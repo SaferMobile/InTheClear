@@ -1,0 +1,10 @@
+MIDlet-1: Data Voider,,info.guardianproject.me.data.DevoidMeMidlet
+MIDlet-2: Mobile Network Test,,info.guardianproject.me.net.OMNIMidlet
+MIDlet-3: Remote Activation,,info.guardianproject.me.sms.RemoteControlMidlet
+MIDlet-4: PageViewrMidlet,,info.guardianproject.me.data.PageViewrMidlet
+MIDlet-Jar-URL: intheclear.jar
+MIDlet-Name: InTheClear
+MIDlet-Vendor: https://lab.safermobile.org
+MIDlet-Version: 0.0.1
+MicroEdition-Configuration: CLDC-1.0
+MicroEdition-Profile: MIDP-2.0

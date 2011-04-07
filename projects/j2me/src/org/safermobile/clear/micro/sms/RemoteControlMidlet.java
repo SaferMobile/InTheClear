@@ -52,6 +52,7 @@ public class RemoteControlMidlet extends MIDlet implements CommandListener, SMSL
 			}
 			try {				
 				this.server = new SMSServer(1234);
+			
 				this.server.addListener(this);
 				this.server.start();
 			} catch (Exception e) {
@@ -72,6 +73,7 @@ public class RemoteControlMidlet extends MIDlet implements CommandListener, SMSL
 		if (message instanceof TextMessage) {
 			TextMessage txt = (TextMessage) message;
 			this.textBox.setString(txt.getPayloadText());
+			
 		}
 	}
 	

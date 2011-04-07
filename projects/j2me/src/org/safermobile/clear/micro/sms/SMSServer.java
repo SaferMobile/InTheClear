@@ -1,4 +1,5 @@
 package org.safermobile.clear.micro.sms;
+
 import java.io.IOException;
 import java.util.Enumeration;
 import java.util.Vector;
@@ -6,6 +7,7 @@ import java.util.Vector;
 import javax.microedition.io.Connector;
 import javax.wireless.messaging.Message;
 import javax.wireless.messaging.MessageConnection;
+import javax.wireless.messaging.TextMessage;
 
 public class SMSServer implements Runnable {
 
@@ -14,6 +16,7 @@ public class SMSServer implements Runnable {
 	private boolean stop;
 	private int 	port;
 
+	private final static String PROTOCOL = "sms://";
 	/**
 	 * Creates a SMS Server listening on
 	 * the specified port.
@@ -25,6 +28,19 @@ public class SMSServer implements Runnable {
 		this.port = port;
 	}
 	
+	public void sendSMSAlert (String address, String message)
+	{
+		try 
+		  {
+		    //creates a new TextMessage
+		    TextMessage textMessage = (TextMessage)connection.newMessage(MessageConnection.TEXT_MESSAGE);
+		    textMessage.setAddress(PROTOCOL + address);
+		    textMessage.setPayloadText(message);
+		    connection.send(textMessage);
+		  } 
+		  catch (Exception e) {
+		  }
+	}
 	/**
 	 * Starts the server.
 	 * 
@@ -47,7 +63,7 @@ public class SMSServer implements Runnable {
 	 */
 	public void run() {
 		try {
-			this.connection = (MessageConnection) Connector.open("sms://:" + this.port);
+			this.connection = (MessageConnection) Connector.open(PROTOCOL + ':' + this.port);
 			
 			while (!stop) {
 				try {

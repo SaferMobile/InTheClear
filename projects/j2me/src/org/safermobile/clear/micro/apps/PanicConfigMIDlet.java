@@ -43,10 +43,7 @@ public class PanicConfigMIDlet extends MIDlet implements CommandListener, Runnab
 	private SMSServer smsServer;
 	private int SMS_SERVER_PORT = 0;
 	
-	private final static String TAG = "PanicConfig";
-	
 	private final static String TITLE_MAIN = "Panic! Config";
-	private final static String PANIC_PREFS_DB = "panicprefs";
 
 	private Preferences _prefs;
 	
@@ -64,11 +61,11 @@ public class PanicConfigMIDlet extends MIDlet implements CommandListener, Runnab
 		
 		try
 		{
-		 _prefs = new Preferences (PANIC_PREFS_DB);
+		 _prefs = new Preferences (PanicConstants.PANIC_PREFS_DB);
 		} catch (RecordStoreException e) {
 			
 			showAlert("Boo!","We couldn't access your settings!",_form);
-			Logger.error(TAG, "a problem saving the prefs: " + e, e);
+			Logger.error(PanicConstants.TAG, "a problem saving the prefs: " + e, e);
 		}
 
 		setupForm();
@@ -129,10 +126,12 @@ public class PanicConfigMIDlet extends MIDlet implements CommandListener, Runnab
 
 		try {
 
-			_prefs.put("user.recp", _tfRecp.getString());
-			_prefs.put("user.name", _tfName.getString());
-			_prefs.put("user.msg", _tfMsg.getString());
-			_prefs.put("user.loc", _tfLoc.getString());
+			Logger.debug(PanicConstants.TAG, "saving preferences to: " + PanicConstants.PANIC_PREFS_DB);
+			
+			_prefs.put(PanicConstants.PREFS_KEY_RECIPIENT, _tfRecp.getString());
+			_prefs.put(PanicConstants.PREFS_KEY_NAME, _tfName.getString());
+			_prefs.put(PanicConstants.PREFS_KEY_MESSAGE, _tfMsg.getString());
+			_prefs.put(PanicConstants.PREFS_KEY_LOCATION, _tfLoc.getString());
 			
 			_prefs.save();
 			
@@ -141,7 +140,7 @@ public class PanicConfigMIDlet extends MIDlet implements CommandListener, Runnab
 		} catch (RecordStoreException e) {
 			
 			showAlert("Boo!","We couldn't save you settings!",_form);
-			Logger.error(TAG, "a problem saving the prefs: " + e, e);
+			Logger.error(PanicConstants.TAG, "a problem saving the prefs: " + e, e);
 		}
 	}
 
@@ -172,8 +171,15 @@ public class PanicConfigMIDlet extends MIDlet implements CommandListener, Runnab
 		{
 			savePrefs();
 		}
-		else if (command == _cmdExit) {
-				this.notifyDestroyed();
+		else if (command == _cmdExit)
+		{
+			try {
+				destroyApp(false);
+			} catch (MIDletStateChangeException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		    notifyDestroyed();
 			
 		}
 	}
@@ -189,21 +195,6 @@ public class PanicConfigMIDlet extends MIDlet implements CommandListener, Runnab
 	protected void pauseApp() {}
 
 	
-	private void testSmsServer ()
-	{
-		if (smsServer == null)
-		{
-			smsServer = SMSServer.getInstance (SMS_SERVER_PORT);
-			try {
-				smsServer.start();
-			} catch (IOException e) {
-			
-				
-				Logger.error(TAG, "error starting sms server", e);
-			}
-		}
-		
-	}
 	
 	public void run ()
 	{

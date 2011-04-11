@@ -13,6 +13,8 @@ import javax.wireless.messaging.Message;
 import javax.wireless.messaging.MessageConnection;
 import javax.wireless.messaging.TextMessage;
 
+import org.safermobile.micro.utils.Logger;
+
 public class SMSServer implements Runnable {
 
 	private MessageConnection connection;
@@ -33,18 +35,27 @@ public class SMSServer implements Runnable {
 		this.port = port;
 	}
 	
-	public static synchronized SMSServer getInstance (int port)
+	public static synchronized SMSServer getInstance (int port) throws IOException
 	{
 		if (_instances == null)
 			_instances = new Hashtable();
 		
+		String key = "" + port;
 		
-		SMSServer smsServer = (SMSServer)_instances.get("" + port);
+		SMSServer smsServer;
 		
-		if (smsServer == null)
+		if (_instances.containsKey(key))
 		{
-				smsServer = new SMSServer (port);
-				_instances.put("" + port, smsServer);
+			smsServer = (SMSServer)_instances.get(key);
+			Logger.debug("SMSServer", "found exist SMSServer on port: " + key);
+		}
+		else
+		{
+			smsServer = new SMSServer (port);
+			smsServer.start();
+			Logger.debug("SMSServer", "created new SMSServer on port: " + key);
+
+			_instances.put(key, smsServer);
 		}
 		
 		return smsServer;

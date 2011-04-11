@@ -36,7 +36,8 @@ public class Preferences {
 	    RecordEnumeration re = null;
 
 	    try {
-	      rs = RecordStore.openRecordStore(mRecordStoreName, true);
+	      rs = RecordStore.openRecordStore(mRecordStoreName, true, RecordStore.AUTHMODE_PRIVATE, true);
+	      
 	      re = rs.enumerateRecords(null, null, false);
 	      while (re.hasNextElement()) {
 	        byte[] raw = re.nextRecord();
@@ -59,7 +60,7 @@ public class Preferences {
 	    RecordStore rs = null;
 	    RecordEnumeration re = null;
 	    try {
-	      rs = RecordStore.openRecordStore(mRecordStoreName, true);
+		  rs = RecordStore.openRecordStore(mRecordStoreName, true, RecordStore.AUTHMODE_PRIVATE, true);
 	      re = rs.enumerateRecords(null, null, false);
 
 	      // First remove all records, a little clumsy.

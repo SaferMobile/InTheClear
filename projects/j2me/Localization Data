@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<locales destination="src" package="org.safermobile.clear.micro">
+   <locale country="US" language="en">
+      <entry key="key_0" value="No"/>
+      <entry key="key_1" value="Yes"/>
+      <entry key="key_2" value="Home"/>
+      <entry key="key_3" value="Run"/>
+      <entry key="key_4" value="Back"/>
+      <entry key="key_5" value="DevoidME [Main Menu]"/>
+      <entry key="key_6" value="List Contacts"/>
+      <entry key="key_7" value="Delete All Contacts"/>
+      <entry key="key_8" value="Random Fill Contacts (100)"/>
+      <entry key="key_9" value="Zero Fill Contacts (100)"/>
+      <entry key="key_10" value="AntiSocial"/>
+      <entry key="key_11" value="Attention"/>
+      <entry key="key_12" value="Are you sure?"/>
+      <entry key="key_13" value="Removed"/>
+      <entry key="key_14" value="All of your contacts have been removed from your phone."/>
+      <entry key="key_15" value="Random"/>
+      <entry key="key_16" value="100 randomly generated contacts have been added to your phone"/>
+      <entry key="key_17" value="Zero"/>
+      <entry key="key_18" value="100 &apos;zeroed&apos; contacts have been added to overwrite memory on your phone"/>
+      <entry key="key_panic_title" value="Panic!"/>
+      <entry key="key_panic_btn_back" value="Back"/>
+      <entry key="key_panic_btn_panic" value="Panic!"/>
+      <entry key="key_panic_btn_cancel" value="Cancel"/>
+      <entry key="key_panic_title_error" value="Error"/>
+      <entry key="key_panic_error_prefs" value="Unable to open preferences"/>
+      <entry key="key_panic_title_main" value="Panic! Activated"/>
+      <entry key="key_panic_error_sms" value="Unable to initiate SMS access"/>
+      <entry key="key_panic_msg_from" value="Panic! from"/>
+      <entry key="key_panic_msg_location" value="Location:"/>
+      <entry key="key_panic_msg_cid" value="cid:"/>
+      <entry key="key_panic_msg_lac" value="lac:"/>
+      <entry key="key_panic_msg_timestamp" value="ts:"/>
+      <entry key="key_panic_msg_sent" value="Panic Sent"/>
+      <entry key="key_panic_msg_sentto" value="Sent to:"/>
+   </locale>
+</locales>

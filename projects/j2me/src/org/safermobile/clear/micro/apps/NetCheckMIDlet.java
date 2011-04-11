@@ -1,4 +1,4 @@
-package org.safermobile.clear.micro.net;
+package org.safermobile.clear.micro.apps;
 
 import javax.microedition.lcdui.Command;
 import javax.microedition.lcdui.CommandListener;
@@ -10,8 +10,11 @@ import javax.microedition.lcdui.TextField;
 import javax.microedition.midlet.MIDlet;
 import javax.microedition.midlet.MIDletStateChangeException;
 
+import org.safermobile.clear.micro.net.DownloadListener;
+import org.safermobile.clear.micro.net.DownloadManager;
 
-public class OMNIMidlet extends MIDlet implements CommandListener, DownloadListener {
+
+public class NetCheckMIDlet extends MIDlet implements CommandListener, DownloadListener {
 
 	private DownloadManager manager;
 	private Display display;
@@ -20,7 +23,7 @@ public class OMNIMidlet extends MIDlet implements CommandListener, DownloadListe
 	private Command download;
 	private Command exit;
 	
-	public OMNIMidlet() {
+	public NetCheckMIDlet() {
 		this.display = Display.getDisplay(this);
 		this.form	 = new Form("Image Downloader");
 		this.form.setCommandListener(this);

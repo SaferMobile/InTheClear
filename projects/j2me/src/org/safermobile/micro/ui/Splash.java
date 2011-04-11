@@ -1,4 +1,4 @@
-package org.safermobile.clear.micro.data;
+package org.safermobile.micro.ui;
 import java.io.IOException;
 import javax.microedition.lcdui.Canvas;
 import javax.microedition.lcdui.Display;

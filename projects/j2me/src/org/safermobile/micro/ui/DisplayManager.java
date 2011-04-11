@@ -1,4 +1,4 @@
-package org.safermobile.clear.micro.data;
+package org.safermobile.micro.ui;
 import java.util.Stack;
 
 import javax.microedition.lcdui.Alert;

@@ -1,0 +1,7 @@
+#Mon Apr 11 02:10:04 EDT 2011
+eclipse.preferences.version=1
+pkg_autoversion=true
+pkg_use_project=true
+preprocess_use_project=true
+preverify_config_value=CLDC-1.0
+preverify_type=default_preverifier

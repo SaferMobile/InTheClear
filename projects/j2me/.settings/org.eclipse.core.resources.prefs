@@ -1,4 +1,4 @@
-#Mon Apr 11 01:20:40 EDT 2011
+#Mon Apr 11 01:34:19 EDT 2011
 eclipse.preferences.version=1
 encoding//.processed/src/org/safermobile/clear/micro/L10nConstants.java=UTF-8
 encoding//.processed/src/org/safermobile/clear/micro/L10nResources.java=UTF-8
@@ -13,8 +13,6 @@ encoding//.processed/src/org/safermobile/clear/micro/net/DownloadListener.java=U
 encoding//.processed/src/org/safermobile/clear/micro/net/DownloadManager.java=UTF-8
 encoding//.processed/src/org/safermobile/clear/micro/sms/SMSListener.java=UTF-8
 encoding//.processed/src/org/safermobile/clear/micro/sms/SMSServer.java=UTF-8
-encoding//.processed/src/org/safermobile/clear/micro/ui/DisplayManager.java=UTF-8
-encoding//.processed/src/org/safermobile/clear/micro/ui/Splash.java=UTF-8
 encoding//.processed/src/org/safermobile/micro/ui/DisplayManager.java=UTF-8
 encoding//.processed/src/org/safermobile/micro/ui/Splash.java=UTF-8
 encoding//.processed/src/org/safermobile/micro/utils/FileWriter.java=UTF-8

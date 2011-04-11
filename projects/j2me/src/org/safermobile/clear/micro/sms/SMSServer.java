@@ -5,6 +5,7 @@ package org.safermobile.clear.micro.sms;
 
 import java.io.IOException;
 import java.util.Enumeration;
+import java.util.Hashtable;
 import java.util.Vector;
 
 import javax.microedition.io.Connector;
@@ -18,7 +19,8 @@ public class SMSServer implements Runnable {
 	private Vector  listeners;
 	private boolean stop;
 	private int 	port;
-
+	
+	private static Hashtable _instances;
 	private final static String PROTOCOL = "sms://";
 	/**
 	 * Creates a SMS Server listening on
@@ -26,9 +28,26 @@ public class SMSServer implements Runnable {
 	 * 
 	 * @param port server port.
 	 */
-	public SMSServer(int port) {
+	private SMSServer(int port) {
 		this.listeners = new Vector();
 		this.port = port;
+	}
+	
+	public static synchronized SMSServer getInstance (int port)
+	{
+		if (_instances == null)
+			_instances = new Hashtable();
+		
+		
+		SMSServer smsServer = (SMSServer)_instances.get("" + port);
+		
+		if (smsServer == null)
+		{
+				smsServer = new SMSServer (port);
+				_instances.put("" + port, smsServer);
+		}
+		
+		return smsServer;
 	}
 	
 	public void sendSMSAlert (String address, String message)

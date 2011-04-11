@@ -14,75 +14,135 @@ import javax.microedition.lcdui.Display;
 import javax.microedition.lcdui.Displayable;
 import javax.microedition.lcdui.Form;
 import javax.microedition.lcdui.List;
+import javax.microedition.lcdui.StringItem;
 import javax.microedition.lcdui.TextBox;
 import javax.microedition.lcdui.TextField;
 import javax.microedition.midlet.MIDlet;
 import javax.microedition.midlet.MIDletStateChangeException;
+import javax.microedition.rms.RecordStoreException;
 
 import org.safermobile.clear.micro.data.PhoneInfo;
 import org.safermobile.clear.micro.sms.SMSServer;
 import org.safermobile.micro.ui.DisplayManager;
 import org.safermobile.micro.utils.Logger;
+import org.safermobile.micro.utils.Preferences;
 import org.safermobile.micro.utils.StringTokenizer;
 
 
+//release.build = false
 public class PanicConfigMIDlet extends MIDlet implements CommandListener, Runnable {
 
-	private DisplayManager manager;
-	private Displayable _screenMain;
-	private Displayable _screenSettings;
-	private Displayable _screenAbout;
+	private DisplayManager _manager;
+	private Display _display;
+	private Form _form;
+	private TextField _tfRecp, _tfName, _tfLoc, _tfMsg;
 	
-	private Command	 _cmdBack;
-	private Command	 _cmdPanic;
-	private Command	 _cmdSettings;
-	private Command	 _cmdAbout;
+	private Command	 _cmdSave;
+	private Command	 _cmdExit;
 	
-	
-	private Hashtable _userHash;
 	private SMSServer smsServer;
 	private int SMS_SERVER_PORT = 0;
 	
-	private final static String TAG = "Panic";
+	private final static String TAG = "PanicConfig";
 	
-	private final static String TITLE_MAIN = "Panic!";
-	private final static String TITLE_SETTINGS = "Settings";
-	private final static String TITLE_ABOUT = "About";
+	private final static String TITLE_MAIN = "Panic! Config";
+	private final static String PANIC_PREFS_DB = "panicprefs";
+
+	private Preferences _prefs;
 	
-	private Thread thread;
-	private boolean keepPanicing = false;
 	/**
 	 * Creates several screens and navigates between them.
 	 */
 	public PanicConfigMIDlet() {
 		
 
-		initUserData();
+		_display = Display.getDisplay(this);
+		_manager = new DisplayManager(_display);
 		
-		this.manager = new DisplayManager(Display.getDisplay(this));
+		_cmdSave = new Command("Save", Command.SCREEN, 1);
+		_cmdExit = new Command("Exit", Command.EXIT, 1);
 		
-		_cmdBack = new Command("Back", Command.BACK, 1);
-		_cmdPanic = new Command("Panic!", Command.ITEM, 1);
-		_cmdSettings = new Command("Settings", Command.OK, 1);
-		_cmdAbout = new Command("About", Command.HELP, 1);
-		
-		
-		_screenMain = getScreenMain();
-		_screenMain.setCommandListener(this);
-		
-		_screenMain.addCommand(_cmdPanic);
-		
-		
+		try
+		{
+		 _prefs = new Preferences (PANIC_PREFS_DB);
+		} catch (RecordStoreException e) {
+			
+			showAlert("Boo!","We couldn't access your settings!",_form);
+			Logger.error(TAG, "a problem saving the prefs: " + e, e);
+		}
+
+		setupForm();
+		fillForm ();
 	}
 
-	private Displayable getScreenMain() {
-		List list = new List(TITLE_MAIN, List.IMPLICIT);
-		list.append("Your Name: " + _userHash.get("name"), null);
-		list.append("Alert Msg: " + _userHash.get("msg"), null);
-		list.append("Location: " + _userHash.get("loc"), null);
-		list.append("Send To: " + _userHash.get("recp"), null);
+	private void setupForm() {
 		
-		return list;
+		_form = new Form(TITLE_MAIN);
+		
+		_form.append(new StringItem(null,"This form is used to configure the Panic! button app"));
+
+		_form.append(new StringItem(null,"Enter the mobile phone number(s), separated by comma, of who you want to alert via SMS"));
+
+		_tfRecp = new TextField("Mobile number(s)","",50,TextField.ANY);
+		_form.append(_tfRecp);
+		
+		_tfName = new TextField("What is your name?","",50,TextField.ANY);
+		_form.append(_tfName);
+		
+		 _tfLoc = new TextField("Where are you now?","",50,TextField.ANY);
+		_form.append(_tfLoc);
+		
+		 _tfMsg = new TextField("What is your PANIC! message?","",100,TextField.ANY);
+		_form.append(_tfMsg);
+		
+		_form.append(new StringItem(null,"Press the 'save' button when you are done"));
+
+		_form.setCommandListener(this);
+		
+		_form.addCommand(_cmdSave);
+		_form.addCommand(_cmdExit);
+		
+	}
+	
+	private void fillForm ()
+	{
+
+		String pref = _prefs.get("user.recp");
+		if (pref != null)
+			_tfRecp.setString(pref);
+		
+		pref = _prefs.get("user.name");
+		if (pref != null)
+			_tfName.setString(pref);
+		
+		pref = _prefs.get("user.msg");
+		if (pref != null)
+			_tfMsg.setString(pref);
+		
+		pref = _prefs.get("user.loc");
+		if (pref != null)
+			_tfLoc.setString(pref);
+	}
+	
+	private void savePrefs ()
+	{
+
+		try {
+
+			_prefs.put("user.recp", _tfRecp.getString());
+			_prefs.put("user.name", _tfName.getString());
+			_prefs.put("user.msg", _tfMsg.getString());
+			_prefs.put("user.loc", _tfLoc.getString());
+			
+			_prefs.save();
+			
+			showAlert("Yay!","Your settings have been updated",_form);
+			
+		} catch (RecordStoreException e) {
+			
+			showAlert("Boo!","We couldn't save you settings!",_form);
+			Logger.error(TAG, "a problem saving the prefs: " + e, e);
+		}
 	}
 
 	
@@ -90,27 +150,31 @@ public class PanicConfigMIDlet extends MIDlet implements CommandListener, Runnab
 	 * @see javax.microedition.midlet.MIDlet#startApp()
 	 */
 	protected void startApp() throws MIDletStateChangeException {
-		this.manager.next(_screenMain);
 		
+		_manager.next(_form);
 
-		startSmsServer();
 	}
 	
 	public void showAlert (String title, String msg, Displayable next)
 	{
 		Alert alert = new Alert(title);
 		alert.setString(msg);
-        manager.next(alert, next);
+		alert.setTimeout(Alert.FOREVER);
+        _manager.next(alert, _form);
 	}
 	
 	/* (non-Javadoc)
 	 * @see javax.microedition.lcdui.CommandListener#commandAction(javax.microedition.lcdui.Command, javax.microedition.lcdui.Displayable)
 	 */
 	public void commandAction(Command command, Displayable displayable) {
-		
-		if (command == _cmdPanic) {
-			thread = new Thread(this);
-			thread.start();
+	
+		if (command == _cmdSave) 
+		{
+			savePrefs();
+		}
+		else if (command == _cmdExit) {
+				this.notifyDestroyed();
+			
 		}
 	}
 	
@@ -123,25 +187,13 @@ public class PanicConfigMIDlet extends MIDlet implements CommandListener, Runnab
 	 * @see javax.microedition.midlet.MIDlet#pauseApp()
 	 */
 	protected void pauseApp() {}
-	
-	//Okay, here is where the meat of the app is
 
-	private void initUserData ()
-	{
-		_userHash = new Hashtable();
-		_userHash.put("name", "Freda Fayter");
-		_userHash.put("msg", "The police must have nabbed me");
-		_userHash.put("loc", "SomewhereVille");
-		_userHash.put("recp", "+17185697272,+14136879877");
-		
-		//load values from db
-	}
 	
-	private void startSmsServer ()
+	private void testSmsServer ()
 	{
 		if (smsServer == null)
 		{
-			smsServer = new SMSServer (SMS_SERVER_PORT);
+			smsServer = SMSServer.getInstance (SMS_SERVER_PORT);
 			try {
 				smsServer.start();
 			} catch (IOException e) {

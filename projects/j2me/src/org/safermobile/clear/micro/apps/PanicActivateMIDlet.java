@@ -36,6 +36,7 @@ import javax.microedition.location.LocationListener;
 import javax.microedition.location.LocationProvider;
 
 // hasLocationCapability=false
+//release.build = false
 public class PanicActivateMIDlet extends MIDlet implements CommandListener, Runnable {
 
 	
@@ -194,7 +195,7 @@ public class PanicActivateMIDlet extends MIDlet implements CommandListener, Runn
 	{
 		if (_smsServer == null)
 		{
-			_smsServer = new SMSServer (SMS_SERVER_PORT);
+			_smsServer = SMSServer.getInstance(SMS_SERVER_PORT);
 			try {
 				_smsServer.start();
 			} catch (IOException e) {

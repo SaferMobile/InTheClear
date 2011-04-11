@@ -12,12 +12,16 @@ import javax.microedition.lcdui.Display;
 import javax.microedition.lcdui.Displayable;
 import javax.microedition.lcdui.TextBox;
 import javax.microedition.lcdui.TextField;
+import javax.microedition.location.Location;
+import javax.microedition.location.LocationException;
+import javax.microedition.location.LocationProvider;
 import javax.microedition.midlet.MIDlet;
 import javax.microedition.midlet.MIDletStateChangeException;
 import javax.microedition.rms.RecordStoreException;
 
 import org.safermobile.clear.micro.L10nConstants;
 import org.safermobile.clear.micro.L10nResources;
+import org.safermobile.clear.micro.data.MovementTracker;
 import org.safermobile.clear.micro.data.PhoneInfo;
 import org.safermobile.clear.micro.sms.SMSServer;
 import org.safermobile.micro.ui.DisplayManager;
@@ -25,8 +29,16 @@ import org.safermobile.micro.utils.Logger;
 import org.safermobile.micro.utils.Preferences;
 import org.safermobile.micro.utils.StringTokenizer;
 
+
+import javax.microedition.location.Location;
+import javax.microedition.location.LocationException;
+import javax.microedition.location.LocationListener;
+import javax.microedition.location.LocationProvider;
+
+// hasLocationCapability=false
 public class PanicActivateMIDlet extends MIDlet implements CommandListener, Runnable {
 
+	
 	private DisplayManager _manager;
 	private Display _display;
 
@@ -40,6 +52,14 @@ public class PanicActivateMIDlet extends MIDlet implements CommandListener, Runn
 	private final static String TAG = "Panic";
 	private final static int DEFAULT_RESEND_TIMEOUT = 60000;
 	private final static String PANIC_PREFS_DB = "panicprefs";
+	
+	private boolean _useGPS = true;
+	
+	// #if hasLocationCapability
+	private MovementTracker _mTracker;
+	private float MOVEMENT_CHANGE = 0.1f;
+	private Location _lastLocation;
+	// #endif
 	
 	private Thread _thread;
 	private boolean _keepPanicing = false;
@@ -62,6 +82,30 @@ public class PanicActivateMIDlet extends MIDlet implements CommandListener, Runn
 		
 		_screenMain.addCommand(_cmdCancel);
 
+		
+		
+		if (_useGPS)
+		{
+			// #if hasLocationCapability
+			try {
+				_mTracker = new MovementTracker(MOVEMENT_CHANGE, new LocationListener ()
+				{
+					 public void locationUpdated(LocationProvider provider, Location location) {
+						 _lastLocation = location;
+						 
+					    }
+
+					    public void providerStateChanged(LocationProvider provider, int newState) {
+					    }
+				});
+				
+				
+				
+			} catch (LocationException e) {
+				Logger.error(TAG, "unable to get location: " + e.getMessage(), e);
+			}
+			// #endif
+		}
 		
 	}
 
@@ -198,6 +242,8 @@ public class PanicActivateMIDlet extends MIDlet implements CommandListener, Runn
 		{
 			sendSMSPanic (recipients, panicMsg);
 			
+			showMessage("Will resend again in " + (resendTimeout/1000) + " seconds... (CANCEL to stop)");
+			
 			try { Thread.sleep(resendTimeout); }
 			catch (Exception e){}
 		}
@@ -217,6 +263,23 @@ public class PanicActivateMIDlet extends MIDlet implements CommandListener, Runn
 		sbPanicMsg.append(l10n.getString(L10nConstants.keys.KEY_PANIC_MSG_LOCATION));
 		sbPanicMsg.append(userLocation);
 
+		String IMEI = PhoneInfo.getIMEI();
+		if (IMEI != null)
+		{
+			sbPanicMsg.append("IMEI:");
+			sbPanicMsg.append(IMEI);
+
+			sbPanicMsg.append(' ');
+		}
+		
+		String IMSI = PhoneInfo.getIMSI();
+		if (IMSI != null)
+		{
+			sbPanicMsg.append("IMSI:");
+			sbPanicMsg.append(IMSI);
+
+			sbPanicMsg.append(' ');
+		}
 		
 		//append loc info
 		String cid = PhoneInfo.getCellId();
@@ -224,13 +287,35 @@ public class PanicActivateMIDlet extends MIDlet implements CommandListener, Runn
 		{
 			sbPanicMsg.append(l10n.getString(L10nConstants.keys.KEY_PANIC_MSG_CID));
 			sbPanicMsg.append(cid);
+
+			sbPanicMsg.append(' ');
 		}
+		
 		
 		String lac = PhoneInfo.getLAC();
 		if (lac != null)
 		{
 			sbPanicMsg.append(l10n.getString(L10nConstants.keys.KEY_PANIC_MSG_LAC));
 			sbPanicMsg.append(lac);
+
+			sbPanicMsg.append(' ');
+		}
+		
+		
+		if (_useGPS)
+		{
+			// #if hasLocationCapability
+			
+			if (_lastLocation != null)
+			{	
+				sbPanicMsg.append(" GPS:");
+				sbPanicMsg.append(_lastLocation.getQualifiedCoordinates().getLatitude());
+				sbPanicMsg.append(",");
+				sbPanicMsg.append(_lastLocation.getQualifiedCoordinates().getLongitude());
+
+				sbPanicMsg.append(' ');
+			}
+			// #endif
 		}
 		
 		//append timestamp

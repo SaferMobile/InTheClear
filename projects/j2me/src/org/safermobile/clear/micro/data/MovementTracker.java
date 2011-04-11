@@ -7,7 +7,7 @@ import javax.microedition.location.LocationException;
 import javax.microedition.location.LocationListener;
 import javax.microedition.location.LocationProvider;
 
-public class MovementTracker implements LocationListener 
+public class MovementTracker  
 {
     float movementDistance;
     LocationProvider provider;
@@ -15,21 +15,16 @@ public class MovementTracker implements LocationListener
     UpdateHandler handler;
     boolean done;
 
-    public MovementTracker(float movementDistance) throws LocationException {
+    public MovementTracker(float movementDistance, LocationListener listener) throws LocationException {
 		this.movementDistance = movementDistance;
 		done = false;
 		handler = new UpdateHandler();
 		new Thread(handler).start();
 		provider = LocationProvider.getInstance(null);
-		provider.setLocationListener(this, -1, -1, -1);
+		provider.setLocationListener(listener, -1, -1, -1);
     }
 
-    public void locationUpdated(LocationProvider provider, Location location) {
-	handler.handleUpdate(location);
-    }
-
-    public void providerStateChanged(LocationProvider provider, int newState) {
-    }
+   
 
     class UpdateHandler implements Runnable {
 	private Location updatedLocation = null;

@@ -147,11 +147,11 @@ public class PIMWiper {
 		while (contacts.hasMoreElements())
 		{
 			c = (Contact) contacts.nextElement();
-			log("removing contact: " + idx++);
+			log("removing contact: " + (idx++));
 			clist.removeContact(c);//delete baby
+			
 		}
 
-		
 		clist.close();
 		
 	}

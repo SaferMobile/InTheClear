@@ -118,7 +118,8 @@ public class PanicActivateMIDlet extends MIDlet implements CommandListener, Runn
 			_prefs = new Preferences (PANIC_PREFS_DB);
 		
 			String recipients = _prefs.get("user.recp");
-			if (recipients == null)
+			
+			if (false)//if (recipients == null)
 			{
 				showMessage("Please run the 'Panic! Config' app first to enter your alert information.");
 				_screenMain.removeCommand(_cmdCancel);

@@ -1,10 +1,11 @@
-MIDlet-1: Data Voider,,info.guardianproject.me.data.DevoidMeMidlet
-MIDlet-2: Mobile Network Test,,info.guardianproject.me.net.OMNIMidlet
-MIDlet-3: Remote Activation,,info.guardianproject.me.sms.RemoteControlMidlet
-MIDlet-4: PageViewrMidlet,,info.guardianproject.me.data.PageViewrMidlet
+MIDlet-4: NetCheck,/netcheck.png,org.safermobile.clear.micro.apps.NetCheckMIDlet
+MIDlet-3: AntiSocial,/social.png,org.safermobile.clear.micro.apps.AntiSocialMIDlet
+MIDlet-2: Panic!,/alert.png,org.safermobile.clear.micro.apps.PanicConfigMIDlet
+MIDlet-1: Panic! Setup,/config.png,org.safermobile.clear.micro.apps.PanicActivateMIDlet
 MIDlet-Jar-URL: intheclear.jar
+MicroEdition-Configuration: CLDC-1.1
+MIDlet-Version: 0.0.3
+MIDlet-Vendor: https://lab.safermobile.org/
 MIDlet-Name: InTheClear
-MIDlet-Vendor: https://lab.safermobile.org
-MIDlet-Version: 0.0.1
-MicroEdition-Configuration: CLDC-1.0
+MIDlet-Permissions: javax.microedition.io.Connector.http,javax.microedition.io.Connector.https,javax.microedition.io.PushRegistry,javax.microedition.io.Connector.sms,javax.wireless.messaging.sms.send,javax.wireless.messaging.sms.receive,javax.microedition.location.Location,javax.microedition.location.Orientation
 MicroEdition-Profile: MIDP-2.0

@@ -1,3 +1,5 @@
+/* Copyright (c) 2011, SaferMobile/MobileActive - https://safermobile.org */
+/* See LICENSE for licensing information */
 package org.safermobile.clear.micro.net;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -7,6 +9,7 @@ import java.util.Vector;
 
 import javax.microedition.io.Connector;
 import javax.microedition.io.HttpConnection;
+import javax.microedition.io.HttpsConnection;
 
 
 public class DownloadManager implements Runnable {
@@ -14,6 +17,8 @@ public class DownloadManager implements Runnable {
 	private Vector listeners = new Vector();
 	private boolean running;
 	private String  url;
+	
+	private HttpsConnection connection  = null;
 	
 	public void download(String url) {
 		if (!running) {
@@ -23,12 +28,16 @@ public class DownloadManager implements Runnable {
 		}
 	}
 	
+	public HttpsConnection getConnection ()
+	{
+		return connection;
+	}
+	
 	/* (non-Javadoc)
 	 * @see java.lang.Runnable#run()
 	 */
 	public void run() {
 		ByteArrayOutputStream buffer = null;
-		HttpConnection connection  = null;
 		InputStream    inputStream = null;
 		Enumeration    enumeration = null;
 		
@@ -36,7 +45,7 @@ public class DownloadManager implements Runnable {
 		try {
 			buffer = new ByteArrayOutputStream();
 			
-			connection  = (HttpConnection) Connector.open(this.url);
+			connection  = (HttpsConnection) Connector.open(this.url);
 			inputStream = connection.openInputStream();
 			
 			long length = connection.getLength();
@@ -55,7 +64,7 @@ public class DownloadManager implements Runnable {
 					}
 				}
 			} while (read != -1);
-		} catch (IOException e) {
+		} catch (Exception e) {
 			enumeration = this.listeners.elements();
 			while (enumeration.hasMoreElements()) {
 				DownloadListener listener = (DownloadListener) enumeration.nextElement();
@@ -68,14 +77,17 @@ public class DownloadManager implements Runnable {
 				listener.downloadCompleted(buffer.toByteArray());
 			}
 			
-			try {				
-				inputStream.close();
-				connection.close();
-			} catch (Exception e) {
-				enumeration = this.listeners.elements();
-				while (enumeration.hasMoreElements()) {
-					DownloadListener listener = (DownloadListener) enumeration.nextElement();
-					listener.downloadError(e);
+			if (inputStream != null)
+			{
+				try {				
+					inputStream.close();
+					connection.close();
+				} catch (Exception e) {
+					enumeration = this.listeners.elements();
+					while (enumeration.hasMoreElements()) {
+						DownloadListener listener = (DownloadListener) enumeration.nextElement();
+						listener.downloadError(e);
+					}
 				}
 			}
 		}

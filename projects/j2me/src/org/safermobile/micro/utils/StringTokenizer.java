@@ -1,5 +1,7 @@
-package org.safermobile.micro.utils;
+/* Copyright (c) 2011, SaferMobile/MobileActive - https://safermobile.org */
+/* See LICENSE for licensing information */
 
+package org.safermobile.micro.utils;
 
 import java.util.Enumeration;
 import java.util.NoSuchElementException;

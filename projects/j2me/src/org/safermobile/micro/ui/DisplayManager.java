@@ -1,3 +1,5 @@
+/* Copyright (c) 2011, SaferMobile/MobileActive - https://safermobile.org */
+/* See LICENSE for licensing information */
 package org.safermobile.micro.ui;
 import java.util.Stack;
 

@@ -1,4 +1,5 @@
-
+/* Copyright (c) 2011, SaferMobile/MobileActive - https://safermobile.org */
+/* See LICENSE for licensing information */
 package org.safermobile.clear.micro.apps;
 
 import java.util.Enumeration;

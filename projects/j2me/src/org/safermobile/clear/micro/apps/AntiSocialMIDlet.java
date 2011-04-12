@@ -35,7 +35,9 @@ public class AntiSocialMIDlet extends MIDlet implements Runnable, CommandListene
 	private Command	cmdHome = new Command(l10n.getString(L10nConstants.keys.KEY_2), Command.OK, 3);
     
 	private int lastCmdIdx = 1;
-	
+
+	private int fillItemCount = 20;
+	private int zeroItemCount = 100;
 	
 	/**
 	 * Creates several screens and navigates between them.
@@ -122,12 +124,12 @@ public class AntiSocialMIDlet extends MIDlet implements Runnable, CommandListene
 					showAlert(l10n.getString(L10nConstants.keys.KEY_13),l10n.getString(L10nConstants.keys.KEY_14), listMain);
 				break;
 				case 2:
-					PIMWiper.fillContacts(100);
-					showAlert(l10n.getString(L10nConstants.keys.KEY_15),l10n.getString(L10nConstants.keys.KEY_16), listMain);
+					PIMWiper.fillContacts(fillItemCount);
+					showAlert(l10n.getString(L10nConstants.keys.KEY_15),fillItemCount + ' ' + l10n.getString(L10nConstants.keys.KEY_16), listMain);
 				break;
 				case 3:
-					PIMWiper.zeroContacts(100);
-					showAlert(l10n.getString(L10nConstants.keys.KEY_17),l10n.getString(L10nConstants.keys.KEY_18), listMain);
+					PIMWiper.zeroContacts(zeroItemCount);
+					showAlert(l10n.getString(L10nConstants.keys.KEY_17),zeroItemCount + ' ' + l10n.getString(L10nConstants.keys.KEY_18), listMain);
 
 				break;
 				

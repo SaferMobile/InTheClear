@@ -20,6 +20,7 @@ import org.safermobile.clear.micro.L10nConstants;
 import org.safermobile.clear.micro.L10nResources;
 import org.safermobile.clear.micro.data.PhoneInfo;
 import org.safermobile.clear.micro.sms.SMSServer;
+import org.safermobile.clear.micro.ui.LargeStringCanvas;
 import org.safermobile.micro.ui.DisplayManager;
 import org.safermobile.micro.utils.Logger;
 import org.safermobile.micro.utils.Preferences;
@@ -116,6 +117,7 @@ public class PanicActivateMIDlet extends MIDlet implements CommandListener, Runn
 		
 	}
 
+	
 	private void insertTestData ()
 	{
 		_prefs.put(PanicConstants.PREFS_KEY_RECIPIENT,"2125551212");
@@ -270,31 +272,44 @@ public class PanicActivateMIDlet extends MIDlet implements CommandListener, Runn
 		
 		String panicMsg = buildPanicMessage(userName, userMessage, userLocation);
 		
-		showMessage ("PANIC MESSAGE READY: " + panicMsg);
+		showMessage ("PANIC MESSAGE: " + panicMsg + "\n\npreparing to send...");
 		
 		doSecPause (5);
 		
-		showMessage ("Sending panic in 5...");
-		doSecPause (1);
-		showMessage("4...");
-		doSecPause (1);
-		showMessage("3...");
-		doSecPause (1);
-		showMessage("2...");
-		doSecPause (1);
-		showMessage("1...");
+		LargeStringCanvas lsCanvas = new LargeStringCanvas("");
+		_manager.next(lsCanvas);
 		
+		lsCanvas.setLargeString("Sending in 5...");
+		doSecPause (1);
+		lsCanvas.setLargeString("4");
+		doSecPause (1);
+		lsCanvas.setLargeString("3");
+		doSecPause (1);
+		lsCanvas.setLargeString("2");
+		doSecPause (1);
+		lsCanvas.setLargeString("1");
+		doSecPause (1);
+		
+		_manager.next(_tbMain);
 		int resendTimeout = PanicConstants.DEFAULT_RESEND_TIMEOUT; //one minute
+		
 		
 		while (_keepPanicing)
 		{
 			sendSMSPanic (recipients, panicMsg);
 			
+			int secs = resendTimeout/1000;
 			
-			showMessage("Will resend again in " + (resendTimeout/1000) + " seconds... (CANCEL to stop)");
+			while (secs > 0)
+			{
+				showMessage("Will resend again in " + secs + " seconds... (CANCEL to stop)");
+				doSecPause (1);
+				secs--;
+			}
 			
-			try { Thread.sleep(resendTimeout); }
-			catch (Exception e){}
+			//update message with new mobile cid, lac info
+			panicMsg = buildPanicMessage(userName, userMessage, userLocation);
+			
 		}
 	}
 	
@@ -311,7 +326,7 @@ public class PanicActivateMIDlet extends MIDlet implements CommandListener, Runn
 		sbPanicMsg.append(' ');
 		sbPanicMsg.append(userMessage);
 		
-		sbPanicMsg.append('/');
+		sbPanicMsg.append(" #");
 		sbPanicMsg.append(l10n.getString(L10nConstants.keys.KEY_PANIC_MSG_LOCATION));
 		sbPanicMsg.append(userLocation);
 		
@@ -319,7 +334,7 @@ public class PanicActivateMIDlet extends MIDlet implements CommandListener, Runn
 		if (IMEI != null)
 		{
 
-			sbPanicMsg.append('/');
+			sbPanicMsg.append(" #");
 			sbPanicMsg.append("IMEI:");
 			sbPanicMsg.append(IMEI);
 
@@ -328,7 +343,7 @@ public class PanicActivateMIDlet extends MIDlet implements CommandListener, Runn
 		String IMSI = PhoneInfo.getIMSI();
 		if (IMSI != null)
 		{
-			sbPanicMsg.append('/');
+			sbPanicMsg.append(" #");
 			sbPanicMsg.append("IMSI:");
 			sbPanicMsg.append(IMSI);
 		}
@@ -337,7 +352,7 @@ public class PanicActivateMIDlet extends MIDlet implements CommandListener, Runn
 		String cid = PhoneInfo.getCellId();
 		if (cid != null)
 		{
-			sbPanicMsg.append('/');
+			sbPanicMsg.append(" #");
 			sbPanicMsg.append(l10n.getString(L10nConstants.keys.KEY_PANIC_MSG_CID));
 			sbPanicMsg.append(cid);
 		}
@@ -346,7 +361,7 @@ public class PanicActivateMIDlet extends MIDlet implements CommandListener, Runn
 		String lac = PhoneInfo.getLAC();
 		if (lac != null)
 		{
-			sbPanicMsg.append('/');
+			sbPanicMsg.append(" #");
 			sbPanicMsg.append(l10n.getString(L10nConstants.keys.KEY_PANIC_MSG_LAC));
 			sbPanicMsg.append(lac);
 		}
@@ -370,7 +385,7 @@ public class PanicActivateMIDlet extends MIDlet implements CommandListener, Runn
 		}*/
 		
 		//append timestamp
-		sbPanicMsg.append('/');
+		sbPanicMsg.append(" #");
 		sbPanicMsg.append(l10n.getString(L10nConstants.keys.KEY_PANIC_MSG_TIMESTAMP));
 		sbPanicMsg.append(new Date().toString());
 	
@@ -399,9 +414,12 @@ public class PanicActivateMIDlet extends MIDlet implements CommandListener, Runn
 		while (st.hasMoreTokens())
 		{
 			String recp = st.nextToken().trim();
-			showMessage ("sending panic to: " + recp);
+			showMessage ("sending panic to: " + recp + "...");
+			
 			_smsServer.sendSMSAlert(recp, alertMsg);
-			doSecPause (2);
+			showMessage ("sending panic to: " + recp + "... done.");
+			
+			doSecPause (1);
 			
 		}
 		

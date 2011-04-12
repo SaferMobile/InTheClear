@@ -24,6 +24,7 @@ import javax.microedition.rms.RecordStoreException;
 import org.safermobile.clear.micro.data.PhoneInfo;
 import org.safermobile.clear.micro.sms.SMSServer;
 import org.safermobile.micro.ui.DisplayManager;
+import org.safermobile.micro.ui.Splash;
 import org.safermobile.micro.utils.Logger;
 import org.safermobile.micro.utils.Preferences;
 import org.safermobile.micro.utils.StringTokenizer;
@@ -32,8 +33,9 @@ import org.safermobile.micro.utils.StringTokenizer;
 //release.build = false
 public class PanicConfigMIDlet extends MIDlet implements CommandListener, Runnable {
 
-	private DisplayManager _manager;
 	private Display _display;
+	private Splash _splash;
+	
 	private Form _form;
 	private TextField _tfRecp, _tfName, _tfLoc, _tfMsg;
 	
@@ -54,7 +56,8 @@ public class PanicConfigMIDlet extends MIDlet implements CommandListener, Runnab
 		
 
 		_display = Display.getDisplay(this);
-		_manager = new DisplayManager(_display);
+		
+		_splash = new Splash("/logo.gif",0xffffff);
 		
 		_cmdSave = new Command("Save", Command.SCREEN, 1);
 		_cmdExit = new Command("Exit", Command.EXIT, 1);
@@ -150,16 +153,19 @@ public class PanicConfigMIDlet extends MIDlet implements CommandListener, Runnab
 	 */
 	protected void startApp() throws MIDletStateChangeException {
 		
-		_manager.next(_form);
-
+		
+	//	_manager.next(_form);
+		_splash.show(_display, _form, 3000);
+		
 	}
 	
 	public void showAlert (String title, String msg, Displayable next)
 	{
 		Alert alert = new Alert(title);
 		alert.setString(msg);
-		alert.setTimeout(Alert.FOREVER);
-        _manager.next(alert, _form);
+		alert.setTimeout(5000);
+		
+		_display.setCurrent(alert, _form);
 	}
 	
 	/* (non-Javadoc)

@@ -35,6 +35,8 @@ public class PanicActivateMIDlet extends MIDlet implements CommandListener, Runn
 	private Display _display;
 
 	private TextBox _tbMain;
+	private LargeStringCanvas _lsCanvas;
+	
 	private Command	 _cmdCancel;
 	private Command	 _cmdExit;
 	
@@ -271,38 +273,41 @@ public class PanicActivateMIDlet extends MIDlet implements CommandListener, Runn
 		String userLocation = _prefs.get(PanicConstants.PREFS_KEY_LOCATION);
 		
 		String panicMsg = buildPanicMessage(userName, userMessage, userLocation);
+		String panicData = buildPanicData (userName);
 		
 		showMessage ("PANIC MESSAGE: " + panicMsg + "\n\npreparing to send...");
 		
 		doSecPause (5);
 		
-		LargeStringCanvas lsCanvas = new LargeStringCanvas("");
-		_manager.next(lsCanvas);
+		_lsCanvas = new LargeStringCanvas("");
+		_lsCanvas.setCommandListener(this);
+		_lsCanvas.addCommand(_cmdCancel);
 		
-		lsCanvas.setLargeString("Sending in 5...");
+		_manager.next(_lsCanvas);
+		
+		_lsCanvas.setLargeString("Sending in 5...");
 		doSecPause (1);
-		lsCanvas.setLargeString("4");
+		_lsCanvas.setLargeString("4");
 		doSecPause (1);
-		lsCanvas.setLargeString("3");
+		_lsCanvas.setLargeString("3");
 		doSecPause (1);
-		lsCanvas.setLargeString("2");
+		_lsCanvas.setLargeString("2");
 		doSecPause (1);
-		lsCanvas.setLargeString("1");
+		_lsCanvas.setLargeString("1");
 		doSecPause (1);
 		
-		_manager.next(_tbMain);
 		int resendTimeout = PanicConstants.DEFAULT_RESEND_TIMEOUT; //one minute
 		
 		
 		while (_keepPanicing)
 		{
-			sendSMSPanic (recipients, panicMsg);
+			sendSMSPanic (recipients, panicMsg, panicData);
 			
 			int secs = resendTimeout/1000;
 			
 			while (secs > 0)
 			{
-				showMessage("Will resend again in " + secs + " seconds... (CANCEL to stop)");
+				showMessage("Panic! again in " + secs + "secs...");
 				doSecPause (1);
 				secs--;
 			}
@@ -311,6 +316,9 @@ public class PanicActivateMIDlet extends MIDlet implements CommandListener, Runn
 			panicMsg = buildPanicMessage(userName, userMessage, userLocation);
 			
 		}
+		
+
+		_manager.next(_tbMain);
 	}
 	
 	private String buildPanicMessage (String userName, String userMessage, String userLocation)
@@ -329,6 +337,27 @@ public class PanicActivateMIDlet extends MIDlet implements CommandListener, Runn
 		sbPanicMsg.append(" #");
 		sbPanicMsg.append(l10n.getString(L10nConstants.keys.KEY_PANIC_MSG_LOCATION));
 		sbPanicMsg.append(userLocation);
+		
+		
+		//append timestamp
+		sbPanicMsg.append(" #");
+		sbPanicMsg.append(l10n.getString(L10nConstants.keys.KEY_PANIC_MSG_TIMESTAMP));
+		sbPanicMsg.append(new Date().toString());
+	
+		return sbPanicMsg.toString();
+	}
+	
+	private String buildPanicData (String userName)
+	{
+		
+		
+		StringBuffer sbPanicMsg = new StringBuffer();
+		
+		sbPanicMsg.append(l10n.getString(L10nConstants.keys.KEY_PANIC_MSG_FROM));
+		sbPanicMsg.append(' ');
+		sbPanicMsg.append(userName);
+		sbPanicMsg.append(':');
+		
 		
 		String IMEI = PhoneInfo.getIMEI();
 		if (IMEI != null)
@@ -396,17 +425,24 @@ public class PanicActivateMIDlet extends MIDlet implements CommandListener, Runn
 	{
 		Logger.debug(PanicConstants.TAG, "msg: " + msg);
 
-		try
+		if (_display.getCurrent() == _tbMain)
 		{
-			_tbMain.setString(msg);
+			try
+			{
+				_tbMain.setString(msg);
+			}
+			catch (Exception e)
+			{
+				e.printStackTrace();
+			}
 		}
-		catch (Exception e)
+		else if (_display.getCurrent() == _lsCanvas)
 		{
-			e.printStackTrace();
+			_lsCanvas.setLargeString(msg);
 		}
 	}
 	
-	private void sendSMSPanic (String recipients, String alertMsg)
+	private void sendSMSPanic (String recipients, String panicMsg, String panicData)
 	{
 		
 		StringTokenizer st = new StringTokenizer(recipients,",");
@@ -414,12 +450,16 @@ public class PanicActivateMIDlet extends MIDlet implements CommandListener, Runn
 		while (st.hasMoreTokens())
 		{
 			String recp = st.nextToken().trim();
-			showMessage ("sending panic to: " + recp + "...");
 			
-			_smsServer.sendSMSAlert(recp, alertMsg);
-			showMessage ("sending panic to: " + recp + "... done.");
+			showMessage ("Sending to " + recp + "...");
 			
+			_smsServer.sendSMSAlert(recp, panicMsg);
 			doSecPause (1);
+			_smsServer.sendSMSAlert(recp, panicData);
+			
+			showMessage ("Panic Sent!");
+			
+			doSecPause (2);
 			
 		}
 		

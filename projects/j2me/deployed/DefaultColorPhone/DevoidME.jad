@@ -1,8 +1,0 @@
-MIDlet-1: DevoidMeMidlet,,info.guardianproject.me.devoid.DevoidMeMidlet
-MIDlet-Jar-Size: 10087
-MIDlet-Jar-URL: DevoidME.jar
-MIDlet-Name: DevoidME MIDlet Suite
-MIDlet-Vendor: MIDlet Suite Vendor
-MIDlet-Version: 1.0.0
-MicroEdition-Configuration: CLDC-1.0
-MicroEdition-Profile: MIDP-2.0

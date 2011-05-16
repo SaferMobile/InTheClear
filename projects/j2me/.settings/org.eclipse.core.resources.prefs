@@ -1,4 +1,4 @@
-#Fri May 06 11:02:23 EDT 2011
+#Sun May 15 22:57:48 EDT 2011
 eclipse.preferences.version=1
 encoding//.processed/src/org/j4me/collections/Cache.java=UTF-8
 encoding//.processed/src/org/j4me/collections/CubbyHole.java=UTF-8
@@ -26,11 +26,12 @@ encoding//.processed/src/org/j4me/util/ConnectorHelper.java=UTF-8
 encoding//.processed/src/org/j4me/util/MathFunc.java=UTF-8
 encoding//.processed/src/org/safermobile/clear/micro/L10nConstants.java=UTF-8
 encoding//.processed/src/org/safermobile/clear/micro/L10nResources.java=UTF-8
-encoding//.processed/src/org/safermobile/clear/micro/apps/AntiSocialMIDlet.java=UTF-8
 encoding//.processed/src/org/safermobile/clear/micro/apps/NetCheckMIDlet.java=UTF-8
 encoding//.processed/src/org/safermobile/clear/micro/apps/PanicActivateMIDlet.java=UTF-8
 encoding//.processed/src/org/safermobile/clear/micro/apps/PanicConfigMIDlet.java=UTF-8
 encoding//.processed/src/org/safermobile/clear/micro/apps/PanicConstants.java=UTF-8
+encoding//.processed/src/org/safermobile/clear/micro/apps/ShoutMIDlet.java=UTF-8
+encoding//.processed/src/org/safermobile/clear/micro/apps/WipeMIDlet.java=UTF-8
 encoding//.processed/src/org/safermobile/clear/micro/data/MovementTracker.java=UTF-8
 encoding//.processed/src/org/safermobile/clear/micro/data/PIMWiper.java=UTF-8
 encoding//.processed/src/org/safermobile/clear/micro/data/PhoneInfo.java=UTF-8

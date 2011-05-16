@@ -1,11 +1,13 @@
-MIDlet-1: Panic! Setup,/config.png,org.safermobile.clear.micro.apps.PanicConfigMIDlet
-MIDlet-2: Panic!,/alert.png,org.safermobile.clear.micro.apps.PanicActivateMIDlet
-MIDlet-3: AntiSocial,/social.png,org.safermobile.clear.micro.apps.AntiSocialMIDlet
-MIDlet-4: NetCheck,/netcheck.png,org.safermobile.clear.micro.apps.NetCheckMIDlet
+MIDlet-1: Panic!,/alert.gif,org.safermobile.clear.micro.apps.PanicActivateMIDlet
+MIDlet-2: Panic! Setup,/config.gif,org.safermobile.clear.micro.apps.PanicConfigMIDlet
+MIDlet-3: Protect,/social.gif,org.safermobile.clear.micro.apps.AntiSocialMIDlet
+MIDlet-4: NetCheck,/netcheck.gif,org.safermobile.clear.micro.apps.NetCheckMIDlet
+MIDlet-Icon: logo.gif
+MIDlet-Info-URL: https://safermobile.org/intheclear
 MIDlet-Jar-URL: intheclear.jar
 MIDlet-Name: InTheClear
-MIDlet-Permissions: javax.microedition.pim.ContactList.read,javax.microedition.pim.ContactList.write,javax.microedition.pim.EventList.read,javax.microedition.pim.EventList.write,javax.microedition.pim.ToDoList.read,javax.microedition.pim.ToDoList.write,javax.microedition.io.Connector.http,javax.microedition.io.Connector.https,javax.microedition.io.PushRegistry,javax.microedition.io.Connector.sms,javax.wireless.messaging.sms.send,javax.wireless.messaging.sms.receive,javax.microedition.location.Location,javax.microedition.location.Orientation
+MIDlet-Permissions: javax.microedition.pim.ContactList.read,javax.microedition.pim.ContactList.write,javax.microedition.pim.EventList.read,javax.microedition.pim.EventList.write,javax.microedition.pim.ToDoList.read,javax.microedition.pim.ToDoList.write,javax.microedition.io.Connector.http,javax.microedition.io.Connector.https,javax.microedition.io.PushRegistry,javax.microedition.io.Connector.sms,javax.wireless.messaging.sms.send,javax.wireless.messaging.sms.receive
 MIDlet-Vendor: https://lab.safermobile.org/
-MIDlet-Version: 0.0.8
+MIDlet-Version: 0.0.50
 MicroEdition-Configuration: CLDC-1.0
 MicroEdition-Profile: MIDP-2.0

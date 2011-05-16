@@ -2,11 +2,14 @@
 <mtjMetadata jad="intheclear.jad" version="1.2.1.v201009031435">
    <device group="Sun Java(TM) Wireless Toolkit 2.5.2_01 for CLDC" name="DefaultColorPhone"/>
    <signing projectSpecific="true" signProject="true">
-      <alias>mycert</alias>
-      <keystore>/home/n8fr8/dev/safermobile/repo/InTheClear/tools/selfsigned.ks</keystore>
+      <alias>safermobile</alias>
+      <keystore>/home/n8fr8/dev/safermobile/keystore/safermobile.ks</keystore>
       <provider/>
       <keystoreType/>
-      <passwords storePasswords="1"/>
+      <passwords storePasswords="2">
+         <keystore>KigkTZI+ikRsoyJmdrDjRA==</keystore>
+         <key>KigkTZI+ikRsoyJmdrDjRA==</key>
+      </passwords>
    </signing>
    <configurations>
       <configuration active="true" name="DefaultColorPhone">

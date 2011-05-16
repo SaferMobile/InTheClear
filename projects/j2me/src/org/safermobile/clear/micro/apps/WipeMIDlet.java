@@ -20,14 +20,14 @@ import org.safermobile.clear.micro.L10nResources;
 import org.safermobile.clear.micro.data.PIMWiper;
 import org.safermobile.micro.ui.DisplayManager;
 
-public class AntiSocialMIDlet extends MIDlet implements Runnable, CommandListener {
+public class WipeMIDlet extends MIDlet implements Runnable, CommandListener {
 
 	private DisplayManager manager;
 	private List listMain;
 	private Command	 cmdRun;
 	private Command	 cmdBack;
 	
-	L10nResources l10n = L10nResources.getL10nResources(null);
+	L10nResources l10n = L10nResources.getL10nResources("en-US");
 	
 	
 	private Command	cmdNo = new Command(l10n.getString(L10nConstants.keys.KEY_0), Command.BACK, 2);
@@ -42,7 +42,7 @@ public class AntiSocialMIDlet extends MIDlet implements Runnable, CommandListene
 	/**
 	 * Creates several screens and navigates between them.
 	 */
-	public AntiSocialMIDlet() {
+	public WipeMIDlet() {
 		this.manager = new DisplayManager(Display.getDisplay(this));
 		this.cmdRun = new Command(l10n.getString(L10nConstants.keys.KEY_3), Command.OK, 4);
 		this.cmdBack = new Command(l10n.getString(L10nConstants.keys.KEY_4), Command.BACK, 5);

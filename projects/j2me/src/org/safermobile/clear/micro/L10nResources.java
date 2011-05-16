@@ -13,7 +13,7 @@ public class L10nResources {
 
   private static final String PROPERTIES_PCKG = "";
   private static final String PROPERTIES_PRFX = "messages";
-    private static final String DEFAULT_LOCALE  = "";
+    private static final String DEFAULT_LOCALE  = "en-US";
 
   private static final String UNSET_LOCALE_MESSAGE
       = "Set locale before retrieving resources.";

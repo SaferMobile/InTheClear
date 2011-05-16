@@ -23,6 +23,8 @@ import javax.microedition.pki.Certificate;
 import org.safermobile.clear.micro.net.DownloadListener;
 import org.safermobile.clear.micro.net.DownloadManager;
 import org.safermobile.micro.utils.Logger;
+import org.safermobile.clear.micro.L10nResources;
+import org.safermobile.clear.micro.L10nConstants;
 
 // release.build = false
 public class NetCheckMIDlet extends MIDlet implements CommandListener, DownloadListener {
@@ -34,9 +36,11 @@ public class NetCheckMIDlet extends MIDlet implements CommandListener, DownloadL
 	private Command download;
 	private Command exit;
 	
-	private final static String TAG = "NetCheck";
 	
 	private String lastUrl;
+	L10nResources l10n = L10nResources.getL10nResources("en-US");
+	
+	private final static String TAG = "NetCheck";
 	
 	public NetCheckMIDlet() {
 		this.display = Display.getDisplay(this);
@@ -52,12 +56,12 @@ public class NetCheckMIDlet extends MIDlet implements CommandListener, DownloadL
 		this.form	 = new Form("NetCheck");
 		this.form.setCommandListener(this);
 		
-		this.form.append(new StringItem(null,"This utility will display the SSL certificate information for any HTTPS enabled website"));
-		this.item = new TextField("Enter an HTTPS Url:", url, 200, TextField.URL);
+		this.form.append(new StringItem(null,l10n.getString(L10nConstants.keys.KEY_NC_INTRO)));
+		this.item = new TextField(l10n.getString(L10nConstants.keys.KEY_NC_ENTER), url, 200, TextField.URL);
 		this.form.append(item);
 		
-		this.download = new Command("Start", Command.SCREEN, 1);
-		this.exit = new Command("Exit", Command.EXIT, 1);
+		this.download = new Command(l10n.getString(L10nConstants.keys.KEY_START), Command.SCREEN, 1);
+		this.exit = new Command(l10n.getString(L10nConstants.keys.KEY_EXIT), Command.EXIT, 1);
 		this.form.addCommand(this.download);
 		this.form.addCommand(this.exit);
 		
@@ -87,7 +91,7 @@ public class NetCheckMIDlet extends MIDlet implements CommandListener, DownloadL
 			}
 			else
 			{
-				this.showAlert("Warning", "You must enter an https:// site address", form);
+				this.showAlert(l10n.getString(L10nConstants.keys.KEY_WARNING), l10n.getString(L10nConstants.keys.KEY_NC_ERROR), form);
 			}
 		} else 
 		if (c == this.exit) {
@@ -128,7 +132,7 @@ public class NetCheckMIDlet extends MIDlet implements CommandListener, DownloadL
 		if (data.length > 0 && hConn != null)
 		{
 
-			this.form.setTitle("Check Completed!");
+			this.form.setTitle(l10n.getString(L10nConstants.keys.KEY_NC_COMPLETE));
 			
 			try
 			{

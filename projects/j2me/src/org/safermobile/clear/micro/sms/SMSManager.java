@@ -4,6 +4,7 @@
 package org.safermobile.clear.micro.sms;
 
 import java.io.IOException;
+import java.io.InterruptedIOException;
 import java.util.Enumeration;
 import java.util.Hashtable;
 import java.util.Vector;
@@ -15,65 +16,77 @@ import javax.wireless.messaging.TextMessage;
 
 import org.safermobile.micro.utils.Logger;
 
-public class SMSServer implements Runnable {
+public class SMSManager implements Runnable {
 
 	private MessageConnection connection;
 	private Vector  listeners;
 	private boolean stop;
 	private int 	port;
 	
-	private static Hashtable _instances;
+	//private static Hashtable _instances;
 	private final static String PROTOCOL = "sms://";
+	
 	/**
 	 * Creates a SMS Server listening on
 	 * the specified port.
 	 * 
 	 * @param port server port.
 	 */
-	private SMSServer(int port) {
+	private SMSManager(int port) {
 		this.listeners = new Vector();
 		this.port = port;
 	}
 	
-	public static synchronized SMSServer getInstance (int port) throws IOException
+	/*
+	public static synchronized SMSManager getInstance (int port) throws IOException
 	{
 		if (_instances == null)
 			_instances = new Hashtable();
 		
 		String key = "" + port;
 		
-		SMSServer smsServer;
+		SMSManager smsServer;
 		
 		if (_instances.containsKey(key))
 		{
-			smsServer = (SMSServer)_instances.get(key);
-			Logger.debug("SMSServer", "found exist SMSServer on port: " + key);
+			smsServer = (SMSManager)_instances.get(key);
+			Logger.debug("SMSManager", "found exist SMSManager on port: " + key);
 		}
 		else
 		{
-			smsServer = new SMSServer (port);
+			smsServer = new SMSManager (port);
 			smsServer.start();
-			Logger.debug("SMSServer", "created new SMSServer on port: " + key);
+			Logger.debug("SMSManager", "created new SMSManager on port: " + key);
 
 			_instances.put(key, smsServer);
 		}
 		
 		return smsServer;
-	}
+	}*/
 	
-	public void sendSMSAlert (String address, String message)
+	public static void sendSMSAlert (String phoneNumber, String message) throws InterruptedIOException, IOException
 	{
-		try 
-		  {
+		
+			/*
+			MessageConnection sender = (MessageConnection) Connector.open(address);
+			
 		    //creates a new TextMessage
 		    TextMessage textMessage = (TextMessage)connection.newMessage(MessageConnection.TEXT_MESSAGE);
-		    textMessage.setAddress(PROTOCOL + address);
+		    textMessage.setAddress(PROTOCOL + address + ":" + port);
 		    textMessage.setPayloadText(message);
-		    connection.send(textMessage);
-		  } 
-		  catch (Exception e) {
-		  }
+		    connection.send(textMessage);*/
+		    
+		    String url = "sms://" +  phoneNumber;
+		    MessageConnection connection =
+		    	(MessageConnection) Connector.open(url);
+		    	TextMessage msg = (TextMessage) connection.newMessage(
+		    	MessageConnection.TEXT_MESSAGE);
+		    	msg.setPayloadText(message);
+		    	connection.send(msg);
+		    	connection.close();
+		 
 	}
+	
 	/**
 	 * Starts the server.
 	 * 
@@ -95,6 +108,7 @@ public class SMSServer implements Runnable {
 	 * @see java.lang.Runnable#run()
 	 */
 	public void run() {
+		/*
 		try {
 			this.connection = (MessageConnection) Connector.open(PROTOCOL + ':' + this.port);
 			
@@ -115,7 +129,7 @@ public class SMSServer implements Runnable {
 			this.connection.close();
 		} catch (Exception e) {
 			e.printStackTrace();
-		}
+		}*/
 	}
 	
 	/**

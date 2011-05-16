@@ -21,8 +21,14 @@ import javax.microedition.midlet.MIDlet;
 import javax.microedition.midlet.MIDletStateChangeException;
 import javax.microedition.rms.RecordStoreException;
 
+import org.j4me.ui.Menu;
+import org.j4me.ui.MenuItem;
+import org.j4me.ui.UIManager;
 import org.safermobile.clear.micro.data.PhoneInfo;
-import org.safermobile.clear.micro.sms.SMSServer;
+import org.safermobile.clear.micro.sms.SMSManager;
+import org.safermobile.clear.micro.ui.ClearTheme;
+import org.safermobile.clear.micro.ui.ConsoleTheme;
+import org.safermobile.clear.micro.ui.TestForm;
 import org.safermobile.micro.ui.DisplayManager;
 import org.safermobile.micro.ui.Splash;
 import org.safermobile.micro.utils.Logger;
@@ -42,18 +48,68 @@ public class PanicConfigMIDlet extends MIDlet implements CommandListener, Runnab
 	private Command	 _cmdSave;
 	private Command	 _cmdExit;
 	
-	private SMSServer smsServer;
+	private SMSManager smsServer;
 	private int SMS_SERVER_PORT = 0;
 	
 	private final static String TITLE_MAIN = "Panic! Config";
 
 	private Preferences _prefs;
 	
+	private Menu menu;
+	
 	/**
 	 * Creates several screens and navigates between them.
 	 */
 	public PanicConfigMIDlet() {
+	
+		oldUI ();
+	}
+	
+	private void setupUI ()
+	{
+		UIManager.init(this);
+		 UIManager.setTheme( new ClearTheme()  );
+		 
+		 TestForm testForm = new TestForm (menu);
+	       // menu.appendMenuOption(testForm);
+	        
+		 testForm.show();
 		
+		/*
+		 // The first screen is a menu to choose among the example screens.
+        menu = new Menu(TITLE_MAIN, null );
+        
+       
+        
+        // Attach an exit option.
+        menu.appendMenuOption( new MenuItem()
+                        {
+                                public String getText ()
+                                {
+                                        return "Exit";
+                                }
+
+                                public void onSelection ()
+                                {
+                                        notifyDestroyed();
+                                }
+                        } );
+        
+     // Applies a theme to the example midlet.
+       
+        menu.show();
+        */
+		
+		
+        // Repaint the screen so the changes take effect.
+     //   UIManager.getScreen().repaint();
+        
+    
+        
+	}
+		
+	public void oldUI ()
+	{
 
 		_display = Display.getDisplay(this);
 		
@@ -73,6 +129,18 @@ public class PanicConfigMIDlet extends MIDlet implements CommandListener, Runnab
 
 		setupForm();
 		fillForm ();
+	}
+	
+
+	/* (non-Javadoc)
+	 * @see javax.microedition.midlet.MIDlet#startApp()
+	 */
+	protected void startApp() throws MIDletStateChangeException {
+		
+		
+		_splash.show(_display, _form, 3000);
+		
+		
 	}
 
 	private void setupForm() {
@@ -148,16 +216,6 @@ public class PanicConfigMIDlet extends MIDlet implements CommandListener, Runnab
 	}
 
 	
-	/* (non-Javadoc)
-	 * @see javax.microedition.midlet.MIDlet#startApp()
-	 */
-	protected void startApp() throws MIDletStateChangeException {
-		
-		
-	//	_manager.next(_form);
-		_splash.show(_display, _form, 3000);
-		
-	}
 	
 	public void showAlert (String title, String msg, Displayable next)
 	{

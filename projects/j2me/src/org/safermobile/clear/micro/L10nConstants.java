@@ -9,6 +9,8 @@ public class L10nConstants {
  	 */
     public class locales {
 		public static final String EN_US = "en-US";
+		public static final String EN_GB = "en-GB";
+		public static final String AR_EG = "ar-EG";
 
     }
 
@@ -50,6 +52,14 @@ public class L10nConstants {
 		public static final String KEY_PANIC_MSG_TIMESTAMP = "KEY_PANIC_MSG_TIMESTAMP";
 		public static final String KEY_PANIC_MSG_SENT = "KEY_PANIC_MSG_SENT";
 		public static final String KEY_PANIC_MSG_SENTTO = "KEY_PANIC_MSG_SENTTO";
+		public static final String KEY_NC_TITLE = "KEY_NC_TITLE";
+		public static final String KEY_NC_INTRO = "KEY_NC_INTRO";
+		public static final String KEY_NC_ENTER = "KEY_NC_ENTER";
+		public static final String KEY_START = "KEY_START";
+		public static final String KEY_EXIT = "KEY_EXIT";
+		public static final String KEY_WARNING = "KEY_WARNING";
+		public static final String KEY_NC_ERROR = "KEY_NC_ERROR";
+		public static final String KEY_NC_COMPLETE = "KEY_NC_COMPLETE";
 
     }
 }

@@ -28,7 +28,7 @@ import org.safermobile.micro.utils.StringTokenizer;
 
 // hasLocationCapability=false
 //release.build = false
-public class PanicActivateMIDlet extends MIDlet implements CommandListener, Runnable {
+public class ShoutMIDlet extends MIDlet implements CommandListener, Runnable {
 
 	
 	private DisplayManager _manager;
@@ -67,7 +67,7 @@ public class PanicActivateMIDlet extends MIDlet implements CommandListener, Runn
 	/**
 	 * Creates Panic Activate app
 	 */
-	public PanicActivateMIDlet() {
+	public ShoutMIDlet() {
 		
 		_display = Display.getDisplay(this);
 		_manager = new DisplayManager(_display);

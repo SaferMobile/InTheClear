@@ -1,4 +1,4 @@
-<project name="Hello, World! Project" default="build">
+<project name="InTheClear" default="build">
    <property file="build.properties" />
 
    <taskdef resource="bb-ant-defs.xml" />

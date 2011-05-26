@@ -1,22 +1,108 @@
 <project name="InTheClear" default="build">
    <property file="build.properties" />
 
-   <taskdef resource="bb-ant-defs.xml" />
-
    <property name="src.dir" location="src" />
    <property name="build.dir" location="build" />
 
-   <target name="build">
-      <mkdir dir="build" />
-      <rapc output="${output}" srcdir="${src.dir}" destdir="${build.dir}"
-            quiet="true">
-         <jdp file="build.properties" />
+<!-- bb-ant-tool targets -->
+
+   <taskdef resource="bb-ant-defs.xml" />
+   <property name="blackberry.build.dir" location="${build.dir}/blackberry" />
+
+   <target name="build-blackberry">
+      <mkdir dir="${blackberry.build.dir}" />
+      <rapc output="${output}"
+	    srcdir="${src.dir}"
+	    destdir="${blackberry.build.dir}"
+            quiet="false">
+<!--         <jdp file="rapc.properties" /> -->
       </rapc>
    </target>
 
-   <target name="sign" depends="build">
-      <sigtool codfile="${build.dir}/${output}.cod" />
+   <target name="sign-blackberry" depends="build-blackberry">
+      <sigtool codfile="${blackberry.build.dir}/${output}.cod" />
       <delete file="LogFile.txt" />
+   </target>
+
+<!-- antenna J2ME targets -->
+
+   <taskdef resource="antenna.properties" />
+   <property name="wtk.home" value="/usr/local/WTK2.5.2" />
+   <property name="j2me.build.dir" location="${build.dir}/j2me" />
+   <property name="j2me.output" location="${j2me.build.dir}/${output}" />
+
+   <target name="build-j2me">
+      <mkdir dir="${j2me.build.dir}" />
+
+        <!-- Create a JAD file. -->
+        
+        <wtkjad jadfile="${j2me.output}.jad"
+                jarfile="${j2me.output}.jar"
+                name="${title}"
+                vendor="${vendor}"
+                version="1.0.0">
+
+          <midlet name="NetCheck" class="NetCheckMIDlet" />
+          <midlet name="PanicActivate" class="PanicActivateMIDlet" />
+          <midlet name="PanicConfig" class="PanicConfigMIDlet" />
+          <midlet name="Wipe" class="WipeMIDlet" />
+          <midlet name="Shout" class="ShoutMIDlet" />
+          <attribute name="URL" value="http://safermobile.org/" />
+        </wtkjad>
+        
+        <delete dir="classes"/>
+        <mkdir dir="classes"/>
+
+        <!-- Compile everything, but don't preverify (yet). -->
+
+        <wtkbuild srcdir="${src.dir}"
+                  destdir="classes"
+                  preverify="false"/>
+
+        <!-- Package everything. Most of the necessary information is
+             contained in the JAD file. Also preverify the result this
+             time. To obfuscate everything, set the corresponding
+             parameter to "true" (requires RetroGuard or ProGuard). The
+             version parameter increments the MIDlet-Version by one. -->
+
+        <wtkpackage jadfile="${j2me.output}.jad"
+                    jarfile="${j2me.output}.jar"
+                    obfuscate="false"
+                    preverify="false">
+
+            <!-- Package our newly compiled classes. -->
+
+            <fileset dir="classes"/>
+        </wtkpackage>
+    		
+        <!-- Preverify. -->
+
+        <!-- wtkpreverify jarfile="hello.jar"
+                      jadfile="hello.jad"/-->
+
+        <!-- Convert the JAR file into a MIDP for PalmOS PRC file. -->
+
+        <!--wtkmakeprc jadfile="hello.jad"
+			jarfile="hello.jar"
+                    prcfile="hello.prc"/-->
+    	        
+		<!-- Start the MIDlet suite
+    	<wtkrun jadfile="hello.jad" device="DefaultColorPhone" wait="true"/>
+    	 -->
+
+    </target>
+   
+   <target name="sign-j2me"
+	   depends="build-j2me">
+   </target>
+   
+<!-- generic targets -->
+   <target name="build"
+	   depends="build-blackberry, build-j2me">
+   </target>
+
+   <target name="sign"
+	   depends="sign-blackberry, sign-j2me">
    </target>
 
    <target name="clean">
@@ -25,7 +111,8 @@
 
    <target name="load-simulator" depends="build">
       <copy todir="${simulator.dir}">
-         <fileset dir="${build.dir}" includes="*.cod,*.csl,*.cso,*.debug,*.jar" />
+         <fileset dir="${blackberry.build.dir}"
+		  includes="*.cod,*.csl,*.cso,*.debug,*.jar" />
       </copy>
    </target>
 </project>

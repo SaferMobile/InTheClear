@@ -22,7 +22,7 @@
 
     <target name="alx" depends="build-blackberry">
         <alx destdir="${blackberry.build.dir}/alx" filename="${output}.alx">
-            <application id="org.safermobile.sms.${module.name}" name="${module.fullname}"
+            <application id="org.safermobile.sms.InTheClear" name="In The Clear"
                          description="In The Clear app suite"
                          version="0.0.3"
                          vendor="Safer Mobile">

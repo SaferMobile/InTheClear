@@ -1,5 +1,7 @@
 <project name="InTheClear" default="build">
    <property file="build.properties" />
+<!-- use the home dir for things like cert passwords, etc -->   
+   <property file="${user.home}/build.properties" />
 
    <property name="src.dir" location="src" />
    <property name="build.dir" location="build" />
@@ -120,12 +122,12 @@
    <target name="sign-j2me"
 	   depends="build-j2me">
      <wtksign 
-	keystore="${keystore.file}" 
+	keystore="${j2me.keystore.file}" 
 	jarfile="${jar.name}" 
 	jadfile="${jad.name}"
-	storepass="${keystore.pass}" 
-	certpass="${cert.pass}"
-	certalias="${cert.alias}"
+	storepass="${j2me.keystore.pass}" 
+	certpass="${j2me.cert.pass}"
+	certalias="${j2me.cert.alias}"
 	/>
 
    </target>

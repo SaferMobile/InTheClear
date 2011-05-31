@@ -22,10 +22,10 @@
 
     <target name="alx" depends="build-blackberry">
         <alx destdir="${blackberry.build.dir}/alx" filename="${output}.alx">
-            <application id="org.safermobile.sms.InTheClear" name="In The Clear"
-                         description="In The Clear app suite"
-                         version="0.0.3"
-                         vendor="Safer Mobile">
+            <application id="org.safermobile.sms.InTheClear" name="${title}"
+                         description="${desc}"
+                         version="${version}"
+                         vendor="${vendor}">
                 <codset>
                     <fileset dir="${blackberry.build.dir}" includes="*.cod" />
                 </codset>
@@ -60,7 +60,7 @@
                 jarfile="${j2me.output}.jar"
                 name="${title}"
                 vendor="${vendor}"
-                version="1.0.0">
+                version="${version}">
 
           <midlet name="NetCheck" class="NetCheckMIDlet" />
           <midlet name="PanicActivate" class="PanicActivateMIDlet" />

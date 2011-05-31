@@ -41,7 +41,9 @@
 
 
    <target name="sign-blackberry" depends="build-blackberry">
-      <sigtool codfile="${blackberry.build.dir}/${output}.cod" />
+      <sigtool codfile="${blackberry.build.dir}/${output}.cod" 
+	       password="${blackberry.password}"
+	       forceclose="true" />
       <delete file="LogFile.txt" />
    </target>
 

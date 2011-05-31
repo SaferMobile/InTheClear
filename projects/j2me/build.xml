@@ -119,6 +119,15 @@
    
    <target name="sign-j2me"
 	   depends="build-j2me">
+     <wtksign 
+	keystore="${keystore.file}" 
+	jarfile="${jar.name}" 
+	jadfile="${jad.name}"
+	storepass="${keystore.pass}" 
+	certpass="${cert.pass}"
+	certalias="${cert.alias}"
+	/>
+
    </target>
    
 <!-- generic targets -->

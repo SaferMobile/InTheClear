@@ -53,14 +53,16 @@
    <property name="wtk.all.enabled" value="true" />
    <property name="j2me.build.dir" location="${build.dir}/j2me" />
    <property name="j2me.output" location="${j2me.build.dir}/${output}" />
+   <property name="jar.name" location="${j2me.output}.jar" />
+   <property name="jad.name" location="${j2me.output}.jad" />
 
    <target name="build-j2me">
       <mkdir dir="${j2me.build.dir}" />
 
         <!-- Create a JAD file. -->
         
-        <wtkjad jadfile="${j2me.output}.jad"
-                jarfile="${j2me.output}.jar"
+        <wtkjad jadfile="${jad.name}"
+                jarfile="${jar.name}"
                 name="${title}"
                 vendor="${vendor}"
                 version="${version}">
@@ -88,8 +90,8 @@
              parameter to "true" (requires RetroGuard or ProGuard). The
              version parameter increments the MIDlet-Version by one. -->
 
-        <wtkpackage jadfile="${j2me.output}.jad"
-                    jarfile="${j2me.output}.jar"
+        <wtkpackage jadfile="${jad.name}"
+                    jarfile="${jar.name}"
                     obfuscate="false"
                     preverify="false">
 

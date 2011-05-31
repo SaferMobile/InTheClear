@@ -19,10 +19,30 @@
       </rapc>
    </target>
 
+
+    <target name="alx" depends="build-blackberry">
+        <alx destdir="${blackberry.build.dir}/alx" filename="${output}.alx">
+            <application id="org.safermobile.sms.${module.name}" name="${module.fullname}"
+                         description="In The Clear app suite"
+                         version="0.0.3"
+                         vendor="Safer Mobile">
+                <codset>
+                    <fileset dir="${blackberry.build.dir}" includes="*.cod" />
+                </codset>
+            </application>
+        </alx>
+
+        <zip zipfile="${blackberry.build.dir}/${output}.zip">
+            <zipfileset dir="${blackberry.build.dir}/alx" includes="*.cod, *.alx" />
+        </zip>
+    </target>
+
+
    <target name="sign-blackberry" depends="build-blackberry">
       <sigtool codfile="${blackberry.build.dir}/${output}.cod" />
       <delete file="LogFile.txt" />
    </target>
+
 
 <!-- antenna J2ME targets -->
 

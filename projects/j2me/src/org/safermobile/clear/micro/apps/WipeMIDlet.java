@@ -17,6 +17,7 @@ import javax.microedition.pim.PIMException;
 
 import org.safermobile.clear.micro.L10nConstants;
 import org.safermobile.clear.micro.L10nResources;
+import org.safermobile.clear.micro.apps.controllers.WipeController;
 import org.safermobile.clear.micro.data.PIMWiper;
 import org.safermobile.micro.ui.DisplayManager;
 
@@ -29,6 +30,8 @@ public class WipeMIDlet extends MIDlet implements Runnable, CommandListener {
 	
 	L10nResources l10n = L10nResources.getL10nResources("en-US");
 	
+	private WipeController wControl = new WipeController();
+
 	
 	private Command	cmdNo = new Command(l10n.getString(L10nConstants.keys.KEY_0), Command.BACK, 2);
 	private Command	cmdYes = new Command(l10n.getString(L10nConstants.keys.KEY_1), Command.OK, 1);
@@ -72,7 +75,7 @@ public class WipeMIDlet extends MIDlet implements Runnable, CommandListener {
 		listContacts.setCommandListener(this);
 		
 	 	try {
-			Vector contacts = PIMWiper.getContacts();
+			Vector contacts = wControl.getContacts();
 			
 			Enumeration enumContacts = contacts.elements();
 			while(enumContacts.hasMoreElements())
@@ -111,6 +114,7 @@ public class WipeMIDlet extends MIDlet implements Runnable, CommandListener {
 	
 	public void run ()
 	{
+		
 		try
 		{
 			switch (lastCmdIdx)
@@ -120,15 +124,15 @@ public class WipeMIDlet extends MIDlet implements Runnable, CommandListener {
 					displayContactList();
 				break;
 				case 1:
-					PIMWiper.removeContacts();
+					wControl.wipeContacts();					
 					showAlert(l10n.getString(L10nConstants.keys.KEY_13),l10n.getString(L10nConstants.keys.KEY_14), listMain);
 				break;
 				case 2:
-					PIMWiper.fillContacts(fillItemCount);
+					wControl.fillContactsRandom(fillItemCount);
 					showAlert(l10n.getString(L10nConstants.keys.KEY_15),fillItemCount + ' ' + l10n.getString(L10nConstants.keys.KEY_16), listMain);
 				break;
 				case 3:
-					PIMWiper.zeroContacts(zeroItemCount);
+					wControl.fillContactsZero(zeroItemCount);
 					showAlert(l10n.getString(L10nConstants.keys.KEY_17),zeroItemCount + ' ' + l10n.getString(L10nConstants.keys.KEY_18), listMain);
 
 				break;
@@ -138,15 +142,15 @@ public class WipeMIDlet extends MIDlet implements Runnable, CommandListener {
 		}
 		catch (SecurityException e)
 		{
-			e.printStackTrace();
+			showAlert("Error",e.getMessage(),listMain);
 		}
 		catch (PIMException e)
 		{
-			e.printStackTrace();
+			showAlert("Error",e.getMessage(),listMain);
 		}
 		catch (Exception e)
 		{
-			e.printStackTrace();
+			showAlert("Error",e.getMessage(),listMain);
 		}
 	}
 	
@@ -173,15 +177,6 @@ public class WipeMIDlet extends MIDlet implements Runnable, CommandListener {
 			{
 				showYesNo();
 			}
-			
-			/*
-			if (displayable == this.screen1) {
-				this.manager.next(this.screen2);
-			} else
-			if (displayable == this.screen2) {
-				this.manager.next(this.screen3);
-			}*/
-			
 		}
 		else if (command == this.cmdYes)
 		{

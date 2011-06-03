@@ -3,37 +3,27 @@
 /* See LICENSE for licensing information */
 
 package org.safermobile.clear.micro.apps;
-import java.io.IOException;
-import java.util.Date;
-import java.util.Hashtable;
-
 import javax.microedition.lcdui.Alert;
 import javax.microedition.lcdui.Command;
 import javax.microedition.lcdui.CommandListener;
 import javax.microedition.lcdui.Display;
 import javax.microedition.lcdui.Displayable;
 import javax.microedition.lcdui.Form;
-import javax.microedition.lcdui.List;
-import javax.microedition.lcdui.StringItem;
-import javax.microedition.lcdui.TextBox;
 import javax.microedition.lcdui.TextField;
 import javax.microedition.midlet.MIDlet;
 import javax.microedition.midlet.MIDletStateChangeException;
 import javax.microedition.rms.RecordStoreException;
 
+import org.j4me.ui.DeviceScreen;
 import org.j4me.ui.Menu;
 import org.j4me.ui.MenuItem;
 import org.j4me.ui.UIManager;
-import org.safermobile.clear.micro.data.PhoneInfo;
-import org.safermobile.clear.micro.sms.SMSManager;
+import org.safermobile.clear.micro.apps.screens.StartForm;
+import org.safermobile.clear.micro.apps.screens.TestForm;
 import org.safermobile.clear.micro.ui.ClearTheme;
-import org.safermobile.clear.micro.ui.ConsoleTheme;
-import org.safermobile.clear.micro.ui.TestForm;
-import org.safermobile.micro.ui.DisplayManager;
 import org.safermobile.micro.ui.Splash;
 import org.safermobile.micro.utils.Logger;
 import org.safermobile.micro.utils.Preferences;
-import org.safermobile.micro.utils.StringTokenizer;
 
 
 //release.build = false
@@ -47,22 +37,27 @@ public class PanicConfigMIDlet extends MIDlet implements CommandListener, Runnab
 	
 	private Command	 _cmdSave;
 	private Command	 _cmdExit;
-	
-	private SMSManager smsServer;
-	private int SMS_SERVER_PORT = 0;
-	
-	private final static String TITLE_MAIN = "Panic! Config";
-
+		
 	private Preferences _prefs;
 	
-	private Menu menu;
+	private DeviceScreen _currentForm;
 	
 	/**
 	 * Creates several screens and navigates between them.
 	 */
 	public PanicConfigMIDlet() {
 	
-		oldUI ();
+		try
+		{
+		 _prefs = new Preferences (PanicConstants.PANIC_PREFS_DB);
+		} catch (RecordStoreException e) {
+			
+			showAlert("Boo!","We couldn't access your settings!",_form);
+			Logger.error(PanicConstants.TAG, "a problem saving the prefs: " + e, e);
+		}
+		
+		setupUI();
+		showSplash();
 	}
 	
 	private void setupUI ()
@@ -70,45 +65,13 @@ public class PanicConfigMIDlet extends MIDlet implements CommandListener, Runnab
 		UIManager.init(this);
 		 UIManager.setTheme( new ClearTheme()  );
 		 
-		 TestForm testForm = new TestForm (menu);
-	       // menu.appendMenuOption(testForm);
-	        
-		 testForm.show();
-		
-		/*
-		 // The first screen is a menu to choose among the example screens.
-        menu = new Menu(TITLE_MAIN, null );
-        
-       
-        
-        // Attach an exit option.
-        menu.appendMenuOption( new MenuItem()
-                        {
-                                public String getText ()
-                                {
-                                        return "Exit";
-                                }
+		 _currentForm = new StartForm (null);	     
 
-                                public void onSelection ()
-                                {
-                                        notifyDestroyed();
-                                }
-                        } );
-        
-     // Applies a theme to the example midlet.
-       
-        menu.show();
-        */
-		
-		
-        // Repaint the screen so the changes take effect.
-     //   UIManager.getScreen().repaint();
-        
-    
-        
 	}
 		
-	public void oldUI ()
+	
+
+	public void showSplash ()
 	{
 
 		_display = Display.getDisplay(this);
@@ -118,17 +81,8 @@ public class PanicConfigMIDlet extends MIDlet implements CommandListener, Runnab
 		_cmdSave = new Command("Save", Command.SCREEN, 1);
 		_cmdExit = new Command("Exit", Command.EXIT, 1);
 		
-		try
-		{
-		 _prefs = new Preferences (PanicConstants.PANIC_PREFS_DB);
-		} catch (RecordStoreException e) {
-			
-			showAlert("Boo!","We couldn't access your settings!",_form);
-			Logger.error(PanicConstants.TAG, "a problem saving the prefs: " + e, e);
-		}
-
-		setupForm();
-		fillForm ();
+		_splash.show(_display, _currentForm.getCanvas(), 3000);
+		
 	}
 	
 
@@ -143,6 +97,7 @@ public class PanicConfigMIDlet extends MIDlet implements CommandListener, Runnab
 		
 	}
 
+	/*
 	private void setupForm() {
 		
 		_form = new Form(TITLE_MAIN);
@@ -191,6 +146,7 @@ public class PanicConfigMIDlet extends MIDlet implements CommandListener, Runnab
 		if (pref != null)
 			_tfLoc.setString(pref);
 	}
+	*/
 	
 	private void savePrefs ()
 	{

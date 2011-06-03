@@ -37,7 +37,7 @@ public class ShoutMIDlet extends MIDlet implements CommandListener, Runnable {
 	private TextBox _tbMain;
 	private LargeStringCanvas _lsCanvas;
 	
-	private Command	 _cmdCancel;
+	private Command	 _cmdSend;	
 	private Command	 _cmdExit;
 	
 	//private SMSManager _smsServer;
@@ -72,67 +72,19 @@ public class ShoutMIDlet extends MIDlet implements CommandListener, Runnable {
 		_display = Display.getDisplay(this);
 		_manager = new DisplayManager(_display);
 		
-		_cmdCancel = new Command(l10n.getString(L10nConstants.keys.KEY_PANIC_BTN_CANCEL), Command.SCREEN,1);
+		_cmdSend = new Command("Shout!", Command.OK,0);
 		_cmdExit = new Command("Exit", Command.EXIT,1);
 		
 		_tbMain = new TextBox(l10n.getString(L10nConstants.keys.KEY_PANIC_TITLE_MAIN), "", 500, TextField.ANY);
 		
 		_tbMain.setCommandListener(this);
 		
-		_tbMain.addCommand(_cmdCancel);
+		_tbMain.addCommand(_cmdSend);
+		_tbMain.addCommand(_cmdExit);
+
+	}
+
 	
-	}
-
-	/*
-	private void insertTestData ()
-	{
-		_prefs.put(PanicConstants.PREFS_KEY_RECIPIENT,"2125551212");
-		 _prefs.put(PanicConstants.PREFS_KEY_NAME,"foo");
-		 _prefs.put(PanicConstants.PREFS_KEY_MESSAGE,"what");
-		 _prefs.put(PanicConstants.PREFS_KEY_LOCATION,"where am i");
-	}
-	*/
-	
-	private void startPanic ()
-	{
-		try {
-
-			_prefs = new Preferences (PanicConstants.PANIC_PREFS_DB);
-			//insertTestData();
-			
-			String recipients = _prefs.get(PanicConstants.PREFS_KEY_RECIPIENT);
-			
-			if (recipients == null)
-			{
-				showMessage("Please run the 'Panic! Config' app first to enter your alert information.");
-				_tbMain.removeCommand(_cmdCancel);
-				_tbMain.addCommand(_cmdExit);
-
-			}
-			else
-			{
-
-				_keepPanicing = true;
-				
-				//startSmsServer();
-				
-				_thread = new Thread(this);
-				_thread.start();
-			}
-		
-		} catch (RecordStoreException e) {
-			
-			Logger.error(PanicConstants.TAG, "error access preferences", e);
-			showAlert(l10n.getString(L10nConstants.keys.KEY_PANIC_TITLE_ERROR),l10n.getString(L10nConstants.keys.KEY_PANIC_ERROR_PREFS),null);
-		}
-	}
-	
-	private void stopPanic ()
-	{
-
-		_keepPanicing = false;
-		_thread.interrupt();
-	}
 
 	
 	/* (non-Javadoc)
@@ -140,16 +92,9 @@ public class ShoutMIDlet extends MIDlet implements CommandListener, Runnable {
 	 */
 	protected void startApp() throws MIDletStateChangeException {
 		
-		_manager.next(_tbMain);
-		
-		Thread thread = new Thread ()
-		{
-			public void run ()
-			{
-				startPanic();
-			}
-		};
-		thread.start();
+		showAlert("Shout!","Enter the message you want to shout to your configured friends.",_tbMain);
+
+	
 	}
 	
 	public void showAlert (String title, String msg, Displayable next)
@@ -165,28 +110,7 @@ public class ShoutMIDlet extends MIDlet implements CommandListener, Runnable {
 	 */
 	public void commandAction(Command command, Displayable displayable) {
 		
-		if (command == _cmdCancel) 
-		{
-			stopPanic ();
-			
-			try {
-				destroyApp(false);
-			} catch (MIDletStateChangeException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			this.notifyDestroyed();
-		}
-		else if (command == _cmdExit)
-		{
-			try {
-				destroyApp(false);
-			} catch (MIDletStateChangeException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			this.notifyDestroyed();
-		}
+		
 	}
 	
 	/* (non-Javadoc)
@@ -204,24 +128,6 @@ public class ShoutMIDlet extends MIDlet implements CommandListener, Runnable {
 	protected void pauseApp() {}
 	
 	
-	/*
-	private void startSmsServer ()
-	{
-		if (_smsServer == null)
-		{
-			try {
-				
-				_smsServer = SMSManager.getInstance(SMS_SERVER_PORT);
-			
-			} catch (IOException e) {
-			
-				showAlert("error",l10n.getString(L10nConstants.keys.KEY_PANIC_ERROR_SMS),_tbMain);
-				Logger.error(PanicConstants.TAG, "error starting sms server", e);
-			}
-		}
-		
-	}*/
-	
 	private void doSecPause (int secs)
 	{
 		try { Thread.sleep(secs * 1000);}
@@ -231,161 +137,10 @@ public class ShoutMIDlet extends MIDlet implements CommandListener, Runnable {
 	public void run ()
 	{
 		
-		Logger.debug(PanicConstants.TAG, "starting panic run(); loading prefs...");
 		
-		String recipients = _prefs.get(PanicConstants.PREFS_KEY_RECIPIENT);
-		String userName =  _prefs.get(PanicConstants.PREFS_KEY_NAME);
-		String userMessage = _prefs.get(PanicConstants.PREFS_KEY_MESSAGE);
-		String userLocation = _prefs.get(PanicConstants.PREFS_KEY_LOCATION);
-		
-		String panicMsg = buildPanicMessage(userName, userMessage, userLocation);
-		String panicData = buildPanicData (userName);
-		
-		showMessage ("PANIC MESSAGE: " + panicMsg + "\n\npreparing to send...");
-		
-		doSecPause (5);
-		
-		_lsCanvas = new LargeStringCanvas("");
-		_lsCanvas.setCommandListener(this);
-		_lsCanvas.addCommand(_cmdCancel);
-		
-		_manager.next(_lsCanvas);
-		
-		_lsCanvas.setLargeString("Sending in 5...");
-		doSecPause (1);
-		_lsCanvas.setLargeString("4");
-		doSecPause (1);
-		_lsCanvas.setLargeString("3");
-		doSecPause (1);
-		_lsCanvas.setLargeString("2");
-		doSecPause (1);
-		_lsCanvas.setLargeString("1");
-		doSecPause (1);
-		
-		int resendTimeout = PanicConstants.DEFAULT_RESEND_TIMEOUT; //one minute
-		
-		
-		while (_keepPanicing)
-		{
-			sendSMSPanic (recipients, panicMsg, panicData);
-			
-			int secs = resendTimeout/1000;
-			
-			while (secs > 0)
-			{
-				showMessage("Panic! again in " + secs + "secs...");
-				doSecPause (1);
-				secs--;
-			}
-			
-			//update message with new mobile cid, lac info
-			panicMsg = buildPanicMessage(userName, userMessage, userLocation);
-			
-		}
-		
-
-		_manager.next(_tbMain);
 	}
 	
-	private String buildPanicMessage (String userName, String userMessage, String userLocation)
-	{
-		
-		
-		StringBuffer sbPanicMsg = new StringBuffer();
-		
-		sbPanicMsg.append(l10n.getString(L10nConstants.keys.KEY_PANIC_MSG_FROM));
-		sbPanicMsg.append(' ');
-		sbPanicMsg.append(userName);
-		sbPanicMsg.append(':');
-		sbPanicMsg.append(' ');
-		sbPanicMsg.append(userMessage);
-
-		sbPanicMsg.append(' ');
-		sbPanicMsg.append(l10n.getString(L10nConstants.keys.KEY_PANIC_MSG_LOCATION));
-		sbPanicMsg.append(userLocation);
-		
-		
-		//append timestamp
-		sbPanicMsg.append(' ');
-		sbPanicMsg.append(l10n.getString(L10nConstants.keys.KEY_PANIC_MSG_TIMESTAMP));
-		sbPanicMsg.append(new Date().toString());
 	
-		return sbPanicMsg.toString();
-	}
-	
-	private String buildPanicData (String userName)
-	{
-		
-		
-		StringBuffer sbPanicMsg = new StringBuffer();
-		
-		sbPanicMsg.append(l10n.getString(L10nConstants.keys.KEY_PANIC_MSG_FROM));
-		sbPanicMsg.append(' ');
-		sbPanicMsg.append(userName);
-		sbPanicMsg.append(':');
-		
-		
-		String IMEI = PhoneInfo.getIMEI();
-		if (IMEI != null)
-		{
-
-			sbPanicMsg.append(" ");
-			sbPanicMsg.append("IMEI:");
-			sbPanicMsg.append(IMEI);
-
-		}
-		
-		String IMSI = PhoneInfo.getIMSI();
-		if (IMSI != null)
-		{
-			sbPanicMsg.append(" ");
-			sbPanicMsg.append("IMSI:");
-			sbPanicMsg.append(IMSI);
-		}
-		
-		//append loc info
-		String cid = PhoneInfo.getCellId();
-		if (cid != null)
-		{
-			sbPanicMsg.append(" ");
-			sbPanicMsg.append(l10n.getString(L10nConstants.keys.KEY_PANIC_MSG_CID));
-			sbPanicMsg.append(cid);
-		}
-		
-		
-		String lac = PhoneInfo.getLAC();
-		if (lac != null)
-		{
-			sbPanicMsg.append(" ");
-			sbPanicMsg.append(l10n.getString(L10nConstants.keys.KEY_PANIC_MSG_LAC));
-			sbPanicMsg.append(lac);
-		}
-		
-		
-		/*
-		if (_useGPS)
-		{
-			// #if hasLocationCapability
-			
-			if (_lastLocation != null)
-			{	
-				sbPanicMsg.append(" GPS:");
-				sbPanicMsg.append(_lastLocation.getQualifiedCoordinates().getLatitude());
-				sbPanicMsg.append(",");
-				sbPanicMsg.append(_lastLocation.getQualifiedCoordinates().getLongitude());
-
-				sbPanicMsg.append(' ');
-			}
-			// #endif
-		}*/
-		
-		//append timestamp
-		sbPanicMsg.append(" ");
-		sbPanicMsg.append(l10n.getString(L10nConstants.keys.KEY_PANIC_MSG_TIMESTAMP));
-		sbPanicMsg.append(new Date().toString());
-	
-		return sbPanicMsg.toString();
-	}
 	
 	private void showMessage (String msg)
 	{
@@ -408,38 +163,7 @@ public class ShoutMIDlet extends MIDlet implements CommandListener, Runnable {
 		}
 	}
 	
-	private void sendSMSPanic (String recipients, String panicMsg, String panicData)
-	{
-		
-		StringTokenizer st = new StringTokenizer(recipients,",");
-		
-		while (st.hasMoreTokens())
-		{
-			String recp = st.nextToken().trim();
-			
-			try
-			{
-				showMessage ("Sending to " + recp + "...");
-				
-				SMSManager.sendSMSAlert(recp, panicMsg);
-				doSecPause (1);
-				SMSManager.sendSMSAlert(recp, panicData);
-				
-				showMessage ("Panic Sent!");
-				
-				doSecPause (2);
-			}
-			catch (Exception e)
-			{
-				_display.setCurrent(_tbMain);
-				doSecPause (1);
-				showMessage("Error Sending: " + e.toString());
-				doSecPause (10);
-
-			}
-		}
-		
-	}
+	
 	
 	
 }

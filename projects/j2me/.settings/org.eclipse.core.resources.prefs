@@ -1,4 +1,4 @@
-#Sun May 15 22:57:48 EDT 2011
+#Fri Jun 03 11:43:58 EDT 2011
 eclipse.preferences.version=1
 encoding//.processed/src/org/j4me/collections/Cache.java=UTF-8
 encoding//.processed/src/org/j4me/collections/CubbyHole.java=UTF-8
@@ -26,12 +26,20 @@ encoding//.processed/src/org/j4me/util/ConnectorHelper.java=UTF-8
 encoding//.processed/src/org/j4me/util/MathFunc.java=UTF-8
 encoding//.processed/src/org/safermobile/clear/micro/L10nConstants.java=UTF-8
 encoding//.processed/src/org/safermobile/clear/micro/L10nResources.java=UTF-8
-encoding//.processed/src/org/safermobile/clear/micro/apps/NetCheckMIDlet.java=UTF-8
 encoding//.processed/src/org/safermobile/clear/micro/apps/PanicActivateMIDlet.java=UTF-8
 encoding//.processed/src/org/safermobile/clear/micro/apps/PanicConfigMIDlet.java=UTF-8
 encoding//.processed/src/org/safermobile/clear/micro/apps/PanicConstants.java=UTF-8
 encoding//.processed/src/org/safermobile/clear/micro/apps/ShoutMIDlet.java=UTF-8
 encoding//.processed/src/org/safermobile/clear/micro/apps/WipeMIDlet.java=UTF-8
+encoding//.processed/src/org/safermobile/clear/micro/apps/controllers/ShoutController.java=UTF-8
+encoding//.processed/src/org/safermobile/clear/micro/apps/controllers/WipeController.java=UTF-8
+encoding//.processed/src/org/safermobile/clear/micro/apps/screens/LocationPermissionForm.java=UTF-8
+encoding//.processed/src/org/safermobile/clear/micro/apps/screens/SMSSendTestForm.java=UTF-8
+encoding//.processed/src/org/safermobile/clear/micro/apps/screens/ShoutMessageForm.java=UTF-8
+encoding//.processed/src/org/safermobile/clear/micro/apps/screens/StartForm.java=UTF-8
+encoding//.processed/src/org/safermobile/clear/micro/apps/screens/TestForm.java=UTF-8
+encoding//.processed/src/org/safermobile/clear/micro/apps/screens/UserInfoForm.java=UTF-8
+encoding//.processed/src/org/safermobile/clear/micro/apps/screens/WipeSetupForm.java=UTF-8
 encoding//.processed/src/org/safermobile/clear/micro/data/MovementTracker.java=UTF-8
 encoding//.processed/src/org/safermobile/clear/micro/data/PIMWiper.java=UTF-8
 encoding//.processed/src/org/safermobile/clear/micro/data/PhoneInfo.java=UTF-8
@@ -42,7 +50,6 @@ encoding//.processed/src/org/safermobile/clear/micro/sms/SMSManager.java=UTF-8
 encoding//.processed/src/org/safermobile/clear/micro/ui/ClearTheme.java=UTF-8
 encoding//.processed/src/org/safermobile/clear/micro/ui/ConsoleTheme.java=UTF-8
 encoding//.processed/src/org/safermobile/clear/micro/ui/LargeStringCanvas.java=UTF-8
-encoding//.processed/src/org/safermobile/clear/micro/ui/TestForm.java=UTF-8
 encoding//.processed/src/org/safermobile/micro/ui/DisplayManager.java=UTF-8
 encoding//.processed/src/org/safermobile/micro/ui/Splash.java=UTF-8
 encoding//.processed/src/org/safermobile/micro/utils/FileWriter.java=UTF-8

@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+  xmlns:android="http://schemas.android.com/apk/res/android"
+  android:layout_width="match_parent"
+  android:layout_height="match_parent"
+  android:orientation="vertical">
+  <TextView
+  	android:layout_width="fill_parent"
+  	android:layout_height="wrap_content"
+  	android:text="@string/KEY_SHOUT_BTN_TITLE"
+  	android:textSize="30px" />
+  <TextView
+  	android:layout_width="fill_parent"
+  	android:layout_height="wrap_content"
+  	android:text="@string/KEY_SHOUT_PANICMSG_TITLE"
+  	android:id="@+id/panicMsg" />
+  <Button
+  	android:layout_width="fill_parent"
+  	android:layout_height="wrap_content"
+  	android:text="@string/KEY_SHOUT_CHANGEPANICMSG_BTN"
+  	android:id="@+id/changePanicMsg_btn" />
+  <Button
+  	android:layout_width="fill_parent"
+  	android:layout_height="wrap_content"
+  	android:text="@string/KEY_SHOUT_BTN_TITLE"
+  	android:id="@+id/shoutBtn" />
+  	 
+  
+</LinearLayout>

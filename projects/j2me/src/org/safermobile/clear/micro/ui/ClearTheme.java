@@ -1,5 +1,7 @@
 package org.safermobile.clear.micro.ui;
 
+import javax.microedition.lcdui.Font;
+
 import org.j4me.ui.*;
 
 /**
@@ -13,7 +15,7 @@ public class ClearTheme
          */
         public int getBackgroundColor ()
         {
-                return WHITE;
+                return BLACK;
         }
 
         /**
@@ -21,15 +23,22 @@ public class ClearTheme
          */
         public int getFontColor ()
         {
-                return FOREST_GREEN;
+                return WHITE;
         }
 
-        /**
+        /*
+        public Font getFont() {
+		
+			return Font.getFont(Font.FACE_MONOSPACE, 
+                    Font.STYLE_BOLD, Font.SIZE_MEDIUM);
+		}*/
+
+		/**
          * @see Theme#getBorderColor()
          */
         public int getBorderColor ()
         {
-                return FOREST_GREEN;
+                return BURNT_ORANGE;
         }
 
         /**

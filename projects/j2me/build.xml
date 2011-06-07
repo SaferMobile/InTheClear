@@ -17,7 +17,7 @@
 	    srcdir="${src.dir}"
 	    destdir="${blackberry.build.dir}"
             quiet="false">
-<!--         <jdp file="rapc.properties" /> -->
+        <jdp title="${title}" vendor="${vendor}" version="${version}" type="cldc" icon="${icon}" />
       </rapc>
    </target>
 

@@ -17,7 +17,14 @@
 	    srcdir="${src.dir}"
 	    destdir="${blackberry.build.dir}"
             quiet="false">
-        <jdp title="${title}" vendor="${vendor}" version="${version}" type="cldc" icon="${icon}" />
+        <jdp title="NetCheck"
+	     icon="/netcheck.gif"
+	     vendor="${vendor}"
+	     version="${version}"
+             description="${desc}"
+	     type="midlet"
+	     midletclass="org.safermobile.clear.micro.apps.NetCheckMIDlet"
+	     />
       </rapc>
    </target>
 
@@ -52,8 +59,8 @@
 
    <taskdef resource="antenna.properties" />
    <property name="wtk.home" value="/usr/local/WTK2.5.2" />
-   <property name="wtk.cldc.version" value="1.1" />
-   <property name="wtk.midp.version" value="2.1" />
+   <property name="wtk.cldc.version" value="1.0" />
+   <property name="wtk.midp.version" value="2.0" />
    <property name="wtk.all.enabled" value="true" />
    <property name="j2me.build.dir" location="${build.dir}/j2me" />
    <property name="j2me.output" location="${j2me.build.dir}/${output}" />

@@ -17,13 +17,13 @@
 	    srcdir="${src.dir}"
 	    destdir="${blackberry.build.dir}"
             quiet="false">
-        <jdp title="NetCheck"
-	     icon="/netcheck.gif"
+        <jdp title="Panic!"
+	     icon="/alert.gif"
 	     vendor="${vendor}"
 	     version="${version}"
              description="${desc}"
 	     type="midlet"
-	     midletclass="org.safermobile.clear.micro.apps.NetCheckMIDlet"
+	     midletclass="org.safermobile.clear.micro.apps.PanicActivateMIDlet"
 	     />
       </rapc>
    </target>

@@ -1,0 +1,97 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<html>
+<head>
+</head>
+<body bgcolor="white">
+
+UI framework for building professional looking applications that have a consistent
+experience across devices.  The J4ME looks and behaves like the mobile editions of
+Google Maps, GMail, and the Opera Mini browser.
+
+<p>The J4ME UI was built in response to shortcomings of J2ME's standard LCDUI.  It
+suffers because it looks bad, behaves differently and in an unintuitive manner on almost every
+phone, and is a bit cumbersome to code in because of its procedural API.
+
+<p>The J4ME UI uses a lot of classes found in the LCDUI package.  For
+example <code>javax.microedition.lcdui.Graphics</code> is still used for drawing.
+
+<h2>Concepts</h2>
+
+<h4>Screens</h4>
+
+<p>The easiest way to code your application is to make a class for every screen.  There
+is a small code size penalty for this because each new class takes around 200 KB.
+Phones used to have many restrictions about how big the Jar file could be and you
+still don't want applications to be too big since they have to be downloaded to
+phones.  But these problems are not as acute as they once were and the time savings
+from code simplification and clarity you gain are worth the trade off today.
+
+<p>The base class for all screens is <code>DeviceScreen</code>.  If you screen does
+free drawing over an area it would derive from this class.  The Etch-A-Sketch example
+shows where this is useful.
+
+<p><code>DeviceScreen</code> defines a title bar at the top of the screen and menu
+bar at the bottom.  These are optional areas that can be hidden.  The menu bar supports
+up to two options that can be selected using the phone's menu buttons (note the extra
+menu buttons found on some phones are ignored, such as the middle "Menu" button on
+Motorola phones).
+
+<p><code>Dialog</code> screens are built using components.  This is the most common
+type of screen and can be assembled quickly by stringing together labels, progress
+bars, pictures, text boxes, and the like.  The <code>Dialog</code> class houses all
+the components and lays them out on the screen.  It adds a scroll bar automatically
+when the screen is not big enough to show all the components.
+
+<p>The <code>Menu</code> classes are the last common type of screens.  These are
+just menus where the user can select from multiple options.
+
+<h4>Components</h4>
+
+<p>Components are just UI widgets that can be placed onto a screen.  Common examples are
+labels and text boxes.  Typically components are used with the <code>DeviceScreen</code>
+class, but that is not a requirement.  Components are discussed in more detail in the
+<code>org.j4me.examples.ui.components</code> package.
+
+<h4>Themes</h4>
+
+<p>The appearance of applications can be completely adjusted by supplying a different
+<code>Theme</code> class.  The most common change is to use a different color scheme.
+However, more complex changes can be made such as displaying background images.
+
+<h2>Porting</h2>
+
+<p>The J4ME UI API is designed to be similar to the LCDUI.  However, each J4ME screen
+is typically defined by its own class with methods that can be overridden to handle
+menu commands.  Therefore set aside some time for porting; perhaps 15 minutes per
+screen.
+
+<p>Start your porting with the following steps.  There will certainly be compile errors
+due to scope errors that need be cleaned up when you are done.  But this should get
+you most of the way and illustrate the differences between the J4ME and LCDUI APIs.
+<ul>
+ <li>In your MIDlet's <code>startApp</code> method add <code>UIManager.init(this);</code> as the first line
+ <li>Change occurrences of the <code>Canvas</code> class to <code>DeviceScreen</code>
+ <li>Change occurrences of the <code>Form</code> class to <code>Dialog</code>
+ <li>Replace <code>CommandListener.commandAction</code> methods with overrides of <code>declineNotify</code> and <code>acceptNotify</code>
+ <li>Each <code>Item</code> is replaced by its <code>Component</code> counterpart; for example <code>Guage</code> with <code>ProgressBar</code>
+</ul>
+
+<h2>Example</h2>
+
+<p>Examples are provided in the <code>/examples</code> folder under the
+<code>org.j4me.examples.ui.*</code> packages.  The examples all run under the
+<code>UIDemoMidlet</code>:
+<ul>
+ <li><i>Components</i> shows each of the different components in action on a <code>Dialog</code> screen
+ <li><i>Themes</i> lets you select from several different themes to see how they change the appearance of an application
+ <li><i>Key Code</i> gives the integer value of each key on your phone
+ <li><i>Etch A Sketch</i> demonstrates using the <code>DeviceScreen</code> class directly
+ <li><i>Stopwatch</i> is the most basic example of how to use the J4ME UI
+</ul>
+  
+<!-- <h2>Related Documentation</h2> -->
+
+<!-- Put @see and @since tags down here. -->
+
+</body>
+</html>

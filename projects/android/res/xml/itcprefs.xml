@@ -1,22 +1,26 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
-	<PreferenceCategory android:title="@string/KEY_PREF_CONFIG_TITLE">
+	<PreferenceCategory android:title="@string/KEY_PREF_CONFIG_PANIC_TITLE">
 		<EditTextPreference
 			android:title="@string/KEY_PREF_ENTERPHONES_TITLE"
 			android:key="ConfiguredFriends"
-			android:dialogMessage="@string/KEY_PREF_ENTERPHONES" />
+			android:summary="@string/KEY_PREF_ENTERPHONES" />
 		<EditTextPreference
 			android:title="@string/KEY_PREF_ENTERNAME_TITLE"
 			android:key="UserDisplayName"
-			android:dialogMessage="@string/KEY_PREF_ENTERNAME" />
+			android:summary="@string/KEY_PREF_ENTERNAME" />
 		<EditTextPreference
 			android:title="@string/KEY_PREF_ENTERLOCATION_TITLE"
 			android:key="UserDisplayLocation"
-			android:dialogMessage="@string/KEY_PREF_ENTERLOCATION" />
+			android:summary="@string/KEY_PREF_ENTERLOCATION" />
 		<EditTextPreference
 			android:title="@string/KEY_PREF_ENTERPANICMSG_TITLE"
 			android:key="DefaultPanicMsg"
-			android:dialogMessage="@string/KEY_PREF_ENTERPANICMSG" />
-		
+			android:summary="@string/KEY_PREF_ENTERPANICMSG" />
+	</PreferenceCategory>
+	<PreferenceCategory 
+		android:title="@string/KEY_PREF_CONFIG_WIPE_TITLE"
+		android:summary="@string/KEY_PREF_WIPEDIALOG">
+
 	</PreferenceCategory>
 </PreferenceScreen>

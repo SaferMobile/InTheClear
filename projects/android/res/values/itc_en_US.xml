@@ -42,7 +42,8 @@
 	<string name="KEY_WARNING">Warning</string>
 	<string name="KEY_NC_ERROR">You must enter an https:// site address</string>
 	<string name="KEY_NC_COMPLETE">Check Completed!</string>
-	<string name="KEY_PREF_CONFIG_TITLE">PANIC! Preferences</string>
+	<string name="KEY_PREF_CONFIG_PANIC_TITLE">PANIC! Preferences</string>
+	<string name="KEY_PREF_CONFIG_WIPE_TITLE">WIPE Preferences</string>
 	<string name="KEY_PREF_ENTERPHONES_TITLE">Configure Friends</string>
 	<string name="KEY_PREF_ENTERPHONES">Enter the mobile phone number(s), separated by comma, of who you wnat to alert via SMS</string>
 	<string name="KEY_PREF_ENTERNAME_TITLE">Your name</string>
@@ -51,12 +52,17 @@
 	<string name="KEY_PREF_ENTERLOCATION">Where are you now?</string>
 	<string name="KEY_PREF_ENTERPANICMSG_TITLE">Your PANIC! Message</string>
 	<string name="KEY_PREF_ENTERPANICMSG">Enter your PANIC! message here.</string>
+	<string name="KEY_PREF_WIPEDIALOG_TITLE">What to wipe</string>
+	<string name="KEY_PREF_WIPEDIALOG">Select the folders that will be wiped when you press the PANIC! button</string>
 	<string name="KEY_PREF_ACCESSFAIL">We couldn\'t access your settings.  Please check your preferences.</string>
 	<string name="KEY_PREF_SAVEFAIL">There was a problem saving your preferences.</string>
 	<string name="KEY_MAIN_TOPREFS">Launch Preferences</string>
 	<string name="KEY_SHOUT_BTN_TITLE">Shout!</string>
 	<string name="KEY_SHOUT_PANICMSG_TITLE">Your Message:</string>
 	<string name="KEY_SHOUT_CHANGEPANICMSG_BTN">Change this message?</string>
+	<string name="KEY_SHOUT_SAVECHANGEDPANICMSG_BTN">Save new message</string>
+	<string name="KEY_SHOUT_MENU_CANCEL">Cancel Shout!</string>
+	<string name="KEY_SHOUT_MENU_RESTOREDEFAULT">Restore Default Message</string>
 	<string name="KEY_SHOUT_PREFSFAIL">You do not have any friends configured.  Please check your preferences.</string>
 	<string name="KEY_SHOUT_ENTERSHOUTMSG">Enter the message you want to shout to your configured friends.</string>
 </resources>

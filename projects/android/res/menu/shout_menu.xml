@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu
+  xmlns:android="http://schemas.android.com/apk/res/android">
+  <item
+  	android:id="@+id/cancelShout"
+  	android:title="@string/KEY_SHOUT_MENU_CANCEL" />
+  <item
+  	android:id="@+id/restoreDefaultMsg"
+  	android:title="@string/KEY_SHOUT_MENU_RESTOREDEFAULT" />
+</menu>

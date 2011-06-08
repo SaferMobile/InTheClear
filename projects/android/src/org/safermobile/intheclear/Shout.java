@@ -28,7 +28,7 @@ public class Shout extends Activity implements Runnable, OnClickListener {
 	LinearLayout panicMsgHolder;
 	android.view.ViewGroup.LayoutParams lp;
 	
-	String msg,shoutMsg;
+	String msg,shoutMsg,shoutData;
 	
 	long firstWarning = 5000L;
 	long countDown = 1000L;
@@ -62,7 +62,6 @@ public class Shout extends Activity implements Runnable, OnClickListener {
         panicMsgHolder = (LinearLayout) findViewById(R.id.panicMsgHolder);
         panicEdit = new EditText(this);
         panicEdit.setLayoutParams(lp);
-        
     }
 
 	@Override
@@ -71,7 +70,8 @@ public class Shout extends Activity implements Runnable, OnClickListener {
 	}
 	
 	public void doCountdown() {
-		
+		Log.v(ITC,"SHOUT DATA:\n" + shoutMsg + "\n" + shoutData);
+		sc.sendSMSShout(_sp.getString("ConfiguredFriends", ""), shoutMsg, shoutData);
 	}
 	
 	@Override
@@ -125,6 +125,7 @@ public class Shout extends Activity implements Runnable, OnClickListener {
 		if(v == sendShout) {
 			sc = new ShoutController(this);
 			shoutMsg = sc.buildShoutMessage(_sp.getString("UserDisplayName", ""), msg, _sp.getString("UserDisplayLocation", ""));
+			shoutData = sc.buildShoutData(_sp.getString("UserDisplayName", ""));
 			doCountdown();
 		} else if(v == changeMsg) {
 			toggleMessageUI();

@@ -12,13 +12,13 @@ import org.safermobile.clear.micro.apps.PanicConfigMIDlet;
 /**
  * Example of a <code>TextBox</code> component.
  */
-public class SMSSendTestForm
+public class SetupAlertMessageForm
         extends Dialog
 {
         /**
          * The previous screen.
          */
-        private PanicConfigMIDlet midlet;
+        private PanicConfigMIDlet _midlet;
         
         /**
          * The number box used by this example for entering phone numbers.
@@ -35,18 +35,18 @@ public class SMSSendTestForm
          * 
          * @param previous is the screen to return to once this done.
          */
-        public SMSSendTestForm (PanicConfigMIDlet midlet)
+        public SetupAlertMessageForm (PanicConfigMIDlet midlet)
         {
-                this.midlet = midlet;
+               _midlet = midlet;
                 
                 // Set the title and menu.
-                setTitle( l10n.getString(L10nConstants.keys.KEY_PANIC_TITLE_SMS_TEST) );
-                setMenuText(  l10n.getString(L10nConstants.keys.KEY_MENU_BACK) ,  l10n.getString(L10nConstants.keys.KEY_MENU_SEND) );
+                setTitle(l10n.getString(L10nConstants.keys.KEY_ALERT_MESSAGE_TITLE) );
+                setMenuText(  l10n.getString(L10nConstants.keys.KEY_MENU_BACK) ,  l10n.getString(L10nConstants.keys.KEY_MENU_NEXT) );
 
              // Center the text.
         		_label.setHorizontalAlignment( Graphics.LEFT );
 
-        		_label.setLabel(l10n.getString(L10nConstants.keys.KEY_PANIC_SMS_TEST_MESSAGE));
+        		_label.setLabel(l10n.getString(L10nConstants.keys.KEY_ALERT_MESSAGE_INFO));
         		
         		// Add the label to this screen.
         		append( _label );
@@ -57,6 +57,11 @@ public class SMSSendTestForm
                 phoneNumber.setForPhoneNumber();
                 phoneNumber.setMaxSize( 20 );
                 append( phoneNumber );
+                
+                // Add the phone number box.
+                phoneNumber = new TextBox();
+                phoneNumber.setLabel(l10n.getString(L10nConstants.keys.KEY_ALERT_LBL));                
+                append( phoneNumber );
                
         }
 
@@ -65,7 +70,7 @@ public class SMSSendTestForm
          */
         protected void declineNotify ()
         {
-                midlet.showShoutConfigMenu();
+               _midlet.showShoutConfigMenu();
         }
         
         protected void acceptNotify() 

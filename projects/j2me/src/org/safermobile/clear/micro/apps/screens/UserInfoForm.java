@@ -3,6 +3,9 @@ package org.safermobile.clear.micro.apps.screens;
 
 import org.j4me.ui.*;
 import org.j4me.ui.components.*;
+import org.safermobile.clear.micro.L10nResources;
+import org.safermobile.clear.micro.L10nConstants;
+import org.safermobile.clear.micro.apps.PanicConfigMIDlet;
 
 /**
  * Example of a <code>TextBox</code> component.
@@ -13,44 +16,44 @@ public class UserInfoForm
         /**
          * The previous screen.
          */
-        private DeviceScreen previous;
+        private PanicConfigMIDlet _midlet;
+        
         
         /**
          * The number box used by this example for entering phone numbers.
          */
-        private TextBox phoneNumber;
+        private TextBox tbUserName;
         
         /**
          * A number box for entering a PIN.
          */
-        private TextBox pinNumber;
+        private TextBox tbOtherInfo;
+		L10nResources l10n = L10nResources.getL10nResources(null);
         
         /**
          * Constructs a screen that shows a <code>TextBox</code> component in action.
          * 
          * @param previous is the screen to return to once this done.
          */
-        public UserInfoForm (DeviceScreen previous)
+        public UserInfoForm (PanicConfigMIDlet midlet)
         {
-                this.previous = previous;
+                _midlet = midlet;
                 
                 // Set the title and menu.
-                setTitle( "TextBox Example" );
-                setMenuText( "Back", null );
+                setTitle( l10n.getString(L10nConstants.keys.KEY_PANIC_TITLE_YOUR_INFO) );
+                setMenuText( l10n.getString(L10nConstants.keys.KEY_MENU_BACK), l10n.getString(L10nConstants.keys.KEY_MENU_NEXT) );
 
                 // Add the phone number box.
-                phoneNumber = new TextBox();
-                phoneNumber.setLabel( "Phone Number" );
-                phoneNumber.setForPhoneNumber();
-                phoneNumber.setMaxSize( 10 );
-                append( phoneNumber );
+                tbUserName = new TextBox();
+                tbUserName.setLabel( l10n.getString(L10nConstants.keys.KEY_LBL_YOUR_NAME) );
+                tbUserName.setForAnyText();
+                append( tbUserName );
                 
                 // Add the PIN number box.
-                pinNumber = new TextBox();
-                pinNumber.setLabel( "PIN Number" );
-                pinNumber.setForNumericOnly();
-                pinNumber.setPassword( true );
-                append( pinNumber );
+                tbOtherInfo = new TextBox();
+                tbOtherInfo.setForAnyText();
+                tbOtherInfo.setLabel( l10n.getString(L10nConstants.keys.KEY_LBL_YOUR_INFO) );               
+                append( tbOtherInfo );
         }
 
         /**
@@ -58,6 +61,14 @@ public class UserInfoForm
          */
         protected void declineNotify ()
         {
-                previous.show();
+        	_midlet.showNext();
         }
+
+		protected void acceptNotify() {
+			
+			_midlet.showShoutConfigMenu();
+			
+		}
+        
+        
 }

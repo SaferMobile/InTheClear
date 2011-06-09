@@ -15,7 +15,7 @@ public class ClearTheme
          */
         public int getBackgroundColor ()
         {
-                return BLACK;
+                return WHITE;
         }
 
         /**
@@ -23,7 +23,7 @@ public class ClearTheme
          */
         public int getFontColor ()
         {
-                return WHITE;
+                return BLACK;
         }
 
         /*
@@ -46,7 +46,7 @@ public class ClearTheme
          */
         public int getHighlightColor ()
         {
-                return LIGHT_GREEN;
+                return BURNT_ORANGE;
         }
 
         /**
@@ -54,7 +54,7 @@ public class ClearTheme
          */
         public int getMenuBarBackgroundColor ()
         {
-                return DARK_GREEN;
+                return BURNT_ORANGE;
         }
 
         /**
@@ -62,7 +62,7 @@ public class ClearTheme
          */
         public int getMenuBarHighlightColor ()
         {
-                return MEDIUM_GREEN;
+                return BURNT_ORANGE;
         }
 
         /**
@@ -94,7 +94,7 @@ public class ClearTheme
          */
         public int getTitleBarBackgroundColor ()
         {
-                return DARK_GREEN;
+                return BURNT_ORANGE;
         }
 
         /**
@@ -102,7 +102,7 @@ public class ClearTheme
          */
         public int getTitleBarHighlightColor ()
         {
-                return MEDIUM_GREEN;
+                return ORANGE;
         }
 
         /**
@@ -110,7 +110,7 @@ public class ClearTheme
          */
         public int getTitleBarBorderColor ()
         {
-                return DARK_GREEN;
+                return BURNT_ORANGE;
         }
 
         /**
@@ -126,7 +126,7 @@ public class ClearTheme
          */
         public int getScrollbarBackgroundColor ()
         {
-                return DARK_GREEN;
+                return BURNT_ORANGE;
         }
 
         /**
@@ -142,7 +142,7 @@ public class ClearTheme
          */
         public int getScrollbarBorderColor ()
         {
-                return DARK_GREEN;
+                return BURNT_ORANGE;
         }
 
         /**
@@ -150,6 +150,6 @@ public class ClearTheme
          */
         public int getScrollbarTrackbarColor ()
         {
-                return MEDIUM_GREEN;
+                return ORANGE;
         }
 }

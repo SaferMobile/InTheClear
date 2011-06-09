@@ -9,8 +9,6 @@ public class L10nConstants {
  	 */
     public class locales {
 		public static final String EN_US = "en-US";
-		public static final String EN_GB = "en-GB";
-		public static final String AR_EG = "ar-EG";
 
     }
 
@@ -18,12 +16,12 @@ public class L10nConstants {
  	 *	KEY VALUES
  	 */    
     public class keys {
-		public static final String KEY_0 = "KEY_0";
-		public static final String KEY_1 = "KEY_1";
-		public static final String KEY_2 = "KEY_2";
-		public static final String KEY_3 = "KEY_3";
-		public static final String KEY_4 = "KEY_4";
-		public static final String KEY_5 = "KEY_5";
+		public static final String KEY_MENU_NO = "KEY_MENU_NO";
+		public static final String KEY_MENU_YES = "KEY_MENU_YES";
+		public static final String KEY_MENU_HOME = "KEY_MENU_HOME";
+		public static final String KEY_MENU_RUN = "KEY_MENU_RUN";
+		public static final String KEY_MENU_BACK = "KEY_MENU_BACK";
+		public static final String KEY_WIPE_TITLE = "KEY_WIPE_TITLE";
 		public static final String KEY_6 = "KEY_6";
 		public static final String KEY_7 = "KEY_7";
 		public static final String KEY_8 = "KEY_8";
@@ -60,6 +58,23 @@ public class L10nConstants {
 		public static final String KEY_WARNING = "KEY_WARNING";
 		public static final String KEY_NC_ERROR = "KEY_NC_ERROR";
 		public static final String KEY_NC_COMPLETE = "KEY_NC_COMPLETE";
+		public static final String PANIC_SETUP_TITLE = "PANIC_SETUP_TITLE";
+		public static final String MENU_EXIT = "MENU_EXIT";
+		public static final String MENU_NEXT = "MENU_NEXT";
+		public static final String PANIC_SETUP_INTRO_1 = "PANIC_SETUP_INTRO_1";
+		public static final String PANIC_SETUP_INTRO_2 = "PANIC_SETUP_INTRO_2";
+		public static final String PANIC_SETUP_INTRO_3 = "PANIC_SETUP_INTRO_3";
+		public static final String KEY_PANIC_TITLE_YOUR_INFO = "KEY_PANIC_TITLE_YOUR_INFO";
+		public static final String KEY_MENU_NEXT = "KEY_MENU_NEXT";
+		public static final String KEY_MENU_SEND = "KEY_MENU_SEND";
+		public static final String KEY_LBL_YOUR_NAME = "KEY_LBL_YOUR_NAME";
+		public static final String KEY_LBL_YOUR_INFO = "KEY_LBL_YOUR_INFO";
+		public static final String KEY_PANIC_TITLE_SMS_TEST = "KEY_PANIC_TITLE_SMS_TEST";
+		public static final String KEY_PANIC_SMS_TEST_MESSAGE = "KEY_PANIC_SMS_TEST_MESSAGE";
+		public static final String KEY_PANIC_LBL_PHONE_NUMBER = "KEY_PANIC_LBL_PHONE_NUMBER";
+		public static final String KEY_ALERT_MESSAGE_TITLE = "KEY_ALERT_MESSAGE_TITLE";
+		public static final String KEY_ALERT_MESSAGE_INFO = "KEY_ALERT_MESSAGE_INFO";
+		public static final String KEY_ALERT_LBL = "KEY_ALERT_LBL";
 
     }
 }

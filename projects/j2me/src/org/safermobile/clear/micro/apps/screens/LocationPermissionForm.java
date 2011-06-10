@@ -3,6 +3,7 @@ package org.safermobile.clear.micro.apps.screens;
 
 import org.j4me.ui.*;
 import org.j4me.ui.components.*;
+import org.safermobile.clear.micro.apps.PanicConfigMIDlet;
 
 /**
  * Example of a <code>TextBox</code> component.
@@ -13,7 +14,7 @@ public class LocationPermissionForm
         /**
          * The previous screen.
          */
-        private DeviceScreen previous;
+    private PanicConfigMIDlet _midlet;
         
         /**
          * The number box used by this example for entering phone numbers.
@@ -30,9 +31,9 @@ public class LocationPermissionForm
          * 
          * @param previous is the screen to return to once this done.
          */
-        public LocationPermissionForm (DeviceScreen previous)
+        public LocationPermissionForm (PanicConfigMIDlet midlet)
         {
-                this.previous = previous;
+                _midlet = midlet;
                 
                 // Set the title and menu.
                 setTitle( "TextBox Example" );
@@ -58,6 +59,6 @@ public class LocationPermissionForm
          */
         protected void declineNotify ()
         {
-                previous.show();
+                _midlet.showShoutConfigMenu();
         }
 }

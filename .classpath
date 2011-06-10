@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="src" path="projects/j2me/src"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="lib" path="C:/Program Files (x86)/Research In Motion/BlackBerry JDE 6.0.0/lib/net_rim_api.jar"/>
+	<classpathentry kind="output" path="bin"/>
+</classpath>

@@ -33,9 +33,9 @@ public class WipeMIDlet extends MIDlet implements Runnable, CommandListener {
 	private WipeController wControl = new WipeController();
 
 	
-	private Command	cmdNo = new Command(l10n.getString(L10nConstants.keys.KEY_0), Command.BACK, 2);
-	private Command	cmdYes = new Command(l10n.getString(L10nConstants.keys.KEY_1), Command.OK, 1);
-	private Command	cmdHome = new Command(l10n.getString(L10nConstants.keys.KEY_2), Command.OK, 3);
+	private Command	cmdNo = new Command(l10n.getString(L10nConstants.keys.KEY_MENU_NO), Command.BACK, 2);
+	private Command	cmdYes = new Command(l10n.getString(L10nConstants.keys.KEY_MENU_YES), Command.OK, 1);
+	private Command	cmdHome = new Command(l10n.getString(L10nConstants.keys.KEY_MENU_HOME), Command.OK, 3);
     
 	private int lastCmdIdx = 1;
 
@@ -47,8 +47,8 @@ public class WipeMIDlet extends MIDlet implements Runnable, CommandListener {
 	 */
 	public WipeMIDlet() {
 		this.manager = new DisplayManager(Display.getDisplay(this));
-		this.cmdRun = new Command(l10n.getString(L10nConstants.keys.KEY_3), Command.OK, 4);
-		this.cmdBack = new Command(l10n.getString(L10nConstants.keys.KEY_4), Command.BACK, 5);
+		this.cmdRun = new Command(l10n.getString(L10nConstants.keys.KEY_MENU_RUN), Command.OK, 4);
+		this.cmdBack = new Command(l10n.getString(L10nConstants.keys.KEY_MENU_BACK), Command.BACK, 5);
 
 		this.listMain = getListMain();
 		this.listMain.setCommandListener(this);
@@ -58,7 +58,7 @@ public class WipeMIDlet extends MIDlet implements Runnable, CommandListener {
 	}
 
 	private List getListMain() {
-		listMain = new List(l10n.getString(L10nConstants.keys.KEY_5), List.IMPLICIT);
+		listMain = new List(l10n.getString(L10nConstants.keys.KEY_WIPE_TITLE), List.IMPLICIT);
 		
 
 		listMain.append(l10n.getString(L10nConstants.keys.KEY_6), null);

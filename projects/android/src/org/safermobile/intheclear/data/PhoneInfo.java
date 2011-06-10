@@ -19,6 +19,16 @@ public class PhoneInfo {
 		return out;
 	}
 	
+	public static String getOperator() {
+		String out = null;
+		if(tm.getPhoneType() != TelephonyManager.PHONE_TYPE_NONE) {
+			out = tm.getNetworkOperator();
+		} else {
+			out = "No phone provider";
+		}
+		return out;
+	}
+	
 	public static String getCellId() {	
 		String out = null;
 		if (tm.getPhoneType() == TelephonyManager.PHONE_TYPE_GSM) {

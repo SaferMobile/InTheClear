@@ -1,22 +1,33 @@
 package org.safermobile.intheclear.sms;
 
-import android.telephony.SmsManager;
-import android.telephony.TelephonyManager;
+import java.util.ArrayList;
 
-public class SMSSender {
-	private SMSLogger _smsLogger;
-	private SMSErrorStatusReceiver _statusRev;
-	private SmsManager sms = SmsManager.getDefault();
-	private TelephonyManager tm;
+import android.app.PendingIntent;
+import android.content.Context;
+import android.content.Intent;
+
+import android.telephony.SmsManager;
+
+public class SMSSender implements SMSTesterConstants {
+	PendingIntent _sentPI;
+	PendingIntent _deliveredPI;
+	 
+	Context c;
+	SmsManager sms;
 	
-	private String _fromNumber;
-	private String _toNumber;
-	
-	boolean _useDataPort = false;
-	boolean _addMetadataTracking = true;
-	
-	public static void sendSMS(String recipient, String messageData, boolean metadataTracking, boolean containsData) {
-		
+	public SMSSender(Context c) {
+		this.c = c;
 	}
+	
+	public void sendSMS(String recipient, String messageData) {
+		_sentPI = PendingIntent.getBroadcast(c, 0, new Intent(SENT), 0);
+		_deliveredPI = PendingIntent.getBroadcast(c, 0, new Intent(DELIVERED), 0);
+		sms = SmsManager.getDefault();
+		
+		ArrayList<String> splitMsg = sms.divideMessage(messageData);
+		for(String msg : splitMsg) {
+			sms.sendTextMessage(recipient, null, msg, _sentPI, _deliveredPI);
+		}
+ 	}
 	
 }

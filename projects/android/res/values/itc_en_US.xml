@@ -65,4 +65,7 @@
 	<string name="KEY_SHOUT_MENU_RESTOREDEFAULT">Restore Default Message</string>
 	<string name="KEY_SHOUT_PREFSFAIL">You do not have any friends configured.  Please check your preferences.</string>
 	<string name="KEY_SHOUT_ENTERSHOUTMSG">Enter the message you want to shout to your configured friends.</string>
+	<string name="KEY_SHOUT_COUNTDOWNMSG">Shout! in</string>
+	<string name="KEY_SECONDS">seconds</string>
+	<string name="KEY_SHOUT_COUNTDOWNCANCEL">(Cancel this Shout the menu)</string>
 </resources>

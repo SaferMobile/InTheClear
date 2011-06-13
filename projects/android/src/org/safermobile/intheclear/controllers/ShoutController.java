@@ -10,14 +10,19 @@ import org.safermobile.intheclear.sms.SMSSender;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.res.Resources;
+import android.util.Log;
 
 public class ShoutController {
 	Resources res;
 	PhoneInfo pi;
+	SMSSender sms;
+
+	private final static String ITC = "[InTheClear:ShoutController] ************************ ";
 	
 	public ShoutController(Context c) {
 		res = c.getResources();
 		pi = new PhoneInfo(c);
+		sms = new SMSSender(c);
 	}
 	
 	public String buildShoutMessage(String userName, String userMessage, String userLocation) {
@@ -58,7 +63,9 @@ public class ShoutController {
 	public void sendSMSShout(String recipients, String shoutMsg, String shoutData) {
 		StringTokenizer st = new StringTokenizer(recipients,",");
 		while(st.hasMoreTokens()) {
-			SMSSender.sendSMS(st.nextToken().trim(), shoutMsg + "\n\n" + shoutData, true, false);
+			String recipient = st.nextToken().trim();
+			sms.sendSMS(recipient, shoutMsg + "\n\n(1/2)");
+			sms.sendSMS(recipient, shoutData + "\n\n(2/2)");
 		}
 	}
 }

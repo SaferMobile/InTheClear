@@ -5,6 +5,7 @@ import org.safermobile.intheclear.controllers.ShoutController;
 import android.app.Activity;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.Menu;
@@ -16,8 +17,9 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
-public class Shout extends Activity implements Runnable, OnClickListener {
+public class Shout extends Activity implements OnClickListener {
 	private SharedPreferences _sp;
 	
 	private final static String ITC = "[InTheClear:Shout] ************************ ";
@@ -30,14 +32,14 @@ public class Shout extends Activity implements Runnable, OnClickListener {
 	
 	String msg,shoutMsg,shoutData;
 	
-	long firstWarning = 5000L;
-	long countDown = 1000L;
+	long countDown = 5000L;
+	long countDownInterval = 1000L;
+	CountDownTimer cd = null;
+	int t;
 	
 	boolean keepPanicing = true;
 	boolean isEditable = false;
-	
-	Thread t;
-	Runnable r;
+	volatile boolean isCountingDown = false;
 	
 	ShoutController sc;
 	
@@ -63,15 +65,27 @@ public class Shout extends Activity implements Runnable, OnClickListener {
         panicEdit = new EditText(this);
         panicEdit.setLayoutParams(lp);
     }
-
-	@Override
-	public void run() {
-
-	}
 	
 	public void doCountdown() {
-		Log.v(ITC,"SHOUT DATA:\n" + shoutMsg + "\n" + shoutData);
-		sc.sendSMSShout(_sp.getString("ConfiguredFriends", ""), shoutMsg, shoutData);
+		t = 0;
+		cd = new CountDownTimer(countDown, countDownInterval) {
+			@Override
+			public void onFinish() {
+				sc.sendSMSShout(_sp.getString("ConfiguredFriends",""), shoutMsg, shoutData);				
+			}
+
+			@Override
+			public void onTick(long countDown) {
+				String secondString = 
+					getString(R.string.KEY_SHOUT_COUNTDOWNMSG) + " " + (5 - t) +
+					" " + getString(R.string.KEY_SECONDS) + 
+					"\n" + getString(R.string.KEY_SHOUT_COUNTDOWNCANCEL);
+				Log.d(ITC,secondString);
+				makeToast(secondString);
+				t++;
+			}
+		};
+		cd.start();
 	}
 	
 	@Override
@@ -85,6 +99,9 @@ public class Shout extends Activity implements Runnable, OnClickListener {
 		Log.d(ITC,"CHOOSING " + i.getItemId());
 		switch(i.getItemId()) {
 		case R.id.cancelShout:
+			if(cd != null) {
+				cd.cancel();
+			}
 			return true;
 		case R.id.restoreDefaultMsg:
 			msg = _sp.getString("DefaultPanicMsg", "");
@@ -118,6 +135,10 @@ public class Shout extends Activity implements Runnable, OnClickListener {
 			changeMsg.setText(R.string.KEY_SHOUT_SAVECHANGEDPANICMSG_BTN);
 			isEditable = true;
 		}
+	}
+	
+	public void makeToast(String toast) {
+		Toast.makeText(this, toast, Toast.LENGTH_SHORT).show();
 	}
 
 	@Override

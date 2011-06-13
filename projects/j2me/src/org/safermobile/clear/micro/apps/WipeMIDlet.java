@@ -2,99 +2,36 @@
 /* See LICENSE for licensing information */
 package org.safermobile.clear.micro.apps;
 
-import java.util.Enumeration;
-import java.util.Vector;
-
-import javax.microedition.lcdui.Alert;
-import javax.microedition.lcdui.Command;
-import javax.microedition.lcdui.CommandListener;
-import javax.microedition.lcdui.Display;
-import javax.microedition.lcdui.Displayable;
-import javax.microedition.lcdui.List;
 import javax.microedition.midlet.MIDlet;
 import javax.microedition.midlet.MIDletStateChangeException;
-import javax.microedition.pim.PIMException;
 
-import org.safermobile.clear.micro.L10nConstants;
+import org.j4me.ui.UIManager;
 import org.safermobile.clear.micro.L10nResources;
-import org.safermobile.clear.micro.apps.controllers.WipeController;
-import org.safermobile.clear.micro.data.PIMWiper;
+import org.safermobile.clear.micro.apps.screens.WipeManualForm;
+import org.safermobile.clear.micro.ui.ClearTheme;
 import org.safermobile.micro.ui.DisplayManager;
 
-public class WipeMIDlet extends MIDlet implements Runnable, CommandListener {
+public class WipeMIDlet extends MIDlet
+{
 
-	private DisplayManager manager;
-	private List listMain;
-	private Command	 cmdRun;
-	private Command	 cmdBack;
-	
 	L10nResources l10n = L10nResources.getL10nResources("en-US");
 	
-	private WipeController wControl = new WipeController();
-
-	
-	private Command	cmdNo = new Command(l10n.getString(L10nConstants.keys.KEY_MENU_NO), Command.BACK, 2);
-	private Command	cmdYes = new Command(l10n.getString(L10nConstants.keys.KEY_MENU_YES), Command.OK, 1);
-	private Command	cmdHome = new Command(l10n.getString(L10nConstants.keys.KEY_MENU_HOME), Command.OK, 3);
-    
-	private int lastCmdIdx = 1;
-
-	private int fillItemCount = 20;
-	private int zeroItemCount = 100;
-	
+	private WipeManualForm _form;
 	/**
 	 * Creates several screens and navigates between them.
 	 */
-	public WipeMIDlet() {
-		this.manager = new DisplayManager(Display.getDisplay(this));
-		this.cmdRun = new Command(l10n.getString(L10nConstants.keys.KEY_MENU_RUN), Command.OK, 4);
-		this.cmdBack = new Command(l10n.getString(L10nConstants.keys.KEY_MENU_BACK), Command.BACK, 5);
-
-		this.listMain = getListMain();
-		this.listMain.setCommandListener(this);
-		this.listMain.addCommand(this.cmdRun);
-		
-		
-	}
-
-	private List getListMain() {
-		listMain = new List(l10n.getString(L10nConstants.keys.KEY_WIPE_TITLE), List.IMPLICIT);
-		
-
-		listMain.append(l10n.getString(L10nConstants.keys.KEY_6), null);
-		listMain.append(l10n.getString(L10nConstants.keys.KEY_7), null);
-		listMain.append(l10n.getString(L10nConstants.keys.KEY_8), null);
-		listMain.append(l10n.getString(L10nConstants.keys.KEY_9), null);
-		
-		return listMain;
-	}
-	
-	public void displayContactList ()
+	public WipeMIDlet() 	
 	{
-	 	List listContacts = new List(l10n.getString(L10nConstants.keys.KEY_10), List.IMPLICIT);
-		listContacts.setCommandListener(this);
 		
-	 	try {
-			Vector contacts = wControl.getContacts();
-			
-			Enumeration enumContacts = contacts.elements();
-			while(enumContacts.hasMoreElements())
-			{
-				String contact = (String)enumContacts.nextElement();
-				listContacts.append(contact, null);
-			}
-			
-		} catch (PIMException e) {
-			e.printStackTrace();
-		}
-	 	
-	 	
-		listContacts.addCommand(cmdBack);
-		
-		manager.next(listContacts);
+		UIManager.init(this);
+		 UIManager.setTheme( new ClearTheme()  );
+
+		 _form = new WipeManualForm(this);
 		
 	}
+
 	
+	/*
 	public void showYesNo ()
 	{
 		Alert yesNoAlert = new Alert(l10n.getString(L10nConstants.keys.KEY_11));
@@ -110,87 +47,17 @@ public class WipeMIDlet extends MIDlet implements Runnable, CommandListener {
 		Alert alert = new Alert(title);
 		alert.setString(msg);
         manager.next(alert, next);
-	}
+	}*/
 	
-	public void run ()
-	{
-		
-		try
-		{
-			switch (lastCmdIdx)
-			{
 
-				case 0:
-					displayContactList();
-				break;
-				case 1:
-					wControl.wipeContacts();					
-					showAlert(l10n.getString(L10nConstants.keys.KEY_13),l10n.getString(L10nConstants.keys.KEY_14), listMain);
-				break;
-				case 2:
-					wControl.fillContactsRandom(fillItemCount);
-					showAlert(l10n.getString(L10nConstants.keys.KEY_15),fillItemCount + ' ' + l10n.getString(L10nConstants.keys.KEY_16), listMain);
-				break;
-				case 3:
-					wControl.fillContactsZero(zeroItemCount);
-					showAlert(l10n.getString(L10nConstants.keys.KEY_17),zeroItemCount + ' ' + l10n.getString(L10nConstants.keys.KEY_18), listMain);
-
-				break;
-				
-					
-			}
-		}
-		catch (SecurityException e)
-		{
-			showAlert("Error",e.getMessage(),listMain);
-		}
-		catch (PIMException e)
-		{
-			showAlert("Error",e.getMessage(),listMain);
-		}
-		catch (Exception e)
-		{
-			showAlert("Error",e.getMessage(),listMain);
-		}
-	}
-	
 	/* (non-Javadoc)
 	 * @see javax.microedition.midlet.MIDlet#startApp()
 	 */
 	protected void startApp() throws MIDletStateChangeException {
-		this.manager.next(this.listMain);
+		_form.show();
 	}
 	
-	/* (non-Javadoc)
-	 * @see javax.microedition.lcdui.CommandListener#commandAction(javax.microedition.lcdui.Command, javax.microedition.lcdui.Displayable)
-	 */
-	public void commandAction(Command command, Displayable displayable) {
-		if (command == this.cmdRun || command == List.SELECT_COMMAND) {
-			
-			lastCmdIdx = listMain.getSelectedIndex();
-			
-			if (lastCmdIdx == 0)
-			{
-				new Thread(this).start();
-			}
-			else
-			{
-				showYesNo();
-			}
-		}
-		else if (command == this.cmdYes)
-		{
-			new Thread(this).start();
-		}
-		else if (command == this.cmdHome)
-		{
-			this.manager.next(listMain);
-		}
-		else if (command == this.cmdBack || command == this.cmdNo) {
-			this.manager.back();
-		}
-		
-	}
+	
 	
 	/* (non-Javadoc)
 	 * @see javax.microedition.midlet.MIDlet#destroyApp(boolean)

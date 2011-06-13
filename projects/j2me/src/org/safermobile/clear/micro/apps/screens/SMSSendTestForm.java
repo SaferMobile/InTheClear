@@ -8,12 +8,13 @@ import org.j4me.ui.components.*;
 import org.safermobile.clear.micro.L10nConstants;
 import org.safermobile.clear.micro.L10nResources;
 import org.safermobile.clear.micro.apps.PanicConfigMIDlet;
+import org.safermobile.clear.micro.apps.controllers.ShoutController;
 
 /**
  * Example of a <code>TextBox</code> component.
  */
 public class SMSSendTestForm
-        extends Dialog
+        extends Dialog implements Runnable
 {
         /**
          * The previous screen.
@@ -71,5 +72,30 @@ public class SMSSendTestForm
         protected void acceptNotify() 
         {		
         	//do SMS test
-		}
+        	new Thread(this).start();
+        }
+        
+        public void run ()
+        {
+        	sendSMSTestMessage();
+        	midlet.showAlert("Success!", "It seems like your message went through. Please check with the recipient to make sure.", midlet.getShoutConfigMenu());
+
+        }
+        
+        private void sendSMSTestMessage ()
+        {
+        	String recip = phoneNumber.getString();
+        	String msg = "This is a test message. Reply if you get it!";
+        	ShoutController sc = new ShoutController();
+        	
+        	try {
+				sc.sendSMSShout(recip, msg, null);
+				
+			} catch (Exception e) {
+				
+				midlet.showAlert("Error!", "Unable to send SMS message", this);
+				e.printStackTrace();
+			}
+        }
+        
 }

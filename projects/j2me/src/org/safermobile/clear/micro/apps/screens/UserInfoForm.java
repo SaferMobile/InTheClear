@@ -1,11 +1,15 @@
 package org.safermobile.clear.micro.apps.screens;
 
 
+import javax.microedition.lcdui.Displayable;
+import javax.microedition.lcdui.Graphics;
+
 import org.j4me.ui.*;
 import org.j4me.ui.components.*;
 import org.safermobile.clear.micro.L10nResources;
 import org.safermobile.clear.micro.L10nConstants;
 import org.safermobile.clear.micro.apps.PanicConfigMIDlet;
+import org.safermobile.clear.micro.apps.PanicConstants;
 
 /**
  * Example of a <code>TextBox</code> component.
@@ -43,6 +47,14 @@ public class UserInfoForm
                 setTitle( l10n.getString(L10nConstants.keys.KEY_PANIC_TITLE_YOUR_INFO) );
                 setMenuText( l10n.getString(L10nConstants.keys.KEY_MENU_BACK), l10n.getString(L10nConstants.keys.KEY_MENU_NEXT) );
 
+                // Center the text.
+                Label label = new Label();
+                label.setLabel("If you'd like In the Clear to include information about yourself when activated, you can configure that now.");
+        		label.setHorizontalAlignment( Graphics.LEFT );
+        		label.setLabel(l10n.getString(L10nConstants.keys.KEY_PANIC_SMS_TEST_MESSAGE));
+        		append(label );
+        	
+        		
                 // Add the phone number box.
                 tbUserName = new TextBox();
                 tbUserName.setLabel( l10n.getString(L10nConstants.keys.KEY_LBL_YOUR_NAME) );
@@ -56,17 +68,27 @@ public class UserInfoForm
                 append( tbOtherInfo );
         }
 
+        private void persist ()
+        {
+        	_midlet.savePref(PanicConstants.PREFS_KEY_NAME, tbUserName.getString());
+        	_midlet.savePref(PanicConstants.PREFS_KEY_LOCATION, tbOtherInfo.getString());        	
+        }
         /**
          * Takes the user to the previous screen.
          */
         protected void declineNotify ()
         {
-        	_midlet.showNext();
+        	_midlet.showStartScreen();
         }
 
 		protected void acceptNotify() {
 			
-			_midlet.showShoutConfigMenu();
+			persist();
+			
+			DeviceScreen next = _midlet.getShoutConfigMenu();
+			_midlet.showAlert(l10n.getString(L10nConstants.keys.KEY_PANIC_TITLE), "Now we will make sure your phone is configured properly.", next);
+			
+			//_midlet.showShoutConfigMenu();
 			
 		}
         

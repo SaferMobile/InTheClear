@@ -58,7 +58,7 @@
       <entry key="key_panic_sms_test_message" value="Shout sends its alerts via SMS, so we&apos;ll need to ensure it has the right permissions to work properly. Enter a mobile number of your choosing below to test Shout! SMS sending. Make sure you&apos;re able to verify delivery with the recipient!"/>
       <entry key="key_panic_lbl_phone_number" value="Phone Number"/>
       <entry key="key_alert_message_title" value="Panic! Alert Message"/>
-      <entry key="key_alert_message_info" value="Personalize your alert message below. Keep in mind that because Shout! uses SMS you must keep your message under 160 characters."/>
+      <entry key="key_alert_message_info" value="Personalize your alert message below. Enter in one or more phone numbers, separated by a comma, to send the alert to, and the automatic message to send. Keep in mind that because Shout! uses SMS you must keep your message under 160 characters."/>
       <entry key="key_alert_lbl" value="Alert Message"/>
    </locale>
 </locales>

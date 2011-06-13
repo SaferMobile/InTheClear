@@ -2,6 +2,7 @@ package org.safermobile.clear.micro.apps.screens;
 
 
 import javax.microedition.lcdui.Graphics;
+import javax.microedition.pim.PIMException;
 
 import org.j4me.ui.*;
 import org.j4me.ui.components.*;
@@ -9,12 +10,13 @@ import org.safermobile.clear.micro.L10nConstants;
 import org.safermobile.clear.micro.L10nResources;
 import org.safermobile.clear.micro.apps.PanicConfigMIDlet;
 import org.safermobile.clear.micro.apps.controllers.ShoutController;
+import org.safermobile.clear.micro.apps.controllers.WipeController;
 import org.safermobile.clear.micro.data.PhoneInfo;
 
 /**
  * Example of a <code>TextBox</code> component.
  */
-public class LocationPermissionForm
+public class WipePermissionForm
         extends Dialog implements Runnable
 {
         /**
@@ -37,18 +39,18 @@ public class LocationPermissionForm
          * 
          * @param previous is the screen to return to once this done.
          */
-        public LocationPermissionForm (PanicConfigMIDlet midlet)
+        public WipePermissionForm (PanicConfigMIDlet midlet)
         {
                 this.midlet = midlet;
                 
                 // Set the title and menu.
-                setTitle("Location Permission");
+                setTitle("Wipe Permission");
                 setMenuText(  l10n.getString(L10nConstants.keys.KEY_MENU_BACK) ,  "Enable" );
 
              // Center the text.
         		_label.setHorizontalAlignment( Graphics.LEFT );
 
-        		_label.setLabel("When activated, Shout! will optionally send your location information along with your alert message. This information could be essential for your safety, even if your phone does not have GPS. Enable location permissions below.");
+        		_label.setLabel("Wipe can be set up to erase or overwrite your phone's existing data when activated. It requires permissions to access your contact list or SMS database to do so.");
         		
         		// Add the label to this screen.
         		append( _label );
@@ -72,52 +74,26 @@ public class LocationPermissionForm
         
         public void run ()
         {
-        	checkLocationPermission();
+        	checkWipePermission();
 
         }
         
-        private void checkLocationPermission ()
+        private void checkWipePermission ()
         {
-        	StringBuffer sbPanicMsg = new StringBuffer();
-    	
-    		String IMEI = PhoneInfo.getIMEI();
-    		if (IMEI != null && IMEI.length() > 0)
-    		{
+        	
+        	WipeController wc = new WipeController();
+        	
+        	try {
+				wc.getContacts();
+				midlet.showAlert("Wipe Info", "Great! Seems like we can access your local data.", midlet.getShoutConfigMenu());
+				
+        	} catch (PIMException e) {
 
-    			sbPanicMsg.append("IMEI:");
-    			sbPanicMsg.append(IMEI);
-    			sbPanicMsg.append("\n");
-    		}
-    		
-    		String IMSI = PhoneInfo.getIMSI();
-    		if (IMSI != null && IMSI.length() > 0)
-    		{
-    			
-    			sbPanicMsg.append("IMSI:");
-    			sbPanicMsg.append(IMSI);
-    			sbPanicMsg.append("\n");
-    		}
-    		
-    		//append loc info
-    		String cid = PhoneInfo.getCellId();
-    		if (cid != null && cid.length() > 0)
-    		{
-    			
-    			sbPanicMsg.append(l10n.getString(L10nConstants.keys.KEY_PANIC_MSG_CID));
-    			sbPanicMsg.append(cid);
-    			sbPanicMsg.append("\n");    			
-    		}
-    		
-    		
-    		String lac = PhoneInfo.getLAC();
-    		if (lac != null && lac.length() > 0)
-    		{    		
-    			sbPanicMsg.append(l10n.getString(L10nConstants.keys.KEY_PANIC_MSG_LAC));
-    			sbPanicMsg.append(lac);
-    			sbPanicMsg.append("\n");    			
-    		}
-    		
-        	midlet.showAlert("Location Info", "This is the location data we could access:\n" + sbPanicMsg.toString(), midlet.getShoutConfigMenu());
+				midlet.showAlert("Error!", "We were unable to access your data, which means we cannot wipe it.", this);
+				e.printStackTrace();
+			}
+        	
+        	
 
         }
         

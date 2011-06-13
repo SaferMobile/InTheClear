@@ -8,12 +8,13 @@ import org.j4me.ui.components.*;
 import org.safermobile.clear.micro.L10nConstants;
 import org.safermobile.clear.micro.L10nResources;
 import org.safermobile.clear.micro.apps.PanicConfigMIDlet;
+import org.safermobile.clear.micro.apps.PanicConstants;
 
 /**
  * Example of a <code>TextBox</code> component.
  */
 public class SetupAlertMessageForm
-        extends Dialog
+        extends Dialog implements Runnable
 {
         /**
          * The previous screen.
@@ -24,7 +25,7 @@ public class SetupAlertMessageForm
          * The number box used by this example for entering phone numbers.
          */
         private TextBox phoneNumber;
-        
+        private TextBox alertMsg;
         
     	private Label _label = new Label();
 
@@ -59,12 +60,25 @@ public class SetupAlertMessageForm
                 append( phoneNumber );
                 
                 // Add the phone number box.
-                phoneNumber = new TextBox();
-                phoneNumber.setLabel(l10n.getString(L10nConstants.keys.KEY_ALERT_LBL));                
-                append( phoneNumber );
+                alertMsg = new TextBox();
+                alertMsg.setLabel(l10n.getString(L10nConstants.keys.KEY_ALERT_LBL));                
+                append( alertMsg );
                
         }
 
+        private void persist ()
+        {
+        	_midlet.savePref(PanicConstants.PREFS_KEY_RECIPIENT, phoneNumber.getString());        	
+        	_midlet.savePref(PanicConstants.PREFS_KEY_MESSAGE, alertMsg.getString());
+        	_midlet.showAlert("Success!", "Excellent. You are now fully configured for the Shout! alert message.", _midlet.getShoutConfigMenu());
+
+        }
+        
+        public void run ()
+        {
+        	persist();
+        }
+        
         /**
          * Takes the user to the previous screen.
          */
@@ -75,6 +89,6 @@ public class SetupAlertMessageForm
         
         protected void acceptNotify() 
         {		
-        	//do SMS test
+        	new Thread(this).start();
 		}
 }

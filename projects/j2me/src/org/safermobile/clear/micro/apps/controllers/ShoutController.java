@@ -141,14 +141,12 @@ public class ShoutController {
 		while (st.hasMoreTokens())
 		{
 			String recp = st.nextToken().trim();
+						
+			SMSManager.sendSMSAlert(recp, panicMsg);		
 			
-				
-				
-				SMSManager.sendSMSAlert(recp, panicMsg);				
+			if (panicData == null)
 				SMSManager.sendSMSAlert(recp, panicData);
-				
-				
-			
+		
 		}
 		
 	}

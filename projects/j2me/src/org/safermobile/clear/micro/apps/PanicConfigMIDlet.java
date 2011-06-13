@@ -20,7 +20,10 @@ import org.safermobile.clear.micro.apps.screens.PanicWizardForm;
 import org.safermobile.clear.micro.apps.screens.SMSSendTestForm;
 import org.safermobile.clear.micro.apps.screens.SetupAlertMessageForm;
 import org.safermobile.clear.micro.apps.screens.UserInfoForm;
+import org.safermobile.clear.micro.apps.screens.WipePermissionForm;
+import org.safermobile.clear.micro.apps.screens.WipeSelectionForm;
 import org.safermobile.clear.micro.ui.ClearTheme;
+import org.safermobile.clear.micro.ui.ErrorAlert;
 import org.safermobile.micro.ui.Splash;
 import org.safermobile.micro.utils.Logger;
 import org.safermobile.micro.utils.Preferences;
@@ -32,12 +35,12 @@ public class PanicConfigMIDlet extends MIDlet implements Runnable {
 	private Display _display;
 	private Splash _splash;
 	
-	private Form _form;
+	
+	private PanicWizardForm _startForm;	
 	private UserInfoForm _formUserInfo;
 		
 	private Preferences _prefs;
-	
-	private PanicWizardForm _currentForm;
+	private Menu _shoutMenu;
 	
 	private int formIdx = 1;
 	
@@ -51,7 +54,6 @@ public class PanicConfigMIDlet extends MIDlet implements Runnable {
 		 _prefs = new Preferences (PanicConstants.PANIC_PREFS_DB);
 		} catch (RecordStoreException e) {
 			
-			showAlert("Boo!","We couldn't access your settings!",_form);
 			Logger.error(PanicConstants.TAG, "a problem saving the prefs: " + e, e);
 		}
 		
@@ -66,7 +68,7 @@ public class PanicConfigMIDlet extends MIDlet implements Runnable {
 		 
 		 _formUserInfo = new UserInfoForm(this);
 
-		 _currentForm = new PanicWizardForm (this);	     
+		 _startForm = new PanicWizardForm (this);	     
 	}
 		
 	public void showNext ()
@@ -74,29 +76,48 @@ public class PanicConfigMIDlet extends MIDlet implements Runnable {
 		formIdx++;
 		
 		if (formIdx == 1)
-			_currentForm.show();
+			_startForm.show();
 		else if (formIdx == 2)
 			_formUserInfo.show();
 			
 	}
 	
+	public void showStartScreen ()
+	{
+		_startForm.show();
+	}
+	
+	 public Menu getShoutConfigMenu ()
+     {
+
+		  if (_shoutMenu == null)
+			  createShoutConfigMenu();
+		  
+		 return _shoutMenu;
+		 
+     }
+	 
 	  public void showShoutConfigMenu ()
       {
-  		
-  		// The theme is the default represented <code>Theme</code> class.
-  		// To change it, create a new <code>Theme</code>-derived object and call
-  		// <code>UIManager.setTheme</code>.
+		  if (_shoutMenu == null)
+			  createShoutConfigMenu();
+		  
+		  _shoutMenu.show();
+      }
+	  
+	  private void createShoutConfigMenu ()
+	  {
   		
   		// The first screen is a menu to choose among the example screens.
-  		Menu menu = new Menu( "Panic! Shout", null );
+		  _shoutMenu = new Menu( "Panic! Shout", null );
   		
 
   		// Attach an exit option.
-  		menu.appendMenuOption( new MenuItem()
+		  _shoutMenu.appendMenuOption( new MenuItem()
   				{
   					public String getText ()
   					{
-  						return "Check SMS Permissions";
+  						return "1) Check SMS Permissions";
   					}
 
   					public void onSelection ()
@@ -107,11 +128,11 @@ public class PanicConfigMIDlet extends MIDlet implements Runnable {
   				} );
   		
   	// Attach an exit option.
-  		menu.appendMenuOption( new MenuItem()
+		  _shoutMenu.appendMenuOption( new MenuItem()
   				{
   					public String getText ()
   					{
-  						return "Check Location";
+  						return "2) Check Location Access";
   					}
 
   					public void onSelection ()
@@ -122,11 +143,11 @@ public class PanicConfigMIDlet extends MIDlet implements Runnable {
   				} );
   		
   	// Attach an exit option.
-  		menu.appendMenuOption( new MenuItem()
+		  _shoutMenu.appendMenuOption( new MenuItem()
   				{
   					public String getText ()
   					{
-  						return "Setup Alert Message";
+  						return "3) Setup Alert Message";
   					}
 
   					public void onSelection ()
@@ -135,9 +156,40 @@ public class PanicConfigMIDlet extends MIDlet implements Runnable {
   						form.show();
   					}
   				} );
-  		
+		  
+		// Attach an exit option.
+		  _shoutMenu.appendMenuOption( new MenuItem()
+  				{
+  					public String getText ()
+  					{
+  						return "4) Enable Wipe! Permission";
+  					}
+
+  					public void onSelection ()
+  					{
+  						WipePermissionForm form = new WipePermissionForm(PanicConfigMIDlet.this);
+  						form.show();
+  					}
+  				} );
+
+			// Attach an exit option.
+		  _shoutMenu.appendMenuOption( new MenuItem()
+  				{
+  					public String getText ()
+  					{
+  						return "5) Configure Wipe! Options";
+  					}
+
+  					public void onSelection ()
+  					{
+  						WipeSelectionForm form = new WipeSelectionForm(PanicConfigMIDlet.this);
+  						form.show();
+  					}
+  				} );
+
+		  
   		// Show the menu.
-  		menu.show();
+		  _shoutMenu.show();
 
       }
 	
@@ -150,7 +202,7 @@ public class PanicConfigMIDlet extends MIDlet implements Runnable {
 		_splash = new Splash("/logo.gif",0xffffff);
 		
 		
-		_splash.show(_display, _currentForm.getCanvas(), 3000);
+		_splash.show(_display, _startForm.getCanvas(), 2000);
 		
 	}
 	
@@ -161,7 +213,7 @@ public class PanicConfigMIDlet extends MIDlet implements Runnable {
 	protected void startApp() throws MIDletStateChangeException {
 		
 		
-		_splash.show(_display, _form, 3000);
+		//_splash.show(_display, _form, 3000);
 		
 		
 	}
@@ -188,40 +240,62 @@ public class PanicConfigMIDlet extends MIDlet implements Runnable {
 	}
 	*/
 	
-	private void savePrefs ()
+	public void savePref (String key, String value)
 	{
-
 		try {
 
-			Logger.debug(PanicConstants.TAG, "saving preferences to: " + PanicConstants.PANIC_PREFS_DB);
+			Logger.debug(PanicConstants.TAG, "saving " + key + "='" + value + "' to: " + PanicConstants.PANIC_PREFS_DB);
 			
-			/*
-			_prefs.put(PanicConstants.PREFS_KEY_RECIPIENT, _tfRecp.getString());
-			_prefs.put(PanicConstants.PREFS_KEY_NAME, _tfName.getString());
-			_prefs.put(PanicConstants.PREFS_KEY_MESSAGE, _tfMsg.getString());
-			_prefs.put(PanicConstants.PREFS_KEY_LOCATION, _tfLoc.getString());
-			*/
+			_prefs.put(key, value);
 			
 			_prefs.save();
 			
-			showAlert("Yay!","Your settings have been updated",_form);
 			
 		} catch (RecordStoreException e) {
 			
-			showAlert("Boo!","We couldn't save you settings!",_form);
+			showAlert("Error!","We couldn't save you settings!",_startForm);
 			Logger.error(PanicConstants.TAG, "a problem saving the prefs: " + e, e);
 		}
 	}
-
 	
-	
-	public void showAlert (String title, String msg, Displayable next)
+	public void savePrefs (String[] keys, String[] values)
 	{
+		try {
+
+			String key, value;
+			
+			for (int i = 0; i < keys.length; i++)
+			{
+				key = keys[i];
+				value = values[i];
+				
+				Logger.debug(PanicConstants.TAG, "saving " + key + "='" + value + "' to: " + PanicConstants.PANIC_PREFS_DB);
+			
+				_prefs.put(key, value);
+			}
+			
+			_prefs.save();
+			
+			
+		} catch (RecordStoreException e) {
+			
+			showAlert("Error!","We couldn't save you settings!",_startForm);
+			Logger.error(PanicConstants.TAG, "a problem saving the prefs: " + e, e);
+		}
+	}
+	
+	
+	
+	public void showAlert (String title, String msg, DeviceScreen next)
+	{
+		/*
 		Alert alert = new Alert(title);
 		alert.setString(msg);
-		alert.setTimeout(5000);
-		
-		_display.setCurrent(alert, _form);
+		//alert.setTimeout(5000);		
+		_display.setCurrent(alert, next);
+		*/
+		ErrorAlert eAlert = new ErrorAlert (title, msg, null, next);
+		eAlert.show();
 	}
 	
 

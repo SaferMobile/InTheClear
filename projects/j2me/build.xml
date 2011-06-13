@@ -78,11 +78,10 @@
                 vendor="${vendor}"
                 version="${version}">
 
-          <midlet name="NetCheck" class="NetCheckMIDlet" />
-          <midlet name="PanicActivate" class="PanicActivateMIDlet" />
-          <midlet name="PanicConfig" class="PanicConfigMIDlet" />
-          <midlet name="Wipe" class="WipeMIDlet" />
-          <midlet name="Shout" class="ShoutMIDlet" />
+          <midlet name="Panic! Button" class="PanicActivateMIDlet" />
+          <midlet name="Panic! Setup Wizard" class="PanicConfigMIDlet" />
+          <midlet name="Manual Wipe" class="WipeMIDlet" />
+          <midlet name="Shout! Message" class="ShoutMIDlet" />
           <attribute name="URL" value="http://safermobile.org/" />
         </wtkjad>
         

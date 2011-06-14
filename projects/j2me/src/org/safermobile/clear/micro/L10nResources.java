@@ -31,7 +31,7 @@ public class L10nResources {
   // Attributes ----------------------------------------------------
 
   private Hashtable values;
-  private String 	  _locale;
+  private String 	  locale;
 
     // Static --------------------------------------------------------
 
@@ -57,8 +57,7 @@ public class L10nResources {
    */
   private L10nResources(String locale) {
     this.values = new Hashtable();
-    //this.setLocale(locale);
-    this.setLocale("en-US");
+    this.setLocale(locale);
   }
 
     // Public --------------------------------------------------------
@@ -71,20 +70,16 @@ public class L10nResources {
    */
   public void setLocale(String locale) {
     if (locale == null || locale.length() == 0x00) {
-    	
-    	_locale = System.getProperty("microedition.locale");
-      
-    	System.out.println("LOCALE: " + _locale);
-    	
-    	if (_locale == null || _locale.length() == 0) {
-    	  _locale = L10nResources.DEFAULT_LOCALE;
+      this.locale = System.getProperty("microedition.locale");
+      if (this.locale == null) {
+        this.locale = L10nResources.DEFAULT_LOCALE;
       }
     } else {
-    	_locale = locale;
+      this.locale = locale;
     }
 
     try {
-      this.loadResources(_locale);
+      this.loadResources(this.locale);
     } catch (Exception exc) {
       exc.printStackTrace();
     }
@@ -210,7 +205,7 @@ public class L10nResources {
     String resourePath = getResourcePath(locale);
     InputStream stream = this.getClass().getResourceAsStream(resourePath);
     if (stream == null) {
-      throw new IOException(LOCALE_NOT_FOUND + " " + _locale + ".");
+      throw new IOException(LOCALE_NOT_FOUND + " " + this.locale + ".");
     } else {
       reader = new InputStreamReader(stream);
     }

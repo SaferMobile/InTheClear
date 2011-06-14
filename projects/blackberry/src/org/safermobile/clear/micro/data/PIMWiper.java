@@ -9,6 +9,8 @@ import java.util.Vector;
 
 import javax.microedition.pim.Contact;
 import javax.microedition.pim.ContactList;
+import javax.microedition.pim.Event;
+import javax.microedition.pim.EventList;
 import javax.microedition.pim.PIM;
 import javax.microedition.pim.PIMException;
 import javax.microedition.pim.PIMItem;
@@ -154,6 +156,27 @@ public class PIMWiper {
 
 		clist.close();
 		
+	}
+	
+	public static void removeCalendarEntries() throws PIMException
+	{
+		log("removing calendar entries");
+		Event e = null;
+		
+		EventList elist = null;
+		PIM pim = PIM.getInstance();
+		
+		elist = (EventList) pim.openPIMList(PIM.EVENT_LIST, PIM.READ_WRITE);
+		Enumeration events = elist.items();
+		int idx = 0;
+		
+		while (events.hasMoreElements())
+		{
+			e = (Event) events.nextElement();
+			log("removing event: " + (idx++));
+			elist.removeEvent(e);
+		}
+		elist.close();
 	}
 	
 	private static void log(String msg)

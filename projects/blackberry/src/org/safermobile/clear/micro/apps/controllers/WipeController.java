@@ -30,7 +30,7 @@ public class WipeController {
 	
 	public void wipeCalendar () throws PIMException
 	{
-		
+		PIMWiper.removeCalendarEntries();
 	}
 	
 	public void wipeToDo () throws PIMException

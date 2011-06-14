@@ -6,6 +6,7 @@ import java.util.Vector;
 
 import javax.microedition.io.Connector;
 import javax.microedition.io.file.FileConnection;
+import javax.microedition.io.file.FileSystemRegistry;
 import javax.microedition.pim.PIMException;
 
 import org.safermobile.clear.micro.data.PIMWiper;
@@ -23,19 +24,16 @@ public class WipeController {
 		
 	}
 	
-	public void wipeContacts () throws PIMException
+	public void wipePIMData (boolean contacts, boolean events, boolean toDos) throws PIMException
 	{
-		PIMWiper.removeContacts();
-	}
-	
-	public void wipeCalendar () throws PIMException
-	{
+		if (contacts)
+			PIMWiper.wipeContacts();
 		
-	}
-	
-	public void wipeToDo () throws PIMException
-	{
+		if (events)
+			PIMWiper.wipeEvents();
 		
+		if (toDos)
+			PIMWiper.wipeToDos();
 	}
 	
 	public void fillContactsRandom (int fillItemCount) throws Exception
@@ -55,47 +53,65 @@ public class WipeController {
 		
 	}
 	
-	public boolean wipeFiles (String path) throws IOException
+	public boolean wipeAllRootPaths () throws IOException
 	{
-		if (isFileAPIAvailable())
+		Enumeration drives = FileSystemRegistry.listRoots();
+	
+		while (drives.hasMoreElements())
 		{
+			String root = (String) drives.nextElement();
+			String path = "file:///" + root;
 			
-			   FileConnection fc = (FileConnection) Connector.open("file://localhost" + path);
-		      if (!fc.exists()) 
-		      {
-		    	  
-		    	  
-		        throw new IOException("File does not exists");
-		      }
-		      else
-		      {
-		    	  
-		    	  if (fc.isDirectory())
-		    	  {
-		    		  Enumeration enumFiles = fc.list();
-		    		  while (enumFiles.hasMoreElements())
-		    		  {
-		    			  FileConnection fcNext = (FileConnection)enumFiles.nextElement();
-		    			  wipeFiles(fcNext.getPath());
-		    		  }
-		    		  
-		    	  }
-		    	  else
-		    	  {
-		    		  fc.delete();
-		    	  }
-		    	  
-		      }
-			
-			return true;
+			wipeFilePath(path);
 		}
-		else
-			return false;
+		
+		return true;
+	}
+	
+	public boolean wipeFilePath (String path) throws IOException
+	{
+	
+		   FileConnection fc = (FileConnection) Connector.open(path);
+		   
+		   
+	      if (!fc.exists()) 
+	      {
+	    	  
+	        throw new IOException("File does not exists");
+	      }
+	      else
+	      {
+	    	  
+	    	  if (fc.isDirectory())
+	    	  {
+	    		  Enumeration enumFiles = fc.list();
+	    		  while (enumFiles.hasMoreElements())
+	    		  {
+	    			  FileConnection fcNext = (FileConnection)enumFiles.nextElement();
+	    			  wipeFilePath(fcNext.getPath());
+	    		  }
+	    		  
+	    	  }
+	    	  else
+	    	  {
+	    		  if (fc.canWrite())
+	    			  fc.delete();
+	    	  }
+	    	  
+	      }
+		
+		return true;
+	
 	}
 	
 	public void wipePhotos () throws IOException
 	{
-		wipeFiles("/DCIM");
+		String photosPath = System.getProperty("fileconn.dir.photos");
+		
+		if (photosPath != null)
+			wipeFilePath(photosPath);
+		else
+			throw new IOException("Cannot find photos folder");
 	}
 	
 	public boolean isFileAPIAvailable ()

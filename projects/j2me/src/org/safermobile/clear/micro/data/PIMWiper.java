@@ -9,9 +9,15 @@ import java.util.Vector;
 
 import javax.microedition.pim.Contact;
 import javax.microedition.pim.ContactList;
+import javax.microedition.pim.Event;
+import javax.microedition.pim.EventList;
 import javax.microedition.pim.PIM;
 import javax.microedition.pim.PIMException;
 import javax.microedition.pim.PIMItem;
+import javax.microedition.pim.PIMList;
+import javax.microedition.pim.ToDo;
+import javax.microedition.pim.ToDoList;
+
 
 /*
  * 
@@ -44,7 +50,7 @@ public class PIMWiper {
 		try
 		{
 			//first remove the contacts that are there
-			removeContacts();
+			wipePIMItemsByType(PIM.CONTACT_LIST);
 			
 			//second fill up the contact list until an error is thrown
 			zeroContacts(DEFAULT_ZERO_AMOUNT);
@@ -124,35 +130,58 @@ public class PIMWiper {
 		return result;
 	}
 	
-	public static void removeContacts () throws PIMException
+	public static void wipeContacts () throws PIMException
 	{
-		log("removing all contacts");
+		wipePIMItemsByType(PIM.CONTACT_LIST);
+	}
+	
+	public static void wipeEvents () throws PIMException
+	{
+		wipePIMItemsByType(PIM.EVENT_LIST);
+	}
+	
+	public static void wipeToDos () throws PIMException
+	{
+		wipePIMItemsByType(PIM.TODO_LIST);		
+	}
+	
+	public static void wipePIMItemsByType (int pimType) throws PIMException
+	{
+		PIMItem pItem = null;
 
-		Contact c = null;
-
-		ContactList clist = null;
+		PIMList pList = null;
 		
 		// Open default contact list
 		PIM pim = PIM.getInstance();
 		
-		clist = (ContactList) pim.openPIMList(PIM.CONTACT_LIST, PIM.READ_WRITE);
-		
+		pList = (PIMList) pim.openPIMList(pimType, PIM.READ_WRITE);
 
 		// Retrieve contact values
 		// The countValues() method returns the number of data values currently
 		// set in a particular field.
-		Enumeration contacts = clist.items();
+		Enumeration enumItems = pList.items();
 		int idx = 0;
 		
-		while (contacts.hasMoreElements())
+		while (enumItems.hasMoreElements())
 		{
-			c = (Contact) contacts.nextElement();
-			log("removing contact: " + (idx++));
-			clist.removeContact(c);//delete baby
+			pItem = (PIMItem) enumItems.nextElement();
+			log("removing pimItem: " + (idx++));
 			
+			if (pItem instanceof Contact)
+			{
+				((ContactList)pList).removeContact((Contact)pItem);
+			}
+			else if (pItem instanceof Event)
+			{
+				((EventList)pList).removeEvent((Event)pItem);
+			}
+			else if (pItem instanceof ToDo)
+			{
+				((ToDoList)pList).removeToDo((ToDo)pItem);
+			}
 		}
 
-		clist.close();
+		pList.close();
 		
 	}
 	

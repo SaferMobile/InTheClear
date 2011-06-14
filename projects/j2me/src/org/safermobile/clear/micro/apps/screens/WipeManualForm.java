@@ -12,6 +12,7 @@ import org.safermobile.clear.micro.apps.PanicConfigMIDlet;
 import org.safermobile.clear.micro.apps.PanicConstants;
 import org.safermobile.clear.micro.apps.WipeMIDlet;
 import org.safermobile.clear.micro.apps.controllers.WipeController;
+import org.safermobile.clear.micro.ui.ErrorAlert;
 
 /**
  * Example of a <code>TextBox</code> component.
@@ -27,7 +28,6 @@ public class WipeManualForm
         private CheckBox _cbContacts;
         private CheckBox _cbCalendar;
         private CheckBox _cbToDo;
-        private CheckBox _cbMemos;
         private CheckBox _cbPhotos;
         private CheckBox _cbAllStorage;
         
@@ -53,7 +53,6 @@ public class WipeManualForm
         		label.setHorizontalAlignment( Graphics.LEFT );
         		append(label );
         	
-        		
         		_cbContacts = new CheckBox();
         		_cbContacts.setLabel( "Wipe Contacts" );
         		_cbContacts.setChecked( false );
@@ -81,54 +80,49 @@ public class WipeManualForm
         		_cbToDo.setChecked( false );
         		append( _cbToDo );
         		
-        		_cbMemos = new CheckBox();
-        		_cbMemos.setLabel( "Wipe Memos" );
-        		_cbMemos.setChecked( false );
-        		append( _cbMemos );
-        		
 
         }
 
         public void run ()
         {
-        	showConfirmDialog ();
+        	confirmAndWipe ();
         	
         }
         
-        private void showConfirmDialog ()
+        private void confirmAndWipe ()
         {
-        	//are you sure?
-        	doWipe();
-        }
-        
-        private void doWipe ()
-        {
-        	WipeController wControl = new WipeController();
+        	//are you sure? if yes, then
+        	boolean confirmed = true; //need to add this in
         	
-        	if (_cbContacts.isChecked())
-        	{
+        	if (confirmed)
+	        {
         		try
         		{
-        			wControl.wipeContacts();
+        			
+        			WipeController wControl = new WipeController();
+                	
+                	wControl.wipePIMData(_cbContacts.isChecked(), _cbCalendar.isChecked(), _cbToDo.isChecked());
+                	
+                	
+                	if (_cbPhotos.isChecked())
+                		wControl.wipePhotos();
+                	
+                	if (_cbAllStorage.isChecked())
+                		wControl.wipeAllRootPaths();
+                	
+                	ErrorAlert eAlert = new ErrorAlert ("Wipe! Complete", "You have successfully performed the wipe.", null, this);
+        			eAlert.show();
+        			
         		}
         		catch (Exception e)
         		{
-        			
+        			String msg = e.getMessage();
+        			ErrorAlert eAlert = new ErrorAlert ("Wipe! Error", "There was an error performing the wipe: " + msg, null, this);
+        			eAlert.show();
+        			//todo: need to show error alert here
+        			e.printStackTrace();
         		}
-        	}
-        	
-        	if (_cbCalendar.isChecked())
-        	{
-        		try
-        		{
-        			wControl.wipeCalendar();
-        		}
-        		catch (Exception e)
-        		{
-        			
-        		}
-        	}
-        	
+	        }
         }
         
         protected void declineNotify ()

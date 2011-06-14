@@ -1,0 +1,25 @@
+Manifest-Version: 1.0
+MIDlet-Version: 1.0.0
+MIDlet-Jar-Size: 145474
+RIM-COD-Module-Dependencies: net_rim_cldc,net_rim_locationapi,net_rim_pdap
+MicroEdition-Configuration: CLDC-1.1
+MIDlet-Jar-URL: InTheClearBB.jar
+RIM-COD-URL-1: InTheClearBB-1.cod
+RIM-MIDlet-Flags-4: 0
+RIM-COD-SHA1-1: 91 e6 4e 42 32 db c5 e8 74 62 64 43 3a 65 74 92 9b d4 c3 d0
+RIM-MIDlet-Flags-3: 0
+RIM-MIDlet-Flags-2: 0
+RIM-MIDlet-Flags-1: 0
+RIM-COD-Size-1: 28900
+RIM-COD-Module-Name: InTheClearBB
+RIM-COD-Size: 60624
+MIDlet-Name: InTheClearBB
+RIM-COD-Creation-Time: 1307985491
+MIDlet-4: Wipe!,res/logo.gif,org.safermobile.clear.micro.apps.WipeMIDlet
+MIDlet-3: Shout!,res/logo.jpg,org.safermobile.clear.micro.apps.ShoutMIDlet
+MIDlet-2: Panic!,res/logo.jpg,org.safermobile.clear.micro.apps.PanicActivateMIDlet
+MIDlet-1: In The Clear,res/logo.gif,org.safermobile.clear.micro.apps.PanicConfigMIDlet
+RIM-COD-URL: InTheClearBB.cod
+RIM-COD-SHA1: 7f 86 dc 55 09 05 ac 44 88 6b 1c ff 9b f5 bc 70 04 eb 43 3f
+MicroEdition-Profile: MIDP-2.0
+MIDlet-Vendor: SaferMobile.org

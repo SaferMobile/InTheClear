@@ -1,0 +1,34 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<html>
+<head>
+</head>
+<body bgcolor="white">
+
+Provides application logging suitable for constrained devices.  The concepts are similar
+to those in <a href="http://logging.apache.org/log4j/">Log4J</a> or the
+<a href="http://java.sun.com/j2se/1.5.0/docs/api/">Java Standard Edition's logging package</a>.
+
+<p>J4ME stores log messages in a circular buffer in memory.  This is very fast and memory
+efficient.  The alternative is to use RMS to store the logs on the device's persistent
+memory but this is <i>very</i> slow on a lot of devices and therefore inappropriate.
+If you require this you should try <a href="http://microlog.sourceforge.net/">MicroLog</a>
+which is more extensible, but much more heavyweight.
+
+<p>When using the emulator for testing logs are output to the console window similar
+to using <code>System.out.println</code>.  To see the logs on devices you need to have
+screens that display them.  You can use the ones from the logging example directly.
+You may want to "hide" the log from users by making it accessible through a secret
+key combination such as holding down the "*" key for 3 seconds.
+
+<h2>Example</h2>
+
+<p>An example is provided in the <code>/examples</code> folder under the
+<code>org.j4me.examples.log</code> package.  It logs the various J2ME optional
+packages available on the device.
+
+<!-- <h2>Related Documentation</h2> -->
+
+<!-- Put @see and @since tags down here. -->
+
+</body>
+</html>

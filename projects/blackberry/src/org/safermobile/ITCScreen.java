@@ -1,4 +1,4 @@
-package org.safermobile.intheclear;
+package org.safermobile;
 
 import net.rim.device.api.ui.container.MainScreen;
 

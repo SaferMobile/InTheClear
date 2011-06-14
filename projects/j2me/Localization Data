@@ -7,19 +7,6 @@
       <entry key="key_menu_run" value="Run"/>
       <entry key="key_menu_back" value="Back"/>
       <entry key="key_wipe_title" value="Wipe [Main Menu]"/>
-      <entry key="key_6" value="List Contacts"/>
-      <entry key="key_7" value="Delete All Contacts"/>
-      <entry key="key_8" value="Random Fill Contacts (100)"/>
-      <entry key="key_9" value="Zero Fill Contacts (100)"/>
-      <entry key="key_10" value="AntiSocial"/>
-      <entry key="key_11" value="Attention"/>
-      <entry key="key_12" value="Are you sure?"/>
-      <entry key="key_13" value="Removed"/>
-      <entry key="key_14" value="All of your contacts have been removed from your phone."/>
-      <entry key="key_15" value="Random"/>
-      <entry key="key_16" value="100 randomly generated contacts have been added to your phone"/>
-      <entry key="key_17" value="Zero"/>
-      <entry key="key_18" value="100 &apos;zeroed&apos; contacts have been added to overwrite memory on your phone"/>
       <entry key="key_panic_title" value="Panic!"/>
       <entry key="key_panic_btn_back" value="Back"/>
       <entry key="key_panic_btn_panic" value="Panic!"/>
@@ -60,5 +47,15 @@
       <entry key="key_alert_message_title" value="Panic! Alert Message"/>
       <entry key="key_alert_message_info" value="Personalize your alert message below. Enter in one or more phone numbers, separated by a comma, to send the alert to, and the automatic message to send. Keep in mind that because Shout! uses SMS you must keep your message under 160 characters."/>
       <entry key="key_alert_lbl" value="Alert Message"/>
+      <entry key="key_wizard_user_info" value="If you&apos;d like In the Clear to include information about yourself when activated, you can configure that now."/>
+      <entry key="key_wizard_phone_config" value="Now we will make sure your phone is configured properly."/>
+      <entry key="key_wipe_select_title" value="Wipe! Selection"/>
+      <entry key="key_wipe_message" value="Choose how you&apos;d like Wipe! to work below. Caution - erasing or overwriting data is an unrecoverable action, so choose your setup wisely."/>
+      <entry key="key_wipe_menu_contacts" value="Wipe Contacts"/>
+      <entry key="key_wipe_menu_photos" value="Wipe Photos"/>
+      <entry key="key_wipe_menu_files" value="Wipe All Files"/>
+      <entry key="key_wipe_menu_calendar" value="Wipe Calendar"/>
+      <entry key="key_wipe_menu_todo" value="Wipe ToDo&apos;s"/>
+      <entry key="key_wipe_message_saved" value="Your Wipe! settings have been saved. WARNING: If you have chosen to wipe important data, make sure it is backed up to another device or written on paper first."/>
    </locale>
 </locales>

@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
 	<classpathentry kind="src" path="src"/>
+	<classpathentry kind="con" path="org.elipse.mtj.JavaMEContainer/Sun Java(TM) Wireless Toolkit 2.5.2_01 for CLDC/QwertyDevice"/>
+	<classpathentry exported="true" kind="con" path="org.eclipse.mtj.core.EXTERNAL_LIBRARY/JMUnit for CLDC 1.1"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

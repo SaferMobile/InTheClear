@@ -5,7 +5,7 @@
   <Application Type="MIDlet" MainMIDletName="org.safermobile.clear.micro.apps.PanicConfigMIDlet" MainArgs="" HomeScreenPosition="0" StartupTier="7" IsSystemModule="false" IsAutostartup="false"/>
   <Resources hasTitleResource="false" TitleResourceBundleName="" TitleResourceBundleRelativePath="" TitleResourceBundleClassName="" TitleResourceBundleKey="" DescriptionId="">
     <Icons>
-      <Icon CanonicalFileName="res/logo.gif" IsFocus="false"/>
+      <Icon CanonicalFileName="res\img\icon.png" IsFocus="false"/>
     </Icons>
   </Resources>
   <Compile OutputCompilerMessages="false" ConvertImages="true" CreateWarningForNoExportedRoutine="true" CompressResources="false" AliasList="">

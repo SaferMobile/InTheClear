@@ -21,6 +21,7 @@ import net.rim.device.api.system.SIMCardException;
 import org.safermobile.clear.micro.L10nConstants;
 import org.safermobile.clear.micro.L10nResources;
 import org.safermobile.clear.micro.apps.controllers.ShoutController;
+import org.safermobile.clear.micro.apps.controllers.WipeController;
 import org.safermobile.clear.micro.data.PhoneInfo;
 import org.safermobile.clear.micro.sms.SMSManager;
 import org.safermobile.clear.micro.ui.LargeStringCanvas;
@@ -200,6 +201,7 @@ public class PanicActivateMIDlet extends MIDlet implements CommandListener, Runn
 	public void run ()
 	{
 		ShoutController sControl = new ShoutController();
+		WipeController wControl = new WipeController();
 		
 		Logger.debug(PanicConstants.TAG, "starting panic run(); loading prefs...");
 		

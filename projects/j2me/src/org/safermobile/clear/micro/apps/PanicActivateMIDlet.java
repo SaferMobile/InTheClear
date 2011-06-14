@@ -19,6 +19,7 @@ import javax.microedition.rms.RecordStoreException;
 import org.safermobile.clear.micro.L10nConstants;
 import org.safermobile.clear.micro.L10nResources;
 import org.safermobile.clear.micro.apps.controllers.ShoutController;
+import org.safermobile.clear.micro.apps.controllers.WipeController;
 import org.safermobile.clear.micro.data.PhoneInfo;
 import org.safermobile.clear.micro.sms.SMSManager;
 import org.safermobile.clear.micro.ui.LargeStringCanvas;
@@ -227,6 +228,8 @@ public class PanicActivateMIDlet extends MIDlet implements CommandListener, Runn
 		
 		int resendTimeout = PanicConstants.DEFAULT_RESEND_TIMEOUT; //one minute
 		
+		boolean wipeComplete = false;
+		
 		while (_keepPanicing)
 		{
 			try
@@ -234,7 +237,6 @@ public class PanicActivateMIDlet extends MIDlet implements CommandListener, Runn
 				showMessage ("Sending messages...");
 				sControl.sendSMSShout (recipients, panicMsg, panicData);			
 				showMessage ("Panic Sent!");
-				
 
 				doSecPause (2);
 			}
@@ -245,6 +247,70 @@ public class PanicActivateMIDlet extends MIDlet implements CommandListener, Runn
 				showMessage("Error Sending: " + e.toString());
 				doSecPause (10);
 
+			}
+
+			//now that first shout has been sent, time to wipe
+			if (!wipeComplete)
+			{
+				showMessage("Preparing to wipe data...");
+				WipeController wc = new WipeController();
+				
+				String prefBool = _prefs.get(PanicConstants.PREFS_KEY_WIPE_CONTACTS);
+				boolean wipeContacts = (prefBool != null && prefBool.equals("true"));
+				
+				prefBool = _prefs.get(PanicConstants.PREFS_KEY_WIPE_EVENTS);
+				boolean wipeEvents = (prefBool != null && prefBool.equals("true"));
+				
+				prefBool = _prefs.get(PanicConstants.PREFS_KEY_WIPE_TODOS);
+				boolean wipeToDos = (prefBool != null && prefBool.equals("true"));
+				
+				prefBool = _prefs.get(PanicConstants.PREFS_KEY_WIPE_PHOTOS);
+				boolean wipePhotos = (prefBool != null && prefBool.equals("true"));
+				
+				prefBool = _prefs.get(PanicConstants.PREFS_KEY_WIPE_ALL_FILES);
+				boolean wipeAllFiles = (prefBool != null && prefBool.equals("true"));
+				
+				doSecPause (1);
+				showMessage("Wiping selected personal data...");
+				
+				try
+				{
+					wc.wipePIMData(wipeContacts, wipeEvents, wipeToDos);
+					showMessage("Success! Personal data wiped!");
+				}
+				catch (Exception e)
+				{
+					showMessage("WARNING: There was an error wiping your personal data.");
+					e.printStackTrace();
+				}
+				
+				doSecPause (3);
+				
+				
+				if (wipeAllFiles)
+				{
+					showMessage("Wiping all available files...");
+					try {
+						wc.wipeAllRootPaths();
+						showMessage("Wiping all available files... WIPE COMPLETE.");
+					} catch (IOException e) {
+						showMessage("Wiping all photos... ERROR. UNABLE TO WIPE ALL FILES.");
+						e.printStackTrace();
+					}
+				}
+				else if (wipePhotos)
+				{
+					showMessage("Wiping all photos...");
+					try {
+						wc.wipePhotos();
+						showMessage("Wiping all photos... WIPE COMPLETE.");
+					} catch (IOException e) {
+						showMessage("Wiping all photos... ERROR. UNABLE TO WIPE PHOTOS.");
+						e.printStackTrace();
+					}
+				}
+				
+				wipeComplete = true;
 			}
 			
 			int secs = resendTimeout/1000;

@@ -49,12 +49,10 @@ public class UserInfoForm
 
                 // Center the text.
                 Label label = new Label();
-                label.setLabel("If you'd like In the Clear to include information about yourself when activated, you can configure that now.");
+                label.setLabel(l10n.getString(L10nConstants.keys.KEY_WIZARD_USER_INFO));
         		label.setHorizontalAlignment( Graphics.LEFT );
-        		label.setLabel(l10n.getString(L10nConstants.keys.KEY_PANIC_SMS_TEST_MESSAGE));
         		append(label );
-        	
-        		
+        	        		
                 // Add the phone number box.
                 tbUserName = new TextBox();
                 tbUserName.setLabel( l10n.getString(L10nConstants.keys.KEY_LBL_YOUR_NAME) );
@@ -86,7 +84,7 @@ public class UserInfoForm
 			persist();
 			
 			DeviceScreen next = _midlet.getShoutConfigMenu();
-			_midlet.showAlert(l10n.getString(L10nConstants.keys.KEY_PANIC_TITLE), "Now we will make sure your phone is configured properly.", next);
+			_midlet.showAlert(l10n.getString(L10nConstants.keys.KEY_PANIC_TITLE), l10n.getString(L10nConstants.keys.KEY_WIZARD_PHONE_CONFIG), next);
 			
 			//_midlet.showShoutConfigMenu();
 			

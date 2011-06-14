@@ -62,6 +62,16 @@ public class L10nConstants {
 		public static final String KEY_ALERT_MESSAGE_TITLE = "KEY_ALERT_MESSAGE_TITLE";
 		public static final String KEY_ALERT_MESSAGE_INFO = "KEY_ALERT_MESSAGE_INFO";
 		public static final String KEY_ALERT_LBL = "KEY_ALERT_LBL";
+		public static final String KEY_WIZARD_USER_INFO = "KEY_WIZARD_USER_INFO";
+		public static final String KEY_WIZARD_PHONE_CONFIG = "KEY_WIZARD_PHONE_CONFIG";
+		public static final String KEY_WIPE_SELECT_TITLE = "KEY_WIPE_SELECT_TITLE";
+		public static final String KEY_WIPE_MESSAGE = "KEY_WIPE_MESSAGE";
+		public static final String KEY_WIPE_MENU_CONTACTS = "KEY_WIPE_MENU_CONTACTS";
+		public static final String KEY_WIPE_MENU_PHOTOS = "KEY_WIPE_MENU_PHOTOS";
+		public static final String KEY_WIPE_MENU_FILES = "KEY_WIPE_MENU_FILES";
+		public static final String KEY_WIPE_MENU_CALENDAR = "KEY_WIPE_MENU_CALENDAR";
+		public static final String KEY_WIPE_MENU_TODO = "KEY_WIPE_MENU_TODO";
+		public static final String KEY_WIPE_MESSAGE_SAVED = "KEY_WIPE_MESSAGE_SAVED";
 
     }
 }

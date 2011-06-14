@@ -71,7 +71,7 @@ public class WipeController {
 	public boolean wipeFilePath (String path) throws IOException
 	{
 	
-		   FileConnection fc = (FileConnection) Connector.open(path);
+		   FileConnection fc = (FileConnection) Connector.open(path, Connector.READ);
 		   
 		   
 	      if (!fc.exists()) 
@@ -95,7 +95,10 @@ public class WipeController {
 	    	  else
 	    	  {
 	    		  if (fc.canWrite())
+	    		  {
+	    			  fc = (FileConnection) Connector.open(path, Connector.READ_WRITE);
 	    			  fc.delete();
+	    		  }
 	    	  }
 	    	  
 	      }

@@ -42,55 +42,53 @@ public class WipeSelectionForm
                 _midlet = midlet;
                 
                 // Set the title and menu.
-                setTitle( "Wipe! Selection" );
+                setTitle( l10n.getString(L10nConstants.keys.KEY_WIPE_SELECT_TITLE) );
                 setMenuText( l10n.getString(L10nConstants.keys.KEY_MENU_BACK), l10n.getString(L10nConstants.keys.KEY_MENU_NEXT) );
 
                 // Center the text.
                 Label label = new Label();
-                label.setLabel("Choose how you'd like Wipe! to work below. Caution - erasing or overwriting data is an unrecoverable action, so choose your setup wisely.");
+                label.setLabel(l10n.getString(L10nConstants.keys.KEY_WIPE_MESSAGE));
         		label.setHorizontalAlignment( Graphics.LEFT );
-        		label.setLabel(l10n.getString(L10nConstants.keys.KEY_PANIC_SMS_TEST_MESSAGE));
+       
         		append(label );
         	
         		
         		_cbContacts = new CheckBox();
-        		_cbContacts.setLabel( "Wipe Contacts" );
+        		_cbContacts.setLabel( l10n.getString(L10nConstants.keys.KEY_WIPE_MENU_CONTACTS) );
         		_cbContacts.setChecked( true );
         		append( _cbContacts );
 
         		_cbPhotos = new CheckBox();
-        		_cbPhotos.setLabel( "Wipe Photos" );
+        		_cbPhotos.setLabel( l10n.getString(L10nConstants.keys.KEY_WIPE_MENU_PHOTOS) );
         		_cbPhotos.setChecked( true );
         		append( _cbPhotos );
         		
         		_cbAllStorage = new CheckBox();
-        		_cbAllStorage.setLabel( "Wipe All Files" );
+        		_cbAllStorage.setLabel( l10n.getString(L10nConstants.keys.KEY_WIPE_MENU_FILES) );
         		_cbAllStorage.setChecked( true );
         		append( _cbAllStorage );
         		
-        		
-        		
         		_cbCalendar = new CheckBox();
-        		_cbCalendar.setLabel( "Wipe Calendar" );
+        		_cbCalendar.setLabel( l10n.getString(L10nConstants.keys.KEY_WIPE_MENU_CALENDAR) );
         		_cbCalendar.setChecked( true );
         		append( _cbCalendar );
         		
         		_cbToDo = new CheckBox();
-        		_cbToDo.setLabel( "Wipe ToDo" );
+        		_cbToDo.setLabel( l10n.getString(L10nConstants.keys.KEY_WIPE_MENU_TODO) );
         		_cbToDo.setChecked( true );
         		append( _cbToDo );
-        		
-        		_cbMemos = new CheckBox();
-        		_cbMemos.setLabel( "Wipe Memos" );
-        		_cbMemos.setChecked( true );
-        		append( _cbMemos );
         		
 
         }
 
         private void persist ()
         {
-//        	_midlet.savePref(PanicConstants.PREFS_KEY_NAME, tbUserName.getString());
+        	
+        	_midlet.savePref(PanicConstants.PREFS_KEY_WIPE_CONTACTS, _cbContacts.isChecked()+"");
+        	_midlet.savePref(PanicConstants.PREFS_KEY_WIPE_EVENTS, _cbCalendar.isChecked()+"");
+        	_midlet.savePref(PanicConstants.PREFS_KEY_WIPE_TODOS, _cbToDo.isChecked()+"");
+        	_midlet.savePref(PanicConstants.PREFS_KEY_WIPE_PHOTOS, _cbPhotos.isChecked()+"");
+        	_midlet.savePref(PanicConstants.PREFS_KEY_WIPE_ALL_FILES, _cbAllStorage.isChecked()+"");
         	
         }
         /**
@@ -106,7 +104,7 @@ public class WipeSelectionForm
 			persist();
 			
 			DeviceScreen next = new PanicConfigCompleteForm(_midlet);
-			_midlet.showAlert(l10n.getString(L10nConstants.keys.KEY_WIPE_TITLE), "Your Wipe! settings have been saved. WARNING: If you have chosen to wipe important data, make sure it is backed up to another device or written on paper first.", next);
+			_midlet.showAlert(l10n.getString(L10nConstants.keys.KEY_WIPE_TITLE), l10n.getString(L10nConstants.keys.KEY_WIPE_MESSAGE_SAVED), next);
 			
 			
 		}

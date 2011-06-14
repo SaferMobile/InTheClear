@@ -29,7 +29,7 @@ public class SetupAlertMessageForm
         
     	private Label _label = new Label();
 
-		L10nResources l10n = L10nResources.getL10nResources(null);
+    	L10nResources l10n = L10nResources.getL10nResources(PanicConstants.DEFAULT_LOCALE);
 
         /**
          * Constructs a screen that shows a <code>TextBox</code> component in action.

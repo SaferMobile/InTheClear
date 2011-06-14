@@ -8,6 +8,7 @@ import org.j4me.ui.components.*;
 import org.safermobile.clear.micro.L10nConstants;
 import org.safermobile.clear.micro.L10nResources;
 import org.safermobile.clear.micro.apps.PanicConfigMIDlet;
+import org.safermobile.clear.micro.apps.PanicConstants;
 import org.safermobile.clear.micro.apps.ShoutMIDlet;
 import org.safermobile.clear.micro.apps.controllers.ShoutController;
 import org.safermobile.clear.micro.ui.ErrorAlert;
@@ -31,7 +32,7 @@ public class ShoutManualForm
         
     	private Label _label = new Label();
 
-		L10nResources l10n = L10nResources.getL10nResources(null);
+    	L10nResources l10n = L10nResources.getL10nResources(PanicConstants.DEFAULT_LOCALE);
 
         /**
          * Constructs a screen that shows a <code>TextBox</code> component in action.

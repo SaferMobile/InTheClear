@@ -30,7 +30,7 @@ public class WipeSelectionForm
         private CheckBox _cbAllStorage;
         
         
-		L10nResources l10n = L10nResources.getL10nResources(null);
+    	L10nResources l10n = L10nResources.getL10nResources(PanicConstants.DEFAULT_LOCALE);
         
         /**
          * Constructs a screen that shows a <code>TextBox</code> component in action.

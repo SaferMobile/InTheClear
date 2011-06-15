@@ -42,7 +42,7 @@ public class PanicActivateMIDlet extends MIDlet implements CommandListener, Runn
 	private Command	 _cmdCancel;
 	private Command	 _cmdExit;
 	
-	L10nResources l10n = L10nResources.getL10nResources("en-US");
+	L10nResources l10n = LocaleManager.getResources();
 
 	/*
 	 * the thread which manages the panic sending

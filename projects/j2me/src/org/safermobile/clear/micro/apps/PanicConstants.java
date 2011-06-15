@@ -19,5 +19,4 @@ public interface PanicConstants {
 	public final static String PREFS_KEY_WIPE_PHOTOS = "wipe.photos";
 	public final static String PREFS_KEY_WIPE_ALL_FILES = "wipe.allfiles";
 	
-	public final static String DEFAULT_LOCALE = "en-US";
 }

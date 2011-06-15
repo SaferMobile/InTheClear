@@ -6,6 +6,7 @@ import javax.microedition.midlet.MIDlet;
 
 import org.j4me.ui.*;
 import org.j4me.ui.components.*;
+import org.safermobile.clear.micro.apps.LocaleManager;
 import org.safermobile.clear.micro.apps.PanicConfigMIDlet;
 import org.safermobile.clear.micro.apps.PanicConstants;
 import org.safermobile.clear.micro.L10nResources;
@@ -26,7 +27,7 @@ public class PanicConfigCompleteForm
     	 * The label 
     	 */
     	private Label _label = new Label();
-    	L10nResources l10n = L10nResources.getL10nResources(PanicConstants.DEFAULT_LOCALE);
+    	L10nResources l10n = LocaleManager.getResources();
         
         /**
          * Constructs a screen that shows a <code>TextBox</code> component in action.

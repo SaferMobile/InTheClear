@@ -115,7 +115,7 @@ public class LocationPermissionForm
     		
     		if (sbPanicMsg.length()>0)
     		{
-    			midlet.showAlert(l10n.getString(L10nConstants.keys.TITLE_LOCATION_INFO), l10n.getString(L10nConstants.keys.PERMISSION_LOC_SUCCESS) + sbPanicMsg.toString(), midlet.getShoutConfigMenu());
+    			midlet.showAlert(l10n.getString(L10nConstants.keys.TITLE_LOCATION_INFO), l10n.getString(L10nConstants.keys.PERMISSION_LOC_SUCCESS) + "\n" + sbPanicMsg.toString(), midlet.getShoutConfigMenu());
     		}
     		else
     		{

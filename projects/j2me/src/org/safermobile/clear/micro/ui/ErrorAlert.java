@@ -49,6 +49,10 @@ public class ErrorAlert
 		this.next = next;
 	}
 	
+	public void setText (String msg)
+	{
+		label.setLabel(msg);
+	}
 	/**
 	 * @return The error message.
 	 */

@@ -13,13 +13,14 @@ import org.safermobile.clear.micro.apps.PanicConfigMIDlet;
 import org.safermobile.clear.micro.apps.PanicConstants;
 import org.safermobile.clear.micro.apps.WipeMIDlet;
 import org.safermobile.clear.micro.apps.controllers.WipeController;
+import org.safermobile.clear.micro.apps.controllers.WipeListener;
 import org.safermobile.clear.micro.ui.ErrorAlert;
 
 /**
  * Example of a <code>TextBox</code> component.
  */
 public class WipeManualForm
-        extends Dialog implements Runnable
+        extends Dialog implements Runnable, WipeListener
 {
         /**
          * The previous screen.
@@ -45,39 +46,39 @@ public class WipeManualForm
                 _midlet = midlet;
                 
                 // Set the title and menu.
-                setTitle( "Wipe! Now" );
-                setMenuText( "Exit", "WIPE NOW!");
+                setTitle( l10n.getString(L10nConstants.keys.TITLE_WIPE_MANUAL) );
+                setMenuText( l10n.getString(L10nConstants.keys.MENU_EXIT), l10n.getString(L10nConstants.keys.MENU_WIPE_NOW));
 
                 // Center the text.
                 Label label = new Label();
-                label.setLabel("Select one or more data types below to wipe. WARNING: THIS WILL DELETE REAL DATA FROM YOUR PHONE.");
+                label.setLabel(l10n.getString(L10nConstants.keys.WIPE_WARNING_MSG));
         		label.setHorizontalAlignment( Graphics.LEFT );
         		append(label );
         	
         		_cbContacts = new CheckBox();
-        		_cbContacts.setLabel( "Wipe Contacts" );
+        		_cbContacts.setLabel( l10n.getString(L10nConstants.keys.WIPE_MENU_CONTACTS) );
         		_cbContacts.setChecked( false );
         		append( _cbContacts );
 
         		_cbPhotos = new CheckBox();
-        		_cbPhotos.setLabel( "Wipe Photos" );
+        		_cbPhotos.setLabel( l10n.getString(L10nConstants.keys.WIPE_MENU_PHOTOS) );
         		_cbPhotos.setChecked( false );
         		append( _cbPhotos );
         		
         		_cbAllStorage = new CheckBox();
-        		_cbAllStorage.setLabel( "Wipe All Files" );
+        		_cbAllStorage.setLabel( l10n.getString(L10nConstants.keys.WIPE_MENU_FILES) );
         		_cbAllStorage.setChecked( false );
         		append( _cbAllStorage );
         		
         		
         		
         		_cbCalendar = new CheckBox();
-        		_cbCalendar.setLabel( "Wipe Calendar" );
+        		_cbCalendar.setLabel( l10n.getString(L10nConstants.keys.WIPE_MENU_CALENDAR) );
         		_cbCalendar.setChecked( false );
         		append( _cbCalendar );
         		
         		_cbToDo = new CheckBox();
-        		_cbToDo.setLabel( "Wipe ToDo" );
+        		_cbToDo.setLabel( l10n.getString(L10nConstants.keys.WIPE_MENU_TODO) );
         		_cbToDo.setChecked( false );
         		append( _cbToDo );
         		
@@ -106,19 +107,19 @@ public class WipeManualForm
                 	
                 	
                 	if (_cbPhotos.isChecked())
-                		wControl.wipePhotos();
+                		wControl.wipePhotos(this);
                 	
                 	if (_cbAllStorage.isChecked())
-                		wControl.wipeAllRootPaths();
+                		wControl.wipeAllRootPaths(this);
                 	
-                	ErrorAlert eAlert = new ErrorAlert ("Wipe! Complete", "You have successfully performed the wipe.", null, this);
+                	ErrorAlert eAlert = new ErrorAlert (l10n.getString(L10nConstants.keys.TITLE_WIPE_COMPLETE), l10n.getString(L10nConstants.keys.WIPE_MSG_SUCCESS), null, this);
         			eAlert.show();
         			
         		}
         		catch (Exception e)
         		{
         			String msg = e.getMessage();
-        			ErrorAlert eAlert = new ErrorAlert ("Wipe! Error", "There was an error performing the wipe: " + msg, null, this);
+        			ErrorAlert eAlert = new ErrorAlert (l10n.getString(L10nConstants.keys.TITLE_WIPE_ERR), l10n.getString(L10nConstants.keys.WIPE_MSG_ERR) + msg, null, this);
         			eAlert.show();
         			//todo: need to show error alert here
         			e.printStackTrace();
@@ -131,9 +132,29 @@ public class WipeManualForm
         	_midlet.notifyDestroyed();
         }
 
+        ErrorAlert statusDialog;
+        
 		protected void acceptNotify() {
 			
+
+			statusDialog = new ErrorAlert (l10n.getString(L10nConstants.keys.TITLE_WIPE_INPROGRESS), l10n.getString(L10nConstants.keys.WIPE_MSG_INPROGRESS), null, this);
+			statusDialog.show();
+			
 			new Thread(this).start();
+			
+			
+		}
+
+		public void wipingFile(String path) {
+			
+			String current = statusDialog.getText();
+			String update = l10n.getString(L10nConstants.keys.WIPE_MSG_FILE) + path;
+			
+			statusDialog.setText(current + "\n" + update);
+			
+		}
+
+		public void wipePercentComplete(int percent) {
 			
 			
 		}

@@ -68,12 +68,17 @@ public class SetupAlertMessageForm
                 load();
         }
 
-        private void persist ()
+        private boolean persist ()
         {
-        	_midlet.savePref(PanicConstants.PREFS_KEY_RECIPIENT, phoneNumber.getString());        	
-        	_midlet.savePref(PanicConstants.PREFS_KEY_MESSAGE, alertMsg.getString());
-        	_midlet.showAlert("Success!", "Excellent. You are now fully configured for the Shout! alert message.", _midlet.getShoutConfigMenu());
-
+        	if (phoneNumber.getString().length() > 0
+        		&& alertMsg.getString().length() > 0)
+        	{
+        		_midlet.savePref(PanicConstants.PREFS_KEY_RECIPIENT, phoneNumber.getString());        	
+        		_midlet.savePref(PanicConstants.PREFS_KEY_MESSAGE, alertMsg.getString());
+        		return true;
+        	}
+        	
+        	return false;
         }
         
         private void load ()
@@ -84,7 +89,16 @@ public class SetupAlertMessageForm
         }
         public void run ()
         {
-        	persist();
+        	if (persist())
+        	{
+            	_midlet.showAlert("Success!", "Excellent. You are now fully configured for the Shout! alert message.", _midlet.getShoutConfigMenu());
+
+        	}
+        	else
+        	{
+            	_midlet.showAlert("Error!", "You must configure all fields.", this);
+        		
+        	}
         }
         
         /**

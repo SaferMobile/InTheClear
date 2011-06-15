@@ -20,6 +20,7 @@ import org.safermobile.clear.micro.L10nConstants;
 import org.safermobile.clear.micro.L10nResources;
 import org.safermobile.clear.micro.apps.controllers.ShoutController;
 import org.safermobile.clear.micro.apps.controllers.WipeController;
+import org.safermobile.clear.micro.apps.controllers.WipeListener;
 import org.safermobile.clear.micro.data.PhoneInfo;
 import org.safermobile.clear.micro.sms.SMSManager;
 import org.safermobile.clear.micro.ui.LargeStringCanvas;
@@ -30,7 +31,7 @@ import org.safermobile.micro.utils.StringTokenizer;
 
 // hasLocationCapability=false
 //release.build = false
-public class PanicActivateMIDlet extends MIDlet implements CommandListener, Runnable {
+public class PanicActivateMIDlet extends MIDlet implements CommandListener, WipeListener, Runnable {
 
 	
 	private DisplayManager _manager;
@@ -291,7 +292,7 @@ public class PanicActivateMIDlet extends MIDlet implements CommandListener, Runn
 				{
 					showMessage("Wiping all available files...");
 					try {
-						wc.wipeAllRootPaths();
+						wc.wipeAllRootPaths(this);
 						showMessage("Wiping all available files... WIPE COMPLETE.");
 					} catch (IOException e) {
 						showMessage("Wiping all photos... ERROR. UNABLE TO WIPE ALL FILES.");
@@ -302,7 +303,7 @@ public class PanicActivateMIDlet extends MIDlet implements CommandListener, Runn
 				{
 					showMessage("Wiping all photos...");
 					try {
-						wc.wipePhotos();
+						wc.wipePhotos(this);
 						showMessage("Wiping all photos... WIPE COMPLETE.");
 					} catch (IOException e) {
 						showMessage("Wiping all photos... ERROR. UNABLE TO WIPE PHOTOS.");
@@ -352,6 +353,21 @@ public class PanicActivateMIDlet extends MIDlet implements CommandListener, Runn
 		{
 			_lsCanvas.setLargeString(msg);
 		}
+	}
+
+
+	public void wipingFile(String path) {
+		
+		showMessage("wiping: " + path);
+		Logger.debug(PanicConstants.TAG, "wiping: " + path);
+
+	}
+
+
+	public void wipePercentComplete(int percent) {
+		
+		//nothing so far
+		
 	}
 	
 	

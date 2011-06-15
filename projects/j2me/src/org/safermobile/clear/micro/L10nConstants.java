@@ -80,6 +80,16 @@ public class L10nConstants {
 		public static final String TITLE_LOCATION_INFO = "TITLE_LOCATION_INFO";
 		public static final String PERMISSION_LOC_SUCCESS = "PERMISSION_LOC_SUCCESS";
 		public static final String PERMISSION_LOC_FAILURE = "PERMISSION_LOC_FAILURE";
+		public static final String TITLE_WIPE_MANUAL = "TITLE_WIPE_MANUAL";
+		public static final String MENU_WIPE_NOW = "MENU_WIPE_NOW";
+		public static final String WIPE_WARNING_MSG = "WIPE_WARNING_MSG";
+		public static final String TITLE_WIPE_COMPLETE = "TITLE_WIPE_COMPLETE";
+		public static final String WIPE_MSG_SUCCESS = "WIPE_MSG_SUCCESS";
+		public static final String TITLE_WIPE_ERR = "TITLE_WIPE_ERR";
+		public static final String WIPE_MSG_ERR = "WIPE_MSG_ERR";
+		public static final String TITLE_WIPE_INPROGRESS = "TITLE_WIPE_INPROGRESS";
+		public static final String WIPE_MSG_INPROGRESS = "WIPE_MSG_INPROGRESS";
+		public static final String WIPE_MSG_FILE = "WIPE_MSG_FILE";
 
     }
 }

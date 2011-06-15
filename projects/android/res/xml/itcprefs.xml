@@ -25,8 +25,5 @@
 		<CheckBoxPreference
 			android:title="@string/KEY_PREF_WIPEPHOTOS"
 			android:key="DefaultWipePhotos" />
-		<CheckBoxPreference
-			android:title="@string/KEY_PREF_WIPEFILES"
-			android:key="DefaultWipeFolders" />
 	</PreferenceCategory>
 </PreferenceScreen>

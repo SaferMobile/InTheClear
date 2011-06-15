@@ -45,7 +45,7 @@ public class WipePermissionForm
                 
                 // Set the title and menu.
                 setTitle("Wipe Permission");
-                setMenuText(  l10n.getString(L10nConstants.keys.KEY_MENU_BACK) ,  "Enable" );
+                setMenuText(  l10n.getString(L10nConstants.keys.MENU_BACK) ,  "Enable" );
 
              // Center the text.
         		_label.setHorizontalAlignment( Graphics.LEFT );

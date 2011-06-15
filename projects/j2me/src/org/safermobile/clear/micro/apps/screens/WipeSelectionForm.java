@@ -43,39 +43,39 @@ public class WipeSelectionForm
                 _midlet = midlet;
                 
                 // Set the title and menu.
-                setTitle( l10n.getString(L10nConstants.keys.KEY_WIPE_SELECT_TITLE) );
-                setMenuText( l10n.getString(L10nConstants.keys.KEY_MENU_BACK), l10n.getString(L10nConstants.keys.KEY_MENU_NEXT) );
+                setTitle( l10n.getString(L10nConstants.keys.WIPE_SELECT_TITLE) );
+                setMenuText( l10n.getString(L10nConstants.keys.MENU_BACK), l10n.getString(L10nConstants.keys.MENU_NEXT) );
 
                 // Center the text.
                 Label label = new Label();
-                label.setLabel(l10n.getString(L10nConstants.keys.KEY_WIPE_MESSAGE));
+                label.setLabel(l10n.getString(L10nConstants.keys.WIPE_MESSAGE));
         		label.setHorizontalAlignment( Graphics.LEFT );
        
         		append(label );
         	
         		
         		_cbContacts = new CheckBox();
-        		_cbContacts.setLabel( l10n.getString(L10nConstants.keys.KEY_WIPE_MENU_CONTACTS) );
+        		_cbContacts.setLabel( l10n.getString(L10nConstants.keys.WIPE_MENU_CONTACTS) );
         		_cbContacts.setChecked( true );
         		append( _cbContacts );
 
         		_cbPhotos = new CheckBox();
-        		_cbPhotos.setLabel( l10n.getString(L10nConstants.keys.KEY_WIPE_MENU_PHOTOS) );
+        		_cbPhotos.setLabel( l10n.getString(L10nConstants.keys.WIPE_MENU_PHOTOS) );
         		_cbPhotos.setChecked( true );
         		append( _cbPhotos );
         		
         		_cbAllStorage = new CheckBox();
-        		_cbAllStorage.setLabel( l10n.getString(L10nConstants.keys.KEY_WIPE_MENU_FILES) );
+        		_cbAllStorage.setLabel( l10n.getString(L10nConstants.keys.WIPE_MENU_FILES) );
         		_cbAllStorage.setChecked( true );
         		append( _cbAllStorage );
         		
         		_cbCalendar = new CheckBox();
-        		_cbCalendar.setLabel( l10n.getString(L10nConstants.keys.KEY_WIPE_MENU_CALENDAR) );
+        		_cbCalendar.setLabel( l10n.getString(L10nConstants.keys.WIPE_MENU_CALENDAR) );
         		_cbCalendar.setChecked( true );
         		append( _cbCalendar );
         		
         		_cbToDo = new CheckBox();
-        		_cbToDo.setLabel( l10n.getString(L10nConstants.keys.KEY_WIPE_MENU_TODO) );
+        		_cbToDo.setLabel( l10n.getString(L10nConstants.keys.WIPE_MENU_TODO) );
         		_cbToDo.setChecked( true );
         		append( _cbToDo );
         		
@@ -105,7 +105,7 @@ public class WipeSelectionForm
 			persist();
 			
 			DeviceScreen next = new PanicConfigCompleteForm(_midlet);
-			_midlet.showAlert(l10n.getString(L10nConstants.keys.KEY_WIPE_TITLE), l10n.getString(L10nConstants.keys.KEY_WIPE_MESSAGE_SAVED), next);
+			_midlet.showAlert(l10n.getString(L10nConstants.keys.WIPE_TITLE), l10n.getString(L10nConstants.keys.WIPE_MESSAGE_SAVED), next);
 			
 			
 		}

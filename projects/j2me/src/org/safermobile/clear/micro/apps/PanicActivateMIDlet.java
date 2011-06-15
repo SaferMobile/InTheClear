@@ -68,10 +68,10 @@ public class PanicActivateMIDlet extends MIDlet implements CommandListener, Runn
 		_display = Display.getDisplay(this);
 		_manager = new DisplayManager(_display);
 		
-		_cmdCancel = new Command(l10n.getString(L10nConstants.keys.KEY_PANIC_BTN_CANCEL), Command.SCREEN,1);
+		_cmdCancel = new Command(l10n.getString(L10nConstants.keys.PANIC_BTN_CANCEL), Command.SCREEN,1);
 		_cmdExit = new Command("Exit", Command.EXIT,1);
 		
-		_tbMain = new TextBox(l10n.getString(L10nConstants.keys.KEY_PANIC_TITLE_MAIN), "", 500, TextField.ANY);
+		_tbMain = new TextBox(l10n.getString(L10nConstants.keys.PANIC_TITLE_MAIN), "", 500, TextField.ANY);
 		
 		_tbMain.setCommandListener(this);
 		
@@ -109,7 +109,7 @@ public class PanicActivateMIDlet extends MIDlet implements CommandListener, Runn
 		} catch (RecordStoreException e) {
 			
 			Logger.error(PanicConstants.TAG, "error access preferences", e);
-			showAlert(l10n.getString(L10nConstants.keys.KEY_PANIC_TITLE_ERROR),l10n.getString(L10nConstants.keys.KEY_PANIC_ERROR_PREFS),null);
+			showAlert(l10n.getString(L10nConstants.keys.PANIC_TITLE_ERROR),l10n.getString(L10nConstants.keys.PANIC_ERROR_PREFS),null);
 		}
 	}
 	

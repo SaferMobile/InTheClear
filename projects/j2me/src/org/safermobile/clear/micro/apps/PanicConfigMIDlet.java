@@ -3,10 +3,7 @@
 /* See LICENSE for licensing information */
 
 package org.safermobile.clear.micro.apps;
-import javax.microedition.lcdui.Alert;
 import javax.microedition.lcdui.Display;
-import javax.microedition.lcdui.Displayable;
-import javax.microedition.lcdui.Form;
 import javax.microedition.midlet.MIDlet;
 import javax.microedition.midlet.MIDletStateChangeException;
 import javax.microedition.rms.RecordStoreException;
@@ -15,6 +12,8 @@ import org.j4me.ui.DeviceScreen;
 import org.j4me.ui.Menu;
 import org.j4me.ui.MenuItem;
 import org.j4me.ui.UIManager;
+import org.safermobile.clear.micro.L10nConstants;
+import org.safermobile.clear.micro.L10nResources;
 import org.safermobile.clear.micro.apps.screens.LocationPermissionForm;
 import org.safermobile.clear.micro.apps.screens.PanicWizardForm;
 import org.safermobile.clear.micro.apps.screens.SMSSendTestForm;
@@ -35,7 +34,6 @@ public class PanicConfigMIDlet extends MIDlet implements Runnable {
 	private Display _display;
 	private Splash _splash;
 	
-	
 	private PanicWizardForm _startForm;	
 	private UserInfoForm _formUserInfo;
 		
@@ -44,6 +42,8 @@ public class PanicConfigMIDlet extends MIDlet implements Runnable {
 	
 	private int formIdx = 1;
 	
+	private L10nResources l10n = LocaleManager.getResources();
+
 	/**
 	 * Creates several screens and navigates between them.
 	 */
@@ -109,7 +109,7 @@ public class PanicConfigMIDlet extends MIDlet implements Runnable {
 	  {
   		
   		// The first screen is a menu to choose among the example screens.
-		  _shoutMenu = new Menu( "Panic! Shout", null );
+		  _shoutMenu = new Menu( l10n.getString(L10nConstants.keys.TITLE_SHOUT), null );
   		
 
   		// Attach an exit option.
@@ -117,7 +117,7 @@ public class PanicConfigMIDlet extends MIDlet implements Runnable {
   				{
   					public String getText ()
   					{
-  						return "1) Check SMS Permissions";
+  						return l10n.getString(L10nConstants.keys.MENU_SETUP_SMS);
   					}
 
   					public void onSelection ()
@@ -132,7 +132,7 @@ public class PanicConfigMIDlet extends MIDlet implements Runnable {
   				{
   					public String getText ()
   					{
-  						return "2) Check Location Access";
+  						return l10n.getString(L10nConstants.keys.MENU_SETUP_LOCATION);
   					}
 
   					public void onSelection ()
@@ -147,7 +147,7 @@ public class PanicConfigMIDlet extends MIDlet implements Runnable {
   				{
   					public String getText ()
   					{
-  						return "3) Setup Alert Message";
+  						return l10n.getString(L10nConstants.keys.MENU_SETUP_ALERT);
   					}
 
   					public void onSelection ()
@@ -162,7 +162,7 @@ public class PanicConfigMIDlet extends MIDlet implements Runnable {
   				{
   					public String getText ()
   					{
-  						return "4) Enable Wipe! Permission";
+  						return l10n.getString(L10nConstants.keys.MENU_SETUP_WIPE);
   					}
 
   					public void onSelection ()
@@ -177,7 +177,7 @@ public class PanicConfigMIDlet extends MIDlet implements Runnable {
   				{
   					public String getText ()
   					{
-  						return "5) Configure Wipe! Options";
+  						return l10n.getString(L10nConstants.keys.MENU_CONFIG_WIPE);
   					}
 
   					public void onSelection ()
@@ -256,6 +256,12 @@ public class PanicConfigMIDlet extends MIDlet implements Runnable {
 			showAlert("Error!","We couldn't save you settings!",_startForm);
 			Logger.error(PanicConstants.TAG, "a problem saving the prefs: " + e, e);
 		}
+	}
+	
+	public String loadPref (String key)
+	{
+		return _prefs.get(key);
+			
 	}
 	
 	public void savePrefs (String[] keys, String[] values)

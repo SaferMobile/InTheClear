@@ -50,7 +50,7 @@ public class WipeManualForm
 
                 // Center the text.
                 Label label = new Label();
-                label.setLabel("Select one or more data types below to wipe.\n\nWARNING: THIS WILL REMOVE THE ACTUAL DATA FROM YOUR PHONE.");
+                label.setLabel("Select one or more data types below to wipe. WARNING: THIS WILL DELETE REAL DATA FROM YOUR PHONE.");
         		label.setHorizontalAlignment( Graphics.LEFT );
         		append(label );
         	

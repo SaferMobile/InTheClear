@@ -42,29 +42,30 @@ public class SetupAlertMessageForm
                _midlet = midlet;
                 
                 // Set the title and menu.
-                setTitle(l10n.getString(L10nConstants.keys.KEY_ALERT_MESSAGE_TITLE) );
-                setMenuText(  l10n.getString(L10nConstants.keys.KEY_MENU_BACK) ,  l10n.getString(L10nConstants.keys.KEY_MENU_NEXT) );
+                setTitle(l10n.getString(L10nConstants.keys.ALERT_MESSAGE_TITLE) );
+                setMenuText(  l10n.getString(L10nConstants.keys.MENU_BACK) ,  l10n.getString(L10nConstants.keys.MENU_NEXT) );
 
              // Center the text.
         		_label.setHorizontalAlignment( Graphics.LEFT );
 
-        		_label.setLabel(l10n.getString(L10nConstants.keys.KEY_ALERT_MESSAGE_INFO));
+        		_label.setLabel(l10n.getString(L10nConstants.keys.ALERT_MESSAGE_INFO));
         		
         		// Add the label to this screen.
         		append( _label );
         		
                 // Add the phone number box.
                 phoneNumber = new TextBox();
-                phoneNumber.setLabel( l10n.getString(L10nConstants.keys.KEY_PANIC_LBL_PHONE_NUMBER) );
+                phoneNumber.setLabel( l10n.getString(L10nConstants.keys.PANIC_LBL_PHONE_NUMBER) );
                 phoneNumber.setForPhoneNumber();
                 phoneNumber.setMaxSize( 20 );
                 append( phoneNumber );
                 
                 // Add the phone number box.
                 alertMsg = new TextBox();
-                alertMsg.setLabel(l10n.getString(L10nConstants.keys.KEY_ALERT_LBL));                
+                alertMsg.setLabel(l10n.getString(L10nConstants.keys.ALERT_LBL));                
                 append( alertMsg );
                
+                load();
         }
 
         private void persist ()
@@ -75,6 +76,12 @@ public class SetupAlertMessageForm
 
         }
         
+        private void load ()
+        {
+        	phoneNumber.setString(_midlet.loadPref(PanicConstants.PREFS_KEY_RECIPIENT));
+        	alertMsg.setString(_midlet.loadPref(PanicConstants.PREFS_KEY_MESSAGE));
+        	
+        }
         public void run ()
         {
         	persist();

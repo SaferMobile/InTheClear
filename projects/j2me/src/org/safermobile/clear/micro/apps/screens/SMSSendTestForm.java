@@ -43,20 +43,20 @@ public class SMSSendTestForm
                 this.midlet = midlet;
                 
                 // Set the title and menu.
-                setTitle( l10n.getString(L10nConstants.keys.KEY_PANIC_TITLE_SMS_TEST) );
-                setMenuText(  l10n.getString(L10nConstants.keys.KEY_MENU_BACK) ,  l10n.getString(L10nConstants.keys.KEY_MENU_SEND) );
+                setTitle( l10n.getString(L10nConstants.keys.PANIC_TITLE_SMS_TEST) );
+                setMenuText(  l10n.getString(L10nConstants.keys.MENU_BACK) ,  l10n.getString(L10nConstants.keys.MENU_SEND) );
 
              // Center the text.
         		_label.setHorizontalAlignment( Graphics.LEFT );
 
-        		_label.setLabel(l10n.getString(L10nConstants.keys.KEY_PANIC_SMS_TEST_MESSAGE));
+        		_label.setLabel(l10n.getString(L10nConstants.keys.PANIC_SMS_TEST_MESSAGE));
         		
         		// Add the label to this screen.
         		append( _label );
         		
                 // Add the phone number box.
                 phoneNumber = new TextBox();
-                phoneNumber.setLabel( l10n.getString(L10nConstants.keys.KEY_PANIC_LBL_PHONE_NUMBER) );
+                phoneNumber.setLabel( l10n.getString(L10nConstants.keys.PANIC_LBL_PHONE_NUMBER) );
                 phoneNumber.setForPhoneNumber();
                 phoneNumber.setMaxSize( 20 );
                 append( phoneNumber );

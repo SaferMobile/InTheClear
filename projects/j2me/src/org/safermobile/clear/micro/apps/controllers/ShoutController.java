@@ -24,7 +24,7 @@ public class ShoutController {
 		
 		StringBuffer sbPanicMsg = new StringBuffer();
 		
-		sbPanicMsg.append(l10n.getString(L10nConstants.keys.KEY_PANIC_MSG_FROM));
+		sbPanicMsg.append(l10n.getString(L10nConstants.keys.PANIC_MSG_FROM));
 		sbPanicMsg.append(' ');
 		sbPanicMsg.append(userName);
 		sbPanicMsg.append(':');
@@ -32,13 +32,13 @@ public class ShoutController {
 		sbPanicMsg.append(userMessage);
 
 		sbPanicMsg.append(' ');
-		sbPanicMsg.append(l10n.getString(L10nConstants.keys.KEY_PANIC_MSG_LOCATION));
+		sbPanicMsg.append(l10n.getString(L10nConstants.keys.PANIC_MSG_LOCATION));
 		sbPanicMsg.append(userLocation);
 		
 		
 		//append timestamp
 		sbPanicMsg.append(' ');
-		sbPanicMsg.append(l10n.getString(L10nConstants.keys.KEY_PANIC_MSG_TIMESTAMP));
+		sbPanicMsg.append(l10n.getString(L10nConstants.keys.PANIC_MSG_TIMESTAMP));
 		sbPanicMsg.append(new Date().toString());
 	
 		return sbPanicMsg.toString();
@@ -50,7 +50,7 @@ public class ShoutController {
 		
 		StringBuffer sbPanicMsg = new StringBuffer();
 		
-		sbPanicMsg.append(l10n.getString(L10nConstants.keys.KEY_PANIC_MSG_FROM));
+		sbPanicMsg.append(l10n.getString(L10nConstants.keys.PANIC_MSG_FROM));
 		sbPanicMsg.append(' ');
 		sbPanicMsg.append(userName);
 		sbPanicMsg.append(':');
@@ -79,7 +79,7 @@ public class ShoutController {
 		if (cid != null && cid.length() > 0)
 		{
 			sbPanicMsg.append(" ");
-			sbPanicMsg.append(l10n.getString(L10nConstants.keys.KEY_PANIC_MSG_CID));
+			sbPanicMsg.append(l10n.getString(L10nConstants.keys.PANIC_MSG_CID));
 			sbPanicMsg.append(cid);
 		}
 		
@@ -88,7 +88,7 @@ public class ShoutController {
 		if (lac != null && lac.length() > 0)
 		{
 			sbPanicMsg.append(" ");
-			sbPanicMsg.append(l10n.getString(L10nConstants.keys.KEY_PANIC_MSG_LAC));
+			sbPanicMsg.append(l10n.getString(L10nConstants.keys.PANIC_MSG_LAC));
 			sbPanicMsg.append(lac);
 		}
 		
@@ -112,7 +112,7 @@ public class ShoutController {
 		
 		//append timestamp
 		sbPanicMsg.append(" ");
-		sbPanicMsg.append(l10n.getString(L10nConstants.keys.KEY_PANIC_MSG_TIMESTAMP));
+		sbPanicMsg.append(l10n.getString(L10nConstants.keys.PANIC_MSG_TIMESTAMP));
 		sbPanicMsg.append(new Date().toString());
 	
 		return sbPanicMsg.toString();

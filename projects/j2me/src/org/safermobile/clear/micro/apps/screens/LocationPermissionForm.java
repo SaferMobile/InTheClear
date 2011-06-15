@@ -45,7 +45,7 @@ public class LocationPermissionForm
                 
                 // Set the title and menu.
                 setTitle("Location Permission");
-                setMenuText(  l10n.getString(L10nConstants.keys.KEY_MENU_BACK) ,  "Enable" );
+                setMenuText(  l10n.getString(L10nConstants.keys.MENU_BACK) ,  "Enable" );
 
              // Center the text.
         		_label.setHorizontalAlignment( Graphics.LEFT );
@@ -105,7 +105,7 @@ public class LocationPermissionForm
     		if (cid != null && cid.length() > 0)
     		{
     			
-    			sbPanicMsg.append(l10n.getString(L10nConstants.keys.KEY_PANIC_MSG_CID));
+    			sbPanicMsg.append(l10n.getString(L10nConstants.keys.PANIC_MSG_CID));
     			sbPanicMsg.append(cid);
     			sbPanicMsg.append("\n");    			
     		}
@@ -114,7 +114,7 @@ public class LocationPermissionForm
     		String lac = PhoneInfo.getLAC();
     		if (lac != null && lac.length() > 0)
     		{    		
-    			sbPanicMsg.append(l10n.getString(L10nConstants.keys.KEY_PANIC_MSG_LAC));
+    			sbPanicMsg.append(l10n.getString(L10nConstants.keys.PANIC_MSG_LAC));
     			sbPanicMsg.append(lac);
     			sbPanicMsg.append("\n");    			
     		}

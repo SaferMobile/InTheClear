@@ -1009,7 +1009,7 @@ final class CanvasWrapper
 		//  There are special cases, like BlackBerry's and IBM's J9
 		//  on Windows Mobile, where this is not true.  These are
 		//  handled by setMenuText() and other methods.
-		setFullScreenMode( true );
+		setFullScreenMode( false );
 		
 		// Register for getting LCDUI menu commands.
 		setCommandListener( this );

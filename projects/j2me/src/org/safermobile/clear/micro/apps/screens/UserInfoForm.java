@@ -45,25 +45,25 @@ public class UserInfoForm
                 _midlet = midlet;
                 
                 // Set the title and menu.
-                setTitle( l10n.getString(L10nConstants.keys.KEY_PANIC_TITLE_YOUR_INFO) );
-                setMenuText( l10n.getString(L10nConstants.keys.KEY_MENU_BACK), l10n.getString(L10nConstants.keys.KEY_MENU_NEXT) );
+                setTitle( l10n.getString(L10nConstants.keys.PANIC_TITLE_YOUR_INFO) );
+                setMenuText( l10n.getString(L10nConstants.keys.MENU_BACK), l10n.getString(L10nConstants.keys.MENU_NEXT) );
 
                 // Center the text.
                 Label label = new Label();
-                label.setLabel(l10n.getString(L10nConstants.keys.KEY_WIZARD_USER_INFO));
+                label.setLabel(l10n.getString(L10nConstants.keys.WIZARD_USER_INFO));
         		label.setHorizontalAlignment( Graphics.LEFT );
         		append(label );
         	        		
                 // Add the phone number box.
                 tbUserName = new TextBox();
-                tbUserName.setLabel( l10n.getString(L10nConstants.keys.KEY_LBL_YOUR_NAME) );
+                tbUserName.setLabel( l10n.getString(L10nConstants.keys.LBL_YOUR_NAME) );
                 tbUserName.setForAnyText();
                 append( tbUserName );
                 
                 // Add the PIN number box.
                 tbOtherInfo = new TextBox();
                 tbOtherInfo.setForAnyText();
-                tbOtherInfo.setLabel( l10n.getString(L10nConstants.keys.KEY_LBL_YOUR_INFO) );               
+                tbOtherInfo.setLabel( l10n.getString(L10nConstants.keys.LBL_YOUR_INFO) );               
                 append( tbOtherInfo );
         }
 
@@ -85,7 +85,7 @@ public class UserInfoForm
 			persist();
 			
 			DeviceScreen next = _midlet.getShoutConfigMenu();
-			_midlet.showAlert(l10n.getString(L10nConstants.keys.KEY_PANIC_TITLE), l10n.getString(L10nConstants.keys.KEY_WIZARD_PHONE_CONFIG), next);
+			_midlet.showAlert(l10n.getString(L10nConstants.keys.PANIC_TITLE), l10n.getString(L10nConstants.keys.WIZARD_PHONE_CONFIG), next);
 			
 			//_midlet.showShoutConfigMenu();
 			

@@ -2,6 +2,7 @@ package org.safermobile.clear.micro.apps.screens;
 
 
 import javax.microedition.lcdui.Graphics;
+import javax.microedition.rms.RecordStoreException;
 
 import org.j4me.ui.*;
 import org.j4me.ui.components.*;
@@ -13,6 +14,8 @@ import org.safermobile.clear.micro.apps.PanicConstants;
 import org.safermobile.clear.micro.apps.ShoutMIDlet;
 import org.safermobile.clear.micro.apps.controllers.ShoutController;
 import org.safermobile.clear.micro.ui.ErrorAlert;
+import org.safermobile.micro.utils.Logger;
+import org.safermobile.micro.utils.Preferences;
 
 /**
  * Example of a <code>TextBox</code> component.
@@ -35,6 +38,8 @@ public class ShoutManualForm
 
     	L10nResources l10n = LocaleManager.getResources();
 
+    	private Preferences _prefs;
+    	
         /**
          * Constructs a screen that shows a <code>TextBox</code> component in action.
          * 
@@ -44,9 +49,17 @@ public class ShoutManualForm
         {
                 this.midlet = midlet;
                 
+                try
+        		{
+        		 _prefs = new Preferences (PanicConstants.PANIC_PREFS_DB);
+        		} catch (RecordStoreException e) {
+        			
+        			Logger.error(PanicConstants.TAG, "a problem saving the prefs: " + e, e);
+        		}
+                
                 // Set the title and menu.
                 setTitle( "Shout!" );
-                setMenuText( "Exit" ,  l10n.getString(L10nConstants.keys.KEY_MENU_SEND) );
+                setMenuText( "Exit" ,  l10n.getString(L10nConstants.keys.MENU_SEND) );
 
              // Center the text.
         		_label.setHorizontalAlignment( Graphics.LEFT );
@@ -58,7 +71,7 @@ public class ShoutManualForm
         		
                 // Add the phone number box.
         		tbPhoneNumber = new TextBox();
-        		tbPhoneNumber.setLabel( l10n.getString(L10nConstants.keys.KEY_PANIC_LBL_PHONE_NUMBER) );
+        		tbPhoneNumber.setLabel( l10n.getString(L10nConstants.keys.PANIC_LBL_PHONE_NUMBER) );
                 tbPhoneNumber.setForPhoneNumber();
                 tbPhoneNumber.setMaxSize( 20 );
                 append( tbPhoneNumber );
@@ -67,6 +80,8 @@ public class ShoutManualForm
         		tbMessage = new TextBox();
         		tbMessage.setLabel("Shout! Message" );        		
                 append( tbMessage );
+                
+                load();
                
         }
 
@@ -89,6 +104,15 @@ public class ShoutManualForm
         {
         	sendShoutMessage();
 
+        }
+        
+        private void load ()
+        {
+        	if (_prefs.get(PanicConstants.PREFS_KEY_RECIPIENT) != null)
+        	{
+        		tbPhoneNumber.setString(_prefs.get(PanicConstants.PREFS_KEY_RECIPIENT));
+        		tbMessage.setString(_prefs.get(PanicConstants.PREFS_KEY_MESSAGE));
+        	}
         }
         
         private void sendShoutMessage ()

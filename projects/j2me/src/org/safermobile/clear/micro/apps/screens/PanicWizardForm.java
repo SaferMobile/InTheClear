@@ -43,11 +43,11 @@ public class PanicWizardForm
                 setMenuText( l10n.getString(L10nConstants.keys.MENU_EXIT), l10n.getString(L10nConstants.keys.MENU_NEXT));
                 
             	// Center the text.
-        		_label.setHorizontalAlignment( Graphics.LEFT );
+        		_label.setHorizontalAlignment( Graphics.HCENTER );
 
         		// Make the label be mutliple paragraphs.
         		_label.setLabel(l10n.getString(L10nConstants.keys.PANIC_SETUP_INTRO_1)
-        				+ "\n\n" + l10n.getString(L10nConstants.keys.PANIC_SETUP_INTRO_2) + "\n\n" + l10n.getString(L10nConstants.keys.PANIC_SETUP_INTRO_3));
+        				+ "\n" + l10n.getString(L10nConstants.keys.PANIC_SETUP_INTRO_2) + "\n" + l10n.getString(L10nConstants.keys.PANIC_SETUP_INTRO_3));
         		
         		// Add the label to this screen.
         		append( _label );

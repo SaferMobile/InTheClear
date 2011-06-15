@@ -53,26 +53,27 @@ public class WipeController {
 		
 	}
 	
-	public boolean wipeAllRootPaths () throws IOException
+	public boolean wipeAllRootPaths (WipeListener wl) throws IOException
 	{
 		Enumeration drives = FileSystemRegistry.listRoots();
 	
 		while (drives.hasMoreElements())
 		{
 			String root =  drives.nextElement().toString();
-		//	String path = "file:///" + root;
+			String path = "file:///" + root;
 			
-			wipeFilePath(root);
+			wipeFilePath(path, wl);
 		}
 		
 		return true;
 	}
 	
-	public boolean wipeFilePath (String path) throws IOException
+	public boolean wipeFilePath (String path, WipeListener wl) throws IOException
 	{
 	
 		   FileConnection fc = (FileConnection) Connector.open(path, Connector.READ);
 		   
+		   wl.wipingFile(path);
 		   
 	      if (!fc.exists()) 
 	      {
@@ -87,8 +88,10 @@ public class WipeController {
 	    		  Enumeration enumFiles = fc.list();
 	    		  while (enumFiles.hasMoreElements())
 	    		  {
-	    			  FileConnection fcNext = (FileConnection)enumFiles.nextElement();
-	    			  wipeFilePath(fcNext.getPath());
+	    			  String fcNext = enumFiles.nextElement().toString();
+	    			  
+	    			  wipeFilePath(fc.getURL() + fcNext, wl);
+	    			  
 	    		  }
 	    		  
 	    	  }
@@ -96,8 +99,16 @@ public class WipeController {
 	    	  {
 	    		  if (fc.canWrite())
 	    		  {
+	    			  fc.close();
 	    			  fc = (FileConnection) Connector.open(path, Connector.READ_WRITE);
 	    			  fc.delete();
+	    			  fc.close();
+	    			  
+	    		  }
+	    		  else
+	    		  {
+	    			  wl.wipingFile("cannot wipe file (read only): " + path);
+	    			  
 	    		  }
 	    	  }
 	    	  
@@ -107,12 +118,12 @@ public class WipeController {
 	
 	}
 	
-	public void wipePhotos () throws IOException
+	public void wipePhotos (WipeListener wl) throws IOException
 	{
 		String photosPath = System.getProperty("fileconn.dir.photos");
 		
 		if (photosPath != null)
-			wipeFilePath(photosPath);
+			wipeFilePath(photosPath, wl);
 		else
 			throw new IOException("Cannot find photos folder");
 	}

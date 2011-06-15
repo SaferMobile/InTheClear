@@ -45,7 +45,7 @@ public class ShoutMIDlet extends MIDlet implements CommandListener {
 	/*
 	 * localized resources
 	 */
-	L10nResources l10n = L10nResources.getL10nResources("en-US");
+	L10nResources l10n = LocaleManager.getResources();
 	
 	/**
 	 * Creates Panic Activate app

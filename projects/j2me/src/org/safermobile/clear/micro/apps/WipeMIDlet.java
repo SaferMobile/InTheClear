@@ -14,7 +14,7 @@ import org.safermobile.micro.ui.DisplayManager;
 public class WipeMIDlet extends MIDlet
 {
 
-	L10nResources l10n = L10nResources.getL10nResources("en-US");
+	L10nResources l10n = LocaleManager.getResources();
 	
 	private WipeManualForm _form;
 	/**

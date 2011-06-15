@@ -56,24 +56,37 @@ public class WipeController {
 	public boolean wipeAllRootPaths (WipeListener wl) throws IOException
 	{
 		Enumeration drives = FileSystemRegistry.listRoots();
-	
+		boolean success = false;
+		
 		while (drives.hasMoreElements())
 		{
 			String root =  drives.nextElement().toString();
 			String path = "file:///" + root;
 			
-			wipeFilePath(path, wl);
+			try
+			{
+			
+				wipeFilePath(path, wl);
+				success = true;
+			}
+			catch (Exception e)
+			{
+				wl.wipingFile("ERROR: " + path);
+				//just catch these individually
+				e.printStackTrace();
+			}
 		}
 		
-		return true;
+		return success;
 	}
 	
-	public boolean wipeFilePath (String path, WipeListener wl) throws IOException
+	public boolean wipeFilePath (String path, WipeListener wl) throws Exception
 	{
-	
+
+		   wl.wipingFile(path);
+		   
 		   FileConnection fc = (FileConnection) Connector.open(path, Connector.READ);
 		   
-		   wl.wipingFile(path);
 		   
 	      if (!fc.exists()) 
 	      {
@@ -90,10 +103,17 @@ public class WipeController {
 	    		  {
 	    			  String fcNext = enumFiles.nextElement().toString();
 	    			  
-	    			  wipeFilePath(fc.getURL() + fcNext, wl);
-	    			  
+	    			  try
+	    			  {
+	    				  wipeFilePath(fc.getURL() + fcNext, wl);
+	    			  }
+	    			  catch (Exception e)
+	    			  {
+	    				  wl.wipingFile("ERROR: unable to delete: " + fc.getURL() + ": " + e.getMessage());
+	    			  }
 	    		  }
 	    		  
+	    		  wipeFilePath(fc.getURL(), wl);
 	    	  }
 	    	  else
 	    	  {
@@ -118,7 +138,7 @@ public class WipeController {
 	
 	}
 	
-	public void wipePhotos (WipeListener wl) throws IOException
+	public void wipePhotos (WipeListener wl) throws Exception
 	{
 		String photosPath = System.getProperty("fileconn.dir.photos");
 		

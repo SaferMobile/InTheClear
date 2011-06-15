@@ -33,7 +33,11 @@ public class WipeManualForm
         private CheckBox _cbPhotos;
         private CheckBox _cbAllStorage;
         
-        
+
+        ErrorAlert statusDialog;
+
+		StringBuffer log = new StringBuffer();
+		
     	L10nResources l10n = LocaleManager.getResources();
         
         /**
@@ -111,16 +115,22 @@ public class WipeManualForm
                 	
                 	if (_cbAllStorage.isChecked())
                 		wControl.wipeAllRootPaths(this);
-                	
-                	ErrorAlert eAlert = new ErrorAlert (l10n.getString(L10nConstants.keys.TITLE_WIPE_COMPLETE), l10n.getString(L10nConstants.keys.WIPE_MSG_SUCCESS), null, this);
-        			eAlert.show();
+
+        			log.append("\n\n" + l10n.getString(L10nConstants.keys.WIPE_MSG_SUCCESS));
         			
+                	ErrorAlert eAlert = new ErrorAlert (l10n.getString(L10nConstants.keys.TITLE_WIPE_COMPLETE), log.toString(), null, this);
+        			eAlert.show();
+
         		}
         		catch (Exception e)
         		{
         			String msg = e.getMessage();
-        			ErrorAlert eAlert = new ErrorAlert (l10n.getString(L10nConstants.keys.TITLE_WIPE_ERR), l10n.getString(L10nConstants.keys.WIPE_MSG_ERR) + msg, null, this);
+        			
+        			log.append(l10n.getString(L10nConstants.keys.WIPE_MSG_ERR) + msg);
+        			
+        			ErrorAlert eAlert = new ErrorAlert (l10n.getString(L10nConstants.keys.TITLE_WIPE_ERR), log.toString(), null, this);
         			eAlert.show();
+        			
         			//todo: need to show error alert here
         			e.printStackTrace();
         		}
@@ -132,11 +142,10 @@ public class WipeManualForm
         	_midlet.notifyDestroyed();
         }
 
-        ErrorAlert statusDialog;
         
 		protected void acceptNotify() {
 			
-
+			log = new StringBuffer();
 			statusDialog = new ErrorAlert (l10n.getString(L10nConstants.keys.TITLE_WIPE_INPROGRESS), l10n.getString(L10nConstants.keys.WIPE_MSG_INPROGRESS), null, this);
 			statusDialog.show();
 			
@@ -144,14 +153,14 @@ public class WipeManualForm
 			
 			
 		}
+		
 
 		public void wipingFile(String path) {
 			
-			String current = statusDialog.getText();
 			String update = l10n.getString(L10nConstants.keys.WIPE_MSG_FILE) + path;
 			
-			statusDialog.setText(current + "\n" + update);
-			
+			log.append(update);
+			log.append('\n');
 		}
 
 		public void wipePercentComplete(int percent) {

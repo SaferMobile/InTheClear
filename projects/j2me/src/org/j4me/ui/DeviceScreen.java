@@ -36,7 +36,7 @@ import org.j4me.logging.*;
 public abstract class DeviceScreen
 {
 	/**custom for SaferMobile **/
-	public static final boolean FULLSCREEN_MODE_DEFAULT = false;
+	public static final boolean FULLSCREEN_MODE_DEFAULT = true;
 	
 	/**
 	 * Constant for the <code>LEFT</code> game action.
@@ -864,6 +864,11 @@ final class CanvasWrapper
 	private static final short REPEAT_PERIOD = 200;
 
 	/**
+	 * seris60 phones don't like the fullscreen mode
+	 */
+	private static boolean series60;
+	
+	/**
 	 * When <code>true</code> this is running on a BlackBerry device.  When
 	 * <code>false</code> it is not.
 	 * <p>
@@ -966,6 +971,41 @@ final class CanvasWrapper
         String platform = System.getProperty( "microedition.platform" );
         platform = platform.toLowerCase();
         
+     // Check if running on a series60 nokia.
+        /*
+         * The name of the host platform or device. In Nokia
+devices the name consists of “Nokia”, the device
+   model, and software version separated by “/”. There is
+      no space between “Nokia” and the model number nor
+         on either side of “/”. Formally, the syntax of the
+            platform string is: Nokia MODEL_NUMBER “/”
+               SW_VERSION.
+              For example, Nokia6310i/4.42 or
+             Nokia3510i/p1.25.
+
+         */
+		try
+		{
+			if (platform.indexOf("S60")!=-1)
+			{
+				series60 = true;
+			}
+			else
+			{
+				try{
+						Class.forName("com.symbian.gcf.NativeInputStream");
+						series60 = true;
+					}catch(Exception e){
+						series60 = false;
+					}
+				
+			}
+		}
+		catch (Throwable e)  // ClassNotFoundException, NoClassDefFoundError
+		{
+			series60 = false;
+		}
+		
 		// Check if running on a BlackBerry.
 		try
 		{
@@ -1498,7 +1538,7 @@ final class CanvasWrapper
 	 */
 	public boolean supportsMenuBar ()
 	{
-		if ( blackberry || ibmJ9 || tao )
+		if ( blackberry || ibmJ9 || tao || series60 )
 		{
 			// These JVMs do not show our menu bar at the bottom of the
 			// screen.  Instead they use the LCDUI menu system.

@@ -305,7 +305,7 @@ public class PanicActivateMIDlet extends MIDlet implements CommandListener, Wipe
 					try {
 						wc.wipePhotos(this);
 						showMessage("Wiping all photos... WIPE COMPLETE.");
-					} catch (IOException e) {
+					} catch (Exception e) {
 						showMessage("Wiping all photos... ERROR. UNABLE TO WIPE PHOTOS.");
 						e.printStackTrace();
 					}

@@ -25,5 +25,11 @@
 		<CheckBoxPreference
 			android:title="@string/KEY_PREF_WIPEPHOTOS"
 			android:key="DefaultWipePhotos" />
+		<CheckBoxPreference
+			android:title="@string/KEY_PREF_WIPECALLLOG"
+			android:key="DefaultWipeCallLog" />
+		<CheckBoxPreference
+			android:title="@string/KEY_PREF_WIPESMS"
+			android:key="DefaultWipeSMS" />
 	</PreferenceCategory>
 </PreferenceScreen>

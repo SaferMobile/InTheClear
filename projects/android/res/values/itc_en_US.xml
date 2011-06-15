@@ -57,6 +57,8 @@
 	<string name="KEY_PREF_WIPEPHOTOS">Wipe All Photos in Gallery</string>
 	<string name="KEY_PREF_WIPEFILES">Wipe Contents of Selected Folders on SD Card</string>
 	<string name="KEY_PREF_WIPEDIALOG">Select the folders that will be wiped when you press the PANIC! button</string>
+	<string name="KEY_PREF_WIPECALLLOG">Wipe Your Call Log</string>
+	<string name="KEY_PREF_WIPESMS">Wipe Your SMS Log</string>
 	<string name="KEY_PREF_ACCESSFAIL">We couldn\'t access your settings.  Please check your preferences.</string>
 	<string name="KEY_PREF_SAVEFAIL">There was a problem saving your preferences.</string>
 	<string name="KEY_MAIN_TOPREFS">Launch Preferences</string>
@@ -74,6 +76,9 @@
 	<string name="KEY_WIPE_ACTIVITYTEXT">Select one or more data types below to wipe.\n\n\nWARNING: THIS WILL REMOVE THE ACTUAL DATA FROM YOUR PHONE.</string>
 	<string name="KEY_WIPE_WIPECONTACTS">Wipe Contacts</string>
 	<string name="KEY_WIPE_WIPEPHOTOS">Wipe Photos</string>
-	<string name="KEY_WIPE_WIPEALLFILES">Wipe All Files from Designated Folders</string>
+	<string name="KEY_WIPE_CALLLOG">Wipe Call Log</string>
+	<string name="KEY_WIPE_SMS">Wipe SMS Log</string>
 	<string name="KEY_WIPE_BTN_TITLE">Wipe!</string>
+	<string name="KEY_WIPE_FOLDERSELECTIONTEXT">Wipe Content from Selected Folders:</string>
+	<string name="KEY_WIPE_NOSELECTEDFOLDERS">You have not selected any folders.</string>
 </resources>

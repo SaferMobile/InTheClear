@@ -3,7 +3,8 @@
   xmlns:android="http://schemas.android.com/apk/res/android"
   android:layout_width="fill_parent"
   android:layout_height="fill_parent"
-  android:orientation="vertical">
+  android:orientation="vertical"
+  android:weightSum="1.0">
   <TextView
   	android:layout_width="fill_parent"
   	android:layout_height="wrap_content"
@@ -12,10 +13,25 @@
   	xmlns:android="http://schemas.android.com/apk/res/android"
   	android:layout_width="fill_parent"
   	android:layout_height="wrap_content"
-  	android:id="@+id/checkBoxHolder" />
+  	android:id="@+id/checkBoxHolder_group1" />
+  <TextView
+  	android:layout_width="fill_parent"
+  	android:layout_height="wrap_content"
+  	android:text="@string/KEY_WIPE_FOLDERSELECTIONTEXT" />
+  <ScrollView
+  	android:layout_width="fill_parent"
+  	android:layout_height="0dip"
+  	android:layout_weight="0.55">
+	  <ListView
+	  	xmlns:android="http://schemas.android.com/apk/res/android"
+	  	android:layout_width="fill_parent"
+	  	android:layout_height="wrap_content"
+	  	android:id="@+id/checkBoxHolder_group2" />
+  </ScrollView>
   <Button
   	android:layout_width="fill_parent"
   	android:layout_height="wrap_content"
+  	android:id="@+id/wipeButton"
   	android:text="@string/KEY_WIPE_BTN_TITLE" />
   
 </LinearLayout>

@@ -1,13 +1,14 @@
 package org.safermobile.intheclear.ui;
 
-import android.widget.CheckBox;
-
 public class WipeSelector {
-	public String _wipeTarget;
-	public int _wipeTargetId;
-	public CheckBox _wipeSelect;
+	String _wipeTarget;
+	int _wipeTargetId;
+	boolean _wipeSelect;
 	
-	public WipeSelector(String wipeTarget, int wipeTargetId, boolean isChecked) {
+	public WipeSelector(String wipeTarget, int wipeTargetId, boolean wipeSelect) {
+		_wipeTarget = wipeTarget;
+		_wipeTargetId = wipeTargetId;
+		_wipeSelect = wipeSelect;
 		
 	}
 }

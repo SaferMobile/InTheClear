@@ -1,5 +1,6 @@
 package org.safermobile.intheclear.data;
 
+import java.io.File;
 import java.util.Random;
 import java.util.Vector;
 
@@ -61,5 +62,25 @@ public class PIMWiper  {
 		}
 		
 		return result;
+	}
+	
+	public static void wipeContacts() {
+		
+	}
+	
+	public static void wipePhotos() {
+		
+	}
+	
+	public static void wipeFolder(File folder) {
+		
+	}
+	
+	public static void wipeSMS() {
+		
+	}
+	
+	public static void wipeCallLog() {
+		
 	}
 }

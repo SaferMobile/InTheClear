@@ -26,8 +26,8 @@ public class WipeSelectionForm
         private CheckBox _cbContacts;
         private CheckBox _cbCalendar;
         private CheckBox _cbToDo;
-        private CheckBox _cbMemos;
         private CheckBox _cbPhotos;
+        private CheckBox _cbVideos;
         private CheckBox _cbAllStorage;
         
         
@@ -64,6 +64,11 @@ public class WipeSelectionForm
         		_cbPhotos.setChecked( true );
         		append( _cbPhotos );
         		
+        		_cbVideos = new CheckBox();
+        		_cbVideos.setLabel( l10n.getString(L10nConstants.keys.WIPE_MENU_VIDEOS) );
+        		_cbVideos.setChecked( true );
+        		append( _cbVideos );
+        		
         		_cbAllStorage = new CheckBox();
         		_cbAllStorage.setLabel( l10n.getString(L10nConstants.keys.WIPE_MENU_FILES) );
         		_cbAllStorage.setChecked( true );
@@ -89,6 +94,7 @@ public class WipeSelectionForm
         	_midlet.savePref(PanicConstants.PREFS_KEY_WIPE_EVENTS, _cbCalendar.isChecked()+"");
         	_midlet.savePref(PanicConstants.PREFS_KEY_WIPE_TODOS, _cbToDo.isChecked()+"");
         	_midlet.savePref(PanicConstants.PREFS_KEY_WIPE_PHOTOS, _cbPhotos.isChecked()+"");
+        	_midlet.savePref(PanicConstants.PREFS_KEY_WIPE_VIDEOS, _cbVideos.isChecked()+"");
         	_midlet.savePref(PanicConstants.PREFS_KEY_WIPE_ALL_FILES, _cbAllStorage.isChecked()+"");
         	
         }

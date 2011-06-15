@@ -9,6 +9,7 @@ public class L10nConstants {
  	 */
     public class locales {
 		public static final String EN_US = "en-US";
+		public static final String AR_EG = "ar-EG";
 
     }
 
@@ -61,6 +62,7 @@ public class L10nConstants {
 		public static final String WIPE_MESSAGE = "WIPE_MESSAGE";
 		public static final String WIPE_MENU_CONTACTS = "WIPE_MENU_CONTACTS";
 		public static final String WIPE_MENU_PHOTOS = "WIPE_MENU_PHOTOS";
+		public static final String WIPE_MENU_VIDEOS = "WIPE_MENU_VIDEOS";
 		public static final String WIPE_MENU_FILES = "WIPE_MENU_FILES";
 		public static final String WIPE_MENU_CALENDAR = "WIPE_MENU_CALENDAR";
 		public static final String WIPE_MENU_TODO = "WIPE_MENU_TODO";

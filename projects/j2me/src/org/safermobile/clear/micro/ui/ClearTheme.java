@@ -26,12 +26,12 @@ public class ClearTheme
                 return BLACK;
         }
 
-        /*
+        
         public Font getFont() {
 		
-			return Font.getFont(Font.FACE_MONOSPACE, 
-                    Font.STYLE_BOLD, Font.SIZE_MEDIUM);
-		}*/
+			return Font.getFont(Font.FACE_PROPORTIONAL, 
+                    Font.STYLE_PLAIN, Font.SIZE_MEDIUM);
+		}
 
 		/**
          * @see Theme#getBorderColor()

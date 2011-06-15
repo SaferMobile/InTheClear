@@ -1,8 +1,12 @@
 package org.safermobile.clear.micro.apps.screens;
 
 
+import javax.microedition.lcdui.Command;
+import javax.microedition.lcdui.CommandListener;
+import javax.microedition.lcdui.Display;
 import javax.microedition.lcdui.Displayable;
 import javax.microedition.lcdui.Graphics;
+import javax.microedition.midlet.MIDletStateChangeException;
 
 import org.j4me.ui.*;
 import org.j4me.ui.components.*;
@@ -15,12 +19,13 @@ import org.safermobile.clear.micro.apps.WipeMIDlet;
 import org.safermobile.clear.micro.apps.controllers.WipeController;
 import org.safermobile.clear.micro.apps.controllers.WipeListener;
 import org.safermobile.clear.micro.ui.ErrorAlert;
+import org.safermobile.clear.micro.ui.LargeStringCanvas;
 
 /**
  * Example of a <code>TextBox</code> component.
  */
 public class WipeManualForm
-        extends Dialog implements Runnable, WipeListener
+        extends Dialog implements Runnable, WipeListener, CommandListener
 {
         /**
          * The previous screen.
@@ -31,12 +36,18 @@ public class WipeManualForm
         private CheckBox _cbCalendar;
         private CheckBox _cbToDo;
         private CheckBox _cbPhotos;
+        private CheckBox _cbVideos;
         private CheckBox _cbAllStorage;
         
+        private WipeController _wControl;
 
-        ErrorAlert statusDialog;
-
-		StringBuffer log = new StringBuffer();
+        //ErrorAlert statusDialog;
+        LargeStringCanvas _lsCanvas;
+    	private Command	 _cmdExit;
+    	
+        String currentType;
+        int successCount = 0;
+        int errCount = 0;
 		
     	L10nResources l10n = LocaleManager.getResources();
         
@@ -68,6 +79,11 @@ public class WipeManualForm
         		_cbPhotos.setLabel( l10n.getString(L10nConstants.keys.WIPE_MENU_PHOTOS) );
         		_cbPhotos.setChecked( false );
         		append( _cbPhotos );
+        		
+        		_cbVideos = new CheckBox();
+        		_cbVideos.setLabel( l10n.getString(L10nConstants.keys.WIPE_MENU_VIDEOS) );
+        		_cbVideos.setChecked( false );
+        		append( _cbVideos );
         		
         		_cbAllStorage = new CheckBox();
         		_cbAllStorage.setLabel( l10n.getString(L10nConstants.keys.WIPE_MENU_FILES) );
@@ -102,36 +118,85 @@ public class WipeManualForm
         	
         	if (confirmed)
 	        {
+
+        		_lsCanvas = new LargeStringCanvas("");
+        		_cmdExit = new Command(l10n.getString(L10nConstants.keys.MENU_EXIT), Command.EXIT,1);
+        		_lsCanvas.addCommand(_cmdExit);
+        		_lsCanvas.setCommandListener(this);
+        		
+        		Display.getDisplay(_midlet).setCurrent(_lsCanvas);
+
+        		//_lsCanvas.setCommandListener(this);
+        		//_lsCanvas.addCommand(_cmdCancel);
+        		
         		try
         		{
         			
-        			WipeController wControl = new WipeController();
-                	
-                	wControl.wipePIMData(_cbContacts.isChecked(), _cbCalendar.isChecked(), _cbToDo.isChecked());
-                	
-                	
-                	if (_cbPhotos.isChecked())
-                		wControl.wipePhotos(this);
-                	
-                	if (_cbAllStorage.isChecked())
-                		wControl.wipeAllRootPaths(this);
-
-        			log.append("\n\n" + l10n.getString(L10nConstants.keys.WIPE_MSG_SUCCESS));
+        			_lsCanvas.setLargeString("Wiping data...");
         			
-                	ErrorAlert eAlert = new ErrorAlert (l10n.getString(L10nConstants.keys.TITLE_WIPE_COMPLETE), log.toString(), null, this);
-        			eAlert.show();
-
+        			_wControl = new WipeController();
+                	
+            		_lsCanvas.setLargeString("Wiping personal data...");
+            		currentType = "personal data";
+            		_wControl.wipePIMData(_cbContacts.isChecked(), _cbCalendar.isChecked(), _cbToDo.isChecked());
+                	
+            		try
+            		{
+	                	if (_cbPhotos.isChecked())
+	                	{
+	                		currentType = "photos";
+	                		_lsCanvas.setLargeString("Wiping photos...");
+	            			
+	                		_wControl.wipePhotos(this);
+	                	}
+            		}
+                	catch (Exception e)
+                	{
+                		_lsCanvas.setLargeString(e.getMessage());
+                	}
+                	
+                	try
+                	{
+	                	if (_cbVideos.isChecked())
+	                	{
+	                		currentType = "videos";
+	                		_lsCanvas.setLargeString("Wiping videos...");
+	
+	                		_wControl.wipeVideos(this);
+	                	}
+                	}
+                	catch (Exception e)
+                	{
+                		_lsCanvas.setLargeString(e.getMessage());
+                	}
+                	
+                	try
+                	{
+	                	if (_cbAllStorage.isChecked())
+	                	{
+	                		currentType = "files";
+	                		_lsCanvas.setLargeString("Wiping files...");
+	                		_wControl.wipeMemoryCard(this);
+	                		_wControl.wipeAllRootPaths(this);
+	                	}
+                	}
+                	catch (Exception e)
+                	{
+                		_lsCanvas.setLargeString(e.getMessage());
+                	}
+                	
+                	String msg = l10n.getString(L10nConstants.keys.WIPE_MSG_SUCCESS);
+                	msg += "\n" + successCount + " files deleted.";
+                	msg += "\n" + errCount + " errors.";
+                	
+                	_lsCanvas.setLargeString(msg);
+                	
         		}
         		catch (Exception e)
         		{
         			String msg = e.getMessage();
+        			_lsCanvas.setLargeString(msg);
         			
-        			log.append(l10n.getString(L10nConstants.keys.WIPE_MSG_ERR) + msg);
-        			
-        			ErrorAlert eAlert = new ErrorAlert (l10n.getString(L10nConstants.keys.TITLE_WIPE_ERR), log.toString(), null, this);
-        			eAlert.show();
-        			
-        			//todo: need to show error alert here
         			e.printStackTrace();
         		}
 	        }
@@ -145,9 +210,9 @@ public class WipeManualForm
         
 		protected void acceptNotify() {
 			
-			log = new StringBuffer();
-			statusDialog = new ErrorAlert (l10n.getString(L10nConstants.keys.TITLE_WIPE_INPROGRESS), l10n.getString(L10nConstants.keys.WIPE_MSG_INPROGRESS), null, this);
-			statusDialog.show();
+			
+			successCount = 0;
+			errCount = 0;
 			
 			new Thread(this).start();
 			
@@ -155,17 +220,38 @@ public class WipeManualForm
 		}
 		
 
-		public void wipingFile(String path) {
+		public void wipingFileSuccess(String path) {
+			successCount++;
 			
-			String update = l10n.getString(L10nConstants.keys.WIPE_MSG_FILE) + path;
+    		_lsCanvas.setLargeString("Wiping " + currentType + ": " + successCount);
+
+		}
+		
+		public void wipingFileError(String path, String err) {
 			
-			log.append(update);
-			log.append('\n');
+			errCount++;
+			
+    		_lsCanvas.setLargeString("Wiping " + currentType + " err: " + errCount);
+
 		}
 
 		public void wipePercentComplete(int percent) {
 			
 			
+		}
+		
+
+		/* (non-Javadoc)
+		 * @see javax.microedition.lcdui.CommandListener#commandAction(javax.microedition.lcdui.Command, javax.microedition.lcdui.Displayable)
+		 */
+		public void commandAction(Command command, Displayable displayable) {
+			
+			if (command == _cmdExit)
+			{
+				_wControl.cancel();
+				_midlet.exit();
+				
+			}
 		}
         
         

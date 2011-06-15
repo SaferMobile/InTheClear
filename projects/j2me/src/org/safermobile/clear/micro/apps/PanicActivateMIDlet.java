@@ -356,10 +356,17 @@ public class PanicActivateMIDlet extends MIDlet implements CommandListener, Wipe
 	}
 
 
-	public void wipingFile(String path) {
+	public void wipingFileSuccess(String path) {
 		
 		showMessage("wiping: " + path);
 		Logger.debug(PanicConstants.TAG, "wiping: " + path);
+
+	}
+	
+	public void wipingFileError(String path, String msg) {
+		
+		showMessage("ERROR wiping: " + path);
+		Logger.debug(PanicConstants.TAG, "wiping error: " + path + ": " + msg);
 
 	}
 

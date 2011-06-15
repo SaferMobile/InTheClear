@@ -2,6 +2,9 @@
 /* See LICENSE for licensing information */
 package org.safermobile.clear.micro.apps;
 
+import javax.microedition.lcdui.Command;
+import javax.microedition.lcdui.CommandListener;
+import javax.microedition.lcdui.Displayable;
 import javax.microedition.midlet.MIDlet;
 import javax.microedition.midlet.MIDletStateChangeException;
 
@@ -29,6 +32,19 @@ public class WipeMIDlet extends MIDlet
 		 _form = new WipeManualForm(this);
 		
 	}
+	
+	public void exit ()
+	{
+
+		try {
+			destroyApp(false);
+		} catch (MIDletStateChangeException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		this.notifyDestroyed();
+	}
+	
 
 	
 	/*

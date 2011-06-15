@@ -9,7 +9,9 @@ import javax.microedition.io.file.FileConnection;
 import javax.microedition.io.file.FileSystemRegistry;
 import javax.microedition.pim.PIMException;
 
+import org.safermobile.clear.micro.apps.PanicConstants;
 import org.safermobile.clear.micro.data.PIMWiper;
+import org.safermobile.micro.utils.Logger;
 
 public class WipeController {
 
@@ -18,10 +20,17 @@ public class WipeController {
 	  private final static String SEP_STR = "/";
 	  private final static char   SEP = '/';
 	
+	  private boolean keepRunning = true;
+	  
 	public Vector getContacts () throws PIMException
 	{
 		return PIMWiper.getContacts();
 		
+	}
+	
+	public void cancel ()
+	{
+		keepRunning = false;
 	}
 	
 	public void wipePIMData (boolean contacts, boolean events, boolean toDos) throws PIMException
@@ -58,7 +67,7 @@ public class WipeController {
 		Enumeration drives = FileSystemRegistry.listRoots();
 		boolean success = false;
 		
-		while (drives.hasMoreElements())
+		while (drives.hasMoreElements() && keepRunning)
 		{
 			String root =  drives.nextElement().toString();
 			String path = "file:///" + root;
@@ -71,9 +80,8 @@ public class WipeController {
 			}
 			catch (Exception e)
 			{
-				wl.wipingFile("ERROR: " + path);
-				//just catch these individually
-				e.printStackTrace();
+				wl.wipingFileError(path,e.getMessage());
+				
 			}
 		}
 		
@@ -83,10 +91,15 @@ public class WipeController {
 	public boolean wipeFilePath (String path, WipeListener wl) throws Exception
 	{
 
-		   wl.wipingFile(path);
+		if (!keepRunning) //this should stop most everything
+			return false;
+		
+		Logger.debug(PanicConstants.TAG, "wipeFilePath called: " + path);
+
 		   
 		   FileConnection fc = (FileConnection) Connector.open(path, Connector.READ);
-		   
+
+		   wl.wipingFileSuccess(path);		   
 		   
 	      if (!fc.exists()) 
 	      {
@@ -109,11 +122,18 @@ public class WipeController {
 	    			  }
 	    			  catch (Exception e)
 	    			  {
-	    				  wl.wipingFile("ERROR: unable to delete: " + fc.getURL() + ": " + e.getMessage());
+	    				  wl.wipingFileError(fc.getURL(),"ERROR: unable to delete: " + e.getMessage());
 	    			  }
 	    		  }
 	    		  
-	    		  wipeFilePath(fc.getURL(), wl);
+	    		  if (fc.canWrite())
+	    		  {
+	    			  fc.close();
+	    			  fc = (FileConnection) Connector.open(path, Connector.READ_WRITE);
+	    			  fc.delete();
+	    			  fc.close();
+	    			  
+	    		  }
 	    	  }
 	    	  else
 	    	  {
@@ -127,7 +147,7 @@ public class WipeController {
 	    		  }
 	    		  else
 	    		  {
-	    			  wl.wipingFile("cannot wipe file (read only): " + path);
+	    			  wl.wipingFileError(path,"cannot wipe file (read only)");
 	    			  
 	    		  }
 	    	  }
@@ -136,6 +156,18 @@ public class WipeController {
 		
 		return true;
 	
+	}
+	
+	public void wipeMemoryCard (WipeListener wl) throws Exception
+	{
+		
+		String memcardPath = System.getProperty("fileconn.dir.memorycard");
+		
+		if (memcardPath != null)
+			wipeFilePath(memcardPath, wl);
+		else
+			throw new IOException("Cannot find memory card folder");
+
 	}
 	
 	public void wipePhotos (WipeListener wl) throws Exception
@@ -147,6 +179,19 @@ public class WipeController {
 		else
 			throw new IOException("Cannot find photos folder");
 	}
+	
+	public void wipeVideos (WipeListener wl) throws Exception
+	{
+		String videosPath = System.getProperty("fileconn.dir.videos");
+		
+		if (videosPath != null)
+			wipeFilePath(videosPath, wl);
+		else
+			throw new IOException("Cannot find videos folder");
+	}
+	
+	 
+
 	
 	public boolean isFileAPIAvailable ()
 	{

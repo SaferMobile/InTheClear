@@ -59,10 +59,10 @@ public class WipeController {
 	
 		while (drives.hasMoreElements())
 		{
-			String root = (String) drives.nextElement();
-			String path = "file:///" + root;
+			String root =  drives.nextElement().toString();
+		//	String path = "file:///" + root;
 			
-			wipeFilePath(path);
+			wipeFilePath(root);
 		}
 		
 		return true;

@@ -35,6 +35,9 @@ import org.j4me.logging.*;
  */
 public abstract class DeviceScreen
 {
+	/**custom for SaferMobile **/
+	public static final boolean FULLSCREEN_MODE_DEFAULT = false;
+	
 	/**
 	 * Constant for the <code>LEFT</code> game action.
 	 */
@@ -288,7 +291,7 @@ public abstract class DeviceScreen
 	 * @param mode is <code>true</code> if the <code>DeviceScreen</code> is to be in full
 	 *  screen mode, <code>false</code> otherwise.
 	 */
-	public void setFullScreenMode (boolean mode)
+	private void setFullScreenMode (boolean mode)
 	{
 		this.fullScreenMode = mode;
 	}
@@ -662,7 +665,7 @@ public abstract class DeviceScreen
 		//   There is a bug on some implementations that turns the screen
 		//   off full-screen mode.  This can be seen when going to a
 		//   javax.microedition.lcdui.TextBox screen and back to this one.
-		slave.setFullScreenMode( true );
+		slave.setFullScreenMode( FULLSCREEN_MODE_DEFAULT );
 		
 		// Do the repaint.
 		slave.repaint();
@@ -1009,7 +1012,7 @@ final class CanvasWrapper
 		//  There are special cases, like BlackBerry's and IBM's J9
 		//  on Windows Mobile, where this is not true.  These are
 		//  handled by setMenuText() and other methods.
-		setFullScreenMode( false );
+		setFullScreenMode( DeviceScreen.FULLSCREEN_MODE_DEFAULT );
 		
 		// Register for getting LCDUI menu commands.
 		setCommandListener( this );

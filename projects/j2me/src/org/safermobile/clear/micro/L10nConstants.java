@@ -72,6 +72,14 @@ public class L10nConstants {
 		public static final String MENU_SETUP_ALERT = "MENU_SETUP_ALERT";
 		public static final String MENU_SETUP_WIPE = "MENU_SETUP_WIPE";
 		public static final String MENU_CONFIG_WIPE = "MENU_CONFIG_WIPE";
+		public static final String TITLE_LOCATION_PERMISSION = "TITLE_LOCATION_PERMISSION";
+		public static final String MENU_ENABLE = "MENU_ENABLE";
+		public static final String PERMISSION_INFO = "PERMISSION_INFO";
+		public static final String LBL_IMEI = "LBL_IMEI";
+		public static final String LBL_IMSI = "LBL_IMSI";
+		public static final String TITLE_LOCATION_INFO = "TITLE_LOCATION_INFO";
+		public static final String PERMISSION_LOC_SUCCESS = "PERMISSION_LOC_SUCCESS";
+		public static final String PERMISSION_LOC_FAILURE = "PERMISSION_LOC_FAILURE";
 
     }
 }

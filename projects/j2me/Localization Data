@@ -57,5 +57,13 @@
       <entry key="menu_setup_alert" value="3) Setup Alert Message"/>
       <entry key="menu_setup_wipe" value="4) Enable Wipe! Permission"/>
       <entry key="menu_config_wipe" value="5) Configure Wipe! Options"/>
+      <entry key="title_location_permission" value="Location Permission"/>
+      <entry key="menu_enable" value="Enable"/>
+      <entry key="permission_info" value="When activated, Shout! will optionally send your location information along with your alert message. This information could be essential for your safety, even if your phone does not have GPS. Enable location permissions below."/>
+      <entry key="lbl_imei" value="IMEI:"/>
+      <entry key="lbl_imsi" value="IMSI:"/>
+      <entry key="title_location_info" value="Location Info"/>
+      <entry key="permission_loc_success" value="This is the location data we could access:\n"/>
+      <entry key="permission_loc_failure" value="Unfortunately, your phone does not provide any location data we can use."/>
    </locale>
 </locales>

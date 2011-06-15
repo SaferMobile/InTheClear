@@ -24,12 +24,6 @@ public class LocationPermissionForm
          */
         private PanicConfigMIDlet midlet;
         
-        /**
-         * The number box used by this example for entering phone numbers.
-         */
-        private TextBox phoneNumber;
-        
-        
     	private Label _label = new Label();
 
     	L10nResources l10n = LocaleManager.getResources();
@@ -44,13 +38,13 @@ public class LocationPermissionForm
                 this.midlet = midlet;
                 
                 // Set the title and menu.
-                setTitle("Location Permission");
-                setMenuText(  l10n.getString(L10nConstants.keys.MENU_BACK) ,  "Enable" );
+                setTitle(l10n.getString(L10nConstants.keys.TITLE_LOCATION_PERMISSION));
+                setMenuText(  l10n.getString(L10nConstants.keys.MENU_BACK) ,  l10n.getString(L10nConstants.keys.MENU_ENABLE) );
 
              // Center the text.
         		_label.setHorizontalAlignment( Graphics.LEFT );
 
-        		_label.setLabel("When activated, Shout! will optionally send your location information along with your alert message. This information could be essential for your safety, even if your phone does not have GPS. Enable location permissions below.");
+        		_label.setLabel(l10n.getString(L10nConstants.keys.PERMISSION_INFO));
         		
         		// Add the label to this screen.
         		append( _label );
@@ -86,7 +80,7 @@ public class LocationPermissionForm
     		if (IMEI != null && IMEI.length() > 0)
     		{
 
-    			sbPanicMsg.append("IMEI:");
+    			sbPanicMsg.append(l10n.getString(L10nConstants.keys.LBL_IMEI));
     			sbPanicMsg.append(IMEI);
     			sbPanicMsg.append("\n");
     		}
@@ -95,7 +89,7 @@ public class LocationPermissionForm
     		if (IMSI != null && IMSI.length() > 0)
     		{
     			
-    			sbPanicMsg.append("IMSI:");
+    			sbPanicMsg.append(l10n.getString(L10nConstants.keys.LBL_IMSI));
     			sbPanicMsg.append(IMSI);
     			sbPanicMsg.append("\n");
     		}
@@ -119,8 +113,15 @@ public class LocationPermissionForm
     			sbPanicMsg.append("\n");    			
     		}
     		
-        	midlet.showAlert("Location Info", "This is the location data we could access:\n" + sbPanicMsg.toString(), midlet.getShoutConfigMenu());
+    		if (sbPanicMsg.length()>0)
+    		{
+    			midlet.showAlert(l10n.getString(L10nConstants.keys.TITLE_LOCATION_INFO), l10n.getString(L10nConstants.keys.PERMISSION_LOC_SUCCESS) + sbPanicMsg.toString(), midlet.getShoutConfigMenu());
+    		}
+    		else
+    		{
+    			midlet.showAlert(l10n.getString(L10nConstants.keys.TITLE_LOCATION_INFO), l10n.getString(L10nConstants.keys.PERMISSION_LOC_FAILURE), midlet.getShoutConfigMenu());
 
+    		}
         }
         
 }

@@ -1,61 +1,61 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <locales default-locale="en-US" destination="src" package="org.safermobile.clear.micro">
    <locale country="US" language="en">
-      <entry key="key_menu_no" value="No"/>
-      <entry key="key_menu_yes" value="Yes"/>
-      <entry key="key_menu_home" value="Home"/>
-      <entry key="key_menu_run" value="Run"/>
-      <entry key="key_menu_back" value="Back"/>
-      <entry key="key_wipe_title" value="Wipe [Main Menu]"/>
-      <entry key="key_panic_title" value="Panic!"/>
-      <entry key="key_panic_btn_back" value="Back"/>
-      <entry key="key_panic_btn_panic" value="Panic!"/>
-      <entry key="key_panic_btn_cancel" value="Cancel"/>
-      <entry key="key_panic_title_error" value="Error"/>
-      <entry key="key_panic_error_prefs" value="Unable to open preferences"/>
-      <entry key="key_panic_title_main" value="Panic! Activated"/>
-      <entry key="key_panic_error_sms" value="Unable to initiate SMS access"/>
-      <entry key="key_panic_msg_from" value="Panic! from"/>
-      <entry key="key_panic_msg_location" value="Location:"/>
-      <entry key="key_panic_msg_cid" value="cid:"/>
-      <entry key="key_panic_msg_lac" value="lac:"/>
-      <entry key="key_panic_msg_timestamp" value="ts:"/>
-      <entry key="key_panic_msg_sent" value="Panic Sent"/>
-      <entry key="key_panic_msg_sentto" value="Sent to:"/>
-      <entry key="key_nc_title" value="NetCheck"/>
-      <entry key="key_nc_intro" value="This utility will display the SSL certificate information for any HTTPS enabled website"/>
-      <entry key="key_nc_enter" value="Enter an HTTPS Url:"/>
-      <entry key="key_start" value="Start"/>
-      <entry key="key_exit" value="Exit"/>
-      <entry key="key_warning" value="Warning"/>
-      <entry key="key_nc_error" value="You must enter an https:// site address"/>
-      <entry key="key_nc_complete" value="Check Completed!"/>
+      <entry key="menu_no" value="No"/>
+      <entry key="menu_yes" value="Yes"/>
+      <entry key="menu_home" value="Home"/>
+      <entry key="menu_run" value="Run"/>
+      <entry key="menu_back" value="Back"/>
+      <entry key="wipe_title" value="Wipe [Main Menu]"/>
+      <entry key="panic_title" value="Panic!"/>
+      <entry key="panic_btn_back" value="Back"/>
+      <entry key="panic_btn_panic" value="Panic!"/>
+      <entry key="panic_btn_cancel" value="Cancel"/>
+      <entry key="panic_title_error" value="Error"/>
+      <entry key="panic_error_prefs" value="Unable to open preferences"/>
+      <entry key="panic_title_main" value="Panic! Activated"/>
+      <entry key="panic_error_sms" value="Unable to initiate SMS access"/>
+      <entry key="panic_msg_from" value="Panic! from"/>
+      <entry key="panic_msg_location" value="Location:"/>
+      <entry key="panic_msg_cid" value="cid:"/>
+      <entry key="panic_msg_lac" value="lac:"/>
+      <entry key="panic_msg_timestamp" value="ts:"/>
+      <entry key="panic_msg_sent" value="Panic Sent"/>
+      <entry key="panic_msg_sentto" value="Sent to:"/>
+      <entry key="warning" value="Warning"/>
+      <entry key="nc_error" value="You must enter an https:// site address"/>
+      <entry key="nc_complete" value="Check Completed!"/>
       <entry key="panic_setup_title" value="Panic! Setup"/>
-      <entry key="menu_exit" value="Exit"/>
-      <entry key="menu_next" value="Next"/>
       <entry key="panic_setup_intro_1" value="Panic! is a mobile app designed to help improve your safety in difficult situations. It does this with two main features that you must configure."/>
       <entry key="panic_setup_intro_2" value="SHOUT!   and   WIPE!"/>
       <entry key="panic_setup_intro_3" value="This wizard will walk you through the setup process for both."/>
-      <entry key="key_panic_title_your_Info" value="Panic! Your Info"/>
-      <entry key="key_menu_next" value="Next"/>
-      <entry key="key_menu_send" value="Send"/>
-      <entry key="key_lbl_your_name" value="Your Name"/>
-      <entry key="key_lbl_your_info" value="Location or other info"/>
-      <entry key="key_panic_title_sms_test" value="Panic! Shout SMS Test"/>
-      <entry key="key_panic_sms_test_message" value="Shout sends its alerts via SMS, so we&apos;ll need to ensure it has the right permissions to work properly. Enter a mobile number of your choosing below to test Shout! SMS sending. Make sure you&apos;re able to verify delivery with the recipient!"/>
-      <entry key="key_panic_lbl_phone_number" value="Phone Number"/>
-      <entry key="key_alert_message_title" value="Panic! Alert Message"/>
-      <entry key="key_alert_message_info" value="Personalize your alert message below. Enter in one or more phone numbers, separated by a comma, to send the alert to, and the automatic message to send. Keep in mind that because Shout! uses SMS you must keep your message under 160 characters."/>
-      <entry key="key_alert_lbl" value="Alert Message"/>
-      <entry key="key_wizard_user_info" value="If you&apos;d like In the Clear to include information about yourself when activated, you can configure that now."/>
-      <entry key="key_wizard_phone_config" value="Now we will make sure your phone is configured properly."/>
-      <entry key="key_wipe_select_title" value="Wipe! Selection"/>
-      <entry key="key_wipe_message" value="Choose how you&apos;d like Wipe! to work below. Caution - erasing or overwriting data is an unrecoverable action, so choose your setup wisely."/>
-      <entry key="key_wipe_menu_contacts" value="Wipe Contacts"/>
-      <entry key="key_wipe_menu_photos" value="Wipe Photos"/>
-      <entry key="key_wipe_menu_files" value="Wipe All Files"/>
-      <entry key="key_wipe_menu_calendar" value="Wipe Calendar"/>
-      <entry key="key_wipe_menu_todo" value="Wipe ToDo&apos;s"/>
-      <entry key="key_wipe_message_saved" value="Your Wipe! settings have been saved. WARNING: If you have chosen to wipe important data, make sure it is backed up to another device or written on paper first."/>
+      <entry key="panic_title_your_Info" value="Panic! Your Info"/>
+      <entry key="menu_next" value="Next"/>
+      <entry key="menu_send" value="Send"/>
+      <entry key="lbl_your_name" value="Your Name"/>
+      <entry key="lbl_your_info" value="Location or other info"/>
+      <entry key="panic_title_sms_test" value="Panic! Shout SMS Test"/>
+      <entry key="panic_sms_test_message" value="Enter a mobile number of your choosing below to test Shout! SMS sending. Make sure you&apos;re able to verify delivery with the recipient!"/>
+      <entry key="panic_lbl_phone_number" value="Phone Number"/>
+      <entry key="alert_message_title" value="Panic! Alert Message"/>
+      <entry key="alert_message_info" value="Enter in one or more phone numbers, separated by a comma, to send the alert to, and the automatic message to send. Keep in mind that because Shout! uses SMS you must keep your message under 160 characters."/>
+      <entry key="alert_lbl" value="Alert Message"/>
+      <entry key="wizard_user_info" value="If you&apos;d like In the Clear to include information about yourself when activated, you can configure that now."/>
+      <entry key="wizard_phone_config" value="Now we will make sure your phone is configured properly."/>
+      <entry key="wipe_select_title" value="Wipe! Selection"/>
+      <entry key="wipe_message" value="Choose how you&apos;d like Wipe! to work below. Caution - erasing or overwriting data is an unrecoverable action, so choose your setup wisely."/>
+      <entry key="wipe_menu_contacts" value="Wipe Contacts"/>
+      <entry key="wipe_menu_photos" value="Wipe Photos"/>
+      <entry key="wipe_menu_files" value="Wipe All Files"/>
+      <entry key="wipe_menu_calendar" value="Wipe Calendar"/>
+      <entry key="wipe_menu_todo" value="Wipe ToDo&apos;s"/>
+      <entry key="wipe_message_saved" value="Your Wipe! settings have been saved. WARNING: If you have chosen to wipe important data, make sure it is backed up to another device or written on paper first."/>
+      <entry key="menu_exit" value="Exit"/>
+      <entry key="title_shout" value="Panic! Shout"/>
+      <entry key="menu_setup_sms" value="1) Check SMS Permissions"/>
+      <entry key="menu_setup_location" value="2) Check Location Access"/>
+      <entry key="menu_setup_alert" value="3) Setup Alert Message"/>
+      <entry key="menu_setup_wipe" value="4) Enable Wipe! Permission"/>
+      <entry key="menu_config_wipe" value="5) Configure Wipe! Options"/>
    </locale>
 </locales>

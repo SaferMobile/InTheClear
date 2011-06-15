@@ -53,6 +53,9 @@
 	<string name="KEY_PREF_ENTERPANICMSG_TITLE">Your PANIC! Message</string>
 	<string name="KEY_PREF_ENTERPANICMSG">Enter your PANIC! message here.</string>
 	<string name="KEY_PREF_WIPEDIALOG_TITLE">What to wipe</string>
+	<string name="KEY_PREF_WIPECONTACTS">Wipe All Contacts</string>
+	<string name="KEY_PREF_WIPEPHOTOS">Wipe All Photos in Gallery</string>
+	<string name="KEY_PREF_WIPEFILES">Wipe Contents of Selected Folders on SD Card</string>
 	<string name="KEY_PREF_WIPEDIALOG">Select the folders that will be wiped when you press the PANIC! button</string>
 	<string name="KEY_PREF_ACCESSFAIL">We couldn\'t access your settings.  Please check your preferences.</string>
 	<string name="KEY_PREF_SAVEFAIL">There was a problem saving your preferences.</string>
@@ -68,4 +71,9 @@
 	<string name="KEY_SHOUT_COUNTDOWNMSG">Shout! in</string>
 	<string name="KEY_SECONDS">seconds</string>
 	<string name="KEY_SHOUT_COUNTDOWNCANCEL">(Cancel this Shout the menu)</string>
+	<string name="KEY_WIPE_ACTIVITYTEXT">Select one or more data types below to wipe.\n\n\nWARNING: THIS WILL REMOVE THE ACTUAL DATA FROM YOUR PHONE.</string>
+	<string name="KEY_WIPE_WIPECONTACTS">Wipe Contacts</string>
+	<string name="KEY_WIPE_WIPEPHOTOS">Wipe Photos</string>
+	<string name="KEY_WIPE_WIPEALLFILES">Wipe All Files from Designated Folders</string>
+	<string name="KEY_WIPE_BTN_TITLE">Wipe!</string>
 </resources>

@@ -18,9 +18,15 @@
 			android:key="DefaultPanicMsg"
 			android:summary="@string/KEY_PREF_ENTERPANICMSG" />
 	</PreferenceCategory>
-	<PreferenceCategory 
-		android:title="@string/KEY_PREF_CONFIG_WIPE_TITLE"
-		android:summary="@string/KEY_PREF_WIPEDIALOG">
-
+	<PreferenceCategory android:title="@string/KEY_PREF_CONFIG_WIPE_TITLE" android:summary="@string/KEY_PREF_WIPEDIALOG">
+		<CheckBoxPreference
+			android:title="@string/KEY_PREF_WIPECONTACTS"
+			android:key="DefaultWipeContacts" />
+		<CheckBoxPreference
+			android:title="@string/KEY_PREF_WIPEPHOTOS"
+			android:key="DefaultWipePhotos" />
+		<CheckBoxPreference
+			android:title="@string/KEY_PREF_WIPEFILES"
+			android:key="DefaultWipeFolders" />
 	</PreferenceCategory>
 </PreferenceScreen>

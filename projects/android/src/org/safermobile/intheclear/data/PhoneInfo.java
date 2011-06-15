@@ -21,11 +21,8 @@ public class PhoneInfo {
 	
 	public static String getOperator() {
 		String out = null;
-		if(tm.getPhoneType() != TelephonyManager.PHONE_TYPE_NONE) {
+		if(tm.getPhoneType() != TelephonyManager.PHONE_TYPE_NONE)
 			out = tm.getNetworkOperator();
-		} else {
-			out = "No phone provider";
-		}
 		return out;
 	}
 	
@@ -35,8 +32,6 @@ public class PhoneInfo {
 			final GsmCellLocation gLoc = (GsmCellLocation) tm.getCellLocation();
 			if(gLoc != null)
 				out = Integer.toString(gLoc.getCid());
-		} else {
-			out = "non GSM phone-- what do we do?";
 		}
 		return out;
 	}
@@ -47,8 +42,6 @@ public class PhoneInfo {
 			final GsmCellLocation gLoc = (GsmCellLocation) tm.getCellLocation();
 			if(gLoc != null)
 				out = Integer.toString(gLoc.getLac());
-		} else {
-			out = "non GSM phone-- what do we do?";
 		}
 		return out;
 	}

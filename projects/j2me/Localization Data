@@ -45,8 +45,8 @@
       <entry key="wipe_select_title" value="Wipe! Selection"/>
       <entry key="wipe_message" value="Choose how you&apos;d like Wipe! to work below. Caution - erasing or overwriting data is an unrecoverable action, so choose your setup wisely."/>
       <entry key="wipe_menu_contacts" value="Wipe Contacts"/>
-      <entry key="wipe_menu_photos" value="Wipe Photos"/>
-      <entry key="wipe_menu_files" value="Wipe All Files"/>
+      <entry key="wipe_menu_photos" value="Wipe Photos (internal memory)"/>
+      <entry key="wipe_menu_files" value="Wipe All Files (SDCard)"/>
       <entry key="wipe_menu_calendar" value="Wipe Calendar"/>
       <entry key="wipe_menu_todo" value="Wipe ToDo&apos;s"/>
       <entry key="wipe_message_saved" value="Your Wipe! settings have been saved. WARNING: If you have chosen to wipe important data, make sure it is backed up to another device or written on paper first."/>
@@ -63,7 +63,17 @@
       <entry key="lbl_imei" value="IMEI:"/>
       <entry key="lbl_imsi" value="IMSI:"/>
       <entry key="title_location_info" value="Location Info"/>
-      <entry key="permission_loc_success" value="This is the location data we could access:\n"/>
+      <entry key="permission_loc_success" value="This is the location data we could access:"/>
       <entry key="permission_loc_failure" value="Unfortunately, your phone does not provide any location data we can use."/>
+      <entry key="title_wipe_manual" value="Wipe! Now"/>
+      <entry key="menu_wipe_now" value="WIPE NOW!"/>
+      <entry key="wipe_warning_msg" value="Select one or more data types below to wipe. WARNING: THIS WILL DELETE REAL DATA FROM YOUR PHONE."/>
+      <entry key="title_wipe_complete" value="Wipe! Complete"/>
+      <entry key="wipe_msg_success" value="You have successfully performed the wipe."/>
+      <entry key="title_wipe_err" value="Wipe! Error"/>
+      <entry key="wipe_msg_err" value="There was an error performing the wipe:"/>
+      <entry key="title_wipe_inprogress" value="Wiping..."/>
+      <entry key="wipe_msg_inprogress" value="Please wait..."/>
+      <entry key="wipe_msg_file" value="wiping file:"/>
    </locale>
 </locales>

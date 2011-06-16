@@ -26,7 +26,7 @@
       <entry key="nc_error" value="You must enter an https:// site address"/>
       <entry key="nc_complete" value="Check Completed!"/>
       <entry key="panic_setup_title" value="InTheClear Setup"/>
-      <entry key="panic_setup_intro_1" value="InTheCLear is a mobile app designed to help improve your safety in difficult situations. It does this with three main features that you must configure."/>
+      <entry key="panic_setup_intro_1" value="InTheClear is a mobile app designed to help improve your safety in difficult situations. It does this with three main features that you must configure."/>
       <entry key="panic_setup_intro_2" value="PANIC!, Shout &amp; Wipe"/>
       <entry key="panic_setup_intro_3" value="This wizard will walk you through the setup process for these features, and ensure your mobile is ready for an emergency situation."/>
       <entry key="panic_title_your_Info" value="ITC: Your Info"/>

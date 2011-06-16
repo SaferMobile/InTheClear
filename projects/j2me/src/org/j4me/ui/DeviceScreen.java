@@ -36,7 +36,7 @@ import org.j4me.logging.*;
 public abstract class DeviceScreen
 {
 	/**custom for SaferMobile **/
-	public static final boolean FULLSCREEN_MODE_DEFAULT = true;
+	public static boolean FULLSCREEN_MODE_DEFAULT = true;
 	
 	/**
 	 * Constant for the <code>LEFT</code> game action.
@@ -989,12 +989,15 @@ devices the name consists of “Nokia”, the device
 			if (platform.indexOf("S60")!=-1)
 			{
 				series60 = true;
+				DeviceScreen.FULLSCREEN_MODE_DEFAULT = false;
+
 			}
 			else
 			{
 				try{
 						Class.forName("com.symbian.gcf.NativeInputStream");
 						series60 = true;
+						DeviceScreen.FULLSCREEN_MODE_DEFAULT = false;
 					}catch(Exception e){
 						series60 = false;
 					}

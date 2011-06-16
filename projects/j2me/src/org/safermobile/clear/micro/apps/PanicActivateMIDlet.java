@@ -268,6 +268,9 @@ public class PanicActivateMIDlet extends MIDlet implements CommandListener, Wipe
 				prefBool = _prefs.get(PanicConstants.PREFS_KEY_WIPE_PHOTOS);
 				boolean wipePhotos = (prefBool != null && prefBool.equals("true"));
 				
+				prefBool = _prefs.get(PanicConstants.PREFS_KEY_WIPE_VIDEOS);
+				boolean wipeVideos = (prefBool != null && prefBool.equals("true"));
+				
 				prefBool = _prefs.get(PanicConstants.PREFS_KEY_WIPE_ALL_FILES);
 				boolean wipeAllFiles = (prefBool != null && prefBool.equals("true"));
 				
@@ -288,25 +291,45 @@ public class PanicActivateMIDlet extends MIDlet implements CommandListener, Wipe
 				doSecPause (3);
 				
 				
-				if (wipeAllFiles)
-				{
-					showMessage("Wiping all available files...");
-					try {
-						wc.wipeAllRootPaths(this);
-						showMessage("Wiping all available files... WIPE COMPLETE.");
-					} catch (IOException e) {
-						showMessage("Wiping all photos... ERROR. UNABLE TO WIPE ALL FILES.");
-						e.printStackTrace();
-					}
-				}
-				else if (wipePhotos)
+				
+				if (wipePhotos)
 				{
 					showMessage("Wiping all photos...");
 					try {
 						wc.wipePhotos(this);
-						showMessage("Wiping all photos... WIPE COMPLETE.");
+						showMessage("Wiping photos...\nWIPE COMPLETE.");
 					} catch (Exception e) {
-						showMessage("Wiping all photos... ERROR. UNABLE TO WIPE PHOTOS.");
+						showMessage("Wiping photos...nERROR. UNABLE TO WIPE PHOTOS.");
+						e.printStackTrace();
+					}
+				}
+				
+				doSecPause (3);
+				
+				if (wipeVideos)
+				{
+					showMessage("Wiping all videos...");
+					try {
+						wc.wipePhotos(this);
+						showMessage("Wiping videos...\nWIPE COMPLETE.");
+					} catch (Exception e) {
+						showMessage("Wiping videos...nERROR. UNABLE TO WIPE PHOTOS.");
+						e.printStackTrace();
+					}
+				}
+				
+				doSecPause (3);
+				
+
+				if (wipeAllFiles)
+				{
+					showMessage("Wiping all files...");
+					try {
+						wc.wipeMemoryCard(this);
+						wc.wipeAllRootPaths(this);
+						showMessage("Wiping all files...\nWIPE COMPLETE.");
+					} catch (Exception e) {
+						showMessage("Wiping all photos...\nERROR. UNABLE TO WIPE ALL FILES.");
 						e.printStackTrace();
 					}
 				}
@@ -318,7 +341,7 @@ public class PanicActivateMIDlet extends MIDlet implements CommandListener, Wipe
 			
 			while (secs > 0)
 			{
-				showMessage("Panic! again in " + secs + "secs...");
+				showMessage("Panic! again in\n" + secs + "secs...");
 				doSecPause (1);
 				secs--;
 			}

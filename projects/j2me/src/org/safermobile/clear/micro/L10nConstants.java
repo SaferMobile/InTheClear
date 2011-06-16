@@ -92,6 +92,22 @@ public class L10nConstants {
 		public static final String TITLE_WIPE_INPROGRESS = "TITLE_WIPE_INPROGRESS";
 		public static final String WIPE_MSG_INPROGRESS = "WIPE_MSG_INPROGRESS";
 		public static final String WIPE_MSG_FILE = "WIPE_MSG_FILE";
+		public static final String DEFAULT_ALERT_MSG = "DEFAULT_ALERT_MSG";
+		public static final String TITLE_SUCCESS = "TITLE_SUCCESS";
+		public static final String SHOUT_SUCCESS_MSG = "SHOUT_SUCCESS_MSG";
+		public static final String TITLE_ERROR = "TITLE_ERROR";
+		public static final String SHOUT_VALIDATION_ERR = "SHOUT_VALIDATION_ERR";
+		public static final String WIPE_STATUS_INPROGRESS = "WIPE_STATUS_INPROGRESS";
+		public static final String WIPE_STATUS_PERSONAL = "WIPE_STATUS_PERSONAL";
+		public static final String WIPE_TYPE_PERSONAL = "WIPE_TYPE_PERSONAL";
+		public static final String WIPE_TYPE_PHOTOS = "WIPE_TYPE_PHOTOS";
+		public static final String WIPE_STATUS_PHOTOS = "WIPE_STATUS_PHOTOS";
+		public static final String WIPE_STATUS_VIDEOS = "WIPE_STATUS_VIDEOS";
+		public static final String WIPE_TYPE_FILES = "WIPE_TYPE_FILES";
+		public static final String WIPE_STATUS_FILES = "WIPE_STATUS_FILES";
+		public static final String WIPE_STATUS_FILES_DELETED = "WIPE_STATUS_FILES_DELETED";
+		public static final String WIPE_STATUS_ERRORS = "WIPE_STATUS_ERRORS";
+		public static final String WIPE_STATUS_WIPING_WORD = "WIPE_STATUS_WIPING_WORD";
 
     }
 }

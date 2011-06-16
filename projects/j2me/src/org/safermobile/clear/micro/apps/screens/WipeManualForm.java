@@ -7,6 +7,7 @@ import javax.microedition.lcdui.Display;
 import javax.microedition.lcdui.Displayable;
 import javax.microedition.lcdui.Graphics;
 import javax.microedition.midlet.MIDletStateChangeException;
+import javax.microedition.rms.RecordStoreException;
 
 import org.j4me.ui.*;
 import org.j4me.ui.components.*;
@@ -20,6 +21,8 @@ import org.safermobile.clear.micro.apps.controllers.WipeController;
 import org.safermobile.clear.micro.apps.controllers.WipeListener;
 import org.safermobile.clear.micro.ui.ErrorAlert;
 import org.safermobile.clear.micro.ui.LargeStringCanvas;
+import org.safermobile.micro.utils.Logger;
+import org.safermobile.micro.utils.Preferences;
 
 /**
  * Example of a <code>TextBox</code> component.
@@ -51,6 +54,10 @@ public class WipeManualForm
 		
     	L10nResources l10n = LocaleManager.getResources();
         
+    	/*
+    	 * stores the user data between the config app and this one
+    	 */
+    	private Preferences _prefs = null; 
         /**
          * Constructs a screen that shows a <code>TextBox</code> component in action.
          * 
@@ -59,6 +66,14 @@ public class WipeManualForm
         public WipeManualForm (WipeMIDlet midlet)
         {
                 _midlet = midlet;
+                
+                try
+        		{
+        		 _prefs = new Preferences (PanicConstants.PANIC_PREFS_DB);
+        		} catch (RecordStoreException e) {
+        			
+        			Logger.error(PanicConstants.TAG, "a problem saving the prefs: " + e, e);
+        		}
                 
                 // Set the title and menu.
                 setTitle( l10n.getString(L10nConstants.keys.TITLE_WIPE_MANUAL) );
@@ -102,9 +117,38 @@ public class WipeManualForm
         		_cbToDo.setChecked( false );
         		append( _cbToDo );
         		
+        		load();
 
         }
 
+        public void load ()
+        {
+        	String prefBool = _prefs.get(PanicConstants.PREFS_KEY_WIPE_CONTACTS);
+			boolean wipeContacts = (prefBool != null && prefBool.equals("true"));
+			_cbContacts.setChecked(wipeContacts);
+			
+			prefBool = _prefs.get(PanicConstants.PREFS_KEY_WIPE_EVENTS);
+			boolean wipeEvents = (prefBool != null && prefBool.equals("true"));
+			_cbCalendar.setChecked(wipeEvents);
+			
+			prefBool = _prefs.get(PanicConstants.PREFS_KEY_WIPE_TODOS);
+			boolean wipeToDos = (prefBool != null && prefBool.equals("true"));
+			_cbToDo.setChecked(wipeToDos);
+			
+			prefBool = _prefs.get(PanicConstants.PREFS_KEY_WIPE_PHOTOS);
+			boolean wipePhotos = (prefBool != null && prefBool.equals("true"));
+			_cbPhotos.setChecked(wipePhotos);
+			
+			prefBool = _prefs.get(PanicConstants.PREFS_KEY_WIPE_VIDEOS);
+			boolean wipeVideos = (prefBool != null && prefBool.equals("true"));
+			_cbVideos.setChecked(wipeVideos);
+			
+			prefBool = _prefs.get(PanicConstants.PREFS_KEY_WIPE_ALL_FILES);
+			boolean wipeAllFiles = (prefBool != null && prefBool.equals("true"));
+			_cbAllStorage.setChecked(wipeAllFiles);
+			
+        }
+        
         public void run ()
         {
         	confirmAndWipe ();
@@ -132,20 +176,20 @@ public class WipeManualForm
         		try
         		{
         			
-        			_lsCanvas.setLargeString("Wiping data...");
+        			_lsCanvas.setLargeString(l10n.getString(L10nConstants.keys.WIPE_STATUS_INPROGRESS));
         			
         			_wControl = new WipeController();
                 	
-            		_lsCanvas.setLargeString("Wiping personal data...");
-            		currentType = "personal data";
+            		_lsCanvas.setLargeString(l10n.getString(L10nConstants.keys.WIPE_STATUS_PERSONAL));
+            		currentType = l10n.getString(L10nConstants.keys.WIPE_TYPE_PERSONAL);
             		_wControl.wipePIMData(_cbContacts.isChecked(), _cbCalendar.isChecked(), _cbToDo.isChecked());
                 	
             		try
             		{
 	                	if (_cbPhotos.isChecked())
 	                	{
-	                		currentType = "photos";
-	                		_lsCanvas.setLargeString("Wiping photos...");
+	                		currentType = l10n.getString(L10nConstants.keys.WIPE_TYPE_PHOTOS);
+	                		_lsCanvas.setLargeString(l10n.getString(L10nConstants.keys.WIPE_STATUS_PHOTOS));
 	            			
 	                		_wControl.wipePhotos(this);
 	                	}
@@ -159,8 +203,8 @@ public class WipeManualForm
                 	{
 	                	if (_cbVideos.isChecked())
 	                	{
-	                		currentType = "videos";
-	                		_lsCanvas.setLargeString("Wiping videos...");
+	                		currentType = l10n.getString(L10nConstants.keys.WIPE_TYPE_PHOTOS);
+	                		_lsCanvas.setLargeString(l10n.getString(L10nConstants.keys.WIPE_STATUS_VIDEOS));
 	
 	                		_wControl.wipeVideos(this);
 	                	}
@@ -174,8 +218,8 @@ public class WipeManualForm
                 	{
 	                	if (_cbAllStorage.isChecked())
 	                	{
-	                		currentType = "files";
-	                		_lsCanvas.setLargeString("Wiping files...");
+	                		currentType = l10n.getString(L10nConstants.keys.WIPE_TYPE_FILES);
+	                		_lsCanvas.setLargeString(l10n.getString(L10nConstants.keys.WIPE_STATUS_FILES));
 	                		_wControl.wipeMemoryCard(this);
 	                		_wControl.wipeAllRootPaths(this);
 	                	}
@@ -186,8 +230,8 @@ public class WipeManualForm
                 	}
                 	
                 	String msg = l10n.getString(L10nConstants.keys.WIPE_MSG_SUCCESS);
-                	msg += "\n" + successCount + " files deleted.";
-                	msg += "\n" + errCount + " errors.";
+                	msg += "\n" + successCount + l10n.getString(L10nConstants.keys.WIPE_STATUS_FILES_DELETED);
+                	msg += "\n" + errCount + l10n.getString(L10nConstants.keys.WIPE_STATUS_ERRORS);
                 	
                 	_lsCanvas.setLargeString(msg);
                 	
@@ -223,7 +267,7 @@ public class WipeManualForm
 		public void wipingFileSuccess(String path) {
 			successCount++;
 			
-    		_lsCanvas.setLargeString("Wiping " + currentType + ": " + successCount);
+    		_lsCanvas.setLargeString(l10n.getString(L10nConstants.keys.WIPE_STATUS_WIPING_WORD) + currentType + ": " + successCount);
 
 		}
 		
@@ -231,12 +275,12 @@ public class WipeManualForm
 			
 			errCount++;
 			
-    		_lsCanvas.setLargeString("Wiping " + currentType + " err: " + errCount);
+    		_lsCanvas.setLargeString(l10n.getString(L10nConstants.keys.WIPE_STATUS_WIPING_WORD) + currentType + " err: " + errCount);
 
 		}
 
-		public void wipePercentComplete(int percent) {
-			
+		public void wipePercentComplete(int percent) 
+		{
 			
 		}
 		

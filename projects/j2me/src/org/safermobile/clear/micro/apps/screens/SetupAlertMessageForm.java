@@ -84,19 +84,26 @@ public class SetupAlertMessageForm
         private void load ()
         {
         	phoneNumber.setString(_midlet.loadPref(PanicConstants.PREFS_KEY_RECIPIENT));
-        	alertMsg.setString(_midlet.loadPref(PanicConstants.PREFS_KEY_MESSAGE));
         	
+        	String alertMsgString = _midlet.loadPref(PanicConstants.PREFS_KEY_MESSAGE);
+        	
+        	if (alertMsgString != null && alertMsgString.length() > 0)
+        		alertMsg.setString(alertMsgString);
+        	else
+        		alertMsg.setString(l10n.getString(L10nConstants.keys.DEFAULT_ALERT_MSG));
         }
+        
+        
         public void run ()
         {
         	if (persist())
         	{
-            	_midlet.showAlert("Success!", "Excellent. You are now fully configured for the Shout! alert message.", _midlet.getShoutConfigMenu());
+            	_midlet.showAlert(l10n.getString(L10nConstants.keys.TITLE_SUCCESS), l10n.getString(L10nConstants.keys.SHOUT_SUCCESS_MSG), _midlet.getShoutConfigMenu());
 
         	}
         	else
         	{
-            	_midlet.showAlert("Error!", "You must configure all fields.", this);
+            	_midlet.showAlert(l10n.getString(L10nConstants.keys.TITLE_ERROR), l10n.getString(L10nConstants.keys.SHOUT_VALIDATION_ERR), this);
         		
         	}
         }

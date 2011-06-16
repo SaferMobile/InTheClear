@@ -5,7 +5,7 @@
   <Application Type="MIDlet" MainMIDletName="org.safermobile.clear.micro.apps.PanicConfigMIDlet" MainArgs="" HomeScreenPosition="0" StartupTier="7" IsSystemModule="false" IsAutostartup="false"/>
   <Resources hasTitleResource="false" TitleResourceBundleName="" TitleResourceBundleRelativePath="" TitleResourceBundleClassName="" TitleResourceBundleKey="" DescriptionId="">
     <Icons>
-      <Icon CanonicalFileName="res\img\icon.png" IsFocus="false"/>
+      <Icon CanonicalFileName="res/setup.png" IsFocus="false"/>
     </Icons>
   </Resources>
   <Compile OutputCompilerMessages="false" ConvertImages="true" CreateWarningForNoExportedRoutine="true" CompressResources="false" AliasList="">
@@ -21,17 +21,17 @@
   <AlternateEntryPoints>
     <AlternateEntryPoint Title="Shout!" MainMIDletName="org.safermobile.clear.micro.apps.ShoutMIDlet" ArgumentsForMain="" HomeScreenPosition="0" StartupTier="7" IsSystemModule="false" IsAutostartup="false" hasTitleResource="false" TitleResourceBundleKey="" TitleResourceBundleName="" TitleResourceBundleClassName="" TitleResourceBundleRelativePath="">
       <Icons>
-        <Icon CanonicalFileName="res/logo.jpg" IsFocus="false"/>
+        <Icon CanonicalFileName="res/shout.png" IsFocus="false"/>
       </Icons>
     </AlternateEntryPoint>
     <AlternateEntryPoint Title="Panic!" MainMIDletName="org.safermobile.clear.micro.apps.PanicActivateMIDlet" ArgumentsForMain="" HomeScreenPosition="0" StartupTier="7" IsSystemModule="false" IsAutostartup="false" hasTitleResource="false" TitleResourceBundleKey="" TitleResourceBundleName="" TitleResourceBundleClassName="" TitleResourceBundleRelativePath="">
       <Icons>
-        <Icon CanonicalFileName="res/logo.jpg" IsFocus="false"/>
+        <Icon CanonicalFileName="res/panic.png" IsFocus="false"/>
       </Icons>
     </AlternateEntryPoint>
     <AlternateEntryPoint Title="Wipe!" MainMIDletName="org.safermobile.clear.micro.apps.WipeMIDlet" ArgumentsForMain="" HomeScreenPosition="0" StartupTier="7" IsSystemModule="false" IsAutostartup="false" hasTitleResource="false" TitleResourceBundleKey="" TitleResourceBundleName="" TitleResourceBundleClassName="" TitleResourceBundleRelativePath="">
       <Icons>
-        <Icon CanonicalFileName="res/logo.jpg" IsFocus="false"/>
+        <Icon CanonicalFileName="res/wipe.png" IsFocus="false"/>
       </Icons>
     </AlternateEntryPoint>
   </AlternateEntryPoints>

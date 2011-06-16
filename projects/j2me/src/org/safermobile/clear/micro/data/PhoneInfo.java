@@ -4,7 +4,8 @@
 package org.safermobile.clear.micro.data;
 
 //#if polish.Vendor == BlackBerry
-// //#= import net.rim.device.api.system.GPRSInfo;
+import net.rim.device.api.system.GPRSInfo;
+import net.rim.device.api.system.SIMCardInfo;
 //#endif
  
 public class PhoneInfo {
@@ -40,7 +41,7 @@ public class PhoneInfo {
 					out = System.getProperty("com.siemens.cellid");
 				//#elif polish.Vendor == BlackBerry
 				if(out== null ||out.equals("null")|| out.equals(""))
-				//	//#= out = GPRSInfo.getCellInfo().getCellId();
+					out = Integer.toString(GPRSInfo.getCellInfo().getCellId());
 				//#else
 				if(out== null ||out.equals("null")|| out.equals(""))
 					out = System.getProperty("cid");
@@ -79,7 +80,7 @@ public class PhoneInfo {
 					out = System.getProperty("com.siemens.cellid");
 				//#elif polish.Vendor == BlackBerry
 				if(out== null ||out.equals("null")|| out.equals(""))
-	//				//#= out = GPRSInfo.getCellInfo().getLAC();
+					out = Integer.toString(GPRSInfo.getCellInfo().getLAC());
 				//#else
 				if(out== null ||out.equals("null")|| out.equals(""))
 					out = System.getProperty("cid");
@@ -124,7 +125,7 @@ public class PhoneInfo {
 					out = System.getProperty("com.siemens.imei");*/
 				//#elif polish.Vendor == BlackBerry
 				if(out== null ||out.equals("null")|| out.equals(""))
-	//				//#= out = GPRSInfo.getCellInfo().getBSIC();
+					out = GPRSInfo.imeisvToString(SIMCardInfo.getIMSI(), false);
 				//#else
 				if(out== null ||out.equals("null")|| out.equals(""))
 					out = System.getProperty("imsi");
@@ -167,7 +168,7 @@ public class PhoneInfo {
 					out = System.getProperty("com.siemens.imei");*/
 				//#elif polish.Vendor == BlackBerry
 				if(out== null ||out.equals("null")|| out.equals(""))//getMNC()
-		//			//#= out = GPRSInfo.getCellInfo().getMCC();   
+					out = Integer.toString(GPRSInfo.getCellInfo().getMCC());   
 				//#else
 				if(out== null ||out.equals("null")|| out.equals(""))
 					out = System.getProperty("mcc");
@@ -210,7 +211,7 @@ public class PhoneInfo {
 					out = System.getProperty("com.siemens.imei");*/
 				//#elif polish.Vendor == BlackBerry
 				if(out== null ||out.equals("null")|| out.equals(""))//getMNC()
-	//				//#= out = GPRSInfo.getCellInfo().getMNC();   
+					out = Integer.toString(GPRSInfo.getCellInfo().getMNC());   
 				//#else
 				if(out== null ||out.equals("null")|| out.equals(""))
 					out = System.getProperty("mnc");
@@ -257,6 +258,9 @@ public class PhoneInfo {
 				//#elif polish.Vendor == Siemens
 				if(out== null ||out.equals("null")|| out.equals(""))
 					out = System.getProperty("com.siemens.imei");
+				//#elif polish.Vendor == BlackBerry
+				if(out== null || out.equals("null")|| out.equals(""))
+					out = GPRSInfo.imeiToString(GPRSInfo.getIMEI());
 				//#else
 				if(out== null ||out.equals("null")|| out.equals(""))
 					out = System.getProperty("imei");

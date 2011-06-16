@@ -1,7 +1,9 @@
 package org.safermobile.intheclear;
 
+import java.io.File;
 import java.util.ArrayList;
-import java.util.Vector;
+
+import org.safermobile.intheclear.ui.FolderIterator;
 
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -12,7 +14,7 @@ import android.preference.PreferenceActivity;
 
 public class ITCPreferences extends PreferenceActivity implements OnPreferenceClickListener {
 	Preference savePrefs;
-	ArrayList<String> allDirs;
+	ArrayList<File> allDirs;
 	
 	SharedPreferences _sp;
 	
@@ -22,7 +24,13 @@ public class ITCPreferences extends PreferenceActivity implements OnPreferenceCl
 		addPreferencesFromResource(R.xml.itcprefs);
 		
 		_sp = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
-		SharedPreferences.Editor ed = _sp.edit();
+
+		new FolderIterator();
+		allDirs = FolderIterator.updateListPreference();
+		
+		for(File f : allDirs) {
+			// TODO: adding the selected folders to shared preferences.
+		}
 	}
 	
 	@Override

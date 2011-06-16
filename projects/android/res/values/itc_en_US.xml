@@ -73,12 +73,12 @@
 	<string name="KEY_SHOUT_COUNTDOWNMSG">Shout! in</string>
 	<string name="KEY_SECONDS">seconds</string>
 	<string name="KEY_SHOUT_COUNTDOWNCANCEL">(Cancel this Shout the menu)</string>
-	<string name="KEY_WIPE_ACTIVITYTEXT">Select one or more data types below to wipe.\n\n\nWARNING: THIS WILL REMOVE THE ACTUAL DATA FROM YOUR PHONE.</string>
+	<string name="KEY_WIPE_ACTIVITYTEXT">WARNING: THIS WILL REMOVE THE ACTUAL DATA FROM YOUR PHONE.\n\nSelect one or more data types below to wipe.</string>
 	<string name="KEY_WIPE_WIPECONTACTS">Wipe Contacts</string>
 	<string name="KEY_WIPE_WIPEPHOTOS">Wipe Photos</string>
 	<string name="KEY_WIPE_CALLLOG">Wipe Call Log</string>
 	<string name="KEY_WIPE_SMS">Wipe SMS Log</string>
 	<string name="KEY_WIPE_BTN_TITLE">Wipe!</string>
-	<string name="KEY_WIPE_FOLDERSELECTIONTEXT">Wipe Content from Selected Folders:</string>
+	<string name="KEY_WIPE_FOLDERSELECTIONTEXT">Wipe Content from Selected Folders on SD Card:</string>
 	<string name="KEY_WIPE_NOSELECTEDFOLDERS">You have not selected any folders.</string>
 </resources>

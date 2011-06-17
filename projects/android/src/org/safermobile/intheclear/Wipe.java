@@ -69,7 +69,6 @@ public class Wipe extends Activity implements OnClickListener {
 	
 	private void doWipe() {
 		// iterate through options to see what's checked
-		Log.d(ITC,"TRYING TO WIPE NOW");
 		ArrayList<File> checkedFolders = new ArrayList<File>();
 		
 		for(WipeSelector w : folderSelector) {
@@ -78,7 +77,7 @@ public class Wipe extends Activity implements OnClickListener {
 		}
 		
 		// create a wipe controller instance
-		wc = new WipeController();
+		wc = new WipeController(getBaseContext());
 		
 		// wipe baby!
 		wc.wipePIMData(

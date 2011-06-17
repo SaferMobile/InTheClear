@@ -1,12 +1,14 @@
 package org.safermobile.intheclear.data;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.Random;
-import java.util.Vector;
 
 import android.content.ContentResolver;
 import android.content.Context;
 import android.database.Cursor;
+import android.net.Uri;
+import android.provider.CallLog;
 import android.provider.ContactsContract.RawContacts;
 import android.util.Log;
 
@@ -34,7 +36,7 @@ public class PIMWiper  {
 			"King","Wright","Hill","Scott","Green","Adams","Baker","Carter","Turner",
 		};
 	
-	private final static String ITC = "[InTheClear:Wipe] ************************ ";
+	private final static String ITC = "[InTheClear:PIMWiper] ************************ ";
 	
 	public PIMWiper(Context c) {
 		PIMWiper.c = c;
@@ -47,22 +49,27 @@ public class PIMWiper  {
 		//second fill up the contact list until an error is thrown
 	}
 	
-	public static Vector<String> getContacts() {
-		Vector<String> result = new Vector<String>();
+	public static ArrayList<String> getContacts() {
+		ArrayList<String> result = new ArrayList<String>();
 		
 		final String[] projection = new String[] {
 				RawContacts.CONTACT_ID,
 				RawContacts.SOURCE_ID
 			};
 		
-		Cursor cursor = cr.query(RawContacts.CONTENT_URI, projection, null, null, null);
-		if(cursor != null) {
-			cursor.moveToFirst();
-			while(!cursor.isAfterLast()) {
-				result.addElement("contact ID: " + cursor.getString(0) + " | source ID: " + cursor.getString(1));
-				cursor.moveToNext();
+		Cursor cursor = null;
+		try {
+			cursor = cr.query(RawContacts.CONTENT_URI, projection, null, null, null);
+			if(cursor != null) {
+				cursor.moveToFirst();
+				while(!cursor.isAfterLast()) {
+					result.add("contact ID: " + cursor.getString(0) + " | source ID: " + cursor.getString(1));
+					cursor.moveToNext();
+				}
 			}
-		}
+			cursor.close();
+		} catch (NullPointerException npe) {}
+
 		
 		return result;
 	}
@@ -80,12 +87,38 @@ public class PIMWiper  {
 	}
 	
 	public static void wipeSMS() {
-		Log.d(ITC,"WIPING SMSes!");
-
+		Uri content_uri = Uri.parse("content://sms/conversations");
+		Cursor cursor = null;
+		try {
+			cursor = cr.query(content_uri, null, null, null, null);
+			if(cursor != null) {
+				/*
+				cursor.moveToFirst();
+				while(!cursor.isAfterLast()) {
+					// TODO: wipe these basterds.
+				}
+				*/
+				Log.d(ITC,"No. of SMS messages : " + cursor.getCount());
+			}
+			cursor.close();
+		} catch(NullPointerException npe) {}
 	}
 	
 	public static void wipeCallLog() {
-		Log.d(ITC,"WIPING CALL LOG!");
-
+		Uri content_uri = Uri.parse("content://call_log/calls");
+		Cursor cursor = null;
+		try {
+			cursor = cr.query(content_uri, null, null, null, null);
+			if(cursor != null) {
+				/*
+				cursor.moveToFirst();
+				while(!cursor.isAfterLast()) {
+					// TODO: wipe them!
+				}
+				*/
+				Log.d(ITC,"No. of Calls in Log : " + cursor.getCount());
+			}
+			cursor.close();
+		} catch (NullPointerException npe) {}	
 	}
 }

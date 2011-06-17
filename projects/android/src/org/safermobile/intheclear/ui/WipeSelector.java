@@ -25,4 +25,8 @@ public class WipeSelector {
 	public void setFilePath(File path) {
 		_path = path;
 	}
+	
+	public File getFilePath() {
+		return _path;
+	}
 }

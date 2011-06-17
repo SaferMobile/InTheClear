@@ -8,6 +8,7 @@ import android.content.ContentResolver;
 import android.content.Context;
 import android.database.Cursor;
 import android.provider.ContactsContract.RawContacts;
+import android.util.Log;
 
 public class PIMWiper  {
 
@@ -32,6 +33,8 @@ public class PIMWiper  {
 			"Martinez","Robinson","Clark","Lewis","Lee","Walker","Hall","Allen","Young",
 			"King","Wright","Hill","Scott","Green","Adams","Baker","Carter","Turner",
 		};
+	
+	private final static String ITC = "[InTheClear:Wipe] ************************ ";
 	
 	public PIMWiper(Context c) {
 		PIMWiper.c = c;
@@ -65,22 +68,24 @@ public class PIMWiper  {
 	}
 	
 	public static void wipeContacts() {
-		
+		Log.d(ITC,"WIPING CONTACTS!");
 	}
 	
 	public static void wipePhotos() {
-		
+		Log.d(ITC,"WIPING PHOTOS!");
 	}
 	
 	public static void wipeFolder(File folder) {
-		
+		Log.d(ITC,"WIPING FOLDER " + folder.getName());
 	}
 	
 	public static void wipeSMS() {
-		
+		Log.d(ITC,"WIPING SMSes!");
+
 	}
 	
 	public static void wipeCallLog() {
-		
+		Log.d(ITC,"WIPING CALL LOG!");
+
 	}
 }

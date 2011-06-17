@@ -1,5 +1,6 @@
 package org.safermobile.intheclear;
 
+import java.io.File;
 import java.util.ArrayList;
 
 import org.safermobile.intheclear.controllers.WipeController;
@@ -41,6 +42,7 @@ public class Wipe extends Activity implements OnClickListener {
 		setContentView(R.layout.wipe);
 		
 		wipeButton = (Button) findViewById(R.id.wipeButton);
+		wipeButton.setOnClickListener(this);
 		
 		_sp = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
 		boolean shouldWipeContacts = _sp.getBoolean("DefaultWipeContacts",false);
@@ -59,24 +61,32 @@ public class Wipe extends Activity implements OnClickListener {
 		checkBoxHolder_group1.setAdapter(new WipeArrayAdaptor(this, wipeSelector));
 				
 		new FolderIterator();
+		folderSelector = FolderIterator.getFolderList(this);
 		checkBoxHolder_group2 = (ListView) findViewById(R.id.checkBoxHolder_group2);
-		checkBoxHolder_group2.setAdapter(new WipeArrayAdaptor(this, FolderIterator.getFolderList(this)));
+		checkBoxHolder_group2.setAdapter(new WipeArrayAdaptor(this, folderSelector));
 		
 	}
 	
 	private void doWipe() {
 		// iterate through options to see what's checked
+		Log.d(ITC,"TRYING TO WIPE NOW");
+		ArrayList<File> checkedFolders = new ArrayList<File>();
 		
-		
-		for(WipeSelector w : wipeSelector) {
-
+		for(WipeSelector w : folderSelector) {
+			if(w.getSelected())
+				checkedFolders.add(w.getFilePath());
 		}
 		
 		// create a wipe controller instance
 		wc = new WipeController();
 		
 		// wipe baby!
-		
+		wc.wipePIMData(
+				wipeSelector.get(0).getSelected(),
+				wipeSelector.get(1).getSelected(),
+				wipeSelector.get(2).getSelected(),
+				wipeSelector.get(3).getSelected(),
+				checkedFolders);
 	}
 
 	@Override

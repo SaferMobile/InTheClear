@@ -5,12 +5,12 @@ MIDlet-Jar-URL: InTheClearME.jar
 MIDlet-Jar-Size: 0
 MicroEdition-Profile: MIDP-2.0
 MicroEdition-Configuration: CLDC-1.1
-MIDlet-1: In The Clear (Setup Wizard),img/icon.png,org.safermobile.clear.micro.apps.PanicConfigMIDlet
+MIDlet-1: In The Clear (Setup Wizard),setup.png,org.safermobile.clear.micro.apps.PanicConfigMIDlet
 RIM-MIDlet-Flags-1: 0
-MIDlet-2: Shout!,logo.jpg,org.safermobile.clear.micro.apps.ShoutMIDlet
+MIDlet-2: Shout!,shout.png,org.safermobile.clear.micro.apps.ShoutMIDlet
 RIM-MIDlet-Flags-2: 0
-MIDlet-3: Panic!,logo.jpg,org.safermobile.clear.micro.apps.PanicActivateMIDlet
+MIDlet-3: Panic!,panic.png,org.safermobile.clear.micro.apps.PanicActivateMIDlet
 RIM-MIDlet-Flags-3: 0
-MIDlet-4: Wipe!,logo.jpg,org.safermobile.clear.micro.apps.WipeMIDlet
+MIDlet-4: Wipe!,wipe.png,org.safermobile.clear.micro.apps.WipeMIDlet
 RIM-MIDlet-Flags-4: 0
 

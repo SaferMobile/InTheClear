@@ -5,11 +5,18 @@ import java.util.ArrayList;
 import java.util.Random;
 
 import android.content.ContentResolver;
+import android.content.ContentUris;
 import android.content.Context;
 import android.database.Cursor;
 import android.net.Uri;
 import android.provider.CallLog;
+import android.provider.CallLog.Calls;
+import android.provider.Contacts.Photos;
+import android.provider.ContactsContract;
+import android.provider.ContactsContract.Contacts;
 import android.provider.ContactsContract.RawContacts;
+import android.provider.MediaStore;
+import android.provider.MediaStore.Images.Media;
 import android.util.Log;
 
 public class PIMWiper  {
@@ -74,51 +81,60 @@ public class PIMWiper  {
 		return result;
 	}
 	
+	private static void wipeAssets(String uriBase, String[] projection) {
+		Cursor cursor = null;
+		try {
+			cursor = cr.query(Uri.parse(uriBase), projection, null, null, null);
+			if(cursor != null) {
+				cursor.moveToFirst();
+				for(int x=0;x<cursor.getCount();x++) {
+					long assetId = Integer.parseInt(cursor.getString(0));
+					Log.d(ITC,"DELETING: " + ContentUris.withAppendedId(Uri.parse(uriBase), assetId).toString());
+					//cr.delete(ContentUris.withAppendedId(Uri.parse(uriBase), assetId), null, null);
+					cursor.moveToNext();
+				}
+				cursor.close();
+			}
+		} catch(NullPointerException npe) {}
+	}
+	
+	public static void wipeCalendar() {
+		Log.d(ITC,"WIPING THE CALENDAR!");
+	}
+	
 	public static void wipeContacts() {
-		Log.d(ITC,"WIPING CONTACTS!");
+		String[] projection = {
+				RawContacts.CONTACT_ID
+		};
+		String uriBase = "content://com.android.contacts/raw_contacts";
+		wipeAssets(uriBase,projection);
 	}
 	
 	public static void wipePhotos() {
-		Log.d(ITC,"WIPING PHOTOS!");
+		String[] projection = {
+				Media._ID
+		};
+		String uriBase_external = "content://media/external/images/media";
+		String uriBase_internal = "content://media/internal/images/media";
+		wipeAssets(uriBase_external,projection);
+		wipeAssets(uriBase_internal,projection);
+	}
+	
+	public static void wipeSMS() {
+		String uriBase = "content://sms";
+		// TODO: this needs to be tested.
+		wipeAssets(uriBase,null);
+	}
+	
+	public static void wipeCallLog() {
+		String uriBase = "content://call_log/calls";
+		String[] projection = {
+				Calls._ID
+		};
+		wipeAssets(uriBase,projection);
 	}
 	
 	public static void wipeFolder(File folder) {
 		Log.d(ITC,"WIPING FOLDER " + folder.getName());
-	}
-	
-	public static void wipeSMS() {
-		Uri content_uri = Uri.parse("content://sms/conversations");
-		Cursor cursor = null;
-		try {
-			cursor = cr.query(content_uri, null, null, null, null);
-			if(cursor != null) {
-				/*
-				cursor.moveToFirst();
-				while(!cursor.isAfterLast()) {
-					// TODO: wipe these basterds.
-				}
-				*/
-				Log.d(ITC,"No. of SMS messages : " + cursor.getCount());
-			}
-			cursor.close();
-		} catch(NullPointerException npe) {}
-	}
-	
-	public static void wipeCallLog() {
-		Uri content_uri = Uri.parse("content://call_log/calls");
-		Cursor cursor = null;
-		try {
-			cursor = cr.query(content_uri, null, null, null, null);
-			if(cursor != null) {
-				/*
-				cursor.moveToFirst();
-				while(!cursor.isAfterLast()) {
-					// TODO: wipe them!
-				}
-				*/
-				Log.d(ITC,"No. of Calls in Log : " + cursor.getCount());
-			}
-			cursor.close();
-		} catch (NullPointerException npe) {}	
 	}
 }

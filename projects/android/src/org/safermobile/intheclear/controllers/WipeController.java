@@ -19,7 +19,7 @@ public class WipeController {
 	
 	public void wipePIMData(boolean contacts, boolean photos, boolean callLog, boolean sms, ArrayList<File> folders) {
 		if(contacts)
-			PIMWiper.getContacts();
+			PIMWiper.wipeContacts();
 		if(photos)
 			PIMWiper.wipePhotos();
 		if(callLog)

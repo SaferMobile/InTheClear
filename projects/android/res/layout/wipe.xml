@@ -1,18 +1,35 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-  xmlns:android="http://schemas.android.com/apk/res/android"
-  android:layout_width="fill_parent"
-  android:layout_height="fill_parent"
-  android:orientation="vertical"
-  android:weightSum="1.0">
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:weightSum="1.0"
+    android:background="#ffffff"
+    >
+	 <TextView
+	 	android:layout_width="fill_parent"
+	 	android:layout_height="0dip"
+	 	android:layout_weight="0.1"
+	 	android:text="@string/KEY_WIPE_BTN_TITLE"
+	 	android:textColor="#ffffffff"
+	 	android:background="#F7E700"
+	 	android:textSize="40px"
+	 	android:textStyle="bold"
+	 	android:paddingLeft="10px"
+	 	android:paddingTop="15px"
+	 	android:layout_gravity="center_horizontal"
+	 	/>
   <TextView
   	android:layout_width="fill_parent"
-  	android:layout_height="wrap_content"
+  	android:layout_height="0dip"
+  	android:layout_weight="0.08"
+  	android:layout_margin="10px"
   	android:text="@string/KEY_WIPE_ACTIVITYTEXT" />
   <ListView
   	xmlns:android="http://schemas.android.com/apk/res/android"
   	android:layout_width="fill_parent"
   	android:layout_height="0dip"
+	android:background="#ffffff"
   	android:layout_weight="0.5"
   	android:id="@+id/checkBoxHolder_group1" />
   <TextView
@@ -21,13 +38,15 @@
   	android:text="@string/KEY_WIPE_FOLDERSELECTIONTEXT" />
   <ListView
 	  	xmlns:android="http://schemas.android.com/apk/res/android"
+	  	android:background="#ffffff"
 	  	android:layout_width="fill_parent"
 	  	android:layout_height="0dip"
 	  	android:layout_weight="0.5"
 	  	android:id="@+id/checkBoxHolder_group2" />
   <Button
   	android:layout_width="fill_parent"
-  	android:layout_height="wrap_content"
+  	android:layout_height="0dip"
+  	android:layout_weight="0.15"
   	android:id="@+id/wipeButton"
   	android:text="@string/KEY_WIPE_BTN_TITLE" />
   

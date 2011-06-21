@@ -3,7 +3,7 @@
       package="org.safermobile.intheclear"
       android:versionCode="1"
       android:versionName="1.0">
-    <uses-sdk android:minSdkVersion="4" />
+    <uses-sdk android:minSdkVersion="7" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
     <uses-permission android:name="android.permission.SEND_SMS" />
@@ -14,17 +14,33 @@
 	
     <application android:icon="@drawable/icon" android:label="@string/app_name">
         <activity android:name=".InTheClear"
-                  android:label="@string/app_name">
+                  android:label="@string/app_name"
+                  android:theme="@android:style/Theme.NoTitleBar"
+                  android:configChanges="orientation|keyboardHidden"
+                  android:screenOrientation="portrait">
             <intent-filter>
             	<action android:name=".InTheClear" />
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".Wizard"
+        		  android:theme="@android:style/Theme.NoTitleBar"
+        		  android:configChanges="orientation|keyboardHidden"
+                  android:screenOrientation="portrait">
+        	<intent-filter>
+        		<action android:name=".Wizard" />
+        		<action	android:name="android.intent.action.MAIN" />
+        		<category android:name="android.intent.category.LAUNCHER" />
+        	</intent-filter>
+        </activity>
         <activity android:name=".ITCPreferences"></activity>
         <activity android:name=".Shout"
                   android:label="SHOUT!"
-                  android:taskAffinity="org.safermobile.intheclear.Shout">
+                  android:taskAffinity="org.safermobile.intheclear.Shout"
+                  android:theme="@android:style/Theme.NoTitleBar"
+                  android:configChanges="orientation|keyboardHidden"
+                  android:screenOrientation="portrait">
             <intent-filter>
             	<action android:name=".Shout" />
                 <action android:name="android.intent.action.MAIN" />
@@ -33,7 +49,10 @@
         </activity>
         <activity android:name=".Wipe"
                   android:label="WIPE!"
-                  android:taskAffinity="org.safermobile.intheclear.Wipe">
+                  android:taskAffinity="org.safermobile.intheclear.Wipe"
+                  android:theme="@android:style/Theme.NoTitleBar"
+                  android:configChanges="orientation|keyboardHidden"
+                  android:screenOrientation="portrait">
             <intent-filter>
             	<action android:name=".Wipe" />
                 <action android:name="android.intent.action.MAIN" />

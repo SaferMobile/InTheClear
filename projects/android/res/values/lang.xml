@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+	<string-array name="languages">
+		<item>English (US)</item>
+	</string-array>
+	<string-array name="languages_values">
+		<item>R.xml.itc_en_US</item>
+	</string-array>
+	
+</resources>

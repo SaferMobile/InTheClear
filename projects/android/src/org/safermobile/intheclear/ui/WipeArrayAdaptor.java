@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import org.safermobile.intheclear.R;
 
 import android.content.Context;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -17,9 +16,7 @@ import android.widget.TextView;
 public class WipeArrayAdaptor extends BaseAdapter {
 	private ArrayList<WipeSelector> _wipeSelector;
 	private LayoutInflater li;
-	
-	private final static String ITC = "[InTheClear:WipeArrayAdaptor] ************************ ";
-	
+		
 	public WipeArrayAdaptor(Context c, ArrayList<WipeSelector> wipeSelector) {
 		li = LayoutInflater.from(c);
 		_wipeSelector = wipeSelector;

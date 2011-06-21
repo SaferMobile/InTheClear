@@ -1,5 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+	<PreferenceCategory android:title="@string/KEY_PREF_LANGUAGE_TITLE">
+			<ListPreference android:title="@string/KEY_PREF_LANGUAGE_TITLE"
+			android:summary="@string/KEY_PREF_LANGUAGE_SUMMARY"
+			android:key="DefaultLanguage"
+			android:defaultValue="EN_US"
+			android:entries="@array/languages"
+			android:entryValues="@array/languages_values" />
+	</PreferenceCategory>
 	<PreferenceCategory android:title="@string/KEY_PREF_CONFIG_PANIC_TITLE">
 		<EditTextPreference
 			android:title="@string/KEY_PREF_ENTERPHONES_TITLE"

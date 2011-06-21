@@ -1,6 +1,7 @@
 package org.safermobile.intheclear;
 
 import org.safermobile.intheclear.controllers.ShoutController;
+import org.safermobile.intheclear.ui.ITCConstants;
 
 import android.app.Activity;
 import android.content.SharedPreferences;
@@ -16,14 +17,13 @@ import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.LinearLayout.LayoutParams;
 import android.widget.TextView;
 import android.widget.Toast;
 
 public class Shout extends Activity implements OnClickListener {
 	private SharedPreferences _sp;
-	
-	private final static String ITC = "[InTheClear:Shout] ************************ ";
-	
+		
 	TextView panicMsg;
 	Button sendShout,changeMsg;
 	EditText panicEdit;
@@ -32,8 +32,6 @@ public class Shout extends Activity implements OnClickListener {
 	
 	String msg,shoutMsg,shoutData;
 	
-	long countDown = 5000L;
-	long countDownInterval = 1000L;
 	CountDownTimer cd = null;
 	int t;
 	
@@ -68,7 +66,7 @@ public class Shout extends Activity implements OnClickListener {
 	
 	public void doCountdown() {
 		t = 0;
-		cd = new CountDownTimer(countDown, countDownInterval) {
+		cd = new CountDownTimer(ITCConstants.Duriation.COUNTDOWN, ITCConstants.Duriation.COUNTDOWNINTERVAL) {
 			@Override
 			public void onFinish() {
 				sc.sendSMSShout(_sp.getString("ConfiguredFriends",""), shoutMsg, shoutData);				
@@ -80,7 +78,7 @@ public class Shout extends Activity implements OnClickListener {
 					getString(R.string.KEY_SHOUT_COUNTDOWNMSG) + " " + (5 - t) +
 					" " + getString(R.string.KEY_SECONDS) + 
 					"\n" + getString(R.string.KEY_SHOUT_COUNTDOWNCANCEL);
-				Log.d(ITC,secondString);
+				Log.d(ITCConstants.Log.ITC,secondString);
 				makeToast(secondString);
 				t++;
 			}
@@ -96,7 +94,7 @@ public class Shout extends Activity implements OnClickListener {
 	}
 	
 	public boolean onOptionsItemSelected(MenuItem i) {
-		Log.d(ITC,"CHOOSING " + i.getItemId());
+		Log.d(ITCConstants.Log.ITC,"CHOOSING " + i.getItemId());
 		switch(i.getItemId()) {
 		case R.id.cancelShout:
 			if(cd != null) {
@@ -106,7 +104,7 @@ public class Shout extends Activity implements OnClickListener {
 		case R.id.restoreDefaultMsg:
 			msg = _sp.getString("DefaultPanicMsg", "");
 			isEditable = true;
-			Log.d(ITC,"RESTORE DEFAULT PLS");
+			Log.d(ITCConstants.Log.ITC,"RESTORE DEFAULT PLS");
 			toggleMessageUI();
 			return true;
 		default:

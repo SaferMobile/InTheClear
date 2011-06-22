@@ -33,9 +33,7 @@ public class Wipe extends Activity implements OnClickListener {
 	final int FOLDER = 5;
 	
 	WipeController wc;
-	
-	private final static String ITC = "[InTheClear:Wipe] ************************ ";
-	
+		
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);

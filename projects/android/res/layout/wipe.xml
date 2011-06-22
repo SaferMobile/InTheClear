@@ -49,5 +49,4 @@
   	android:layout_weight="0.15"
   	android:id="@+id/wipeButton"
   	android:text="@string/KEY_WIPE_BTN_TITLE" />
-  
 </LinearLayout>

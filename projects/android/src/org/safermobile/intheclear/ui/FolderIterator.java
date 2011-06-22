@@ -13,8 +13,6 @@ public class FolderIterator {
 	private static File pathToSDCard;
 	final static int FOLDER = 5;
 	private static SharedPreferences _sp;
-
-	private static final String ITC = "[InTheClear:FolderIterator] ************************* ";
 		
 	public FolderIterator() {
 		pathToSDCard = Environment.getExternalStorageDirectory();

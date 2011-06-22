@@ -19,7 +19,7 @@ public class SMSSender implements SMSTesterConstants {
 		this.c = c;
 	}
 	
-	public void sendSMS(String recipient, String messageData) {
+	public boolean sendSMS(String recipient, String messageData) {
 		_sentPI = PendingIntent.getBroadcast(c, 0, new Intent(SENT), 0);
 		_deliveredPI = PendingIntent.getBroadcast(c, 0, new Intent(DELIVERED), 0);
 		sms = SmsManager.getDefault();
@@ -28,6 +28,7 @@ public class SMSSender implements SMSTesterConstants {
 		for(String msg : splitMsg) {
 			sms.sendTextMessage(recipient, null, msg, _sentPI, _deliveredPI);
 		}
+		return true;
  	}
 	
 }

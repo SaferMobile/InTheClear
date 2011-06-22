@@ -13,6 +13,19 @@ public class PhoneInfo {
 		tm = (TelephonyManager) c.getSystemService(Context.TELEPHONY_SERVICE);
 	}
 	
+	public static String testData() {
+		StringBuffer sb = new StringBuffer();
+		if(getIMEI() != null)
+			sb.append("IMEI: " + PhoneInfo.getIMEI() + "\n");
+		if(getIMSI() != null)
+			sb.append("IMSI: " + PhoneInfo.getIMSI() + "\n");
+		if(getCellId() != null)
+			sb.append("CID: " + PhoneInfo.getCellId() + "\n");
+		if(getLAC() != null)
+			sb.append("LAC: " + PhoneInfo.getLAC() + "\n");
+		return sb.toString();
+	}
+	
 	public static String getMyPhoneNumber() {
 		String out = null;
 		out = tm.getLine1Number();

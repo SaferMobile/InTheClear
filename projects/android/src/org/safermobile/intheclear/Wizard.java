@@ -1,5 +1,6 @@
 package org.safermobile.intheclear;
 
+import org.safermobile.intheclear.screens.WizardForm;
 import org.safermobile.intheclear.ui.ITCConstants;
 
 import android.app.Activity;
@@ -13,12 +14,11 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.ScrollView;
-import android.widget.TextView;
 
 public class Wizard extends Activity implements OnClickListener {
 	int wNum,nextWizard,lastWizard = 0;
-	String[] wizardTexts;
 	ScrollView sv;
+	WizardForm form;
 	Button wizardForward,wizardBackward;
 		
 	@Override
@@ -34,13 +34,15 @@ public class Wizard extends Activity implements OnClickListener {
 		
 		sv = (ScrollView) findViewById(R.id.wizardDisplay);
 		
-		wizardTexts = getResources().getStringArray(R.array.WIZARD_TEXT);
 		if(getIntent().hasExtra("wNum")) {
 			wNum = getIntent().getIntExtra("wNum", 0);
-			TextView t = new TextView(this);
-			t.setText(wizardTexts[wNum]);
-			sv.addView(t);
 			
+			form = new WizardForm(this,wNum);
+			sv.addView(form.returnForm());
+			
+			if(form.containsPreferenceData()) {
+				// then the form must look through the EditTexts for the input
+			}
 			
 			Log.d(ITCConstants.Log.ITC,"wnum = " + wNum);
 		}
@@ -65,7 +67,7 @@ public class Wizard extends Activity implements OnClickListener {
 	@Override
 	public void onClick(View v) {
 		if(v == wizardForward) {
-			if(wNum < (wizardTexts.length - 1)) {
+			if(wNum < (ITCConstants.FormLength - 1)) {
 				Intent i = new Intent(this,Wizard.class);
 				i.putExtra("wNum", (wNum + 1));
 				startActivity(i);

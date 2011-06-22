@@ -15,4 +15,6 @@ public class ITCConstants {
 	public static class Log {
 		public static final String ITC = "[InTheClear] ******************************** ";
 	}
+	
+	public static int FormLength = 7;
 }

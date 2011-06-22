@@ -90,17 +90,32 @@
 	<string name="KEY_WIZARD_NEXT">Next</string>
 	<string name="KEY_WIZARD_BACK">Back</string>
 	<string name="KEY_WIZARD_ENABLE">Enable</string>
+	<string name="KEY_WIZARD_SEND">Send</string>
 	<string-array name="WIZARD_TEXT">
 		<item>If you\'d like In the Clear to include information about yourself when activated, you can configure that now.</item>
 		<item>Now we will make sure your phone is configured properly.</item>
 		<item>Enter a mobile number of your choosing below to test Shout! SMS sending.  Make sure you\'re able to verify delivery with the recipient!</item>
 		<item>When activated, Shout! will optionally send your location information along with your alert message.  This information could be essential for your safety, even if your phone does not have GPS.  Enable location permissions below.</item>
 		<item>Enter in one or more phone numbers, separated by a comma, to send the alert to, and a short alert message to send.</item>
-		<item>Wipe can be set up to erase or overwrite your phone\'s existing data when activated.  It requires permissions to access your contact list or SMS database to do so.</item>
-		<item>Choose how you\'d like Wipe! to work below.  Caution-- erasing or overwriting data is an unrecoverable action, so choose your setup wisely.</item>
+		<item>Wipe can be set up to erase or overwrite your phone\'s existing data when activated.  It requires permissions to access your contact list or SMS database to do so.\n\nChoose how you\'d like Wipe! to work below.  Caution-- erasing or overwriting data is an unrecoverable action, so choose your setup wisely.</item>
 		<item>Your configuration of the Panic! settings are now complete.  You may run this wizard again, or launch preferences from setup screen to change your settings.</item>
+	</string-array>
+	<string-array name="WIZARD_CHECKS">
+		<item>Check SMS Permissions</item>
+		<item>Check Location Access</item>
+		<item>Setup Alert Message</item>
+		<item>Enable Wipe! Permission</item>
+		<item>Configure Wipe! Options</item>
 	</string-array>
 	<string name="WIZARD_CONFIRMATION_SMSTEST">It seems like your message went through.  Please check with the recipient to make sure.</string>
 	<string name="WIZARD_CONFIRMATION_LOCATIONTEST">This is the location data we could access:</string>
+	<string name="WIZARD_FAIL_LOCATIONTEST">We were unable to access any phone location data.</string>
 	<string name="WIZARD_CONFIRMATION_LOCALDATA">Great!  Seems like we can access your local data.</string>
+	<string name="KEY_WIZARD_YOURNAME">Your Name</string>
+	<string name="KEY_WIZARD_YOURLOCATION">Location or other info</string>
+	<string name="KEY_WIZARD_PHONENUMBER">Phone Number</string>
+	<string name="KEY_WIZARD_SMSTESTMSG">This is a test message.  Reply if you get it!</string>
+	<string name="KEY_WIZARD_PHONENUMBERS">Phone Numbers</string>
+	<string name="KEY_WIZARD_ALERTMSG">Alert Message</string>
+	<string name="KEY_WIZARD_CONFIGURE_SHOUT">Configure Alerts</string>
 </resources>

@@ -8,33 +8,42 @@
     >
   <TextView
   	android:layout_width="fill_parent"
-  	android:layout_height="0dip"
-  	android:layout_weight="0.1"
+  	android:layout_height="wrap_content"
+  	android:layout_weight="0.0"
   	android:text="@string/KEY_HOME"
   	android:textColor="#ffffffff"
-  	android:background="#F7E700"
-  	android:textSize="40px"
+  	android:background="#aaaaff"
+  	android:textSize="40sp"
   	android:textStyle="bold"
   	android:paddingLeft="10px"
-  	android:paddingTop="15px"
+  	android:paddingBottom="0px"  	
   	android:layout_gravity="center_horizontal"
   	 />
+  	 <ScrollView 	android:layout_width="fill_parent"
+  	android:layout_height="0dip"
+  	  	android:layout_weight=".85"
+  	
+  	>
   <TextView
   	android:layout_width="fill_parent"
   	android:layout_height="0dip"
   	android:text="@string/KEY_HOME_INTRO"
   	android:layout_weight="0.8"
   	android:textColor="#000000"
-  	android:textSize="26px"
+  	android:textSize="20sp"
+  	android:paddingLeft="3sp"
   	android:layout_margin="10px" />
+  	</ScrollView>
   <LinearLayout
   	android:layout_width="fill_parent"
   	android:layout_height="0dip"
-  	android:layout_weight="0.15"
-  	android:weightSum="1.0">
+  	android:layout_weight="0.35"
+  	android:weightSum="1"
+  	android:paddingTop="6sp"
+  	>
 	  <Button
 	  	android:id="@+id/toWizard"
-	  	android:layout_width="0dip"
+	  	android:layout_width="10sp"
 	  	android:layout_height="wrap_content"
 	  	android:layout_weight="0.5"
 	  	android:text="@string/KEY_HOME_TOWIZARD" />

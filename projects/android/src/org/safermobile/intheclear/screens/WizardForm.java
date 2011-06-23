@@ -183,11 +183,18 @@ public class WizardForm extends View implements OnClickListener {
 			views.add(wipeList);
 			break;
 		case 7:
+			LinearLayout folderListHolder = new LinearLayout(c);
+			auxLP.height = 500;
+			folderListHolder.setLayoutParams(auxLP);
+			
 			ListView folderList = new ListView(c);
 			
 			new FolderIterator();
 			ArrayList<WipeSelector> folderSelector = FolderIterator.getFolderList(c);
+			folderList.setAdapter(new WipeArrayAdaptor(c,folderSelector));
+			folderListHolder.addView(folderList);
 			
+			views.add(folderListHolder);
 			break;
 		}
 		for(View v : views) {

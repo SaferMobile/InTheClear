@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:weightSum="1.0"
+    android:background="#ffffff"
+    >
+  <TextView
+  	android:layout_width="fill_parent"
+  	android:layout_height="0dip"
+  	android:layout_weight="0.1"
+  	android:text="@string/KEY_WIPE_SELECTFOLDERS"
+  	android:textColor="#ffffffff"
+  	android:background="#F7E700"
+  	android:textSize="40px"
+  	android:textStyle="bold"
+  	android:paddingLeft="10px"
+  	android:paddingTop="15px"
+  	android:layout_gravity="center_horizontal"
+  	 />
+  <ListView
+  	android:layout_width="fill_parent"
+  	android:layout_height="0dip"
+  	android:layout_weight="0.8"
+  	android:id="@+id/folderSelectionHolder" />
+  <Button
+  	android:layout_width="fill_parent"
+  	android:layout_height="0dip"
+  	android:layout_weight="0.1"
+  	android:id="@+id/confirmSelection"
+  	android:text="@string/KEY_WIPE_CONFIRMSELECT" />
+</LinearLayout>

@@ -60,6 +60,7 @@
 	<string name="KEY_PREF_WIPEFILES">Wipe Contents of Selected Folders on SD Card</string>
 	<string name="KEY_PREF_WIPEDIALOG">Select the folders that will be wiped when you press the PANIC! button</string>
 	<string name="KEY_PREF_WIPECALLLOG">Wipe Your Call Log</string>
+	<string name="KEY_PREF_WIPECALENDAR">Wipe Your Calendar</string>
 	<string name="KEY_PREF_WIPESMS">Wipe Your SMS Log</string>
 	<string name="KEY_PREF_ACCESSFAIL">We couldn\'t access your settings.  Please check your preferences.</string>
 	<string name="KEY_PREF_SAVEFAIL">There was a problem saving your preferences.</string>
@@ -80,9 +81,13 @@
 	<string name="KEY_WIPE_WIPEPHOTOS">Wipe Photos</string>
 	<string name="KEY_WIPE_CALLLOG">Wipe Call Log</string>
 	<string name="KEY_WIPE_SMS">Wipe SMS Log</string>
+	<string name="KEY_WIPE_CALENDAR">Wipe Calendar</string>
 	<string name="KEY_WIPE_BTN_TITLE">Wipe!</string>
-	<string name="KEY_WIPE_FOLDERSELECTIONTEXT">Wipe Content from Selected Folders on SD Card:</string>
-	<string name="KEY_WIPE_NOSELECTEDFOLDERS">You have not selected any folders.</string>
+	<string name="KEY_WIPE_SELECTFOLDERS">Select Folders to Wipe</string>
+	<string name="KEY_WIPE_CONFIRMSELECT">Done</string>
+	<string name="KEY_WIPE_FOLDERSELECTIONTEXT">You have selected folders on your SD Card to be wiped.</string>
+	<string name="KEY_WIPE_NOSELECTEDFOLDERS">You have not selected any folders, so nothing on your SD Card will be wiped</string>
+	<string name="KEY_WIPE_VIEWSELECTEDFOLDERS">View/Modify selected folders...</string>
 	<string name="KEY_HOME">In The Clear</string>
 	<string name="KEY_HOME_INTRO">InTheClear is a mobile app designed to help improve your safety in difficult situations.  It does this with three main features that you must configure.\n\nPanic!, Shout &amp; Wipe\n\nThis wizard will walk you through the setup process for these features, and ensure your mobile is ready for an emergency situation.</string>
 	<string name="KEY_HOME_TOWIZARD">Start Setup Wizard</string>
@@ -98,17 +103,19 @@
 		<item>When activated, Shout! will optionally send your location information along with your alert message.  This information could be essential for your safety, even if your phone does not have GPS.  Enable location permissions below.</item>
 		<item>Enter in one or more phone numbers, separated by a comma, to send the alert to, and a short alert message to send.</item>
 		<item>Wipe can be set up to erase or overwrite your phone\'s existing data when activated.  It requires permissions to access your contact list or SMS database to do so.\n\nChoose how you\'d like Wipe! to work below.  Caution-- erasing or overwriting data is an unrecoverable action, so choose your setup wisely.</item>
+		<item>You may also select certain folders on your SD card to be automatically wiped.  Please select them here.</item>
 		<item>Your configuration of the Panic! settings are now complete.  You may run this wizard again, or launch preferences from setup screen to change your settings.</item>
 	</string-array>
 	<string-array name="WIZARD_CHECKS">
 		<item>Check SMS Permissions</item>
 		<item>Check Location Access</item>
 		<item>Setup Alert Message</item>
-		<item>Enable Wipe! Permission</item>
 		<item>Configure Wipe! Options</item>
+		<item>Enable Wipe! Access to Folders</item>
 	</string-array>
 	<string name="WIZARD_CONFIRMATION_SMSTEST">It seems like your message went through.  Please check with the recipient to make sure.</string>
 	<string name="WIZARD_CONFIRMATION_LOCATIONTEST">This is the location data we could access:</string>
+	<string name="WIZARD_FAIL_SMSTEST_INVALIDNUMBER">This phone number doesn\'t appear valid.  Please try another number.</string>
 	<string name="WIZARD_FAIL_LOCATIONTEST">We were unable to access any phone location data.</string>
 	<string name="WIZARD_CONFIRMATION_LOCALDATA">Great!  Seems like we can access your local data.</string>
 	<string name="KEY_WIZARD_YOURNAME">Your Name</string>

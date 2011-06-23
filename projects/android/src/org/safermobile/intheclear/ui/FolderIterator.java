@@ -3,6 +3,8 @@ package org.safermobile.intheclear.ui;
 import java.io.File;
 import java.util.ArrayList;
 
+import org.safermobile.intheclear.ITCConstants;
+
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Environment;
@@ -11,7 +13,6 @@ import android.util.Log;
 
 public class FolderIterator {
 	private static File pathToSDCard;
-	final static int FOLDER = 5;
 	private static SharedPreferences _sp;
 		
 	public FolderIterator() {
@@ -26,7 +27,7 @@ public class FolderIterator {
 		for(File f : folder) {
 			if (f.isDirectory()) {
 				boolean isSelected = false;
-				WipeSelector theFolder = new WipeSelector(f.getName(), FOLDER, isSelected);
+				WipeSelector theFolder = new WipeSelector(f.getName(), ITCConstants.Wipe.FOLDER, isSelected);
 				theFolder.setFilePath(f);
 				folders.add(theFolder);
 			}

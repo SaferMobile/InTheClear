@@ -6,23 +6,22 @@
     android:weightSum="1.0"
     android:background="#ffffff"
     >
-	 <TextView
-	 	android:layout_width="fill_parent"
-	 	android:layout_height="0dip"
-	 	android:layout_weight="0.1"
-	 	android:text="@string/KEY_WIPE_BTN_TITLE"
-	 	android:textColor="#ffffffff"
-	 	android:background="#F7E700"
-	 	android:textSize="40px"
-	 	android:textStyle="bold"
-	 	android:paddingLeft="10px"
-	 	android:paddingTop="15px"
-	 	android:layout_gravity="center_horizontal"
-	 	/>
+  <TextView
+ 	android:layout_width="fill_parent"
+ 	android:layout_height="0dip"
+ 	android:layout_weight="0.1"
+ 	android:text="@string/KEY_WIPE_BTN_TITLE"
+ 	android:textColor="#ffffffff"
+ 	android:background="#F7E700"
+ 	android:textSize="40px"
+ 	android:textStyle="bold"
+ 	android:paddingLeft="10px"
+ 	android:paddingTop="15px"
+ 	android:layout_gravity="center_horizontal" />
   <TextView
   	android:layout_width="fill_parent"
   	android:layout_height="0dip"
-  	android:layout_weight="0.08"
+  	android:layout_weight="0.1"
   	android:layout_margin="10px"
   	android:text="@string/KEY_WIPE_ACTIVITYTEXT" />
   <ListView
@@ -31,22 +30,32 @@
   	android:layout_height="0dip"
 	android:background="#ffffff"
   	android:layout_weight="0.5"
-  	android:id="@+id/checkBoxHolder_group1" />
-  <TextView
+  	android:id="@+id/checkBoxHolder" />
+  <LinearLayout
+  	xmlns:android="http://schemas.android.com/apk/res/android"
   	android:layout_width="fill_parent"
-  	android:layout_height="wrap_content"
-  	android:text="@string/KEY_WIPE_FOLDERSELECTIONTEXT" />
-  <ListView
-	  	xmlns:android="http://schemas.android.com/apk/res/android"
-	  	android:background="#ffffff"
-	  	android:layout_width="fill_parent"
-	  	android:layout_height="0dip"
-	  	android:layout_weight="0.5"
-	  	android:id="@+id/checkBoxHolder_group2" />
+  	android:layout_height="0dip"
+  	android:layout_weight="0.2"
+  	android:orientation="horizontal"
+  	android:layout_marginTop="10px"
+  	android:weightSum="1.0">
+	  <TextView
+	  	android:layout_width="0dip"
+	  	android:layout_height="wrap_content"
+	  	android:layout_weight="0.65"
+	  	android:layout_marginLeft="10px"
+	  	android:text="@string/KEY_WIPE_FOLDERSELECTIONTEXT" />
+	  <Button
+	  	android:layout_width="0dip"
+	  	android:layout_height="wrap_content"
+	  	android:layout_weight="0.35"
+	  	android:text="@string/KEY_WIPE_VIEWSELECTEDFOLDERS"
+	  	android:id="@+id/viewSelectedFolders" />
+  </LinearLayout>
   <Button
   	android:layout_width="fill_parent"
   	android:layout_height="0dip"
-  	android:layout_weight="0.15"
+  	android:layout_weight="0.1"
   	android:id="@+id/wipeButton"
   	android:text="@string/KEY_WIPE_BTN_TITLE" />
 </LinearLayout>

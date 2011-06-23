@@ -1,4 +1,4 @@
-package org.safermobile.intheclear;
+package org.safermobile.intheclear.apps;
 
 import android.app.Activity;
 import android.os.Bundle;

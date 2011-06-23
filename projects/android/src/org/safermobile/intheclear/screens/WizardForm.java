@@ -2,10 +2,13 @@ package org.safermobile.intheclear.screens;
 
 import java.util.ArrayList;
 
+import org.safermobile.intheclear.ITCConstants;
 import org.safermobile.intheclear.R;
 import org.safermobile.intheclear.data.PhoneInfo;
 import org.safermobile.intheclear.sms.SMSSender;
-import org.safermobile.intheclear.ui.ITCConstants;
+import org.safermobile.intheclear.ui.FolderIterator;
+import org.safermobile.intheclear.ui.WipeArrayAdaptor;
+import org.safermobile.intheclear.ui.WipeSelector;
 import org.safermobile.intheclear.ui.WizardArrayAdaptor;
 import org.safermobile.intheclear.ui.WizardSelector;
 
@@ -35,7 +38,7 @@ public class WizardForm extends View implements OnClickListener {
 		
 		_l = new LinearLayout(c);
 		lp = new LayoutParams(LinearLayout.LayoutParams.FILL_PARENT,LinearLayout.LayoutParams.WRAP_CONTENT);
-		auxLP = new LayoutParams(LayoutParams.FILL_PARENT,200);
+		auxLP = new LayoutParams(LayoutParams.FILL_PARENT,350);
 		_l.setOrientation(LinearLayout.VERTICAL);
 		_l.setLayoutParams(lp);
 		
@@ -152,7 +155,40 @@ public class WizardForm extends View implements OnClickListener {
 			_containsPreferenceData = true;
 			break;
 		case 6:
-			break;			
+			ArrayList<WipeSelector> wipeSelector = new ArrayList<WipeSelector>();
+			wipeSelector.add(new WipeSelector(
+					c.getString(R.string.KEY_WIPE_WIPECONTACTS), 
+					ITCConstants.Wipe.CONTACTS, 
+					false));
+			wipeSelector.add(
+					new WipeSelector(
+							c.getString(R.string.KEY_WIPE_WIPEPHOTOS), 
+							ITCConstants.Wipe.PHOTOS, 
+							false));
+			wipeSelector.add(new WipeSelector(
+					c.getString(R.string.KEY_WIPE_CALLLOG),
+					ITCConstants.Wipe.CALLLOG,
+					false));
+			wipeSelector.add(new WipeSelector(
+					c.getString(R.string.KEY_WIPE_SMS),
+					ITCConstants.Wipe.SMS,
+					false));
+			wipeSelector.add(new WipeSelector(
+					c.getString(R.string.KEY_WIPE_CALENDAR),
+					ITCConstants.Wipe.CALENDAR,
+					false));
+			ListView wipeList = new ListView(c);
+			wipeList.setLayoutParams(auxLP);
+			wipeList.setAdapter(new WipeArrayAdaptor(c,wipeSelector));
+			views.add(wipeList);
+			break;
+		case 7:
+			ListView folderList = new ListView(c);
+			
+			new FolderIterator();
+			ArrayList<WipeSelector> folderSelector = FolderIterator.getFolderList(c);
+			
+			break;
 		}
 		for(View v : views) {
 			_l.addView(v);

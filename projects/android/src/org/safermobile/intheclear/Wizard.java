@@ -1,7 +1,6 @@
 package org.safermobile.intheclear;
 
 import org.safermobile.intheclear.screens.WizardForm;
-import org.safermobile.intheclear.ui.ITCConstants;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -67,9 +66,26 @@ public class Wizard extends Activity implements OnClickListener {
 	@Override
 	public void onClick(View v) {
 		if(v == wizardForward) {
-			if(wNum < (ITCConstants.FormLength - 1)) {
+			if(wNum < ITCConstants.FormLength) {
 				Intent i = new Intent(this,Wizard.class);
-				i.putExtra("wNum", (wNum + 1));
+				int nextTarget;
+				switch(wNum) {
+				case 3:
+					nextTarget = 2;
+					break;
+				case 4:
+					nextTarget = 2;
+					break;
+				case 5:
+					nextTarget = 2;
+					break;
+				case 6:
+					nextTarget = 2;
+				default:
+					nextTarget = wNum + 1;
+					break;
+				}
+				i.putExtra("wNum", nextTarget);
 				startActivity(i);
 			} else {
 				Log.d(ITCConstants.Log.ITC,"going back now!");
@@ -79,7 +95,24 @@ public class Wizard extends Activity implements OnClickListener {
 		} else if(v == wizardBackward) {
 			if(wNum > 1) {
 				Intent i = new Intent(this,Wizard.class);
-				i.putExtra("wNum", (wNum - 1));
+				int backTarget;
+				switch(wNum) {
+				case 4:
+					backTarget = 2;
+					break;
+				case 5:
+					backTarget = 2;
+					break;
+				case 6:
+					backTarget = 2;
+					break;
+				case 7:
+					backTarget = 2;
+				default:
+					backTarget = wNum - 1;
+					break;
+				}
+				i.putExtra("wNum", backTarget);
 				startActivity(i);
 			} else if(wNum == 1) {
 				Intent i = new Intent(this,InTheClear.class);

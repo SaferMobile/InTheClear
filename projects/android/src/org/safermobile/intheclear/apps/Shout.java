@@ -1,7 +1,8 @@
-package org.safermobile.intheclear;
+package org.safermobile.intheclear.apps;
 
+import org.safermobile.intheclear.ITCConstants;
+import org.safermobile.intheclear.R;
 import org.safermobile.intheclear.controllers.ShoutController;
-import org.safermobile.intheclear.ui.ITCConstants;
 
 import android.app.Activity;
 import android.content.SharedPreferences;
@@ -17,7 +18,6 @@ import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
-import android.widget.LinearLayout.LayoutParams;
 import android.widget.TextView;
 import android.widget.Toast;
 

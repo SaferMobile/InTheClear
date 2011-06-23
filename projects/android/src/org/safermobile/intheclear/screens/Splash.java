@@ -1,4 +1,4 @@
-package org.safermobile.intheclear.ui;
+package org.safermobile.intheclear.screens;
 
 import android.content.Context;
 

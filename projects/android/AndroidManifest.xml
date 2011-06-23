@@ -33,27 +33,37 @@
         		<action	android:name="android.intent.action.MAIN" />
         	</intent-filter>
         </activity>
+        <activity android:name=".screens.FolderSelector"
+        		  android:configChanges="orientation|keyboardHidden"
+        		  android:screenOrientation="portrait"
+        		  android:theme="@style/Theme.CustomDialog">
+        	<intent-filter>
+        		<action android:name=".screens.FolderSelector" />
+        		<action android:name="android.intent.action.MAIN" />
+        	</intent-filter>
+        
+        </activity>
         <activity android:name=".ITCPreferences"></activity>
-        <activity android:name=".Shout"
+        <activity android:name=".apps.Shout"
                   android:label="SHOUT!"
-                  android:taskAffinity="org.safermobile.intheclear.Shout"
+                  android:taskAffinity=".apps.Shout"
                   android:theme="@android:style/Theme.NoTitleBar"
                   android:configChanges="orientation|keyboardHidden"
                   android:screenOrientation="portrait">
             <intent-filter>
-            	<action android:name=".Shout" />
+            	<action android:name=".apps.Shout" />
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".Wipe"
+        <activity android:name=".apps.Wipe"
                   android:label="WIPE!"
-                  android:taskAffinity="org.safermobile.intheclear.Wipe"
+                  android:taskAffinity=".apps.Wipe"
                   android:theme="@android:style/Theme.NoTitleBar"
                   android:configChanges="orientation|keyboardHidden"
                   android:screenOrientation="portrait">
             <intent-filter>
-            	<action android:name=".Wipe" />
+            	<action android:name=".apps.Wipe" />
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>

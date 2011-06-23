@@ -6,11 +6,7 @@ import org.safermobile.intheclear.ITCConstants;
 import org.safermobile.intheclear.R;
 import org.safermobile.intheclear.data.PhoneInfo;
 import org.safermobile.intheclear.sms.SMSSender;
-import org.safermobile.intheclear.ui.FolderIterator;
-import org.safermobile.intheclear.ui.WipeArrayAdaptor;
-import org.safermobile.intheclear.ui.WipeSelector;
-import org.safermobile.intheclear.ui.WizardArrayAdaptor;
-import org.safermobile.intheclear.ui.WizardSelector;
+import org.safermobile.intheclear.ui.*;
 
 import android.content.Context;
 import android.util.Log;
@@ -28,7 +24,7 @@ public class WizardForm extends View implements OnClickListener {
 	String[] wizardText;
 	LinearLayout _l;
 	LayoutParams lp,auxLP;
-	boolean _containsPreferenceData = false;
+	boolean _hasPreferenceData;
 	int screenHeight;
 	
 	public WizardForm(final Context c, int wNum) {
@@ -48,6 +44,8 @@ public class WizardForm extends View implements OnClickListener {
 		intro.setText(wizardText[wNum - 1]);
 		views.add(intro);
 		
+		_hasPreferenceData = false;
+		
 		switch(wNum) {
 		case 1:
 			TextView yourName = new TextView(c);
@@ -55,6 +53,7 @@ public class WizardForm extends View implements OnClickListener {
 			views.add(yourName);
 			
 			EditText yourNameTxt = new EditText(c);
+			yourNameTxt.setContentDescription(ITCConstants.Preference.USER_DISPLAY_NAME);
 			views.add(yourNameTxt);
 			
 			TextView yourLocation = new TextView(c);
@@ -62,9 +61,10 @@ public class WizardForm extends View implements OnClickListener {
 			views.add(yourLocation);
 			
 			EditText yourLocationTxt = new EditText(c);
+			yourLocationTxt.setContentDescription(ITCConstants.Preference.USER_DISPLAY_LOCATION);
 			views.add(yourLocationTxt);
 			
-			_containsPreferenceData = true;
+			_hasPreferenceData = true;
 			break;
 		case 2:
 			ArrayList<WizardSelector> wizardSelector = new ArrayList<WizardSelector>();
@@ -152,7 +152,7 @@ public class WizardForm extends View implements OnClickListener {
 			EditText alertMsgTxt = new EditText(c);
 			views.add(alertMsgTxt);
 			
-			_containsPreferenceData = true;
+			_hasPreferenceData = true;
 			break;
 		case 6:
 			ArrayList<WipeSelector> wipeSelector = new ArrayList<WipeSelector>();
@@ -181,20 +181,22 @@ public class WizardForm extends View implements OnClickListener {
 			wipeList.setLayoutParams(auxLP);
 			wipeList.setAdapter(new WipeArrayAdaptor(c,wipeSelector));
 			views.add(wipeList);
+			
+			_hasPreferenceData = true;
 			break;
 		case 7:
 			LinearLayout folderListHolder = new LinearLayout(c);
-			auxLP.height = 500;
 			folderListHolder.setLayoutParams(auxLP);
-			
 			ListView folderList = new ListView(c);
 			
 			new FolderIterator();
 			ArrayList<WipeSelector> folderSelector = FolderIterator.getFolderList(c);
 			folderList.setAdapter(new WipeArrayAdaptor(c,folderSelector));
-			folderListHolder.addView(folderList);
 			
+			folderListHolder.addView(folderList);
 			views.add(folderListHolder);
+			
+			_hasPreferenceData = true;
 			break;
 		}
 		for(View v : views) {
@@ -203,8 +205,8 @@ public class WizardForm extends View implements OnClickListener {
 		
 	}
 	
-	public boolean containsPreferenceData() {
-		return _containsPreferenceData;
+	public boolean hasPreferenceData() {
+		return _hasPreferenceData;
 	}
 	
 	public LinearLayout returnForm() {

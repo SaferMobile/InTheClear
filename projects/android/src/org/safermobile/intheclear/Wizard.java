@@ -4,6 +4,7 @@ import org.safermobile.intheclear.screens.WizardForm;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
@@ -19,11 +20,14 @@ public class Wizard extends Activity implements OnClickListener {
 	ScrollView sv;
 	WizardForm form;
 	Button wizardForward,wizardBackward;
+	SharedPreferences _sp;
 		
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.wizard);
+		
+		_sp = getSharedPreferences(null, MODE_PRIVATE);
 		
 		wizardForward = (Button) findViewById(R.id.wizardForward);
 		wizardForward.setOnClickListener(this);
@@ -39,13 +43,20 @@ public class Wizard extends Activity implements OnClickListener {
 			form = new WizardForm(this,wNum);
 			sv.addView(form.returnForm());
 			
-			if(form.containsPreferenceData()) {
-				// then the form must look through the EditTexts for the input
-			}
-			
 			Log.d(ITCConstants.Log.ITC,"wnum = " + wNum);
 		}
 			
+	}
+	
+	private void savePreferenceState() {
+		for(int x=0;x<form.returnForm().getChildCount();x++) {
+			View v = form.returnForm().getChildAt(x);
+			if(v.getContentDescription() != null && v.getContentDescription().length() > 0) {
+				if(v instanceof android.widget.EditText) {
+					
+				}
+			}
+		}
 	}
 	
 	@Override
@@ -65,6 +76,10 @@ public class Wizard extends Activity implements OnClickListener {
 
 	@Override
 	public void onClick(View v) {
+		if(form.hasPreferenceData()) {			
+			savePreferenceState();
+		}
+		
 		if(v == wizardForward) {
 			if(wNum < ITCConstants.FormLength) {
 				Intent i = new Intent(this,Wizard.class);

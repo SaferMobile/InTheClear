@@ -21,6 +21,13 @@ public class ITCConstants {
 		public static final long COUNTDOWNINTERVAL = 1000L;
 	}
 	
+	public static class Preference {
+		public static final String USER_DISPLAY_NAME = "UserDisplayName";
+		public static final String USER_DISPLAY_LOCATION = "UserDisplayLocation";
+		public static final String DEFAULT_PANIC_MSG = "DefaultPanicMsg";
+		public static final String DEFAULT_WIPE_CONTACTS = "DefaultWipeContacts";
+	}
+	
 	public static class Log {
 		public static final String ITC = "[InTheClear] ******************************** ";
 	}

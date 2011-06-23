@@ -13,6 +13,7 @@ import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.LinearLayout.LayoutParams;
@@ -26,6 +27,8 @@ public class WizardForm extends View implements OnClickListener {
 	LayoutParams lp,auxLP;
 	boolean _hasPreferenceData;
 	int screenHeight;
+	
+	ArrayList<WizardSelector> wizardSelector;
 	
 	public WizardForm(final Context c, int wNum) {
 		super(c);
@@ -64,19 +67,34 @@ public class WizardForm extends View implements OnClickListener {
 			yourLocationTxt.setContentDescription(ITCConstants.Preference.USER_DISPLAY_LOCATION);
 			views.add(yourLocationTxt);
 			
+			TextView oneTouch = new TextView(c);
+			oneTouch.setText(c.getResources().getString(R.string.KEY_WIZARD_ONETOUCH));
+			views.add(oneTouch);
+			
+			ArrayList<WipeSelector> oneTouchSelector = new ArrayList<WipeSelector>();
+			oneTouchSelector.add(new WipeSelector(
+					c.getResources().getString(R.string.KEY_WIZARD_ONETOUCH_DIALOG),
+					ITCConstants.Preference.ONE_TOUCH,
+					false));
+			
+			ListView oneTouchList = new ListView(c);
+			oneTouchList.setLayoutParams(auxLP);
+			oneTouchList.setAdapter(new WipeArrayAdaptor(c,oneTouchSelector));
+			views.add(oneTouchList);
+			
 			_hasPreferenceData = true;
 			break;
 		case 2:
-			ArrayList<WizardSelector> wizardSelector = new ArrayList<WizardSelector>();
+			wizardSelector = new ArrayList<WizardSelector>();
 			String[] wizardChecks = c.getResources().getStringArray(R.array.WIZARD_CHECKS);
 			for(int x=0;x<wizardChecks.length;x++) {
 				wizardSelector.add(new WizardSelector(wizardChecks[x],x));
-				Log.d(ITCConstants.Log.ITC,"hello " + x);
 			}
 			ListView list = new ListView(c);
 			list.setLayoutParams(auxLP);
 			list.setAdapter(new WizardArrayAdaptor(c,wizardSelector));
 			views.add(list);
+			
 			break;
 		case 3:
 			TextView phoneNumber = new TextView(c);
@@ -107,6 +125,7 @@ public class WizardForm extends View implements OnClickListener {
 			});
 			testSMSL.addView(send);
 			views.add(testSMSL);
+			
 			break;
 		case 4:
 			final LinearLayout testLocationL = new LinearLayout(c);
@@ -136,6 +155,7 @@ public class WizardForm extends View implements OnClickListener {
 			});
 			testLocationL.addView(enable);
 			views.add(testLocationL);
+			
 			break;
 		case 5:
 			TextView phoneNumbers = new TextView(c);
@@ -143,6 +163,7 @@ public class WizardForm extends View implements OnClickListener {
 			views.add(phoneNumbers);
 			
 			EditText phoneNumbersTxt = new EditText(c);
+			phoneNumbersTxt.setContentDescription(ITCConstants.Preference.CONFIGURED_FRIENDS);
 			views.add(phoneNumbersTxt);
 			
 			TextView alertMsg = new TextView(c);
@@ -150,6 +171,7 @@ public class WizardForm extends View implements OnClickListener {
 			views.add(alertMsg);
 			
 			EditText alertMsgTxt = new EditText(c);
+			alertMsgTxt.setContentDescription(ITCConstants.Preference.DEFAULT_PANIC_MSG);
 			views.add(alertMsgTxt);
 			
 			_hasPreferenceData = true;
@@ -180,21 +202,22 @@ public class WizardForm extends View implements OnClickListener {
 			ListView wipeList = new ListView(c);
 			wipeList.setLayoutParams(auxLP);
 			wipeList.setAdapter(new WipeArrayAdaptor(c,wipeSelector));
+			wipeList.setContentDescription(ITCConstants.Preference.WIPE_SELECTOR);
 			views.add(wipeList);
 			
 			_hasPreferenceData = true;
 			break;
 		case 7:
-			LinearLayout folderListHolder = new LinearLayout(c);
-			folderListHolder.setLayoutParams(auxLP);
+
 			ListView folderList = new ListView(c);
-			
+			folderList.setLayoutParams(auxLP);
+			folderList.setContentDescription(ITCConstants.Preference.WIPE_SELECTOR);
+
 			new FolderIterator();
 			ArrayList<WipeSelector> folderSelector = FolderIterator.getFolderList(c);
 			folderList.setAdapter(new WipeArrayAdaptor(c,folderSelector));
 			
-			folderListHolder.addView(folderList);
-			views.add(folderListHolder);
+			views.add(folderList);
 			
 			_hasPreferenceData = true;
 			break;

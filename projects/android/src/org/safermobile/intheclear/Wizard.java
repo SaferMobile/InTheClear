@@ -1,11 +1,13 @@
 package org.safermobile.intheclear;
 
 import org.safermobile.intheclear.screens.WizardForm;
+import org.safermobile.intheclear.ui.WipeSelector;
 
 import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -13,6 +15,8 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
+import android.widget.ListView;
+import android.widget.EditText;
 import android.widget.ScrollView;
 
 public class Wizard extends Activity implements OnClickListener {
@@ -21,13 +25,15 @@ public class Wizard extends Activity implements OnClickListener {
 	WizardForm form;
 	Button wizardForward,wizardBackward;
 	SharedPreferences _sp;
+	SharedPreferences.Editor _ed;
 		
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.wizard);
 		
-		_sp = getSharedPreferences(null, MODE_PRIVATE);
+		_sp = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
+		_ed = _sp.edit();
 		
 		wizardForward = (Button) findViewById(R.id.wizardForward);
 		wizardForward.setOnClickListener(this);
@@ -52,11 +58,55 @@ public class Wizard extends Activity implements OnClickListener {
 		for(int x=0;x<form.returnForm().getChildCount();x++) {
 			View v = form.returnForm().getChildAt(x);
 			if(v.getContentDescription() != null && v.getContentDescription().length() > 0) {
-				if(v instanceof android.widget.EditText) {
+				if(v instanceof EditText) {
+					String val = ((EditText) v).getText().toString();
 					
+					if(val.compareTo("") != 0) {
+						String key = (String) v.getContentDescription();
+						_ed.putString(key, val);
+					}
+				} else if(v instanceof ListView) {
+					if(v.getContentDescription().toString().compareTo(ITCConstants.Preference.WIPE_SELECTOR) == 0) {
+						ListView lv = (ListView) v;
+						for(int l=0;l<lv.getCount();l++) {
+							WipeSelector w = (WipeSelector) lv.getItemAtPosition(l);
+							String key;
+							if(w.getSelected()) {
+								switch(w.getWipeType()) {
+								case ITCConstants.Wipe.CALENDAR:
+									key = ITCConstants.Preference.DEFAULT_WIPE_CALENDAR;
+									_ed.putBoolean(key, true);
+									break;
+								case ITCConstants.Wipe.CALLLOG:
+									key = ITCConstants.Preference.DEFAULT_WIPE_CALLLOG;
+									_ed.putBoolean(key,true);
+									break;
+								case ITCConstants.Wipe.CONTACTS:
+									key = ITCConstants.Preference.DEFAULT_WIPE_CONTACTS;
+									_ed.putBoolean(key, true);
+									break;
+								case ITCConstants.Wipe.FOLDER:
+									break;
+								case ITCConstants.Wipe.PHOTOS:
+									key = ITCConstants.Preference.DEFAULT_WIPE_PHOTOS;
+									_ed.putBoolean(key, true);
+									break;
+								case ITCConstants.Wipe.SMS:
+									key = ITCConstants.Preference.DEFAULT_WIPE_SMS;
+									_ed.putBoolean(key, true);
+									break;
+								case ITCConstants.Preference.ONE_TOUCH:
+									key = ITCConstants.Preference.DEFAULT_ONE_TOUCH_PANIC;
+									_ed.putBoolean(key, true);
+									break;
+								}
+							}
+						}
+					}
 				}
 			}
 		}
+		_ed.commit();
 	}
 	
 	@Override
@@ -96,6 +146,7 @@ public class Wizard extends Activity implements OnClickListener {
 					break;
 				case 6:
 					nextTarget = 2;
+					break;
 				default:
 					nextTarget = wNum + 1;
 					break;

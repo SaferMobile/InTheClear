@@ -87,6 +87,7 @@ public class Wipe extends Activity implements OnClickListener {
 				wipeSelector.get(1).getSelected(),
 				wipeSelector.get(2).getSelected(),
 				wipeSelector.get(3).getSelected(),
+				wipeSelector.get(4).getSelected(),
 				checkedFolders);
 	}
 	

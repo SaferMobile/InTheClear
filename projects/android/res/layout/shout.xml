@@ -46,9 +46,11 @@
 
 	<Button
   		android:layout_width="fill_parent"
-  		android:layout_height="0dip"
+  		android:layout_height="70sp"
   		android:layout_weight="0.15"
   		android:layout_margin="10px"
+  		android:textSize="16pt"
+  		android:drawableLeft="@drawable/shout"
   		android:text="@string/KEY_SHOUT_BTN_TITLE"
   		android:id="@+id/shoutBtn" />
 </LinearLayout>

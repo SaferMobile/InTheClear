@@ -13,7 +13,7 @@ import javax.microedition.midlet.MIDletStateChangeException;
 
 import org.j4me.ui.UIManager;
 import org.safermobile.clear.micro.L10nResources;
-import org.safermobile.clear.micro.apps.screens.ShoutManualForm;
+import org.safermobile.clear.micro.apps.views.ShoutManualForm;
 import org.safermobile.clear.micro.ui.ClearTheme;
 import org.safermobile.clear.micro.ui.LargeStringCanvas;
 import org.safermobile.micro.ui.DisplayManager;

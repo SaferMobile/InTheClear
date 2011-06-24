@@ -1,5 +1,7 @@
 package org.safermobile;
 
+//#ifdef BLACKBERRY
+
 import net.rim.device.api.ui.UiApplication;
 
 /**
@@ -30,3 +32,6 @@ public class InTheClear extends UiApplication
         pushScreen(new ITCScreen());
     }    
 }
+
+//#endif
+

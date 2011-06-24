@@ -3,6 +3,8 @@
 /* See LICENSE for licensing information */
 
 package org.safermobile.clear.micro.apps;
+import java.util.Vector;
+
 import javax.microedition.lcdui.Display;
 import javax.microedition.midlet.MIDlet;
 import javax.microedition.midlet.MIDletStateChangeException;
@@ -14,13 +16,14 @@ import org.j4me.ui.MenuItem;
 import org.j4me.ui.UIManager;
 import org.safermobile.clear.micro.L10nConstants;
 import org.safermobile.clear.micro.L10nResources;
-import org.safermobile.clear.micro.apps.screens.LocationPermissionForm;
-import org.safermobile.clear.micro.apps.screens.PanicWizardForm;
-import org.safermobile.clear.micro.apps.screens.SMSSendTestForm;
-import org.safermobile.clear.micro.apps.screens.SetupAlertMessageForm;
-import org.safermobile.clear.micro.apps.screens.UserInfoForm;
-import org.safermobile.clear.micro.apps.screens.WipePermissionForm;
-import org.safermobile.clear.micro.apps.screens.WipeSelectionForm;
+import org.safermobile.clear.micro.apps.models.WipeDataType;
+import org.safermobile.clear.micro.apps.views.LocationPermissionForm;
+import org.safermobile.clear.micro.apps.views.PanicWizardForm;
+import org.safermobile.clear.micro.apps.views.SMSSendTestForm;
+import org.safermobile.clear.micro.apps.views.SetupAlertMessageForm;
+import org.safermobile.clear.micro.apps.views.UserInfoForm;
+import org.safermobile.clear.micro.apps.views.WipePermissionForm;
+import org.safermobile.clear.micro.apps.views.WipeSelectionForm;
 import org.safermobile.clear.micro.ui.ClearTheme;
 import org.safermobile.clear.micro.ui.ErrorAlert;
 import org.safermobile.micro.ui.Splash;
@@ -40,6 +43,8 @@ public class PanicConfigMIDlet extends MIDlet implements Runnable {
 	private Preferences _prefs;
 	private Menu _shoutMenu;
 	
+	private Vector _wipeDataTypes;
+	
 	private int formIdx = 1;
 	
 	private L10nResources l10n = LocaleManager.getResources();
@@ -57,8 +62,55 @@ public class PanicConfigMIDlet extends MIDlet implements Runnable {
 			Logger.error(PanicConstants.TAG, "a problem saving the prefs: " + e, e);
 		}
 		
+		setupWipeDataTypes();
+		
+		
 		setupUI();
 		showSplash();
+	}
+	
+	private void setupWipeDataTypes ()
+	{
+
+		_wipeDataTypes = new Vector();
+		WipeDataType wdt = null;
+		
+		wdt = new WipeDataType(PanicConstants.PREFS_KEY_WIPE_CONTACTS, l10n.getString(L10nConstants.keys.WIPE_MENU_CONTACTS));
+		_wipeDataTypes.addElement(wdt);
+		
+		wdt = new WipeDataType(PanicConstants.PREFS_KEY_WIPE_PHOTOS, l10n.getString(L10nConstants.keys.WIPE_MENU_PHOTOS));
+		_wipeDataTypes.addElement(wdt);
+		
+
+		//for BB this is where we will add CallLogs and Messages
+		/*
+		 * 
+		 * wdt = new WipeDataType(PanicConstants.PREFS_KEY_WIPE_MESSAGES, l10n.getString(L10nConstants.keys.WIPE_MENU_MESSAGES));
+		_wipeDataTypes.addElement(wdt);
+		
+		
+		wdt = new WipeDataType(PanicConstants.PREFS_KEY_WIPE_CALLLOGS, l10n.getString(L10nConstants.keys.WIPE_MENU_CALLLOGS));
+		_wipeDataTypes.addElement(wdt);
+		
+		 * 
+		 * 
+		 */
+		
+		//
+		
+		wdt = new WipeDataType(PanicConstants.PREFS_KEY_WIPE_VIDEOS, l10n.getString(L10nConstants.keys.WIPE_MENU_VIDEOS));
+		_wipeDataTypes.addElement(wdt);
+		
+		wdt = new WipeDataType(PanicConstants.PREFS_KEY_WIPE_ALL_FILES, l10n.getString(L10nConstants.keys.WIPE_MENU_FILES));
+		_wipeDataTypes.addElement(wdt);
+		
+		wdt = new WipeDataType(PanicConstants.PREFS_KEY_WIPE_EVENTS, l10n.getString(L10nConstants.keys.WIPE_MENU_CALENDAR));
+		_wipeDataTypes.addElement(wdt);
+		
+		wdt = new WipeDataType(PanicConstants.PREFS_KEY_WIPE_TODOS, l10n.getString(L10nConstants.keys.WIPE_MENU_TODO));
+		_wipeDataTypes.addElement(wdt);
+		
+		
 	}
 	
 	private void setupUI ()
@@ -182,7 +234,7 @@ public class PanicConfigMIDlet extends MIDlet implements Runnable {
 
   					public void onSelection ()
   					{
-  						WipeSelectionForm form = new WipeSelectionForm(PanicConfigMIDlet.this);
+  						WipeSelectionForm form = new WipeSelectionForm(PanicConfigMIDlet.this,_wipeDataTypes);
   						form.show();
   					}
   				} );

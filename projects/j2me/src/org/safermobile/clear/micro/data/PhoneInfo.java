@@ -1,12 +1,11 @@
 /* Copyright (c) 2011, SaferMobile/MobileActive - https://safermobile.org */
 /* See LICENSE for licensing information */
-
 package org.safermobile.clear.micro.data;
 
-//#if polish.Vendor == BlackBerry
+// #ifdef BB
 import net.rim.device.api.system.GPRSInfo;
 import net.rim.device.api.system.SIMCardInfo;
-//#endif
+// #endif
  
 public class PhoneInfo {
 

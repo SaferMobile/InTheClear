@@ -1,4 +1,4 @@
-package org.safermobile.clear.micro.apps.screens;
+package org.safermobile.clear.micro.apps.views;
 
 
 import javax.microedition.lcdui.Graphics;
@@ -15,7 +15,7 @@ import org.safermobile.clear.micro.L10nConstants;
 /**
  * Example of a <code>TextBox</code> component.
  */
-public class PanicConfigCompleteForm
+public class PanicWizardForm
         extends Dialog
 {
         /**
@@ -34,19 +34,20 @@ public class PanicConfigCompleteForm
          * 
          * @param previous is the screen to return to once this done.
          */
-        public PanicConfigCompleteForm (PanicConfigMIDlet midlet)
+        public PanicWizardForm (PanicConfigMIDlet midlet)
         {
                 _midlet = midlet;
                 
                 // Set the title and menu.
                 setTitle( l10n.getString(L10nConstants.keys.PANIC_SETUP_TITLE) );
-                setMenuText(null, l10n.getString(L10nConstants.keys.MENU_EXIT));
+                setMenuText( l10n.getString(L10nConstants.keys.MENU_EXIT), l10n.getString(L10nConstants.keys.MENU_NEXT));
                 
             	// Center the text.
-        		_label.setHorizontalAlignment( Graphics.LEFT );
+        		_label.setHorizontalAlignment( Graphics.HCENTER );
 
         		// Make the label be mutliple paragraphs.
-        		_label.setLabel("Your configuration of the Panic! settings are now complete. You may run this wizard again to change your settings.");
+        		_label.setLabel(l10n.getString(L10nConstants.keys.PANIC_SETUP_INTRO_1)
+        				+ "\n" + l10n.getString(L10nConstants.keys.PANIC_SETUP_INTRO_2) + "\n" + l10n.getString(L10nConstants.keys.PANIC_SETUP_INTRO_3));
         		
         		// Add the label to this screen.
         		append( _label );
@@ -56,14 +57,21 @@ public class PanicConfigCompleteForm
         }
         
      
-   
+        /**
+         * Takes the user to the previous screen.
+         */
+        protected void declineNotify ()
+        {
+        	_midlet.notifyDestroyed();
+        }
+        
         
         /**
          * Takes the user to the previous screen.
          */
         protected void acceptNotify ()
         {
-        	_midlet.notifyDestroyed();
+        	_midlet.showNext();
         }
         
       

@@ -1,4 +1,4 @@
-package org.safermobile.clear.micro.apps.screens;
+package org.safermobile.clear.micro.apps.views;
 
 
 import org.j4me.ui.*;

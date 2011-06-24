@@ -43,6 +43,7 @@ public class FolderSelector extends Activity implements OnClickListener {
 		folderList.setAdapter(new WipeArrayAdaptor(this, folderSelect));
 		
 		if(i.hasExtra("selectedFolders")) {
+			selectedFolders.clear();
 			selectedFolders = (ArrayList<File>) i.getSerializableExtra("selectedFolders");
 			Log.d(ITCConstants.Log.ITC,"we passed " + selectedFolders.size() + " folders");
 			

@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:weightSum="1.0"
+    android:background="#ffffff"
+    >
+  <TextView
+  	android:layout_width="fill_parent"
+  	android:layout_height="wrap_content"
+  	android:layout_weight="0.0"
+  	android:text="@string/KEY_PANIC_TITLE"
+  	android:textColor="#ffffffff"
+  	android:background="#aaaaff"
+  	android:textSize="40sp"
+  	android:textStyle="bold"
+  	android:paddingLeft="10px"
+  	android:paddingBottom="0px"  	
+  	android:layout_gravity="center_horizontal"
+  	 />
+	<TextView
+		android:layout_width="fill_parent"
+		android:layout_height="0dip"
+		android:layout_weight="0.8"
+		android:id="@+id/panicReadout" />
+	<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+		android:orientation="vertical"
+		android:layout_width="fill_parent"
+		android:layout_height="0dip"
+		android:layout_weight="0.1"
+		android:id="@+id/panicControl" />
+</LinearLayout>

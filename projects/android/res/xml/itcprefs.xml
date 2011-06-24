@@ -25,8 +25,12 @@
 			android:title="@string/KEY_PREF_ENTERPANICMSG_TITLE"
 			android:key="DefaultPanicMsg"
 			android:summary="@string/KEY_PREF_ENTERPANICMSG" />
+		<CheckBoxPreference
+			android:title="@string/KEY_PREF_ONETOUCH"
+			android:summary="@string/KEY_PREF_ONETOUCH_DIALOG"
+			android:key="DefaultOneTouchPanic" />
 	</PreferenceCategory>
-	<PreferenceCategory android:title="@string/KEY_PREF_CONFIG_WIPE_TITLE" android:summary="@string/KEY_PREF_WIPEDIALOG">
+	<PreferenceCategory android:title="@string/KEY_PREF_CONFIG_WIPE_TITLE" android:summary="@string/KEY_PREF_WIPEDIALOG" android:key="DefaultWipers">
 		<CheckBoxPreference
 			android:title="@string/KEY_PREF_WIPECONTACTS"
 			android:key="DefaultWipeContacts" />
@@ -42,5 +46,12 @@
 		<CheckBoxPreference
 			android:title="@string/KEY_PREF_WIPECALENDAR"
 			android:key="DefaultWipeCalendar" />
+		<CheckBoxPreference
+			android:title="@string/KEY_PREF_WIPEFILES"
+			android:summary="@string/KEY_PREF_WIPEDIALOG"
+			android:key="DefaultWipeFolders" />
+		<EditTextPreference
+			android:title="@string/KEY_PREF_WIPEFILESLIST"
+			android:key="DefaultWipeFoldersList" />
 	</PreferenceCategory>
 </PreferenceScreen>

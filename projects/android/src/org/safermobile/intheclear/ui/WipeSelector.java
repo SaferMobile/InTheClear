@@ -14,6 +14,10 @@ public class WipeSelector {
 		_wipeSelect = wipeSelect;
 	}
 	
+	public int getWipeType() {
+		return _wipeType;
+	}
+	
 	public void setSelected(boolean select) {
 		_wipeSelect = select;
 	}

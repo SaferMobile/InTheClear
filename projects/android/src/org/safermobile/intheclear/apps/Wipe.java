@@ -78,10 +78,6 @@ public class Wipe extends Activity implements OnClickListener {
 	}
 	
 	private void doWipe() {
-		// iterate through options to see what's checked
-		checkedFolders = new ArrayList<File>();
-
-		
 		// create a wipe controller instance
 		wc = new WipeController(getBaseContext());
 		

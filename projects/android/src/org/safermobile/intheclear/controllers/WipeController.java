@@ -15,10 +15,6 @@ public class WipeController {
 		new PIMWiper(c);
 	}
 	
-	public ArrayList<String> getContacts() {
-		return PIMWiper.getContacts();
-	}
-	
 	public void wipePIMData(boolean contacts, boolean photos, boolean callLog, boolean sms, boolean calendar, ArrayList<File> folders) {
 		if(contacts)
 			PIMWiper.wipeContacts();

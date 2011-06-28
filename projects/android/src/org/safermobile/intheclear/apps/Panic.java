@@ -192,7 +192,7 @@ public class Panic extends Activity implements OnClickListener {
 		return true;
 	}
 	
-	public boolean onMenuOptionSelected(MenuItem i) {
+	public boolean onOptionsItemSelected(MenuItem i) {
 		switch(i.getItemId()) {
 		case R.id.cancelPanic:
 			cancelPanic();

@@ -1,5 +1,6 @@
 package org.safermobile.intheclear;
 
+import android.provider.CallLog;
 import android.provider.ContactsContract.CommonDataKinds.Email;
 import android.provider.ContactsContract.CommonDataKinds.Im;
 import android.provider.ContactsContract.CommonDataKinds.Nickname;
@@ -8,9 +9,9 @@ import android.provider.ContactsContract.CommonDataKinds.Phone;
 import android.provider.ContactsContract.CommonDataKinds.Photo;
 import android.provider.ContactsContract.CommonDataKinds.StructuredName;
 import android.provider.ContactsContract.CommonDataKinds.StructuredPostal;
-import android.provider.ContactsContract.Contacts;
 import android.provider.ContactsContract.Data;
-import android.provider.ContactsContract.RawContacts;
+import android.provider.MediaStore.Images;
+import android.provider.MediaStore.Video;
 
 public class ITCConstants {
 	public static class Wipe {
@@ -31,10 +32,6 @@ public class ITCConstants {
 	public static class ContentTargets {
 		public static class CONTACT {
 			public static final String[] STRINGS = {
-				Data.SYNC1,
-				Data.SYNC2,
-				Data.SYNC3,
-				Data.SYNC4,
 				Phone.DISPLAY_NAME,
 				Phone.NUMBER,
 				Photo.PHOTO_ID,
@@ -56,50 +53,102 @@ public class ITCConstants {
 				Nickname.NAME,
 				Im.DATA,
 				Im.PROTOCOL,
-				Im.LABEL
+				Im.LABEL,
+				Email.DISPLAY_NAME,
+				Data.SYNC1,
+				Data.SYNC2,
+				Data.SYNC3,
+				Data.SYNC4,
 			};
 			
-			public static final String[] BLOBS = {
+			public static final String[] FILES = {
 				Photo.PHOTO,
 				
 			};
 		}
 			
-		public static final String[] IMAGE = {
-			android.provider.MediaStore.Images.Media.DATA,
-			android.provider.MediaStore.Images.Media.SIZE,
-			android.provider.MediaStore.Images.Media.DISPLAY_NAME,
-			android.provider.MediaStore.Images.Media.MIME_TYPE,
-			android.provider.MediaStore.Images.Media.TITLE,
-			android.provider.MediaStore.Images.Media.DATE_ADDED,
-			android.provider.MediaStore.Images.Media.DATE_MODIFIED,
-			android.provider.MediaStore.Images.Media.DESCRIPTION
-		};
-		public static final String[] VIDEO = {
-			android.provider.MediaStore.Video.VideoColumns.ALBUM,
-			android.provider.MediaStore.Video.VideoColumns.ARTIST,
-			android.provider.MediaStore.Video.VideoColumns.CATEGORY,
-			android.provider.MediaStore.Video.VideoColumns.DATE_TAKEN,
-			android.provider.MediaStore.Video.VideoColumns.DESCRIPTION,
-			android.provider.MediaStore.Video.VideoColumns.LANGUAGE,
-			android.provider.MediaStore.Video.VideoColumns.LATITUDE,
-			android.provider.MediaStore.Video.VideoColumns.LONGITUDE,
-			android.provider.MediaStore.Video.VideoColumns.MINI_THUMB_MAGIC,
-			android.provider.MediaStore.Video.VideoColumns.TAGS,
-			android.provider.MediaStore.Video.VideoColumns.DATA,
-			android.provider.MediaStore.Video.VideoColumns.DATE_ADDED,
-			android.provider.MediaStore.Video.VideoColumns.DATE_MODIFIED,
-			android.provider.MediaStore.Video.VideoColumns.DISPLAY_NAME,
-			android.provider.MediaStore.Video.VideoColumns.TITLE
-		};
-		public static final String[] IMAGE_THUMBNAIL = {
-			android.provider.MediaStore.Images.Thumbnails.DATA,
-			android.provider.MediaStore.Images.Thumbnails.IMAGE_ID
-		};
-		public static final String[] VIDEO_THUMBNAIL = {
-			android.provider.MediaStore.Video.Thumbnails.DATA,
-			android.provider.MediaStore.Video.Thumbnails.VIDEO_ID
-		};
+		public static class IMAGE {
+			public static final String[] STRINGS = {
+				Images.Media.DISPLAY_NAME,
+				Images.Media.TITLE,
+				Images.Media.DATE_ADDED,
+				Images.Media.DATE_TAKEN,
+				Images.Media.DATE_MODIFIED,
+				Images.Media.DESCRIPTION,
+				Images.Media.LATITUDE,
+				Images.Media.LONGITUDE,
+				Images.Media.MINI_THUMB_MAGIC
+			};
+			
+			public static final String[] FILES = {
+				Images.Media.DATA
+			};
+		}
+		
+		public static class VIDEO {
+			public static final String[] STRINGS = {
+				Video.Media.ALBUM,
+				Video.Media.ARTIST,
+				Video.Media.CATEGORY,
+				Video.Media.DATE_TAKEN,
+				Video.Media.DESCRIPTION,
+				Video.Media.LANGUAGE,
+				Video.Media.LATITUDE,
+				Video.Media.LONGITUDE,
+				Video.Media.MINI_THUMB_MAGIC,
+				Video.Media.TAGS,
+				Video.Media.DATE_ADDED,
+				Video.Media.DATE_MODIFIED,
+				Video.Media.DISPLAY_NAME,
+				Video.Media.TITLE
+			};
+			
+			public static final String[] FILES = {
+				Video.Media.DATA
+			};
+		}
+		
+		public static class IMAGE_THUMBNAIL {
+			public static final String[] STRINGS = {
+				Images.Thumbnails.IMAGE_ID
+			};
+			
+			public static final String[] FILES = {
+				Images.Thumbnails.DATA
+			};
+		}
+		
+		public static class VIDEO_THUMBNAIL {
+			public static final String[] STRINGS = {
+				Video.Thumbnails.VIDEO_ID
+			};
+			
+			public static final String[] FILES = {
+				Video.Thumbnails.DATA
+			};
+		}
+		
+		public static class CALL_LOG {
+			public static final String[] STRINGS = {
+				CallLog.Calls.NUMBER,
+				CallLog.Calls.CACHED_NAME,
+				CallLog.Calls.DATE,
+				CallLog.Calls.DURATION,
+				CallLog.Calls.CACHED_NUMBER_LABEL,
+				CallLog.Calls.CACHED_NUMBER_TYPE
+			};
+		}
+		
+		public static class SMS {
+			public static final String[] STRINGS = {
+				"thread_id",
+				"address",
+				"date",
+				"person",
+				"subject",
+				"body"
+			};
+		}
 	}
 	
 	public static class Duriation {

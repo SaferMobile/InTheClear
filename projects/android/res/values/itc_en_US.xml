@@ -22,8 +22,12 @@
 	<string name="KEY_PANIC_TITLE">Panic!</string>
 	<string name="KEY_PANIC_MSG_TITLE">Panic Msg:</string>
 	<string name="KEY_PANIC_PROGRESS_1">Preparing to send your Panic! message...</string>
+	<string name="KEY_PANIC_PROGRESS_2">Wiping selected data from your phone...</string>
+	<string name="KEY_PANIC_PROGRESS_3">Your phone will continue to Panic! every 45 seconds...</string>
+	<string name="KEY_PANIC_NEXT_PANIC">Next Panic! in </string>
 	<string name="KEY_PANIC_BTN_PANIC">Panic!</string>
-	<string name="KEY_PANIC_MENU_CANCEL">Cancel</string>
+	<string name="KEY_PANIC_MENU_CANCEL">Cancel Panic!</string>
+	<string name="KEY_PANIC_COUNTDOWNMSG">Panic! in </string>
 	<string name="KEY_PANIC_TITLE_ERROR">Error</string>
 	<string name="KEY_PANIC_ERROR_PREFS">Unable to open preferences</string>
 	<string name="KEY_PANIC_TITLE_MAIN">Panic! Activated</string>
@@ -32,6 +36,7 @@
 	<string name="KEY_PANIC_MSG_LOCATION">Location:</string>
 	<string name="KEY_PANIC_MSG_CID">cid:</string>
 	<string name="KEY_PANIC_MSG_LAC">lac:</string>
+	<string name="KEY_PANIC_MSG_MCC">mcc:</string>
 	<string name="KEY_PANIC_MSG_TIMESTAMP">ts:</string>
 	<string name="KEY_PANIC_MSG_SENT">Panic Sent</string>
 	<string name="KEY_PANIC_MSG_SENTTO">Sent to:</string>

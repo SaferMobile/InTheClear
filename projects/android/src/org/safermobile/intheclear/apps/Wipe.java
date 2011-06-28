@@ -32,6 +32,8 @@ public class Wipe extends Activity implements OnClickListener {
 	ArrayList<WipeSelector> wipeSelector;
 	ArrayList<File> checkedFolders;
 	
+	boolean shouldWipePhotos,shouldWipeContacts,shouldWipeCallLog,shouldWipeSMS,shouldWipeCalendar,shouldWipeFolders;
+	
 	WipeController wc;
 	
 	@Override
@@ -48,12 +50,29 @@ public class Wipe extends Activity implements OnClickListener {
 		viewSelectedFolders.setOnClickListener(this);
 		
 		_sp = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
-		boolean shouldWipeContacts = _sp.getBoolean(ITCConstants.Preference.DEFAULT_WIPE_CONTACTS,false);
-		boolean shouldWipePhotos = _sp.getBoolean(ITCConstants.Preference.DEFAULT_WIPE_PHOTOS, false);
-		boolean shouldWipeCallLog = _sp.getBoolean(ITCConstants.Preference.DEFAULT_WIPE_CALLLOG, false);
-		boolean shouldWipeSMS = _sp.getBoolean(ITCConstants.Preference.DEFAULT_WIPE_SMS, false);
-		boolean shouldWipeCalendar = _sp.getBoolean(ITCConstants.Preference.DEFAULT_WIPE_CALENDAR, false);
-		boolean shouldWipeFolders = _sp.getBoolean(ITCConstants.Preference.DEFAULT_WIPE_FOLDERS, false);
+
+		checkBoxHolder = (ListView) findViewById(R.id.checkBoxHolder);
+	}
+	
+	@Override
+	public void onResume() {
+		super.onResume();
+	}
+	
+	@Override
+	public void onStart() {
+		super.onStart();
+		alignPreferences();
+	}
+	
+	private void alignPreferences() {
+		Log.d(ITCConstants.Log.ITC,"WE ARE REALIGNING PREFs");
+		shouldWipeContacts = _sp.getBoolean(ITCConstants.Preference.DEFAULT_WIPE_CONTACTS,false);
+		shouldWipePhotos = _sp.getBoolean(ITCConstants.Preference.DEFAULT_WIPE_PHOTOS, false);
+		shouldWipeCallLog = _sp.getBoolean(ITCConstants.Preference.DEFAULT_WIPE_CALLLOG, false);
+		shouldWipeSMS = _sp.getBoolean(ITCConstants.Preference.DEFAULT_WIPE_SMS, false);
+		shouldWipeCalendar = _sp.getBoolean(ITCConstants.Preference.DEFAULT_WIPE_CALENDAR, false);
+		shouldWipeFolders = _sp.getBoolean(ITCConstants.Preference.DEFAULT_WIPE_FOLDERS, false);
 		
 		wipeSelector = new ArrayList<WipeSelector>();
 		
@@ -79,24 +98,22 @@ public class Wipe extends Activity implements OnClickListener {
 				ITCConstants.Wipe.CALENDAR,
 				shouldWipeCalendar));
 		
+		checkBoxHolder.setAdapter(new WipeArrayAdaptor(this, wipeSelector));
+		
 		checkedFolders = new ArrayList<File>();
 		
 		if(shouldWipeFolders) {
 			checkedFolderDialog.setText(R.string.KEY_WIPE_FOLDERSELECTIONTEXT);
+			
 			String cf = _sp.getString(ITCConstants.Preference.DEFAULT_WIPE_FOLDER_LIST, "");
 			StringTokenizer st = new StringTokenizer(cf,";");
-				
-			while(st.hasMoreTokens()) {
-				String path = st.nextToken();
-				checkedFolders.add(new File(path));
-			} 
+			while(st.hasMoreTokens())
+				checkedFolders.add(new File(st.nextToken()));
+			
 		} else {
 			checkedFolders.clear();
 			checkedFolderDialog.setText(R.string.KEY_WIPE_NOSELECTEDFOLDERS);
 		}
-
-		checkBoxHolder = (ListView) findViewById(R.id.checkBoxHolder);
-		checkBoxHolder.setAdapter(new WipeArrayAdaptor(this, wipeSelector));
 	}
 	
 	private void doWipe() {

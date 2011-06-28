@@ -30,7 +30,7 @@ public class Shout extends Activity implements OnClickListener {
 	LinearLayout panicMsgHolder;
 	android.view.ViewGroup.LayoutParams lp;
 	
-	String msg,shoutMsg,shoutData;
+	String msg,shoutMsg,shoutData,configuredFriends,userDisplayName,userDisplayLocation;
 	
 	CountDownTimer cd = null;
 	int t;
@@ -47,11 +47,9 @@ public class Shout extends Activity implements OnClickListener {
         setContentView(R.layout.shout);
         
         _sp = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
-        msg = _sp.getString("DefaultPanicMsg", "");
         
         panicMsg = (TextView) findViewById(R.id.panicMsg);
         lp = panicMsg.getLayoutParams();
-        panicMsg.setText(panicMsg.getText() + "\n" + msg);
         
         changeMsg = (Button) findViewById(R.id.changePanicMsg_btn);
         changeMsg.setOnClickListener(this);
@@ -64,12 +62,32 @@ public class Shout extends Activity implements OnClickListener {
         panicEdit.setLayoutParams(lp);
     }
 	
+	@Override
+	public void onResume() {
+		super.onResume();
+	}
+	
+	@Override
+	public void onStart() {
+		super.onStart();
+		alignPreferences();
+	}
+	
+	private void alignPreferences() {
+		msg = _sp.getString("DefaultPanicMsg", "");
+        panicMsg.setText(panicMsg.getText() + "\n" + msg);
+
+		configuredFriends = _sp.getString("ConfiguredFriends","");
+		userDisplayName = _sp.getString("UserDisplayName", "");
+		userDisplayLocation = _sp.getString("UserDisplayLocation", "");
+	}
+	
 	public void doCountdown() {
 		t = 0;
 		cd = new CountDownTimer(ITCConstants.Duriation.COUNTDOWN, ITCConstants.Duriation.COUNTDOWNINTERVAL) {
 			@Override
 			public void onFinish() {
-				sc.sendSMSShout(_sp.getString("ConfiguredFriends",""), shoutMsg, shoutData);				
+				sc.sendSMSShout(configuredFriends, shoutMsg, shoutData);				
 			}
 
 			@Override
@@ -143,8 +161,8 @@ public class Shout extends Activity implements OnClickListener {
 	public void onClick(View v) {
 		if(v == sendShout) {
 			sc = new ShoutController(this);
-			shoutMsg = sc.buildShoutMessage(_sp.getString("UserDisplayName", ""), msg, _sp.getString("UserDisplayLocation", ""));
-			shoutData = sc.buildShoutData(_sp.getString("UserDisplayName", ""));
+			shoutMsg = sc.buildShoutMessage(userDisplayName, msg,userDisplayLocation);
+			shoutData = sc.buildShoutData(userDisplayName);
 			doCountdown();
 		} else if(v == changeMsg) {
 			toggleMessageUI();

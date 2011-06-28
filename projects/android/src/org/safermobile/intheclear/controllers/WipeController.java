@@ -30,7 +30,7 @@ public class WipeController {
 			PIMWiper.wipeSMS();
 		if(calendar)
 			PIMWiper.wipeCalendar();
-		if(folders != null && folders.size() > 0) {
+		if(folders != null && !folders.isEmpty()) {
 			for(File f : folders) {
 				PIMWiper.wipeFolder(f);
 			}

@@ -31,7 +31,6 @@ public class FolderIterator {
 		while(st.hasMoreTokens()) {
 			String path = st.nextToken();
 			defaults.add(path);
-			Log.d(ITCConstants.Log.ITC,path);
 		}
 		
 		for(File f : folder) {

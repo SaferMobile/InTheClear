@@ -61,6 +61,7 @@ public class FolderSelector extends Activity implements OnClickListener {
 	@Override
 	public void onClick(View v) {
 		if(v == confirmSelection) {
+			selectedFolders.clear();
 			for(WipeSelector w : folderSelect) {
 				if(w.getSelected() && !selectedFolders.contains(w.getFilePath())) {
 					selectedFolders.add(w.getFilePath());

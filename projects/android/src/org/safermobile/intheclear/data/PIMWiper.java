@@ -78,9 +78,8 @@ public class PIMWiper  {
 								
 								// If the string contains a file path, zero-out/delete the referenced file as well
 								File f = new File(cursor.getString(cursor.getColumnIndex(s)));
-								if(f.isFile()) {
+								if(f.isFile())
 									rewriteAndDelete(f);
-								}
 							}
 						}
 					}

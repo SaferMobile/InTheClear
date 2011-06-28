@@ -31,6 +31,15 @@ public class PIMWiper  {
 		PIMWiper.cr = c.getContentResolver();
 	}
 	
+	private static void getAvailableColumns(Cursor cursor) {
+		String[] availableColumns = cursor.getColumnNames();
+		StringBuffer sbb = new StringBuffer();
+		for(String s : availableColumns) {
+			sbb.append(s + ", ");
+		}
+		Log.d(ITCConstants.Log.ITC,"Available Columns: " + sbb.toString());
+	}
+	
 	private static void wipeAssets(Uri uriBase, String[] rewriteStrings, String[] rewriteFiles) {
 		Cursor cursor = null;
 		long _id = 0;
@@ -70,30 +79,12 @@ public class PIMWiper  {
 								// If the string contains a file path, zero-out/delete the referenced file as well
 								File f = new File(cursor.getString(cursor.getColumnIndex(s)));
 								if(f.isFile()) {
-									try {
-										FileInputStream fis = new FileInputStream(f);
-										char[] newBytes = new char[(int) f.length()];
-										int offset = 0;
-										while(fis.read() != -1) {
-											newBytes[offset] = 0;
-											offset++;
-										}
-										fis.close();
-										
-										FileWriter fw = new FileWriter(f,false);
-										fw.write(newBytes);
-										fw.close();
-										
-										f.delete();
-										
-									} catch(IOException e) {}
-									// Log.d(ITCConstants.Log.ITC,f.getPath() + " is a file to delete.");
+									rewriteAndDelete(f);
 								}
 							}
 						}
 					}
-					
-					
+										
 					// rewrite content
 					String authority = ContactsContract.AUTHORITY;
 					try {
@@ -116,13 +107,25 @@ public class PIMWiper  {
 		} catch(NullPointerException npe) {}
 	}
 	
-	private static void getAvailableColumns(Cursor cursor) {
-		String[] availableColumns = cursor.getColumnNames();
-		StringBuffer sbb = new StringBuffer();
-		for(String s : availableColumns) {
-			sbb.append(s + ", ");
-		}
-		Log.d(ITCConstants.Log.ITC,"Available Columns: " + sbb.toString());
+	private static void rewriteAndDelete(File f) {
+		try {
+			FileInputStream fis = new FileInputStream(f);
+			char[] newBytes = new char[(int) f.length()];
+			int offset = 0;
+			while(fis.read() != -1) {
+				newBytes[offset] = 0;
+				offset++;
+			}
+			fis.close();
+			
+			FileWriter fw = new FileWriter(f,false);
+			fw.write(newBytes);
+			fw.close();
+			
+			f.delete();
+			
+		} catch(IOException e) {}
+		// Log.d(ITCConstants.Log.ITC,f.getPath() + " is a file to delete.");
 	}
 	
 	public static void wipeCalendar() {
@@ -215,23 +218,32 @@ public class PIMWiper  {
 		);
 	}
 	
+	private static ArrayList<File> getInnerFiles(File f) {
+		ArrayList<File> innerFiles = new ArrayList<File>();
+		for(File file : f.listFiles()) {
+			if(file.isFile() && file.canWrite())
+				innerFiles.add(file);
+			else if(file.isDirectory() && file.canRead())
+				innerFiles.addAll(getInnerFiles(file));
+		}
+		return innerFiles;
+	}
+	
 	public static void wipeFolder(File folder) {
-		Log.d(ITCConstants.Log.ITC,"WIPING FOLDER " + folder.getName());
 		ArrayList<File> del = new ArrayList<File>();
-		
-		if(folder.isDirectory()) {
-			for(String s : folder.list()) {
-				if(new File(s).isFile())
-					del.add(new File(s));
-				if(new File(s).isDirectory())
-					Log.d(ITCConstants.Log.ITC,"directory within...");
-			}
-		}
 		StringBuffer sb = new StringBuffer();
-		for(File f : del) {
-			sb.append(f.getPath());
+		for(File file : folder.listFiles()) {
+			if(file.isFile() && file.canWrite())
+				del.add(file);
+			else if(file.isDirectory() && file.canRead())
+				del.addAll(getInnerFiles(file));
 		}
-		Log.d(ITCConstants.Log.ITC,"files at top level: " + sb.toString());
 		
+		int counter = 1;
+		for(File f : del) {
+			sb.append(counter++ + ". " + f.getPath() + "\n");
+			rewriteAndDelete(f);
+		}
+		Log.d(ITCConstants.Log.ITC,"FOLDER " + folder.getName() + " contained:\n" + sb.toString());
 	}
 }

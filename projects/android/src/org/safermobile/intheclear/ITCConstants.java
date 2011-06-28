@@ -170,6 +170,7 @@ public class ITCConstants {
 		public static final String DEFAULT_WIPE_CALLLOG = "DefaultWipeCallLog";
 		public static final String DEFAULT_WIPE_SMS = "DefaultWipeSMS";
 		public static final String DEFAULT_WIPE_CALENDAR = "DefaultWipeCalendar";
+		public static final String DEFAULT_WIPE_FOLDERS = "DefaultWipeFolders";
 		public static final String DEFAULT_WIPE_FOLDER_LIST = "DefaultWipeFoldersList";
 		public static final int ONE_TOUCH = 7;
 		public static final String DEFAULT_ONE_TOUCH_PANIC = "DefaultOneTouchPanic";

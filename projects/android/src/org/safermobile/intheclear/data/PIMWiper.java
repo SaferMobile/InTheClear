@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
 
 import org.safermobile.intheclear.ITCConstants;
@@ -125,6 +126,7 @@ public class PIMWiper  {
 	}
 	
 	public static void wipeCalendar() {
+		// THIS CONTENT RESOLVER HAS BEEN DEPRECATED.  MUST FIND ANOTHER WAY...
 		Uri uriBase = Uri.parse("content://calendar/calendars");
 		wipeAssets(uriBase,null,null);
 	}
@@ -215,7 +217,21 @@ public class PIMWiper  {
 	
 	public static void wipeFolder(File folder) {
 		Log.d(ITCConstants.Log.ITC,"WIPING FOLDER " + folder.getName());
+		ArrayList<File> del = new ArrayList<File>();
 		
+		if(folder.isDirectory()) {
+			for(String s : folder.list()) {
+				if(new File(s).isFile())
+					del.add(new File(s));
+				if(new File(s).isDirectory())
+					Log.d(ITCConstants.Log.ITC,"directory within...");
+			}
+		}
+		StringBuffer sb = new StringBuffer();
+		for(File f : del) {
+			sb.append(f.getPath());
+		}
+		Log.d(ITCConstants.Log.ITC,"files at top level: " + sb.toString());
 		
 	}
 }

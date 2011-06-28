@@ -3,7 +3,6 @@ package org.safermobile.intheclear.screens;
 import java.io.File;
 import java.util.ArrayList;
 
-import org.safermobile.intheclear.ITCConstants;
 import org.safermobile.intheclear.R;
 import org.safermobile.intheclear.ui.FolderIterator;
 import org.safermobile.intheclear.ui.WipeArrayAdaptor;
@@ -12,7 +11,6 @@ import org.safermobile.intheclear.ui.WipeSelector;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
@@ -47,7 +45,7 @@ public class FolderSelector extends Activity implements OnClickListener {
 			selectedFolders = (ArrayList<File>) i.getSerializableExtra("selectedFolders");
 			
 			// run through the folders and set them as selected if they are indeed selected
-			if(selectedFolders.size() > 0) {
+			if(!selectedFolders.isEmpty()) {
 				for(WipeSelector w : folderSelect) {
 					if(selectedFolders.contains(w.getFilePath())) {
 						w.setSelected(true);
@@ -64,10 +62,11 @@ public class FolderSelector extends Activity implements OnClickListener {
 	public void onClick(View v) {
 		if(v == confirmSelection) {
 			for(WipeSelector w : folderSelect) {
-				if(w.getSelected()) {
+				if(w.getSelected() && !selectedFolders.contains(w.getFilePath())) {
 					selectedFolders.add(w.getFilePath());
 				}
 			}
+
 			i.putExtra("selectedFolders", selectedFolders);
 			setResult(RESULT_OK,i);
 			finish();

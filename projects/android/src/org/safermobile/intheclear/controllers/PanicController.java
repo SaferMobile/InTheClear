@@ -9,27 +9,43 @@ import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.app.Service;
 import android.content.Intent;
-import android.os.Handler;
+import android.os.Binder;
 import android.os.IBinder;
-import android.os.Message;
+import android.util.Log;
 
 public class PanicController extends Service {
 	NotificationManager nm;
 	int ticker = 0;
+		
+	ShoutController sc;
+	Intent backToPanic;
+	
+	public class LocalBinder extends Binder {
+		PanicController getService() {
+			return PanicController.this;
+		}
+	}
+	
+	private final IBinder binder = new LocalBinder();
 	
 	@Override
 	public void onCreate() {
-		nm = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
+		nm = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);		
+		sc = new ShoutController(getBaseContext());
+		backToPanic = new Intent(this,Panic.class);
 		showNotification();
-		handler.sendEmptyMessage(ITCConstants.SERVICE_START);
 	}
 	
 	@Override
-	public void onStart(Intent i, int startId) {
-		
+	public int onStartCommand(Intent i, int flags, int startId) {
+		Log.d(ITCConstants.Log.ITC,"service started hello!");
+		return START_STICKY;
 	}
 	
 	private void showNotification() {
+		backToPanic.putExtra("PanicCount", "hi i am back from panic!");
+		backToPanic.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+		
 		Notification n = new Notification(
 				R.drawable.panic,
 				getString(R.string.KEY_PANIC_TITLE_MAIN),
@@ -39,8 +55,8 @@ public class PanicController extends Service {
 		PendingIntent pi = PendingIntent.getActivity(
 				this,
 				ITCConstants.Results.RETURN_FROM_PANIC,
-				new Intent(this,Panic.class),
-				0
+				backToPanic,
+				PendingIntent.FLAG_UPDATE_CURRENT
 		);
 		
 		n.setLatestEventInfo(
@@ -53,31 +69,15 @@ public class PanicController extends Service {
 		nm.notify(R.string.remote_service_start_id,n);
 	}
 	
-	private final Handler handler = new Handler() {
-		@Override
-		public void handleMessage(Message msg) {
-			switch(msg.what) {
-			case ITCConstants.SERVICE_START:
-				int val = ++ticker;
-				
-				
-				
-				break;
-			default:
-				super.handleMessage(msg);
-					
-			}
-		}
-	};
-	
 	@Override
 	public void onDestroy() {
-		
+		Log.d(ITCConstants.Log.ITC,"goodbye service, bye bye!");
+		nm.cancel(R.string.remote_service_start_id);
 	}
 
 	@Override
 	public IBinder onBind(Intent i) {
-		return null;
+		return binder;
 	}
 
 }

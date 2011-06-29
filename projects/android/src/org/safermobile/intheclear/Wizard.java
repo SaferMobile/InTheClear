@@ -70,6 +70,7 @@ public class Wizard extends Activity implements OnClickListener {
 					EditText et = (EditText) v;
 					String hint = _sp.getString((String) v.getContentDescription(), "");
 					et.setHint(hint);
+
 				} else if(v instanceof ListView) {
 					ListView lv = (ListView) v;
 					for(int l=0;l<lv.getCount();l++) {

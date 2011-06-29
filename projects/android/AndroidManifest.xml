@@ -14,7 +14,7 @@
 	<uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 	<uses-permission android:name="android.permission.WRITE_SYNC_SETTINGS" />
 	
-    <application android:icon="@drawable/setup" android:label="@string/app_name">
+    <application android:label="@string/app_name" android:icon="@drawable/ic_launcher_safer">
         <activity android:name=".InTheClear"
                   android:label="@string/app_name"
                   android:theme="@android:style/Theme.NoTitleBar"

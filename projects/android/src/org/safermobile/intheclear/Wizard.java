@@ -19,7 +19,6 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.EditText;
 import android.widget.ScrollView;
-import android.widget.TextView;
 
 public class Wizard extends Activity implements OnClickListener {
 	int wNum,nextWizard,lastWizard = 0;

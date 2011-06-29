@@ -5,6 +5,9 @@ import org.safermobile.intheclear.R;
 import org.safermobile.intheclear.controllers.ShoutController;
 
 import android.app.Activity;
+import android.app.Dialog;
+import android.content.DialogInterface;
+import android.content.DialogInterface.OnDismissListener;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.CountDownTimer;
@@ -21,14 +24,15 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-public class Shout extends Activity implements OnClickListener {
+public class Shout extends Activity implements OnClickListener, OnDismissListener {
 	private SharedPreferences _sp;
 		
-	TextView panicMsg;
-	Button sendShout,changeMsg;
+	TextView panicMsg,countdownReadout;
+	Button sendShout,changeMsg,cancelCountdown;
 	EditText panicEdit;
 	LinearLayout panicMsgHolder;
 	android.view.ViewGroup.LayoutParams lp;
+	Dialog countdown;
 	
 	String msg,shoutMsg,shoutData,configuredFriends,userDisplayName,userDisplayLocation;
 	
@@ -83,21 +87,40 @@ public class Shout extends Activity implements OnClickListener {
 	}
 	
 	public void doCountdown() {
+		countdown = new Dialog(this);
+		countdown.setContentView(R.layout.countdown);
+		countdown.setCancelable(false);
+		countdown.setOnDismissListener(this);
+		
+		countdownReadout = (TextView) countdown.findViewById(R.id.countdownReadout);
+		
+		cancelCountdown = (Button) countdown.findViewById(R.id.cancelCountdown);
+		cancelCountdown.setText(R.string.KEY_SHOUT_MENU_CANCEL);
+		cancelCountdown.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				if(v == cancelCountdown) {
+					countdown.dismiss();
+				}
+			}
+		});
+		countdown.show();
+		
 		t = 0;
 		cd = new CountDownTimer(ITCConstants.Duriation.COUNTDOWN, ITCConstants.Duriation.COUNTDOWNINTERVAL) {
 			@Override
 			public void onFinish() {
-				sc.sendSMSShout(configuredFriends, shoutMsg, shoutData);				
+				sc.sendSMSShout(configuredFriends, shoutMsg, shoutData);
+				countdown.dismiss();
 			}
 
 			@Override
 			public void onTick(long countDown) {
 				String secondString = 
 					getString(R.string.KEY_SHOUT_COUNTDOWNMSG) + " " + (5 - t) +
-					" " + getString(R.string.KEY_SECONDS) + 
-					"\n" + getString(R.string.KEY_SHOUT_COUNTDOWNCANCEL);
+					" " + getString(R.string.KEY_SECONDS);
 				Log.d(ITCConstants.Log.ITC,secondString);
-				makeToast(secondString);
+				countdownReadout.setText(secondString);
 				t++;
 			}
 		};
@@ -167,5 +190,11 @@ public class Shout extends Activity implements OnClickListener {
 		} else if(v == changeMsg) {
 			toggleMessageUI();
 		}
+	}
+
+	@Override
+	public void onDismiss(DialogInterface d) {
+		cd.cancel();
+		
 	}
 }

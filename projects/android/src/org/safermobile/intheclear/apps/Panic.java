@@ -10,6 +10,9 @@ import org.safermobile.intheclear.controllers.ShoutController;
 import org.safermobile.intheclear.controllers.WipeController;
 
 import android.app.Activity;
+import android.app.Dialog;
+import android.content.DialogInterface;
+import android.content.DialogInterface.OnDismissListener;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.CountDownTimer;
@@ -24,11 +27,13 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-public class Panic extends Activity implements OnClickListener {
+public class Panic extends Activity implements OnClickListener, OnDismissListener {
 	SharedPreferences _sp;
-	TextView panicReadout,panicProgress;
+	TextView panicReadout,panicProgress,countdownReadout;
 	LinearLayout panicControl;
-	Button controlPanic;
+	Button controlPanic,cancelCountdown;
+	
+	Dialog countdown;
 	
 	boolean oneTouchPanic,shouldWipePhotos,shouldWipeContacts,shouldWipeCallLog,shouldWipeSMS,shouldWipeCalendar,shouldWipeFolders;
 	boolean canContinuePanicing;
@@ -59,18 +64,6 @@ public class Panic extends Activity implements OnClickListener {
 		panicReadout = (TextView) findViewById(R.id.panicReadout);
 		
 		panicControl = (LinearLayout) findViewById(R.id.panicControl);
-		
-		if(!oneTouchPanic) {
-			controlPanic = new Button(this);
-			controlPanic.setText(this.getResources().getString(R.string.KEY_PANIC_BTN_PANIC));
-			controlPanic.setOnClickListener(this);
-			panicControl.addView(controlPanic);
-		} else {
-			panicProgress = new TextView(this);
-			panicProgress.setText(this.getResources().getString(R.string.KEY_PANIC_PROGRESS_1));
-			panicControl.addView(panicProgress);
-			doPanic();
-		}
 	}
 	
 	@Override
@@ -82,6 +75,14 @@ public class Panic extends Activity implements OnClickListener {
 	public void onStart() {
 		super.onStart();
 		alignPreferences();
+		if(!oneTouchPanic) {
+			controlPanic = new Button(this);
+			controlPanic.setText(this.getResources().getString(R.string.KEY_PANIC_BTN_PANIC));
+			controlPanic.setOnClickListener(this);
+			panicControl.addView(controlPanic);
+		} else {
+			doPanic();
+		}
 	}
 	
 	private void alignPreferences() {
@@ -133,11 +134,31 @@ public class Panic extends Activity implements OnClickListener {
 			panicState = ITCConstants.PanicState.AT_REST;
 			break;
 		}
+		countdown.dismiss();
 	}
 	
 	private void doPanic() {
 		canContinuePanicing = true;
 		panicState++;
+		
+		countdown = new Dialog(this);
+		countdown.setContentView(R.layout.countdown);
+		countdown.setCancelable(false);
+		countdown.setOnDismissListener(this);
+		
+		countdownReadout = (TextView) countdown.findViewById(R.id.countdownReadout);
+		
+		cancelCountdown = (Button) countdown.findViewById(R.id.cancelCountdown);
+		cancelCountdown.setText(R.string.KEY_PANIC_MENU_CANCEL);
+		cancelCountdown.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				if(v == cancelCountdown) {
+					countdown.dismiss();
+				}
+			}
+		});
+		countdown.show();
 
 		t = 0;
 		cd = new CountDownTimer(ITCConstants.Duriation.COUNTDOWN, ITCConstants.Duriation.COUNTDOWNINTERVAL) {
@@ -153,6 +174,7 @@ public class Panic extends Activity implements OnClickListener {
 				// Perform wipe
 				if(canContinuePanicing) {
 					panicState++;
+					countdownReadout.setText(getString(R.string.KEY_PANIC_PROGRESS_2));
 					Log.d(ITCConstants.Log.ITC,"Wiping... " + _sp.getString(ITCConstants.Preference.DEFAULT_WIPE_FOLDER_LIST, ""));
 					wc.wipePIMData(
 							shouldWipeContacts,
@@ -167,6 +189,7 @@ public class Panic extends Activity implements OnClickListener {
 				// Start Service for continued panic
 				if(canContinuePanicing) {
 					panicState++;
+					countdownReadout.setText(getString(R.string.KEY_PANIC_PROGRESS_3));
 					// TODO: start the panic service
 				}
 			}
@@ -174,11 +197,10 @@ public class Panic extends Activity implements OnClickListener {
 			@Override
 			public void onTick(long countDown) {
 				String secondString = 
-					getString(R.string.KEY_SHOUT_COUNTDOWNMSG) + " " + (5 - t) +
-					" " + getString(R.string.KEY_SECONDS) + 
-					"\n" + getString(R.string.KEY_SHOUT_COUNTDOWNCANCEL);
+					getString(R.string.KEY_PANIC_COUNTDOWNMSG) + " " + (5 - t) +
+					" " + getString(R.string.KEY_SECONDS);
 				Log.d(ITCConstants.Log.ITC,secondString);
-				
+				countdownReadout.setText(getString(R.string.KEY_PANIC_PROGRESS_1) + "\n" + secondString);
 				t++;
 			}
 		};
@@ -208,5 +230,10 @@ public class Panic extends Activity implements OnClickListener {
 			doPanic();
 		}
 		
+	}
+
+	@Override
+	public void onDismiss(DialogInterface d) {
+		cancelPanic();
 	}
 }

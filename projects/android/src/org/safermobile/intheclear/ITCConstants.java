@@ -27,6 +27,7 @@ public class ITCConstants {
 		public static final int RESULT_PREFERENCES_UPDATED = 1;
 		public static final int SETUP_WIZARD = 2;
 		public static final int SELECTED_FOLDERS = 3;
+		public static final int RETURN_FROM_PANIC = 4;
 	}
 	
 	public static class ContentTargets {
@@ -188,5 +189,7 @@ public class ITCConstants {
 		public static final int AT_REST = 0;
 	}
 	
-	public static int FormLength = 8;
+	public static final int SERVICE_START = 1;
+	
+	public static final int FormLength = 8;
 }

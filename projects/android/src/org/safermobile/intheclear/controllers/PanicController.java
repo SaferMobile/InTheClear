@@ -1,5 +1,8 @@
 package org.safermobile.intheclear.controllers;
 
+import java.util.Timer;
+import java.util.TimerTask;
+
 import org.safermobile.intheclear.ITCConstants;
 import org.safermobile.intheclear.R;
 import org.safermobile.intheclear.apps.Panic;
@@ -10,15 +13,22 @@ import android.app.PendingIntent;
 import android.app.Service;
 import android.content.Intent;
 import android.os.Binder;
+import android.os.Bundle;
+import android.os.Handler;
 import android.os.IBinder;
 import android.util.Log;
 
 public class PanicController extends Service {
 	NotificationManager nm;
+	
+	TimerTask tt;
+	Timer t = new Timer();
+	final Handler h = new Handler();
 	int ticker = 0;
 		
 	ShoutController sc;
 	Intent backToPanic;
+	Bundle b;
 	
 	public class LocalBinder extends Binder {
 		PanicController getService() {
@@ -34,16 +44,45 @@ public class PanicController extends Service {
 		sc = new ShoutController(getBaseContext());
 		backToPanic = new Intent(this,Panic.class);
 		showNotification();
+		tt = new TimerTask() {
+
+			@Override
+			public void run() {
+				h.post(new Runnable() {
+
+					@Override
+					public void run() {
+						shout();
+						
+					}
+					
+				});
+			}
+			
+		};
+		t.schedule(tt, 0, ITCConstants.Duriation.CONTINUED_PANIC);
+	}
+	
+	public void shout() {
+		Log.d(ITCConstants.Log.ITC,"SHOUTING!!!");
+		sc.sendSMSShout(
+				b.getString("configuredFriends"),
+				b.getString("defaultPanicMsg"),
+				sc.buildShoutData(b.getString("userDisplayName"))
+		);
+		ticker++;
 	}
 	
 	@Override
 	public int onStartCommand(Intent i, int flags, int startId) {
 		Log.d(ITCConstants.Log.ITC,"service started hello!");
+		b = i.getExtras();
+		
 		return START_STICKY;
 	}
 	
 	private void showNotification() {
-		backToPanic.putExtra("PanicCount", "hi i am back from panic!");
+		backToPanic.putExtra("PanicCount", ticker);
 		backToPanic.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
 		
 		Notification n = new Notification(
@@ -72,6 +111,7 @@ public class PanicController extends Service {
 	@Override
 	public void onDestroy() {
 		Log.d(ITCConstants.Log.ITC,"goodbye service, bye bye!");
+		t.cancel();
 		nm.cancel(R.string.remote_service_start_id);
 	}
 

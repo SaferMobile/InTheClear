@@ -88,8 +88,16 @@ public class Panic extends Activity implements OnClickListener, OnDismissListene
 	}
 	
 	@Override
+	public void onNewIntent(Intent i) {
+		super.onNewIntent(i);
+		setIntent(i);
+
+		if(i.hasExtra("PanicCount"))
+			Log.d(ITCConstants.Log.ITC,"Panic Count at: " + i.getIntExtra("PanicCount",0));
+	}
+	
+	@Override
 	public void onDestroy() {
-		Log.d(ITCConstants.Log.ITC,"um... destroyed?");
 		super.onDestroy();
 	}
 	
@@ -179,6 +187,9 @@ public class Panic extends Activity implements OnClickListener, OnDismissListene
 					panicState++;
 					Log.d(ITCConstants.Log.ITC,"panic state: " + panicState);
 					sc.sendSMSShout(configuredFriends, defaultPanicMsg, sc.buildShoutData(userDisplayName));
+					panic.putExtra("configuredFriends", configuredFriends);
+					panic.putExtra("defaultPanicMsg", defaultPanicMsg);
+					panic.putExtra("userDisplayName", userDisplayName);
 				}
 				
 				// Perform wipe

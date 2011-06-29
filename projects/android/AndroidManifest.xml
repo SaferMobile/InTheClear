@@ -29,13 +29,15 @@
         </activity>
         <activity android:name=".Wizard"
         		   android:icon="@drawable/setup"
-        		    android:label="InTheClear"
+        		  android:label="InTheClear - Setup Wizard"
+        		  android:taskAffinity=".Wizard"
         		  android:theme="@android:style/Theme.NoTitleBar"
         		  android:configChanges="orientation|keyboardHidden"
                   android:screenOrientation="portrait">
         	<intent-filter>
         		<action android:name=".Wizard" />
         		<action	android:name="android.intent.action.MAIN" />
+        		<category android:name="android.intent.category.LAUNCHER" />
         	</intent-filter>
         </activity>
         <activity android:name=".screens.FolderSelector"
@@ -50,9 +52,10 @@
         </activity>
         <activity android:name=".ITCPreferences"></activity>
          <activity android:name=".apps.Panic"
-         		android:icon="@drawable/panic"
+         		  android:icon="@drawable/panic"
                   android:label="Panic!"
                   android:taskAffinity=".apps.Panic"
+                  android:launchMode="singleTop"
                   android:theme="@android:style/Theme.NoTitleBar"
                   android:configChanges="orientation|keyboardHidden"
                   android:screenOrientation="portrait">

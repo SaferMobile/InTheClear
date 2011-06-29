@@ -47,17 +47,18 @@ public class Wizard extends Activity implements OnClickListener {
 		
 		sv = (ScrollView) findViewById(R.id.wizardDisplay);
 		
-		if(getIntent().hasExtra("wNum")) {
-			wNum = getIntent().getIntExtra("wNum", 0);
-			
-			form = new WizardForm(this,wNum);
-			if(form.hasPreferenceData())
-				formFrame = populateDefaults(form.returnForm());
-			else
-				formFrame = form.returnForm();
-			
-			sv.addView(formFrame);			
-		}
+		if(getIntent().hasExtra("wNum"))
+			wNum = getIntent().getIntExtra("wNum", 0);			
+		else
+			wNum = 1;
+		
+		form = new WizardForm(this,wNum);
+		if(form.hasPreferenceData())
+			formFrame = populateDefaults(form.returnForm());
+		else
+			formFrame = form.returnForm();
+		
+		sv.addView(formFrame);
 			
 	}
 	

@@ -21,9 +21,10 @@
 	<string name="KEY_18">100 \'zeroed\' contacts have been added to overwrite memory on your phone.</string>
 	<string name="KEY_PANIC_TITLE">Panic!</string>
 	<string name="KEY_PANIC_MSG_TITLE">Panic Msg:</string>
-	<string name="KEY_PANIC_PROGRESS_1">Preparing to send your Panic! message...</string>
+	<string name="KEY_PANIC_PROGRESS_1">Sending your Panic! message...</string>
 	<string name="KEY_PANIC_PROGRESS_2">Wiping selected data from your phone...</string>
-	<string name="KEY_PANIC_PROGRESS_3">Your phone will continue to Panic! every 45 seconds...</string>
+	<string name="KEY_PANIC_ERROR_CONFIGUREDFRIENDS">Please setup preferences first to enter your alert information.</string>
+	<string name="KEY_PANIC_PROGRESS_3">Your phone will continue to Panic! every 45 seconds until you cancel this process...</string>
 	<string name="KEY_PANIC_NEXT_PANIC">Next Panic! in </string>
 	<string name="KEY_PANIC_BTN_PANIC">Panic!</string>
 	<string name="KEY_PANIC_MENU_CANCEL">Cancel Panic!</string>
@@ -85,7 +86,7 @@
 	<string name="KEY_SHOUT_PREFSFAIL">You do not have any friends configured.  Please check your preferences.</string>
 	<string name="KEY_SHOUT_ENTERSHOUTMSG">Enter the message you want to shout to your configured friends.</string>
 	<string name="KEY_SHOUT_COUNTDOWNMSG">Shout! in</string>
-	<string name="KEY_SECONDS">seconds</string>
+	<string name="KEY_SECONDS">seconds...</string>
 	<string name="KEY_SHOUT_COUNTDOWNCANCEL">(Cancel this Shout the menu)</string>
 	<string name="KEY_WIPE_ACTIVITYTEXT">WARNING: THIS WILL REMOVE THE ACTUAL DATA FROM YOUR PHONE.\n\nSelect one or more data types below to wipe.</string>
 	<string name="KEY_WIPE_WIPECONTACTS">Wipe Contacts</string>
@@ -99,6 +100,12 @@
 	<string name="KEY_WIPE_FOLDERSELECTIONTEXT">You have selected folders on your SD Card to be wiped.</string>
 	<string name="KEY_WIPE_NOSELECTEDFOLDERS">You have not selected any folders, or have disabled folder wiping, so nothing on your SD Card will be wiped</string>
 	<string name="KEY_WIPE_VIEWSELECTEDFOLDERS">View/Modify selected folders...</string>
+	<string name="KEY_WIPE_CONFIRM_PHOTOS">Photos have been wiped!</string>
+	<string name="KEY_WIPE_CONFIRM_CONTACTS">All contacts have been wiped!</string>
+	<string name="KEY_WIPE_CONFIRM_CALLLOG">Your call log has been wiped!</string>
+	<string name="KEY_WIPE_CONFIRM_SMS">All SMS messages have been wiped!</string>
+	<string name="KEY_WIPE_CONFIRM_CALENDAR">Your calendar has been wiped!</string>
+	<string name="KEY_WIPE_CONFIRM_FOLDERS">Selected folders have been wiped!</string>
 	<string name="KEY_HOME">In The Clear</string>
 	<string name="KEY_HOME_INTRO">InTheClear is a mobile app designed to help improve your safety in difficult situations.  It does this with three main features that you must configure.\n\nPanic!, Shout &amp; Wipe\n\nThis wizard will walk you through the setup process for these features, and ensure your mobile is ready for an emergency situation.</string>
 	<string name="KEY_HOME_TOWIZARD">Start Wizard</string>

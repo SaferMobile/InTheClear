@@ -28,6 +28,8 @@ public class ITCConstants {
 		public static final int SETUP_WIZARD = 2;
 		public static final int SELECTED_FOLDERS = 3;
 		public static final int RETURN_FROM_PANIC = 4;
+		public static final int A_OK = 1;
+		public static final int FAIL = -1;
 	}
 	
 	public static class ContentTargets {
@@ -154,9 +156,9 @@ public class ITCConstants {
 	
 	public static class Duriation {
 		public static final long SPLASH = 3000L;
-		public static final long COUNTDOWN = 5000L;
+		public static final long COUNTDOWN = 6000L;
 		public static final long COUNTDOWNINTERVAL = 1000L;
-		public static final long CONTINUED_PANIC = 45000L;
+		public static final long CONTINUED_PANIC = 60000L;
 	}
 	
 	public static class Preference {
@@ -181,6 +183,8 @@ public class ITCConstants {
 	public static class Log {
 		public static final String ITC = "[InTheClear] ******************************** ";
 	}
+	
+	public static final String UPDATE_UI = "updateUi";
 	
 	public static class PanicState {
 		public static final int IN_COUNTDOWN = 1;

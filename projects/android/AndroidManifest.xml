@@ -55,7 +55,7 @@
          		  android:icon="@drawable/panic"
                   android:label="Panic!"
                   android:taskAffinity=".apps.Panic"
-                  android:launchMode="singleTop"
+                  android:launchMode="singleInstance"
                   android:theme="@android:style/Theme.NoTitleBar"
                   android:configChanges="orientation|keyboardHidden"
                   android:screenOrientation="portrait">
@@ -90,6 +90,11 @@
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+        </activity>
+        <activity android:name="org.safermobile.utils.EndActivity">
+        	<intent-filter>
+        		<action android:name="org.safermobile.utils.EndActivity" />
+        	</intent-filter>
         </activity>
 		<service android:enabled="true" android:name=".controllers.PanicController" />
     </application>

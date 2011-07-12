@@ -5,6 +5,9 @@ import org.safermobile.intheclear.R;
 import org.safermobile.intheclear.controllers.ShoutController;
 
 import android.app.Activity;
+import android.app.Dialog;
+import android.content.DialogInterface;
+import android.content.DialogInterface.OnDismissListener;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.CountDownTimer;
@@ -21,16 +24,17 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-public class Shout extends Activity implements OnClickListener {
+public class Shout extends Activity implements OnClickListener, OnDismissListener {
 	private SharedPreferences _sp;
 		
-	TextView panicMsg;
-	Button sendShout,changeMsg;
+	TextView panicMsg,countdownReadout;
+	Button sendShout,changeMsg,cancelCountdown;
 	EditText panicEdit;
 	LinearLayout panicMsgHolder;
 	android.view.ViewGroup.LayoutParams lp;
+	Dialog countdown;
 	
-	String msg,shoutMsg,shoutData;
+	String msg,shoutMsg,shoutData,configuredFriends,userDisplayName,userDisplayLocation;
 	
 	CountDownTimer cd = null;
 	int t;
@@ -47,11 +51,9 @@ public class Shout extends Activity implements OnClickListener {
         setContentView(R.layout.shout);
         
         _sp = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
-        msg = _sp.getString("DefaultPanicMsg", "");
         
         panicMsg = (TextView) findViewById(R.id.panicMsg);
         lp = panicMsg.getLayoutParams();
-        panicMsg.setText(panicMsg.getText() + "\n" + msg);
         
         changeMsg = (Button) findViewById(R.id.changePanicMsg_btn);
         changeMsg.setOnClickListener(this);
@@ -64,22 +66,61 @@ public class Shout extends Activity implements OnClickListener {
         panicEdit.setLayoutParams(lp);
     }
 	
+	@Override
+	public void onResume() {
+		super.onResume();
+	}
+	
+	@Override
+	public void onStart() {
+		super.onStart();
+		alignPreferences();
+	}
+	
+	private void alignPreferences() {
+		msg = _sp.getString("DefaultPanicMsg", "");
+        panicMsg.setText(panicMsg.getText() + "\n" + msg);
+
+		configuredFriends = _sp.getString("ConfiguredFriends","");
+		userDisplayName = _sp.getString("UserDisplayName", "");
+		userDisplayLocation = _sp.getString("UserDisplayLocation", "");
+	}
+	
 	public void doCountdown() {
+		countdown = new Dialog(this);
+		countdown.setContentView(R.layout.countdown);
+		countdown.setCancelable(false);
+		countdown.setOnDismissListener(this);
+		
+		countdownReadout = (TextView) countdown.findViewById(R.id.countdownReadout);
+		
+		cancelCountdown = (Button) countdown.findViewById(R.id.cancelCountdown);
+		cancelCountdown.setText(R.string.KEY_SHOUT_MENU_CANCEL);
+		cancelCountdown.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				if(v == cancelCountdown) {
+					countdown.dismiss();
+				}
+			}
+		});
+		countdown.show();
+		
 		t = 0;
 		cd = new CountDownTimer(ITCConstants.Duriation.COUNTDOWN, ITCConstants.Duriation.COUNTDOWNINTERVAL) {
 			@Override
 			public void onFinish() {
-				sc.sendSMSShout(_sp.getString("ConfiguredFriends",""), shoutMsg, shoutData);				
+				sc.sendSMSShout(configuredFriends, shoutMsg, shoutData);
+				countdown.dismiss();
 			}
 
 			@Override
 			public void onTick(long countDown) {
 				String secondString = 
 					getString(R.string.KEY_SHOUT_COUNTDOWNMSG) + " " + (5 - t) +
-					" " + getString(R.string.KEY_SECONDS) + 
-					"\n" + getString(R.string.KEY_SHOUT_COUNTDOWNCANCEL);
+					" " + getString(R.string.KEY_SECONDS);
 				Log.d(ITCConstants.Log.ITC,secondString);
-				makeToast(secondString);
+				countdownReadout.setText(secondString);
 				t++;
 			}
 		};
@@ -143,11 +184,17 @@ public class Shout extends Activity implements OnClickListener {
 	public void onClick(View v) {
 		if(v == sendShout) {
 			sc = new ShoutController(this);
-			shoutMsg = sc.buildShoutMessage(_sp.getString("UserDisplayName", ""), msg, _sp.getString("UserDisplayLocation", ""));
-			shoutData = sc.buildShoutData(_sp.getString("UserDisplayName", ""));
+			shoutMsg = sc.buildShoutMessage(userDisplayName, msg,userDisplayLocation);
+			shoutData = sc.buildShoutData(userDisplayName);
 			doCountdown();
 		} else if(v == changeMsg) {
 			toggleMessageUI();
 		}
+	}
+
+	@Override
+	public void onDismiss(DialogInterface d) {
+		cd.cancel();
+		
 	}
 }

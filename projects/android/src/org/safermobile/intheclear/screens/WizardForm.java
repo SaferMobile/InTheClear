@@ -75,11 +75,13 @@ public class WizardForm extends View implements OnClickListener {
 			oneTouchSelector.add(new WipeSelector(
 					c.getResources().getString(R.string.KEY_WIZARD_ONETOUCH_DIALOG),
 					ITCConstants.Preference.ONE_TOUCH,
-					false));
+					false)
+			);
 			
 			ListView oneTouchList = new ListView(c);
 			oneTouchList.setLayoutParams(auxLP);
 			oneTouchList.setAdapter(new WipeArrayAdaptor(c,oneTouchSelector));
+			oneTouchList.setContentDescription(ITCConstants.Preference.DEFAULT_ONE_TOUCH_PANIC);
 			views.add(oneTouchList);
 			
 			_hasPreferenceData = true;

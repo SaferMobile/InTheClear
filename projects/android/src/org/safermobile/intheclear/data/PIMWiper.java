@@ -1,140 +1,248 @@
 package org.safermobile.intheclear.data;
 
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
-import java.util.Random;
 
+import org.safermobile.intheclear.ITCConstants;
+import org.safermobile.utils.ShellUtils;
+import org.safermobile.utils.StreamThread;
+
+import android.content.ContentProviderOperation;
 import android.content.ContentResolver;
 import android.content.ContentUris;
 import android.content.Context;
+import android.content.OperationApplicationException;
 import android.database.Cursor;
 import android.net.Uri;
-import android.provider.CallLog;
-import android.provider.CallLog.Calls;
-import android.provider.Contacts.Photos;
+import android.os.RemoteException;
 import android.provider.ContactsContract;
-import android.provider.ContactsContract.Contacts;
-import android.provider.ContactsContract.RawContacts;
+import android.provider.ContactsContract.Data;
 import android.provider.MediaStore;
-import android.provider.MediaStore.Images.Media;
 import android.util.Log;
 
 public class PIMWiper  {
-
-	private final static String ZERO_STRING = "000000000000000"; //limit to 15 for name and phone number fields
-	private final static int DEFAULT_ZERO_AMOUNT = 1000000000;
-	
-	private static Random RAND = new Random();
-	
-	private static Context c;
 	private static ContentResolver cr;
-	
-	private final static String[] names = new String[] {
-			"Tom","Jacob","Jake",
-			"Ethan","Jonathan","Tyler","Samuel","Nicholas","Angel",
-			"Jayden","Nathan","Elijah","Christian","Gabriel","Benjamin",
-			"Emma","Aiden","Ryan","James","Abigail","Logan","John",
-			"Daniel","Alexander","Isabella","Anthony","William","Christopher","Matthew","Emily","Madison",
-			"Rob","Ava","Olivia","Andrew","Joseph","David","Sophia","Noah",
-			"Justin",
-			"Smith","Johnson","Williams","Jones","Brown","Davis","Miller","Wilson","Moore",
-			"Taylor","Anderson","Thomas","Jackson","White","Harris","Martin","Thompson","Garcia",
-			"Martinez","Robinson","Clark","Lewis","Lee","Walker","Hall","Allen","Young",
-			"King","Wright","Hill","Scott","Green","Adams","Baker","Carter","Turner",
-		};
-	
-	private final static String ITC = "[InTheClear:PIMWiper] ************************ ";
-	
+		
 	public PIMWiper(Context c) {
-		PIMWiper.c = c;
 		PIMWiper.cr = c.getContentResolver();
 	}
 	
-	public void test () {
-		//first remove the contacts that are there
-		
-		//second fill up the contact list until an error is thrown
+	private static void getAvailableColumns(Cursor cursor) {
+		String[] availableColumns = cursor.getColumnNames();
+		StringBuffer sbb = new StringBuffer();
+		for(String s : availableColumns) {
+			sbb.append(s + ", ");
+		}
+		Log.d(ITCConstants.Log.ITC,"Available Columns: " + sbb.toString());
 	}
 	
-	public static ArrayList<String> getContacts() {
-		ArrayList<String> result = new ArrayList<String>();
-		
-		final String[] projection = new String[] {
-				RawContacts.CONTACT_ID,
-				RawContacts.SOURCE_ID
-			};
-		
+	private static void wipeAssets(Uri uriBase, String[] rewriteStrings, String[] rewriteFiles) {
 		Cursor cursor = null;
+		long _id = 0;
+		
 		try {
-			cursor = cr.query(RawContacts.CONTENT_URI, projection, null, null, null);
-			if(cursor != null) {
+			cursor = cr.query(uriBase, null, null, null, null);
+			if(cursor != null && cursor.getCount() > 0) {
 				cursor.moveToFirst();
-				while(!cursor.isAfterLast()) {
-					result.add("contact ID: " + cursor.getString(0) + " | source ID: " + cursor.getString(1));
+				Log.d(ITCConstants.Log.ITC,"there are " + cursor.getCount() + " records in type: " + uriBase.toString());
+				while(!cursor.isAfterLast()) {					
+					_id = cursor.getLong(cursor.getColumnIndex("_id"));					
+					ArrayList<ContentProviderOperation> cpo = new ArrayList<ContentProviderOperation>();
+
+					for(String s : rewriteStrings) {
+						if(cursor.getString(cursor.getColumnIndex(s)) != null && cursor.getString(cursor.getColumnIndex(s)).length() > 0) {
+							
+							StringBuffer sb = new StringBuffer();
+							for(@SuppressWarnings("unused") char c : cursor.getString(cursor.getColumnIndex(s)).toCharArray()) {
+								sb.append(0);
+							}
+							
+							cpo.add(ContentProviderOperation
+									.newUpdate(ContentUris.withAppendedId(uriBase, _id))
+									.withSelection(Data._ID + "=?", new String[] {Integer.toString((int) _id)})
+									.withValue(s,sb.toString())
+									.build()
+							);
+
+							Log.d(ITCConstants.Log.ITC,"old " + s + " : " + cursor.getString(cursor.getColumnIndex(s)) + " | new " + s + " : " + sb.toString());
+						}
+					}
+					
+					if(rewriteFiles != null && rewriteFiles.length > 0) {
+						for(String s : rewriteFiles) {
+							if(cursor.getString(cursor.getColumnIndex(s)) != null && cursor.getString(cursor.getColumnIndex(s)).length() > 0) {
+								
+								// If the string contains a file path, zero-out/delete the referenced file as well
+								File f = new File(cursor.getString(cursor.getColumnIndex(s)));
+								if(f.isFile())
+									rewriteAndDelete(f);
+							}
+						}
+					}
+										
+					// rewrite content
+					String authority = ContactsContract.AUTHORITY;
+					try {
+						cr.applyBatch(authority, cpo);
+					} catch (RemoteException e) {
+						Log.d(ITCConstants.Log.ITC,"FAIL : " + e);
+					} catch (OperationApplicationException e) {
+						Log.d(ITCConstants.Log.ITC,"FAIL : " + e);
+					} catch (UnsupportedOperationException e) {
+						Log.d(ITCConstants.Log.ITC,"FAIL : " + e);
+					}
+					cpo.clear();
+					
+					// delete content
+					cr.delete(ContentUris.withAppendedId(uriBase, _id), null, null);
 					cursor.moveToNext();
 				}
 			}
 			cursor.close();
-		} catch (NullPointerException npe) {}
-
-		
-		return result;
-	}
-	
-	private static void wipeAssets(String uriBase, String[] projection) {
-		Cursor cursor = null;
-		try {
-			cursor = cr.query(Uri.parse(uriBase), projection, null, null, null);
-			if(cursor != null) {
-				cursor.moveToFirst();
-				for(int x=0;x<cursor.getCount();x++) {
-					long assetId = Integer.parseInt(cursor.getString(0));
-					Log.d(ITC,"DELETING: " + ContentUris.withAppendedId(Uri.parse(uriBase), assetId).toString());
-					//cr.delete(ContentUris.withAppendedId(Uri.parse(uriBase), assetId), null, null);
-					cursor.moveToNext();
-				}
-				cursor.close();
-			}
 		} catch(NullPointerException npe) {}
 	}
 	
+	private static void rewriteAndDelete(File f) {
+		try {
+			FileInputStream fis = new FileInputStream(f);
+			char[] newBytes = new char[(int) f.length()];
+			int offset = 0;
+			while(fis.read() != -1) {
+				newBytes[offset] = 0;
+				offset++;
+			}
+			fis.close();
+			
+			FileWriter fw = new FileWriter(f,false);
+			fw.write(newBytes);
+			fw.close();
+			
+			f.delete();
+			
+		} catch(IOException e) {}
+		// Log.d(ITCConstants.Log.ITC,f.getPath() + " is a file to delete.");
+	}
+	
 	public static void wipeCalendar() {
-		Log.d(ITC,"WIPING THE CALENDAR!");
+		// THIS CONTENT RESOLVER HAS BEEN DEPRECATED.  MUST FIND ANOTHER WAY...
+		Uri uriBase = Uri.parse("content://calendar/calendars");
+		wipeAssets(uriBase,null,null);
 	}
 	
 	public static void wipeContacts() {
-		String[] projection = {
-				RawContacts.CONTACT_ID
-		};
-		String uriBase = "content://com.android.contacts/raw_contacts";
-		wipeAssets(uriBase,projection);
+		// String uriBase = "content://com.android.contacts/data";
+		Uri uriBase = Data.CONTENT_URI;
+		wipeAssets(
+				uriBase,ITCConstants.ContentTargets.CONTACT.STRINGS,
+				null
+		);
 	}
 	
 	public static void wipePhotos() {
-		String[] projection = {
-				Media._ID
+		Uri[] uriBases = {
+				MediaStore.Images.Media.EXTERNAL_CONTENT_URI,
+				MediaStore.Images.Media.INTERNAL_CONTENT_URI
 		};
-		String uriBase_external = "content://media/external/images/media";
-		String uriBase_internal = "content://media/internal/images/media";
-		wipeAssets(uriBase_external,projection);
-		wipeAssets(uriBase_internal,projection);
+		for(Uri uriBase : uriBases) {
+			wipeAssets(
+					uriBase,
+					ITCConstants.ContentTargets.IMAGE.STRINGS,
+					ITCConstants.ContentTargets.IMAGE.FILES
+			);
+		}
+	}
+	
+	public static void wipeImageThumnbnails() {
+		Uri[] uriBases = {
+				MediaStore.Images.Thumbnails.EXTERNAL_CONTENT_URI,
+				MediaStore.Images.Thumbnails.INTERNAL_CONTENT_URI
+		};
+		for(Uri uriBase : uriBases) {
+			wipeAssets(
+					uriBase,
+					ITCConstants.ContentTargets.IMAGE_THUMBNAIL.STRINGS,
+					ITCConstants.ContentTargets.IMAGE_THUMBNAIL.FILES
+			);
+		}
+	}
+	
+	public static void wipeVideoThumbnails() {
+		Uri[] uriBases = {
+				android.provider.MediaStore.Video.Thumbnails.EXTERNAL_CONTENT_URI,
+				android.provider.MediaStore.Video.Thumbnails.INTERNAL_CONTENT_URI
+		};
+		for(Uri uriBase : uriBases) {
+			wipeAssets(
+					uriBase,
+					ITCConstants.ContentTargets.VIDEO_THUMBNAIL.STRINGS,
+					ITCConstants.ContentTargets.VIDEO_THUMBNAIL.FILES
+			);
+		}
+	}
+	
+	public static void wipeVideos() {
+		Uri[] uriBases = {
+				android.provider.MediaStore.Video.Media.EXTERNAL_CONTENT_URI,
+				android.provider.MediaStore.Video.Media.INTERNAL_CONTENT_URI
+				
+		};
+		for(Uri uriBase : uriBases) {
+			wipeAssets(
+					uriBase,
+					ITCConstants.ContentTargets.VIDEO.STRINGS,
+					ITCConstants.ContentTargets.VIDEO.FILES
+			);
+		}
 	}
 	
 	public static void wipeSMS() {
-		String uriBase = "content://sms";
-		// TODO: this needs to be tested.
-		wipeAssets(uriBase,null);
+		Uri uriBase = Uri.parse("content://sms");
+		wipeAssets(
+				uriBase,
+				ITCConstants.ContentTargets.SMS.STRINGS,
+				null
+		);
 	}
 	
 	public static void wipeCallLog() {
-		String uriBase = "content://call_log/calls";
-		String[] projection = {
-				Calls._ID
-		};
-		wipeAssets(uriBase,projection);
+		Uri uriBase = android.provider.CallLog.Calls.CONTENT_URI;
+		wipeAssets(
+				uriBase,
+				ITCConstants.ContentTargets.CALL_LOG.STRINGS,
+				null
+		);
+	}
+	
+	private static ArrayList<File> getInnerFiles(File f) {
+		ArrayList<File> innerFiles = new ArrayList<File>();
+		for(File file : f.listFiles()) {
+			if(file.isFile() && file.canWrite())
+				innerFiles.add(file);
+			else if(file.isDirectory() && file.canRead())
+				innerFiles.addAll(getInnerFiles(file));
+		}
+		return innerFiles;
 	}
 	
 	public static void wipeFolder(File folder) {
-		Log.d(ITC,"WIPING FOLDER " + folder.getName());
+		ArrayList<File> del = new ArrayList<File>();
+		StringBuffer sb = new StringBuffer();
+		for(File file : folder.listFiles()) {
+			if(file.isFile() && file.canWrite())
+				del.add(file);
+			else if(file.isDirectory() && file.canRead())
+				del.addAll(getInnerFiles(file));
+		}
+		
+		int counter = 1;
+		for(File f : del) {
+			sb.append(counter++ + ". " + f.getPath() + "\n");
+			rewriteAndDelete(f);
+		}
+		Log.d(ITCConstants.Log.ITC,"FOLDER " + folder.getName() + " contained:\n" + sb.toString());
 	}
 }

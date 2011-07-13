@@ -25,8 +25,9 @@ public class PanicController extends Service {
 	private NotificationManager nm;
 	SharedPreferences _sp;
 	
-	TimerTask tt;
+	TimerTask tt,ui;
 	Timer t = new Timer();
+	Timer u = new Timer();
 	final Handler h = new Handler();
 	boolean isPanicing = false;
 	
@@ -98,10 +99,19 @@ public class PanicController extends Service {
 	}
 	
 	public void updatePanicUi(String message) {
-		Intent i = new Intent();
+		final Intent i = new Intent();
 		i.putExtra(ITCConstants.UPDATE_UI, message);
 		i.setAction(Panic.class.getName());
-		sendBroadcast(i);
+		
+		ui = new TimerTask() {
+			@Override
+			public void run() {
+				// TODO Auto-generated method stub
+				sendBroadcast(i);
+			}
+			
+		};
+		u.schedule(ui,ITCConstants.Duriation.SPLASH);
 	}
 	
 	private int shout() {
@@ -117,11 +127,13 @@ public class PanicController extends Service {
 					@Override
 					public void run() {
 						if(isPanicing) {
+							/*
 							sc.sendSMSShout(
 									configuredFriends,
 									defaultPanicMsg,
 									sc.buildShoutData(userDisplayName)
 							);
+							*/
 							Log.d(ITCConstants.Log.ITC,"this is a shout going out...");
 							panicCount++;
 						}
@@ -150,7 +162,6 @@ public class PanicController extends Service {
 						shouldWipeCalendar,
 						selectedFolders
 				);
-				confirmPanic();
 			}
 		});
 		wipe.start();
@@ -187,60 +198,6 @@ public class PanicController extends Service {
 			Log.d(ITCConstants.Log.ITC,"SOMETHING WAS WRONG WITH SHOUT");	
 		}
 	}
-	
-	/*
-	private int doFirstShout() { 
-		t = 0;
-		_result = ITCConstants.Results.FAIL;
-		if(_keepPanicing) {
-			panicState++;
-			Log.d(ITCConstants.Log.ITC,"panic state: " + panicState);
-			sc.sendSMSShout(configuredFriends, defaultPanicMsg, sc.buildShoutData(userDisplayName));
-			panic.putExtra("configuredFriends", configuredFriends);
-			panic.putExtra("defaultPanicMsg", defaultPanicMsg);
-			panic.putExtra("userDisplayName", userDisplayName);
-			_result = ITCConstants.Results.A_OK;
-		}
-		int result = _result;
-		return result;
-	}
-	
-	private int doWipe() {
-		_result = ITCConstants.Results.FAIL;
-		if(_keepPanicing) {
-			panicState++;
-			Log.d(ITCConstants.Log.ITC,"panic state: " + panicState);
-
-			countdownReadout.setText(getString(R.string.KEY_PANIC_PROGRESS_2));
-			Log.d(ITCConstants.Log.ITC,"Wiping... " + _sp.getString(ITCConstants.Preference.DEFAULT_WIPE_FOLDER_LIST, ""));
-			wc.wipePIMData(
-					shouldWipeContacts,
-					shouldWipePhotos,
-					shouldWipeCallLog,
-					shouldWipeSMS,
-					shouldWipeCalendar,
-					selectedFolders
-			);
-			_result = ITCConstants.Results.A_OK;
-		}
-		
-		int result = _result;
-		return result;
-	}
-	
-	private int startConstantPanic() {
-		_result = ITCConstants.Results.FAIL;
-		if(_keepPanicing) {
-			panicState++;
-			Log.d(ITCConstants.Log.ITC,"panic state: " + panicState);
-			
-			_result = ITCConstants.Results.A_OK;
-		}
-		
-		int result = _result;
-		return result;
-	}
-	*/
 	
 	private void showNotification() {
 		backToPanic.putExtra("PanicCount", panicCount);

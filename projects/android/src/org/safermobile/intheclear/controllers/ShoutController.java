@@ -44,6 +44,10 @@ public class ShoutController {
 			sbPanicMsg.append(res.getString(R.string.KEY_PANIC_MSG_CID) + " " + PhoneInfo.getCellId() + "\n");
 		if(PhoneInfo.getLAC().length() > 0)
 			sbPanicMsg.append(res.getString(R.string.KEY_PANIC_MSG_LAC) + " " + PhoneInfo.getLAC() + "\n");
+		if(PhoneInfo.getMCC().length() > 0)
+			sbPanicMsg.append(res.getString(R.string.KEY_PANIC_MSG_MCC) + " " + PhoneInfo.getMCC() + "\n");
+		if(PhoneInfo.getMNC().length() > 0)
+			sbPanicMsg.append(res.getString(R.string.KEY_PANIC_MSG_MNC) + " " + PhoneInfo.getMNC() + "\n");
 		sbPanicMsg.append(res.getString(R.string.KEY_PANIC_MSG_TIMESTAMP) + " " + new Date().toString());
 		return sbPanicMsg.toString();
 	}

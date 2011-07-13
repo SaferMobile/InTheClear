@@ -23,6 +23,10 @@ public class PhoneInfo {
 			sb.append("CID: " + PhoneInfo.getCellId() + "\n");
 		if(getLAC() != null)
 			sb.append("LAC: " + PhoneInfo.getLAC() + "\n");
+		if(getMCC() != null)
+			sb.append("MCC: " + PhoneInfo.getMCC() + "\n");
+		if(getMNC() != null)
+			sb.append("MNC: " + PhoneInfo.getMNC() + "\n");
 		return sb.toString();
 	}
 	
@@ -67,13 +71,13 @@ public class PhoneInfo {
 	
 	public static String getMCC() {
 		String out = null;
-		out = getIMSI().substring(0,3);
+		out = tm.getNetworkOperator().substring(0,3);
 		return out;
 	}
 	
 	public static String getMNC() {
 		String out = null;
-		out = getIMSI().substring(3,5);
+		out = tm.getNetworkOperator().substring(3);
 		return out;
 	}
 	

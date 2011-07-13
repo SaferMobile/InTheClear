@@ -138,7 +138,6 @@ public class PIMWiper  {
 			f.delete();
 			
 		} catch(IOException e) {}
-		// Log.d(ITCConstants.Log.ITC,f.getPath() + " is a file to delete.");
 	}
 	
 	public static void wipeCalendar() {

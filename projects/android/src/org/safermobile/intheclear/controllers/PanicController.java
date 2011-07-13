@@ -30,9 +30,7 @@ public class PanicController extends Service {
 	Timer u = new Timer();
 	final Handler h = new Handler();
 	boolean isPanicing = false;
-	
-	Thread wipe;
-	
+		
 	Intent backToPanic;
 	int panicCount = 0;
 	
@@ -127,13 +125,11 @@ public class PanicController extends Service {
 					@Override
 					public void run() {
 						if(isPanicing) {
-							/*
 							sc.sendSMSShout(
 									configuredFriends,
 									defaultPanicMsg,
 									sc.buildShoutData(userDisplayName)
 							);
-							*/
 							Log.d(ITCConstants.Log.ITC,"this is a shout going out...");
 							panicCount++;
 						}
@@ -151,7 +147,7 @@ public class PanicController extends Service {
 	private int wipe() {
 		int result = ITCConstants.Results.FAIL;
 		updatePanicUi(getString(R.string.KEY_PANIC_PROGRESS_2));
-		wipe = new Thread(new Runnable() {
+		new Thread(new Runnable() {
 			@Override
 			public void run() {
 				wc.wipePIMData(
@@ -163,14 +159,9 @@ public class PanicController extends Service {
 						selectedFolders
 				);
 			}
-		});
-		wipe.start();
+		}).start();
 		result = ITCConstants.Results.A_OK;
 		return result;
-	}
-	
-	private void confirmPanic() {
-		updatePanicUi(getString(R.string.KEY_PANIC_PROGRESS_3));
 	}
 	
 	private void stopRunnables() {
@@ -190,7 +181,7 @@ public class PanicController extends Service {
 		isPanicing = true;
 		if(shout() == ITCConstants.Results.A_OK)			
 			if(wipe() == ITCConstants.Results.A_OK){
-				// notify that there was an error
+				updatePanicUi(getString(R.string.KEY_PANIC_PROGRESS_3));
 			} else {
 				Log.d(ITCConstants.Log.ITC,"SOMETHING WAS WRONG WITH WIPE");
 			}

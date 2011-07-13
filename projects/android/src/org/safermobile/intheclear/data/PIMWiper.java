@@ -104,9 +104,10 @@ public class PIMWiper  {
 					try {
 						cr.delete(ContentUris.withAppendedId(uriBase, _id), null, null);
 					} catch(UnsupportedOperationException e) {
-						Log.d(ITCConstants.Log.ITC,"fucking exception: " + e);
-						// there's an exception, so try building the delete query from scratch and forcing it through
-						cr.delete(uriBase, "_id", new String[]{Integer.toString((int) _id)});
+						Log.d(ITCConstants.Log.ITC,"CAN\'T DELETE BECAUSE: " + e);
+						
+						// there's an exception, so try building the delete query from scratch and forcing it through?
+						//cr.delete(uriBase, "_id", new String[]{Integer.toString((int) _id)});
 					}
 					cursor.moveToNext();
 				}

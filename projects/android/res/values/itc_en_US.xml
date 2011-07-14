@@ -40,6 +40,8 @@
 	<string name="KEY_PANIC_MSG_LAC">lac:</string>
 	<string name="KEY_PANIC_MSG_MCC">mcc:</string>
 	<string name="KEY_PANIC_MSG_MNC">mnc:</string>
+	<string name="KEY_PANIC_MSG_LAT">latitude:</string>
+	<string name="KEY_PANIC_MSG_LNG">longitude:</string>
 	<string name="KEY_PANIC_MSG_TIMESTAMP">ts:</string>
 	<string name="KEY_PANIC_MSG_SENT">Panic Sent</string>
 	<string name="KEY_PANIC_MSG_SENTTO">Sent to:</string>

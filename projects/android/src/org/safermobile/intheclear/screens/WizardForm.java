@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import org.safermobile.intheclear.ITCConstants;
 import org.safermobile.intheclear.R;
+import org.safermobile.intheclear.data.MovementTracker;
 import org.safermobile.intheclear.data.PhoneInfo;
 import org.safermobile.intheclear.sms.SMSSender;
 import org.safermobile.intheclear.ui.*;
@@ -140,11 +141,14 @@ public class WizardForm extends View implements OnClickListener {
 				@Override
 				public void onClick(View v) {
 					new PhoneInfo(c);
+					new MovementTracker(c);
 					StringBuffer sb = new StringBuffer();
 					String phoneTest = PhoneInfo.testData();
+					String locTest = MovementTracker.testData();
 					if(phoneTest != null && phoneTest.compareTo("") != 0) {
 						sb.append(c.getResources().getString(R.string.WIZARD_CONFIRMATION_LOCATIONTEST) + "\n\n");
 						sb.append(phoneTest);
+						sb.append(locTest);
 					} else {
 						sb.append(c.getResources().getString(R.string.WIZARD_FAIL_LOCATIONTEST));
 					}

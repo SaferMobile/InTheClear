@@ -18,19 +18,25 @@ public class MovementTracker {
 		_c = c;
 		lm = (LocationManager) c.getSystemService(Context.LOCATION_SERVICE);
 		criteria = new Criteria();
-		Log.d(ITCConstants.Log.ITC,"movement tracker started");
 	}
 	
 	public static String testData() {
 		StringBuffer sb = new StringBuffer();
-		double[] loc = updateLocation();
-		sb.append("Latitude: " + loc[0] + "\nLongitude: " + loc[1] + "\n");
+		if(updateLocation() != null) {
+			double[] loc = updateLocation();
+			sb.append("Latitude: " + loc[0] + "\nLongitude: " + loc[1] + "\n");
+		}
 		return sb.toString();
 	}
 	
 	public static double[] updateLocation() {
+		try {
 		String bestProvider = lm.getBestProvider(criteria, false);
 		Location l = lm.getLastKnownLocation(bestProvider);
 		return new double[] {l.getLatitude(),l.getLongitude()};
+		} catch(NullPointerException e) {
+			Log.d(ITCConstants.Log.ITC,e.toString());
+			return null;
+		}
 	}
 }

@@ -9,11 +9,11 @@
       <passwords storePasswords="1"/>
    </signing>
    <configurations>
-      <configuration active="false" name="DefaultColorPhone">
+      <configuration active="true" name="DefaultColorPhone">
          <device group="Sun Java(TM) Wireless Toolkit 2.5.2_01 for CLDC" name="DefaultColorPhone"/>
          <symbolSet name="DefaultColorPhone">
-            <symbol name="MMAPI" value="1.1"/>
             <symbol name="screen.isColor" value="true"/>
+            <symbol name="MMAPI" value="1.1"/>
             <symbol name="screen.bitDepth" value="8"/>
             <symbol name="JSR82" value="1.1"/>
             <symbol name="JSR226" value="1.0"/>
@@ -22,8 +22,8 @@
             <symbol name="SATSA-PKI" value="1.0"/>
             <symbol name="CLDC" value="1.1"/>
             <symbol name="JSR179" value="1.0"/>
-            <symbol name="SATSA-JCRMI" value="1.0"/>
             <symbol name="WMA" value="2.0"/>
+            <symbol name="SATSA-JCRMI" value="1.0"/>
             <symbol name="J2ME-WS" value="1.0"/>
             <symbol name="screen.width" value="240"/>
             <symbol name="JSR238" value="1.0"/>
@@ -41,12 +41,28 @@
             <symbol name="JSR180" value="1.0"/>
             <symbol name="screen.height" value="320"/>
          </symbolSet>
+         <workspaceSymbolSet name="BlackBerry_5810"/>
+         <workspaceSymbolSet name="BlackBerry_7100t"/>
+         <workspaceSymbolSet name="BlackBerry_7130g"/>
+         <workspaceSymbolSet name="BlackBerry_7290"/>
+         <workspaceSymbolSet name="BlackBerry_7520"/>
+         <workspaceSymbolSet name="BlackBerry_8100"/>
+         <workspaceSymbolSet name="BlackBerry_8300"/>
+         <workspaceSymbolSet name="BlackBerry_8700"/>
+         <workspaceSymbolSet name="BlackBerry_8707"/>
+         <workspaceSymbolSet name="BlackBerry_8800"/>
+         <workspaceSymbolSet name="BlackBerry_8830"/>
+         <workspaceSymbolSet name="BlackBerry_Curve"/>
+         <workspaceSymbolSet name="BlackBerry_Pearl"/>
+         <workspaceSymbolSet name="Nokia_6110"/>
+         <workspaceSymbolSet name="Nokia_6120_classic"/>
+         <workspaceSymbolSet name="Nokia_7200"/>
       </configuration>
-      <configuration active="true" name="QwertyDevice">
+      <configuration active="false" name="QwertyDevice">
          <device group="Sun Java(TM) Wireless Toolkit 2.5.2_01 for CLDC" name="QwertyDevice"/>
          <symbolSet name="QwertyDevice">
-            <symbol name="screen.isColor" value="true"/>
             <symbol name="MMAPI" value="1.1"/>
+            <symbol name="screen.isColor" value="true"/>
             <symbol name="screen.bitDepth" value="12"/>
             <symbol name="JSR82" value="1.1"/>
             <symbol name="JSR226" value="1.0"/>
@@ -55,8 +71,8 @@
             <symbol name="SATSA-PKI" value="1.0"/>
             <symbol name="CLDC" value="1.1"/>
             <symbol name="JSR179" value="1.0"/>
-            <symbol name="WMA" value="2.0"/>
             <symbol name="SATSA-JCRMI" value="1.0"/>
+            <symbol name="WMA" value="2.0"/>
             <symbol name="J2ME-WS" value="1.0"/>
             <symbol name="screen.width" value="320"/>
             <symbol name="JSR238" value="1.0"/>

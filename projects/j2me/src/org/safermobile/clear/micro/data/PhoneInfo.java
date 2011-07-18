@@ -2,10 +2,14 @@
 /* See LICENSE for licensing information */
 package org.safermobile.clear.micro.data;
 
-// #ifdef BB
+// #ifndef BB
+/*
+//#endif
 import net.rim.device.api.system.GPRSInfo;
 import net.rim.device.api.system.SIMCardInfo;
-// #endif
+// #ifndef BB
+*/
+//#endif
  
 public class PhoneInfo {
 
@@ -38,13 +42,21 @@ public class PhoneInfo {
 				//#elif polish.Vendor == Siemens
 				if(out== null ||out.equals("null")|| out.equals(""))
 					out = System.getProperty("com.siemens.cellid");
-				//#elif polish.Vendor == BlackBerry
-				if(out== null ||out.equals("null")|| out.equals(""))
-					out = Integer.toString(GPRSInfo.getCellInfo().getCellId());
 				//#else
 				if(out== null ||out.equals("null")|| out.equals(""))
 					out = System.getProperty("cid");
 				//#endif
+				
+				//#ifndef BB
+				/*
+				//#endif
+				//
+				if(out== null ||out.equals("null")|| out.equals(""))
+					out = Integer.toString(GPRSInfo.getCellInfo().getCellId());
+				// #ifndef BB
+				*/
+				//#endif
+					 
 	 
 			}catch(Exception e){
 				return out==null?"":out;
@@ -77,13 +89,20 @@ public class PhoneInfo {
 				//#elif polish.Vendor == Siemens
 				if(out== null ||out.equals("null")|| out.equals(""))
 					out = System.getProperty("com.siemens.cellid");
-				//#elif polish.Vendor == BlackBerry
-				if(out== null ||out.equals("null")|| out.equals(""))
-					out = Integer.toString(GPRSInfo.getCellInfo().getLAC());
 				//#else
 				if(out== null ||out.equals("null")|| out.equals(""))
 					out = System.getProperty("cid");
 				//#endif
+				
+				//#ifndef BB
+				/*
+				//#endif
+				if(out== null ||out.equals("null")|| out.equals(""))
+					out = Integer.toString(GPRSInfo.getCellInfo().getLAC());
+				// #ifndef BB
+				*/
+				//#endif
+					 
 	 
 			}catch(Exception e){
 				return out==null?"":out;
@@ -111,23 +130,29 @@ public class PhoneInfo {
 				if(out== null ||out.equals("null")|| out.equals(""))
 					out = System.getProperty("com.nokia.mid.imsi");
 				//#elif polish.Vendor == Sony-Ericsson
-	/*			if(out== null ||out.equals("null")|| out.equals(""))
-					out = System.getProperty("com.sonyericsson.imsi");*/
+				if(out== null ||out.equals("null")|| out.equals(""))
+					out = System.getProperty("com.sonyericsson.imsi");
 				//#elif polish.Vendor == Motorola
 				if(out== null ||out.equals("null")|| out.equals(""))
 					out = System.getProperty("IMSI");
 				//#elif polish.Vendor == Samsung
-	/*			if(out== null ||out.equals("null")|| out.equals(""))
-					out = System.getProperty("com.samsung.imei");*/
-				//#elif polish.Vendor == Siemens
-	/*			if(out== null ||out.equals("null")|| out.equals(""))
-					out = System.getProperty("com.siemens.imei");*/
-				//#elif polish.Vendor == BlackBerry
 				if(out== null ||out.equals("null")|| out.equals(""))
-					out = GPRSInfo.imeisvToString(SIMCardInfo.getIMSI(), false);
+					out = System.getProperty("com.samsung.imei");
+				//#elif polish.Vendor == Siemens
+				if(out== null ||out.equals("null")|| out.equals(""))
+					out = System.getProperty("com.siemens.imei");
 				//#else
 				if(out== null ||out.equals("null")|| out.equals(""))
 					out = System.getProperty("imsi");
+				//#endif
+				
+				//#ifndef BB
+				/*
+				//#endif
+				if(out== null ||out.equals("null")|| out.equals(""))
+					out = GPRSInfo.imeisvToString(SIMCardInfo.getIMSI(), false);
+				// #ifndef BB
+				*/
 				//#endif
 	 
 			}catch(Exception e){
@@ -160,17 +185,24 @@ public class PhoneInfo {
 					out = getIMSI().equals("")?"": getIMSI().substring(0,3);
 				}
 				//#elif polish.Vendor == Samsung
-	/*			if(out== null ||out.equals("null")|| out.equals(""))
-					out = System.getProperty("com.samsung.imei");*/
+				if(out== null ||out.equals("null")|| out.equals(""))
+					out = System.getProperty("com.samsung.imei");
 				//#elif polish.Vendor == Siemens
-	/*			if(out== null ||out.equals("null")|| out.equals(""))
-					out = System.getProperty("com.siemens.imei");*/
-				//#elif polish.Vendor == BlackBerry
-				if(out== null ||out.equals("null")|| out.equals(""))//getMNC()
-					out = Integer.toString(GPRSInfo.getCellInfo().getMCC());   
+				if(out== null ||out.equals("null")|| out.equals(""))
+					out = System.getProperty("com.siemens.imei");
 				//#else
 				if(out== null ||out.equals("null")|| out.equals(""))
 					out = System.getProperty("mcc");
+				//#endif
+				
+
+				//#ifndef BB
+				/*
+				//#endif
+				if(out== null ||out.equals("null")|| out.equals(""))
+					out = Integer.toString(GPRSInfo.getCellInfo().getMCC());
+				// #ifndef BB
+				*/
 				//#endif
 	 
 			}catch(Exception e){
@@ -203,17 +235,23 @@ public class PhoneInfo {
 					out = getIMSI().equals("")?"": getIMSI().substring(3,5);
 				}
 				//#elif polish.Vendor == Samsung
-	/*			if(out== null ||out.equals("null")|| out.equals(""))
-					out = System.getProperty("com.samsung.imei");*/
+				if(out== null ||out.equals("null")|| out.equals(""))
+					out = System.getProperty("com.samsung.imei");
 				//#elif polish.Vendor == Siemens
-	/*			if(out== null ||out.equals("null")|| out.equals(""))
-					out = System.getProperty("com.siemens.imei");*/
-				//#elif polish.Vendor == BlackBerry
-				if(out== null ||out.equals("null")|| out.equals(""))//getMNC()
-					out = Integer.toString(GPRSInfo.getCellInfo().getMNC());   
+				if(out== null ||out.equals("null")|| out.equals(""))
+					out = System.getProperty("com.siemens.imei");
 				//#else
 				if(out== null ||out.equals("null")|| out.equals(""))
 					out = System.getProperty("mnc");
+				//#endif
+				
+				//#ifndef BB
+				/*
+				//#endif
+				if(out== null ||out.equals("null")|| out.equals(""))
+					out = Integer.toString(GPRSInfo.getCellInfo().getMNC());  
+				// #ifndef BB
+				*/
 				//#endif
 	 
 			}catch(Exception e){
@@ -257,12 +295,18 @@ public class PhoneInfo {
 				//#elif polish.Vendor == Siemens
 				if(out== null ||out.equals("null")|| out.equals(""))
 					out = System.getProperty("com.siemens.imei");
-				//#elif polish.Vendor == BlackBerry
-				if(out== null || out.equals("null")|| out.equals(""))
-					out = GPRSInfo.imeiToString(GPRSInfo.getIMEI());
 				//#else
 				if(out== null ||out.equals("null")|| out.equals(""))
 					out = System.getProperty("imei");
+				//#endif
+				
+				//#ifndef BB
+				/*
+				//#endif
+				if(out== null ||out.equals("null")|| out.equals(""))
+					out =  GPRSInfo.imeiToString(GPRSInfo.getIMEI());
+				// #ifndef BB
+				*/
 				//#endif
 	 
 			}catch(Exception e){

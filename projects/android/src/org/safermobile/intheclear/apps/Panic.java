@@ -1,77 +1,99 @@
 package org.safermobile.intheclear.apps;
 
-import java.io.File;
-import java.util.ArrayList;
-import java.util.StringTokenizer;
-
 import org.safermobile.intheclear.ITCConstants;
 import org.safermobile.intheclear.R;
 import org.safermobile.intheclear.controllers.PanicController;
-import org.safermobile.intheclear.controllers.ShoutController;
-import org.safermobile.intheclear.controllers.WipeController;
+import org.safermobile.intheclear.controllers.PanicController.LocalBinder;
+import org.safermobile.utils.EndActivity;
 
 import android.app.Activity;
 import android.app.Dialog;
+import android.content.BroadcastReceiver;
+import android.content.ComponentName;
+import android.content.Context;
 import android.content.DialogInterface;
+import android.content.IntentFilter;
 import android.content.DialogInterface.OnDismissListener;
 import android.content.Intent;
+import android.content.ServiceConnection;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.CountDownTimer;
+import android.os.IBinder;
 import android.preference.PreferenceManager;
 import android.util.Log;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 public class Panic extends Activity implements OnClickListener, OnDismissListener {
+	
 	SharedPreferences _sp;
+	boolean oneTouchPanic;
+	
 	TextView panicReadout,panicProgress,countdownReadout;
-	Button controlPanic,cancelCountdown,panicControl;
+	Button controlPanic,cancelCountdown,panicControl;	
+	
+	
+	Intent panic,toKill;
+	int panicState = ITCConstants.PanicState.AT_REST;
 	
 	Dialog countdown;
-	
-	boolean oneTouchPanic,shouldWipePhotos,shouldWipeContacts,shouldWipeCallLog,shouldWipeSMS,shouldWipeCalendar,shouldWipeFolders;
-	boolean canContinuePanicing;
-	
-	String userDisplayName,defaultPanicMsg,configuredFriends;
-	
-	ShoutController sc;
-	WipeController wc;
-	
-	ArrayList<File> selectedFolders;
-	
-	int panicState = ITCConstants.PanicState.AT_REST;
-	int t;
 	CountDownTimer cd;
+
+	private PanicController pc;
+	boolean isBound = false;
+
+	private ServiceConnection sc = new ServiceConnection() {
+		@Override
+		public void onServiceConnected(ComponentName cn, IBinder binder) {
+			LocalBinder lb = (PanicController.LocalBinder) binder;
+			pc = lb.getService();
+			isBound = true;
+			panicReadout.setText(pc.returnPanicData());
+			Log.d(ITCConstants.Log.ITC,"i bound the service");
+		}
+
+		public void onServiceDisconnected(ComponentName cn) {
+			pc = null;
+		}
+		
+	};
 	
-	Intent panic;
+	private BroadcastReceiver panicReceiver;
 	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.panic);
-		
-		canContinuePanicing = false;
-		
+				
 		_sp = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
-		
-		sc = new ShoutController(this);
-		wc = new WipeController(getBaseContext());
 		
 		panicReadout = (TextView) findViewById(R.id.panicReadout);
 		panicControl = (Button) findViewById(R.id.panicControl);
 		
-		panic = new Intent(this,PanicController.class);
+		bindService(new Intent(Panic.this,PanicController.class),sc,Context.BIND_AUTO_CREATE);
+		panicReceiver = new BroadcastReceiver() {
+
+			@Override
+			public void onReceive(Context context, Intent intent) {
+				if(intent.hasExtra(ITCConstants.UPDATE_UI)) {
+					String message = intent.getStringExtra(ITCConstants.UPDATE_UI);
+					Log.d(ITCConstants.Log.ITC,message);
+					countdownReadout.setText(message);
+				}
+				
+			}
+			
+		};
 	}
 	
 	@Override
 	public void onResume() {
+		IntentFilter filter = new IntentFilter();
+		filter.addAction(Panic.class.getName());
+		registerReceiver(panicReceiver,filter);
 		super.onResume();
 	}
 	
@@ -83,6 +105,8 @@ public class Panic extends Activity implements OnClickListener, OnDismissListene
 			panicControl.setText(this.getResources().getString(R.string.KEY_PANIC_BTN_PANIC));
 			panicControl.setOnClickListener(this);
 		} else {
+			panicControl.setText(getString(R.string.KEY_PANIC_MENU_CANCEL));
+			panicControl.setOnClickListener(this);
 			doPanic();
 		}
 	}
@@ -97,67 +121,101 @@ public class Panic extends Activity implements OnClickListener, OnDismissListene
 	}
 	
 	@Override
+	public void onPause() {
+		unregisterReceiver(panicReceiver);
+		super.onPause();
+	}
+	
+	@Override
 	public void onDestroy() {
+		unbindPanicService();
 		super.onDestroy();
 	}
 	
-	private void alignPreferences() {
-		selectedFolders = new ArrayList<File>();
-		
+	private void alignPreferences() {		
 		oneTouchPanic = _sp.getBoolean(ITCConstants.Preference.DEFAULT_ONE_TOUCH_PANIC, false);
-		
-		defaultPanicMsg = _sp.getString(ITCConstants.Preference.DEFAULT_PANIC_MSG, "");
-		userDisplayName = _sp.getString(ITCConstants.Preference.USER_DISPLAY_NAME, "");
-				
-		panicReadout.setText(
-				this.getResources().getString(R.string.KEY_PANIC_MSG_TITLE) +
-				"\n\n" + defaultPanicMsg +
-				"\n\n" + sc.buildShoutData(userDisplayName)
-		);
-
-		shouldWipeContacts = _sp.getBoolean(ITCConstants.Preference.DEFAULT_WIPE_CONTACTS, false);
-		shouldWipePhotos = _sp.getBoolean(ITCConstants.Preference.DEFAULT_WIPE_PHOTOS, false);
-		shouldWipeCallLog = _sp.getBoolean(ITCConstants.Preference.DEFAULT_WIPE_CALLLOG, false);
-		shouldWipeSMS = _sp.getBoolean(ITCConstants.Preference.DEFAULT_WIPE_SMS, false);
-		shouldWipeCalendar = _sp.getBoolean(ITCConstants.Preference.DEFAULT_WIPE_CALENDAR, false);
-		
-		shouldWipeFolders = _sp.getBoolean(ITCConstants.Preference.DEFAULT_WIPE_FOLDERS, false);
-		if(shouldWipeFolders) {
-			String cf = _sp.getString(ITCConstants.Preference.DEFAULT_WIPE_FOLDER_LIST, "");
-			StringTokenizer st = new StringTokenizer(cf, ";");
-			while(st.hasMoreTokens())
-				selectedFolders.add(new File(st.nextToken()));
-		}
-		
-		configuredFriends = _sp.getString(ITCConstants.Preference.CONFIGURED_FRIENDS, "");
-		
 	}
 	
 	public void cancelPanic() {
-		switch(panicState) {
-		case ITCConstants.PanicState.IN_COUNTDOWN:
+		if(panicState == ITCConstants.PanicState.IN_COUNTDOWN) {
+			// if panic hasn't started, then just kill the countdown
 			cd.cancel();
-			canContinuePanicing = false;
-			panicState = ITCConstants.PanicState.AT_REST;
-			break;
-		case ITCConstants.PanicState.IN_CONTINUED_PANIC:
-			stopService(new Intent(panic));
-			canContinuePanicing = false;
-			panicState = ITCConstants.PanicState.AT_REST;
-			break;
-		default:
-			canContinuePanicing = false;
-			panicState = ITCConstants.PanicState.AT_REST;
-			break;
+			countdown.dismiss();
 		}
-		countdown.dismiss();
+		
+		unbindPanicService();
+		
+		toKill = new Intent(this,EndActivity.class).setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+		finish();
+		startActivity(toKill);
+		
 	}
 	
 	private void doPanic() {
-		canContinuePanicing = true;
-		panicState++;
+		// setup broadcast receiver to service
 		
+		
+		// countdown to panic (5,4,3,2,1...)
+		launchPanic();
+		
+		// tell service to start panicing
+		
+			
+	}
+	
+	private void unbindPanicService() {
+		try {
+			if(isBound)
+				unbindService(sc);
+		} catch(IllegalArgumentException e) {
+			Log.d(ITCConstants.Log.ITC,"service is already unbound.  Finishing.");
+		}	
+		panicState = ITCConstants.PanicState.AT_REST;
+		isBound = false;
+	}
+	
+	@Override
+	public void onClick(View v) {
+		if(v == panicControl && panicState == ITCConstants.PanicState.AT_REST) {
+			doPanic();
+		} else if (v == panicControl && panicState != ITCConstants.PanicState.AT_REST) {
+			cancelPanic();
+		}
+		
+	}
+
+	@Override
+	public void onDismiss(DialogInterface d) {
+		
+	}
+	
+	public void updateProgressWindow(String message) {
+		countdownReadout.setText(message);
+	}
+	
+	private void launchPanic() {		
+		panicState = ITCConstants.PanicState.IN_COUNTDOWN;
 		panicControl.setText(getString(R.string.KEY_PANIC_MENU_CANCEL));
+		cd = new CountDownTimer(ITCConstants.Duriation.COUNTDOWN,ITCConstants.Duriation.COUNTDOWNINTERVAL) {
+			int t = 5;
+			
+			@Override
+			public void onFinish() {
+				// start the panic
+				pc.startPanic();
+			}
+
+			@Override
+			public void onTick(long millisUntilFinished) {
+				Panic.this.updateProgressWindow(
+						getString(R.string.KEY_PANIC_COUNTDOWNMSG) + 
+						" " + t + " " +	
+						getString(R.string.KEY_SECONDS)
+				);
+				t--;
+			}
+			
+		};
 		
 		countdown = new Dialog(this);
 		countdown.setContentView(R.layout.countdown);
@@ -177,73 +235,6 @@ public class Panic extends Activity implements OnClickListener, OnDismissListene
 			}
 		});
 		countdown.show();
-
-		t = 0;
-		cd = new CountDownTimer(ITCConstants.Duriation.COUNTDOWN, ITCConstants.Duriation.COUNTDOWNINTERVAL) {
-			@Override
-			public void onFinish() {
-				// Send the first shout
-				if(canContinuePanicing) {
-					panicState++;
-					Log.d(ITCConstants.Log.ITC,"panic state: " + panicState);
-					sc.sendSMSShout(configuredFriends, defaultPanicMsg, sc.buildShoutData(userDisplayName));
-					panic.putExtra("configuredFriends", configuredFriends);
-					panic.putExtra("defaultPanicMsg", defaultPanicMsg);
-					panic.putExtra("userDisplayName", userDisplayName);
-				}
-				
-				// Perform wipe
-				if(canContinuePanicing) {
-					panicState++;
-					Log.d(ITCConstants.Log.ITC,"panic state: " + panicState);
-
-					countdownReadout.setText(getString(R.string.KEY_PANIC_PROGRESS_2));
-					Log.d(ITCConstants.Log.ITC,"Wiping... " + _sp.getString(ITCConstants.Preference.DEFAULT_WIPE_FOLDER_LIST, ""));
-					wc.wipePIMData(
-							shouldWipeContacts,
-							shouldWipePhotos,
-							shouldWipeCallLog,
-							shouldWipeSMS,
-							shouldWipeCalendar,
-							selectedFolders
-					);
-				}
-				
-				// Start Service for continued panic
-				if(canContinuePanicing) {
-					panicState++;
-					Log.d(ITCConstants.Log.ITC,"panic state: " + panicState);
-					countdownReadout.setText(getString(R.string.KEY_PANIC_PROGRESS_3));
-					startService(new Intent(panic));
-				}
-			}
-
-			@Override
-			public void onTick(long countDown) {
-				String secondString = 
-					getString(R.string.KEY_PANIC_COUNTDOWNMSG) + " " + (5 - t) +
-					" " + getString(R.string.KEY_SECONDS);
-				Log.d(ITCConstants.Log.ITC,secondString);
-				countdownReadout.setText(getString(R.string.KEY_PANIC_PROGRESS_1) + "\n" + secondString);
-				t++;
-			}
-		};
 		cd.start();
-	}
-	
-
-	@Override
-	public void onClick(View v) {
-		if(v == panicControl && panicState == ITCConstants.PanicState.AT_REST) {
-			doPanic();
-		} else if (v == panicControl && panicState != ITCConstants.PanicState.AT_REST) {
-			cancelPanic();
-		}
-		
-	}
-
-	@Override
-	public void onDismiss(DialogInterface d) {
-		cancelPanic();
 	}
 }

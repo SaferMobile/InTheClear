@@ -19,6 +19,7 @@ import android.content.OperationApplicationException;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.RemoteException;
+import android.provider.CallLog;
 import android.provider.ContactsContract;
 import android.provider.ContactsContract.Data;
 import android.provider.MediaStore;
@@ -40,7 +41,7 @@ public class PIMWiper  {
 		Log.d(ITCConstants.Log.ITC,"Available Columns: " + sbb.toString());
 	}
 	
-	private static void wipeAssets(Uri uriBase, String[] rewriteStrings, String[] rewriteFiles) {
+	private static void wipeAssets(Uri uriBase, String authority, String[] rewriteStrings, String[] rewriteFiles) {
 		Cursor cursor = null;
 		long _id = 0;
 		
@@ -85,20 +86,33 @@ public class PIMWiper  {
 					}
 										
 					// rewrite content
-					String authority = ContactsContract.AUTHORITY;
-					try {
-						cr.applyBatch(authority, cpo);
-					} catch (RemoteException e) {
-						Log.d(ITCConstants.Log.ITC,"FAIL : " + e);
-					} catch (OperationApplicationException e) {
-						Log.d(ITCConstants.Log.ITC,"FAIL : " + e);
-					} catch (UnsupportedOperationException e) {
-						Log.d(ITCConstants.Log.ITC,"FAIL : " + e);
+					if(!cpo.isEmpty()) {
+						try {
+							cr.applyBatch(authority, cpo);
+						} catch (RemoteException e) {
+							Log.d(ITCConstants.Log.ITC,"FAIL : " + e);
+						} catch (OperationApplicationException e) {
+							Log.d(ITCConstants.Log.ITC,"FAIL : " + e);
+						} catch (UnsupportedOperationException e) {
+							Log.d(ITCConstants.Log.ITC,"FAIL : " + e);
+						}
+						cpo.clear();
 					}
-					cpo.clear();
 					
 					// delete content
-					cr.delete(ContentUris.withAppendedId(uriBase, _id), null, null);
+					Log.d(ITCConstants.Log.ITC,"DELETE " + ContentUris.withAppendedId(uriBase, _id).toString() + " ?");
+					try {
+						cr.delete(ContentUris.withAppendedId(uriBase, _id), null, null);
+					} catch(UnsupportedOperationException e) {
+						Log.d(ITCConstants.Log.ITC,"CAN\'T DELETE BECAUSE: " + e);
+						
+						// there's an exception, so try building the delete query from scratch and forcing it through?
+						try {
+							cr.delete(uriBase, Data._ID + "=?", new String[] {Integer.toString((int) _id)});
+						} catch(UnsupportedOperationException e2){
+							Log.d(ITCConstants.Log.ITC,"that shit again: " + e2);
+						}
+					}
 					cursor.moveToNext();
 				}
 			}
@@ -124,20 +138,34 @@ public class PIMWiper  {
 			f.delete();
 			
 		} catch(IOException e) {}
-		// Log.d(ITCConstants.Log.ITC,f.getPath() + " is a file to delete.");
 	}
 	
 	public static void wipeCalendar() {
 		// THIS CONTENT RESOLVER HAS BEEN DEPRECATED.  MUST FIND ANOTHER WAY...
-		Uri uriBase = Uri.parse("content://calendar/calendars");
-		wipeAssets(uriBase,null,null);
+		Uri uriBase = Uri.parse("content://calendar/events");
+		wipeAssets(uriBase,"calendar",null,null);
 	}
 	
 	public static void wipeContacts() {
-		// String uriBase = "content://com.android.contacts/data";
-		Uri uriBase = Data.CONTENT_URI;
+		Uri uriBase = ContactsContract.Contacts.CONTENT_URI;
 		wipeAssets(
-				uriBase,ITCConstants.ContentTargets.CONTACT.STRINGS,
+				uriBase,ContactsContract.AUTHORITY,ITCConstants.ContentTargets.CONTACT.STRINGS,
+				null
+		);
+	}
+	
+	public static void wipePhoneNumbers() {
+		Uri uriBase = ContactsContract.CommonDataKinds.Phone.CONTENT_URI;
+		wipeAssets(
+				uriBase,ContactsContract.AUTHORITY,ITCConstants.ContentTargets.PHONE_NUMBER.STRINGS,
+				null
+		);
+	}
+	
+	public static void wipeEmail() {
+		Uri uriBase = ContactsContract.CommonDataKinds.Email.CONTENT_URI;
+		wipeAssets(
+				uriBase,ContactsContract.AUTHORITY,ITCConstants.ContentTargets.EMAIL.STRINGS,
 				null
 		);
 	}
@@ -150,6 +178,7 @@ public class PIMWiper  {
 		for(Uri uriBase : uriBases) {
 			wipeAssets(
 					uriBase,
+					MediaStore.AUTHORITY,
 					ITCConstants.ContentTargets.IMAGE.STRINGS,
 					ITCConstants.ContentTargets.IMAGE.FILES
 			);
@@ -164,6 +193,7 @@ public class PIMWiper  {
 		for(Uri uriBase : uriBases) {
 			wipeAssets(
 					uriBase,
+					MediaStore.AUTHORITY,
 					ITCConstants.ContentTargets.IMAGE_THUMBNAIL.STRINGS,
 					ITCConstants.ContentTargets.IMAGE_THUMBNAIL.FILES
 			);
@@ -178,6 +208,7 @@ public class PIMWiper  {
 		for(Uri uriBase : uriBases) {
 			wipeAssets(
 					uriBase,
+					MediaStore.AUTHORITY,
 					ITCConstants.ContentTargets.VIDEO_THUMBNAIL.STRINGS,
 					ITCConstants.ContentTargets.VIDEO_THUMBNAIL.FILES
 			);
@@ -193,6 +224,7 @@ public class PIMWiper  {
 		for(Uri uriBase : uriBases) {
 			wipeAssets(
 					uriBase,
+					MediaStore.AUTHORITY,
 					ITCConstants.ContentTargets.VIDEO.STRINGS,
 					ITCConstants.ContentTargets.VIDEO.FILES
 			);
@@ -203,6 +235,7 @@ public class PIMWiper  {
 		Uri uriBase = Uri.parse("content://sms");
 		wipeAssets(
 				uriBase,
+				"sms",
 				ITCConstants.ContentTargets.SMS.STRINGS,
 				null
 		);
@@ -212,6 +245,7 @@ public class PIMWiper  {
 		Uri uriBase = android.provider.CallLog.Calls.CONTENT_URI;
 		wipeAssets(
 				uriBase,
+				CallLog.AUTHORITY,
 				ITCConstants.ContentTargets.CALL_LOG.STRINGS,
 				null
 		);

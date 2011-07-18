@@ -9,6 +9,7 @@ import android.provider.ContactsContract.CommonDataKinds.Phone;
 import android.provider.ContactsContract.CommonDataKinds.Photo;
 import android.provider.ContactsContract.CommonDataKinds.StructuredName;
 import android.provider.ContactsContract.CommonDataKinds.StructuredPostal;
+import android.provider.ContactsContract.Contacts;
 import android.provider.ContactsContract.Data;
 import android.provider.MediaStore.Images;
 import android.provider.MediaStore.Video;
@@ -28,43 +29,42 @@ public class ITCConstants {
 		public static final int SETUP_WIZARD = 2;
 		public static final int SELECTED_FOLDERS = 3;
 		public static final int RETURN_FROM_PANIC = 4;
+		public static final int A_OK = 1;
+		public static final int FAIL = -1;
 	}
 	
 	public static class ContentTargets {
 		public static class CONTACT {
 			public static final String[] STRINGS = {
-				Phone.DISPLAY_NAME,
-				Phone.NUMBER,
-				Photo.PHOTO_ID,
-				StructuredName.DISPLAY_NAME,
-				StructuredName.GIVEN_NAME,
-				StructuredName.MIDDLE_NAME,
-				StructuredName.FAMILY_NAME,
-				StructuredName.PREFIX,
-				StructuredName.SUFFIX,
-				Note.NOTE,
-				StructuredPostal.FORMATTED_ADDRESS,
-				StructuredPostal.STREET,
-				StructuredPostal.CITY,
-				StructuredPostal.NEIGHBORHOOD,
-				StructuredPostal.REGION,
-				StructuredPostal.POBOX,
-				StructuredPostal.POSTCODE,
-				StructuredPostal.COUNTRY,
-				Nickname.NAME,
-				Im.DATA,
-				Im.PROTOCOL,
-				Im.LABEL,
-				Email.DISPLAY_NAME,
-				Data.SYNC1,
-				Data.SYNC2,
-				Data.SYNC3,
-				Data.SYNC4,
+				Contacts.DISPLAY_NAME
 			};
 			
 			public static final String[] FILES = {
 				Photo.PHOTO,
 				
+			};
+		}
+		
+		public static class PHONE_NUMBER {
+			public static final String[] STRINGS = {
+				Phone.DISPLAY_NAME,
+				Phone.NUMBER,
+				Phone.DATA,
+				Phone.SYNC1,
+				Phone.SYNC2,
+				Phone.SYNC3,
+				Phone.SYNC4
+			};
+		}
+		
+		public static class EMAIL {
+			public static final String[] STRINGS = {
+				Email.DISPLAY_NAME,
+				Email.DATA,
+				Email.SYNC1,
+				Email.SYNC2,
+				Email.SYNC3,
+				Email.SYNC4
 			};
 		}
 			
@@ -136,7 +136,8 @@ public class ITCConstants {
 				CallLog.Calls.DATE,
 				CallLog.Calls.DURATION,
 				CallLog.Calls.CACHED_NUMBER_LABEL,
-				CallLog.Calls.CACHED_NUMBER_TYPE
+				CallLog.Calls.CACHED_NUMBER_TYPE,
+				CallLog.Calls.TYPE
 			};
 		}
 		
@@ -154,9 +155,9 @@ public class ITCConstants {
 	
 	public static class Duriation {
 		public static final long SPLASH = 3000L;
-		public static final long COUNTDOWN = 5000L;
+		public static final long COUNTDOWN = 6000L;
 		public static final long COUNTDOWNINTERVAL = 1000L;
-		public static final long CONTINUED_PANIC = 45000L;
+		public static final long CONTINUED_PANIC = 60000L;
 	}
 	
 	public static class Preference {
@@ -181,6 +182,8 @@ public class ITCConstants {
 	public static class Log {
 		public static final String ITC = "[InTheClear] ******************************** ";
 	}
+	
+	public static final String UPDATE_UI = "updateUi";
 	
 	public static class PanicState {
 		public static final int IN_COUNTDOWN = 1;

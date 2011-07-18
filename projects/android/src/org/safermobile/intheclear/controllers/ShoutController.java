@@ -4,6 +4,7 @@ import java.util.Date;
 import java.util.StringTokenizer;
 
 import org.safermobile.intheclear.R;
+import org.safermobile.intheclear.data.MovementTracker;
 import org.safermobile.intheclear.data.PhoneInfo;
 import org.safermobile.intheclear.sms.SMSSender;
 
@@ -16,6 +17,7 @@ public class ShoutController {
 	Resources res;
 	PhoneInfo pi;
 	SMSSender sms;
+	MovementTracker mt;
 
 	private final static String ITC = "[InTheClear:ShoutController] ************************ ";
 	
@@ -23,6 +25,7 @@ public class ShoutController {
 		res = c.getResources();
 		pi = new PhoneInfo(c);
 		sms = new SMSSender(c);
+		mt = new MovementTracker(c);
 	}
 	
 	public String buildShoutMessage(String userName, String userMessage, String userLocation) {
@@ -44,6 +47,15 @@ public class ShoutController {
 			sbPanicMsg.append(res.getString(R.string.KEY_PANIC_MSG_CID) + " " + PhoneInfo.getCellId() + "\n");
 		if(PhoneInfo.getLAC().length() > 0)
 			sbPanicMsg.append(res.getString(R.string.KEY_PANIC_MSG_LAC) + " " + PhoneInfo.getLAC() + "\n");
+		if(PhoneInfo.getMCC().length() > 0)
+			sbPanicMsg.append(res.getString(R.string.KEY_PANIC_MSG_MCC) + " " + PhoneInfo.getMCC() + "\n");
+		if(PhoneInfo.getMNC().length() > 0)
+			sbPanicMsg.append(res.getString(R.string.KEY_PANIC_MSG_MNC) + " " + PhoneInfo.getMNC() + "\n");
+		if(MovementTracker.updateLocation() != null) {
+			double[] location = MovementTracker.updateLocation();
+			sbPanicMsg.append(res.getString(R.string.KEY_PANIC_MSG_LAT) + " " + location[0] + "\n");
+			sbPanicMsg.append(res.getString(R.string.KEY_PANIC_MSG_LNG) + " " + location[1] + "\n");
+		}
 		sbPanicMsg.append(res.getString(R.string.KEY_PANIC_MSG_TIMESTAMP) + " " + new Date().toString());
 		return sbPanicMsg.toString();
 	}

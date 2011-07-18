@@ -5,6 +5,7 @@
       android:versionName="1.0">
     <uses-sdk android:minSdkVersion="7" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
     <uses-permission android:name="android.permission.SEND_SMS" />
     <uses-permission android:name="android.permission.READ_SMS" />
@@ -13,6 +14,7 @@
 	<uses-permission android:name="android.permission.WRITE_CONTACTS" />
 	<uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 	<uses-permission android:name="android.permission.WRITE_SYNC_SETTINGS" />
+	<uses-permission android:name="android.permission.WRITE_CALENDAR" />
 	
     <application android:label="@string/app_name" android:icon="@drawable/ic_launcher_safer">
         <activity android:name=".InTheClear"
@@ -55,7 +57,7 @@
          		  android:icon="@drawable/panic"
                   android:label="Panic!"
                   android:taskAffinity=".apps.Panic"
-                  android:launchMode="singleTop"
+                  android:launchMode="singleInstance"
                   android:theme="@android:style/Theme.NoTitleBar"
                   android:configChanges="orientation|keyboardHidden"
                   android:screenOrientation="portrait">
@@ -90,6 +92,11 @@
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+        </activity>
+        <activity android:name="org.safermobile.utils.EndActivity">
+        	<intent-filter>
+        		<action android:name="org.safermobile.utils.EndActivity" />
+        	</intent-filter>
         </activity>
 		<service android:enabled="true" android:name=".controllers.PanicController" />
     </application>

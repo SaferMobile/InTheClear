@@ -73,13 +73,13 @@
       <entry key="panic_message_lbl_msg" value="Emergency message"/>
       <entry key="setup_complete_title" value="InTheClear Setup Complete"/>
       <entry key="setup_complete_msg" value="Thanks for setting up InTheClear. Remember that you can activate its features manually from within the InTheClear app, or access the Panic! shortcut directly."/>
-      <entry key="error_pim_data" value="We were able to access your local personal data."/>
+      <entry key="error_pim_data" value="We were UNABLE to access your local personal data and media files. Try unselecting some of the data types, as your phone may not support all of them."/>
       <entry key="one_touch_title" value="One-Touch Panic Setup"/>
       <entry key="one_touch_info" value="One-Touch Panic is a feature of InTheClear that activates Emergency SMS and Data Wipe. To avoid accidental usage, the default setting requires you to confirm activation once you start One-Touch Panic. You can remove this prompt with the setting below."/>
       <entry key="one_touch_lbl_cb" value="When One-Touch Panic is activated, confirm before running"/>
       <entry key="error_not_complete" value="You must complete all the fields in the form"/>
       <entry key="error_run_setup" value="You must run the InTheClear setup before you can activate the Panic feature"/>
       <entry key="menu_panic" value="Start"/>
-      <entry key="panic_press_to_activate" value="You must press the &apos;Start&apos; option to confirm you want to start the InTheClear emergency alert and data wipe"/>
+      <entry key="panic_press_to_activate" value="You must press the &apos;Start&apos; option to confirm you want to start the emergency alert and data wipe"/>
    </locale>
 </locales>

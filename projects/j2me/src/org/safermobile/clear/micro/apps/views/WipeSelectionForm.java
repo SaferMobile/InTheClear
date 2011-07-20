@@ -18,6 +18,7 @@ import org.safermobile.clear.micro.apps.PanicConstants;
 import org.safermobile.clear.micro.apps.controllers.WipeController;
 import org.safermobile.clear.micro.apps.models.WipeDataType;
 import org.safermobile.clear.micro.data.PIMWiper;
+import org.safermobile.micro.utils.Preferences;
 
 /**
  * Example of a <code>TextBox</code> component.
@@ -104,19 +105,45 @@ public class WipeSelectionForm
 			persist();
 			
 			WipeController wc = new WipeController();
-        	boolean wipePermsOk = wc.checkAllPermissions();
-        	
-        	if (wipePermsOk)
-        	{
-        		_midlet.showAlert(l10n.getString(L10nConstants.keys.SETUP_TITLE), l10n.getString(L10nConstants.keys.WIPE_MESSAGE_SAVED), _midlet.getNextScreenIdx());
-        	}
-        	else
-        	{
-				_midlet.showAlert(l10n.getString(L10nConstants.keys.TITLE_ERROR), l10n.getString(L10nConstants.keys.ERROR_PIM_DATA), _midlet.getCurrentScreenIdx());
-
-        	}
-				
+			boolean wipePermsOk = false;
 			
+			try
+			{
+				Preferences prefs = new Preferences (PanicConstants.PANIC_PREFS_DB);
+	
+				String prefBool = prefs.get(PanicConstants.PREFS_KEY_WIPE_CONTACTS);
+				boolean wipeContacts = (prefBool != null && prefBool.equals("true"));
+				
+				prefBool = prefs.get(PanicConstants.PREFS_KEY_WIPE_EVENTS);
+				boolean wipeEvents = (prefBool != null && prefBool.equals("true"));
+				
+				prefBool = prefs.get(PanicConstants.PREFS_KEY_WIPE_PHOTOS);
+				boolean wipePhotos = (prefBool != null && prefBool.equals("true"));
+							
+				prefBool = prefs.get(PanicConstants.PREFS_KEY_WIPE_ALL_FILES);
+				boolean wipeAllFiles = (prefBool != null && prefBool.equals("true"));
+				
+	        	wipePermsOk = wc.checkPermissions(wipeContacts, wipeEvents, wipePhotos, wipeAllFiles);
+	        	
+					
+			}
+			catch (Exception e)
+			{
+				wipePermsOk = false;
+			}
+			finally
+			{
+
+	        	if (wipePermsOk)
+	        	{
+	        		_midlet.showAlert(l10n.getString(L10nConstants.keys.SETUP_TITLE), l10n.getString(L10nConstants.keys.WIPE_MESSAGE_SAVED), _midlet.getNextScreenIdx());
+	        	}
+	        	else
+	        	{
+					_midlet.showAlert(l10n.getString(L10nConstants.keys.TITLE_ERROR), l10n.getString(L10nConstants.keys.ERROR_PIM_DATA), _midlet.getCurrentScreenIdx());
+	
+	        	}
+			}
 			
 		}
         

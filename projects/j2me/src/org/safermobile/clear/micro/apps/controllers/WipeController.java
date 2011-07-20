@@ -28,6 +28,52 @@ public class WipeController {
 		
 	}
 	
+	public boolean checkPermissions (boolean checkContacts, boolean checkEvents, boolean checkPhotos, boolean checkSDCard)
+	{
+		boolean result = false;
+		
+		if (checkContacts)
+			result = PIMWiper.checkContacts();
+		
+		if (checkEvents)
+			result = PIMWiper.checkEventsAndToDo();
+		
+		try
+		{
+			if (result = isFileAPIAvailable())
+			{
+				if (checkPhotos)
+				{
+					String photosPath = System.getProperty("fileconn.dir.photos");
+					if (photosPath != null)
+						Connector.open(photosPath);
+		
+					String videosPath = System.getProperty("fileconn.dir.videos");
+					if (videosPath != null)
+						Connector.open(videosPath);
+				}
+				
+				if (checkSDCard)
+				{
+					String memcardPath = System.getProperty("fileconn.dir.memorycard");
+					if (memcardPath != null)
+						Connector.open(memcardPath);
+				}
+			}
+			
+			result = true;
+		}
+		catch (Exception e)
+		{
+			//bad things afoot
+			
+			result = false;
+		}
+		
+		return result;
+
+	}
+	
 	public boolean checkAllPermissions ()
 	{
 		boolean result = false;

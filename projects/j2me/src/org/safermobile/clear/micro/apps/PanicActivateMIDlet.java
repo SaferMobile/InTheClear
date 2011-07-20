@@ -2,9 +2,6 @@
 /* See LICENSE for licensing information */
 
 package org.safermobile.clear.micro.apps;
-import java.io.IOException;
-import java.util.Date;
-
 import javax.microedition.lcdui.Alert;
 import javax.microedition.lcdui.Command;
 import javax.microedition.lcdui.CommandListener;
@@ -21,13 +18,10 @@ import org.safermobile.clear.micro.L10nResources;
 import org.safermobile.clear.micro.apps.controllers.ShoutController;
 import org.safermobile.clear.micro.apps.controllers.WipeController;
 import org.safermobile.clear.micro.apps.controllers.WipeListener;
-import org.safermobile.clear.micro.data.PhoneInfo;
-import org.safermobile.clear.micro.sms.SMSManager;
 import org.safermobile.clear.micro.ui.LargeStringCanvas;
 import org.safermobile.micro.ui.DisplayManager;
 import org.safermobile.micro.utils.Logger;
 import org.safermobile.micro.utils.Preferences;
-import org.safermobile.micro.utils.StringTokenizer;
 
 // hasLocationCapability=false
 //release.build = false
@@ -179,7 +173,7 @@ public class PanicActivateMIDlet extends MIDlet implements CommandListener, Wipe
 		}
 		else if (command == _cmdPanic)
 		{
-			
+			startPanic();
 		}
 	}
 	

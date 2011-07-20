@@ -75,9 +75,39 @@ public class PIMWiper {
 		return currentVersion;
 	}
 	
+	public static boolean checkContacts ()
+	{
+		return checkPermission(PIM.CONTACT_LIST, PIM.READ_WRITE);
+	}
+	
+	public static boolean checkEventsAndToDo ()
+	{
+		boolean result = checkPermission(PIM.EVENT_LIST, PIM.READ_WRITE);
+		
+		if (result)
+		{
+			result = checkPermission(PIM.TODO_LIST, PIM.READ_WRITE);
+		}
+		
+		return result;
+	}
+	
+	public static boolean checkPermission (int type, int perm)
+	{
+		// Open default contact list
+		PIM pim = PIM.getInstance();
+		
+		try {
+			pim.openPIMList(type, perm);
+			return true;
+		} catch (PIMException e) {
+			return false;
+		}
+
+	}
+	
 	public static Vector getContacts () throws PIMException
 	{
-		log("get contacts");
 
 		Vector result = new Vector();
 		

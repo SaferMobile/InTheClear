@@ -2,15 +2,13 @@ package org.safermobile.clear.micro.apps.views;
 
 
 import javax.microedition.lcdui.Graphics;
-import javax.microedition.midlet.MIDlet;
 
-import org.j4me.ui.*;
-import org.j4me.ui.components.*;
+import org.j4me.ui.Dialog;
+import org.j4me.ui.components.Label;
+import org.safermobile.clear.micro.L10nConstants;
+import org.safermobile.clear.micro.L10nResources;
 import org.safermobile.clear.micro.apps.LocaleManager;
 import org.safermobile.clear.micro.apps.PanicConfigMIDlet;
-import org.safermobile.clear.micro.apps.PanicConstants;
-import org.safermobile.clear.micro.L10nResources;
-import org.safermobile.clear.micro.L10nConstants;
 
 /**
  * Example of a <code>TextBox</code> component.
@@ -39,20 +37,16 @@ public class PanicWizardForm
                 _midlet = midlet;
                 
                 // Set the title and menu.
-                setTitle( l10n.getString(L10nConstants.keys.PANIC_SETUP_TITLE) );
+                setTitle( l10n.getString(L10nConstants.keys.SETUP_TITLE) );
                 setMenuText( l10n.getString(L10nConstants.keys.MENU_EXIT), l10n.getString(L10nConstants.keys.MENU_NEXT));
                 
             	// Center the text.
-        		_label.setHorizontalAlignment( Graphics.HCENTER );
+        		_label.setHorizontalAlignment( Graphics.LEFT );
 
-        		// Make the label be mutliple paragraphs.
-        		_label.setLabel(l10n.getString(L10nConstants.keys.PANIC_SETUP_INTRO_1)
-        				+ "\n" + l10n.getString(L10nConstants.keys.PANIC_SETUP_INTRO_2) + "\n" + l10n.getString(L10nConstants.keys.PANIC_SETUP_INTRO_3));
+        		_label.setLabel(l10n.getString(L10nConstants.keys.SETUP_INTRO));
         		
         		// Add the label to this screen.
         		append( _label );
-
-        		
 
         }
         

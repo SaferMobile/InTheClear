@@ -6,6 +6,7 @@ import java.util.Vector;
 
 import javax.microedition.lcdui.Displayable;
 import javax.microedition.lcdui.Graphics;
+import javax.microedition.pim.PIMException;
 
 import org.j4me.ui.*;
 import org.j4me.ui.components.*;
@@ -14,13 +15,15 @@ import org.safermobile.clear.micro.L10nConstants;
 import org.safermobile.clear.micro.apps.LocaleManager;
 import org.safermobile.clear.micro.apps.PanicConfigMIDlet;
 import org.safermobile.clear.micro.apps.PanicConstants;
+import org.safermobile.clear.micro.apps.controllers.WipeController;
 import org.safermobile.clear.micro.apps.models.WipeDataType;
+import org.safermobile.clear.micro.data.PIMWiper;
 
 /**
  * Example of a <code>TextBox</code> component.
  */
 public class WipeSelectionForm
-        extends Dialog
+        extends Dialog implements Runnable
 {
         /**
          * The previous screen.
@@ -72,6 +75,7 @@ public class WipeSelectionForm
 
         }
 
+        
         private void persist ()
         {
         
@@ -92,11 +96,26 @@ public class WipeSelectionForm
         }
 
 		protected void acceptNotify() {
-			
+			new Thread (this).start();
+		}
+		
+		public void run ()
+		{
 			persist();
 			
-			DeviceScreen next = new PanicConfigCompleteForm(_midlet);
-			_midlet.showAlert(l10n.getString(L10nConstants.keys.WIPE_TITLE), l10n.getString(L10nConstants.keys.WIPE_MESSAGE_SAVED), next);
+			WipeController wc = new WipeController();
+        	boolean wipePermsOk = wc.checkAllPermissions();
+        	
+        	if (wipePermsOk)
+        	{
+        		_midlet.showAlert(l10n.getString(L10nConstants.keys.SETUP_TITLE), l10n.getString(L10nConstants.keys.WIPE_MESSAGE_SAVED), _midlet.getNextScreenIdx());
+        	}
+        	else
+        	{
+				_midlet.showAlert(l10n.getString(L10nConstants.keys.TITLE_ERROR), l10n.getString(L10nConstants.keys.ERROR_PIM_DATA), _midlet.getCurrentScreenIdx());
+
+        	}
+				
 			
 			
 		}

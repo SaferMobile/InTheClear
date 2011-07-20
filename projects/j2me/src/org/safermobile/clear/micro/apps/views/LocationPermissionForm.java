@@ -57,7 +57,7 @@ public class LocationPermissionForm
          */
         protected void declineNotify ()
         {
-                midlet.showShoutConfigMenu();
+                midlet.showPrev();
         }
         
         protected void acceptNotify() 
@@ -115,11 +115,11 @@ public class LocationPermissionForm
     		
     		if (sbPanicMsg.length()>0)
     		{
-    			midlet.showAlert(l10n.getString(L10nConstants.keys.TITLE_LOCATION_INFO), l10n.getString(L10nConstants.keys.PERMISSION_LOC_SUCCESS) + "\n" + sbPanicMsg.toString(), midlet.getShoutConfigMenu());
+    			midlet.showAlert(l10n.getString(L10nConstants.keys.TITLE_LOCATION_INFO), l10n.getString(L10nConstants.keys.PERMISSION_LOC_SUCCESS) + "\n" + sbPanicMsg.toString(), midlet.getNextScreenIdx());
     		}
     		else
     		{
-    			midlet.showAlert(l10n.getString(L10nConstants.keys.TITLE_LOCATION_INFO), l10n.getString(L10nConstants.keys.PERMISSION_LOC_FAILURE), midlet.getShoutConfigMenu());
+    			midlet.showAlert(l10n.getString(L10nConstants.keys.TITLE_LOCATION_INFO), l10n.getString(L10nConstants.keys.PERMISSION_LOC_FAILURE), midlet.getCurrentScreenIdx());
 
     		}
         }

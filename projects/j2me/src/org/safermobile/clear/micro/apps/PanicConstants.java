@@ -15,9 +15,10 @@ public interface PanicConstants {
 	
 	public final static String PREFS_KEY_WIPE_CONTACTS = "wipe.contacts";
 	public final static String PREFS_KEY_WIPE_EVENTS = "wipe.events";
-	public final static String PREFS_KEY_WIPE_TODOS = "wipe.todos";
 	public final static String PREFS_KEY_WIPE_PHOTOS = "wipe.photos";
-	public final static String PREFS_KEY_WIPE_VIDEOS = "wipe.videos";
 	public final static String PREFS_KEY_WIPE_ALL_FILES = "wipe.allfiles";
+	
+	public final static String PREFS_KEY_ONE_TOUCH_PANIC = "panic.onetouch";
+	
 	
 }

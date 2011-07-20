@@ -39,7 +39,8 @@ public class PanicActivateMIDlet extends MIDlet implements CommandListener, Wipe
 
 	private TextBox _tbMain;
 	private LargeStringCanvas _lsCanvas;
-	
+
+	private Command	 _cmdPanic;
 	private Command	 _cmdCancel;
 	private Command	 _cmdExit;
 	
@@ -69,49 +70,30 @@ public class PanicActivateMIDlet extends MIDlet implements CommandListener, Wipe
 		_display = Display.getDisplay(this);
 		_manager = new DisplayManager(_display);
 		
-		_cmdCancel = new Command(l10n.getString(L10nConstants.keys.PANIC_BTN_CANCEL), Command.SCREEN,1);
-		_cmdExit = new Command("Exit", Command.EXIT,1);
-		
-		_tbMain = new TextBox(l10n.getString(L10nConstants.keys.PANIC_TITLE_MAIN), "", 500, TextField.ANY);
+		_tbMain = new TextBox(l10n.getString(L10nConstants.keys.PANIC_TITLE), "", 500, TextField.ANY);
 		
 		_tbMain.setCommandListener(this);
+
+		_cmdPanic = new Command(l10n.getString(L10nConstants.keys.MENU_PANIC), Command.SCREEN,1);		
+		_cmdCancel = new Command(l10n.getString(L10nConstants.keys.MENU_CANCEL), Command.SCREEN,1);
+		_cmdExit = new Command(l10n.getString(L10nConstants.keys.MENU_EXIT), Command.EXIT,1);
 		
-		_tbMain.addCommand(_cmdCancel);
-	
+		_tbMain.addCommand(_cmdExit);
+
 	}
 
 	
 	private void startPanic ()
 	{
-		try {
-
-			_prefs = new Preferences (PanicConstants.PANIC_PREFS_DB);
-			
-			String recipients = _prefs.get(PanicConstants.PREFS_KEY_RECIPIENT);
-			
-			if (recipients == null)
-			{
-				showMessage("Please run the 'Panic! Config' app first to enter your alert information.");
-				_tbMain.removeCommand(_cmdCancel);
-				_tbMain.addCommand(_cmdExit);
-
-			}
-			else
-			{
-
-				_keepPanicing = true;
-				
-				//startSmsServer();
-				
-				_thread = new Thread(this);
-				_thread.start();
-			}
 		
-		} catch (RecordStoreException e) {
-			
-			Logger.error(PanicConstants.TAG, "error access preferences", e);
-			showAlert(l10n.getString(L10nConstants.keys.PANIC_TITLE_ERROR),l10n.getString(L10nConstants.keys.PANIC_ERROR_PREFS),null);
-		}
+		_tbMain.removeCommand(_cmdExit);
+		_tbMain.addCommand(_cmdCancel);
+	
+		_keepPanicing = true;
+		
+		_thread = new Thread(this);
+		_thread.start();
+		
 	}
 	
 	private void stopPanic ()
@@ -129,14 +111,35 @@ public class PanicActivateMIDlet extends MIDlet implements CommandListener, Wipe
 		
 		_manager.next(_tbMain);
 		
-		Thread thread = new Thread ()
+		try
 		{
-			public void run ()
+		
+			_prefs = new Preferences (PanicConstants.PANIC_PREFS_DB);
+			String oneTouch = _prefs.get(PanicConstants.PREFS_KEY_ONE_TOUCH_PANIC);
+			String recipients = _prefs.get(PanicConstants.PREFS_KEY_RECIPIENT);
+
+			if (recipients == null)
+			{
+
+				_tbMain.setString(l10n.getString(L10nConstants.keys.ERROR_RUN_SETUP));
+
+			}
+			else if (oneTouch == null || oneTouch.equals("false"))
+			{
+				_tbMain.setString(l10n.getString(L10nConstants.keys.PANIC_PRESS_TO_ACTIVATE));
+				_tbMain.addCommand(_cmdPanic);
+			}
+			else
 			{
 				startPanic();
 			}
-		};
-		thread.start();
+		
+		} catch (RecordStoreException e) {
+			
+			Logger.error(PanicConstants.TAG, "error access preferences", e);
+			showAlert(l10n.getString(L10nConstants.keys.TITLE_ERROR),l10n.getString(L10nConstants.keys.ERROR_PREFS),null);
+		}
+		
 	}
 	
 	public void showAlert (String title, String msg, Displayable next)
@@ -173,6 +176,10 @@ public class PanicActivateMIDlet extends MIDlet implements CommandListener, Wipe
 				e.printStackTrace();
 			}
 			this.notifyDestroyed();
+		}
+		else if (command == _cmdPanic)
+		{
+			
 		}
 	}
 	
@@ -261,15 +268,11 @@ public class PanicActivateMIDlet extends MIDlet implements CommandListener, Wipe
 				
 				prefBool = _prefs.get(PanicConstants.PREFS_KEY_WIPE_EVENTS);
 				boolean wipeEvents = (prefBool != null && prefBool.equals("true"));
-				
-				prefBool = _prefs.get(PanicConstants.PREFS_KEY_WIPE_TODOS);
-				boolean wipeToDos = (prefBool != null && prefBool.equals("true"));
+				boolean wipeToDos = wipeEvents; //grouped together
 				
 				prefBool = _prefs.get(PanicConstants.PREFS_KEY_WIPE_PHOTOS);
 				boolean wipePhotos = (prefBool != null && prefBool.equals("true"));
-				
-				prefBool = _prefs.get(PanicConstants.PREFS_KEY_WIPE_VIDEOS);
-				boolean wipeVideos = (prefBool != null && prefBool.equals("true"));
+				boolean wipeVideos = wipePhotos; //grouped together
 				
 				prefBool = _prefs.get(PanicConstants.PREFS_KEY_WIPE_ALL_FILES);
 				boolean wipeAllFiles = (prefBool != null && prefBool.equals("true"));

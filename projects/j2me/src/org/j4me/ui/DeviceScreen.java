@@ -1014,6 +1014,7 @@ devices the name consists of “Nokia”, the device
 		{
 			Class.forName( "net.rim.device.api.ui.UiApplication" );
 			blackberry = true;
+
 		}
 		catch (Throwable e)  // ClassNotFoundException, NoClassDefFoundError
 		{

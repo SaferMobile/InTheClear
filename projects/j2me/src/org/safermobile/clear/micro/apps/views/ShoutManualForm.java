@@ -71,14 +71,14 @@ public class ShoutManualForm
         		
                 // Add the phone number box.
         		tbPhoneNumber = new TextBox();
-        		tbPhoneNumber.setLabel( l10n.getString(L10nConstants.keys.PANIC_LBL_PHONE_NUMBER) );
+        		tbPhoneNumber.setLabel( l10n.getString(L10nConstants.keys.SMS_TEST_LBL_PHONE) );
                 tbPhoneNumber.setForPhoneNumber();
                 tbPhoneNumber.setMaxSize( 20 );
                 append( tbPhoneNumber );
                 
                 // Add the phone number box.
         		tbMessage = new TextBox();
-        		tbMessage.setLabel("Shout! Message" );        		
+        		tbMessage.setLabel(l10n.getString(L10nConstants.keys.SMS_TEST_LBL_MSG));        		
                 append( tbMessage );
                 
                 load();

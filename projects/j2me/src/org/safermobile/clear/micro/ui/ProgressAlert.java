@@ -1,9 +1,14 @@
 package org.safermobile.clear.micro.ui;
 
-import javax.microedition.lcdui.*;
-import org.j4me.logging.*;
-import org.j4me.ui.*;
-import org.j4me.ui.components.*;
+import javax.microedition.lcdui.Graphics;
+
+import org.j4me.logging.Log;
+import org.j4me.ui.DeviceScreen;
+import org.j4me.ui.Dialog;
+import org.j4me.ui.Theme;
+import org.j4me.ui.UIManager;
+import org.j4me.ui.components.Label;
+import org.j4me.ui.components.ProgressBar;
 
 /**
  * This is a base class for alert screens.  It provides a background thread for

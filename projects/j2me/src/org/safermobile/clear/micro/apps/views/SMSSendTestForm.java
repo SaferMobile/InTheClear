@@ -21,13 +21,18 @@ public class SMSSendTestForm
         /**
          * The previous screen.
          */
-        private PanicConfigMIDlet midlet;
+        private PanicConfigMIDlet _midlet;
         
         /**
          * The number box used by this example for entering phone numbers.
          */
-        private TextBox phoneNumber;
+        private TextBox _tbPhoneNumber;
         
+        /**
+         * The test message to send
+         */
+        private TextBox _tbTestMessage;
+
         
     	private Label _label = new Label();
 
@@ -40,27 +45,32 @@ public class SMSSendTestForm
          */
         public SMSSendTestForm (PanicConfigMIDlet midlet)
         {
-                this.midlet = midlet;
+                _midlet = midlet;
                 
                 // Set the title and menu.
-                setTitle( l10n.getString(L10nConstants.keys.PANIC_TITLE_SMS_TEST) );
+                setTitle( l10n.getString(L10nConstants.keys.SMS_TEST_TITLE) );
                 setMenuText(  l10n.getString(L10nConstants.keys.MENU_BACK) ,  l10n.getString(L10nConstants.keys.MENU_SEND) );
 
              // Center the text.
         		_label.setHorizontalAlignment( Graphics.LEFT );
 
-        		_label.setLabel(l10n.getString(L10nConstants.keys.PANIC_SMS_TEST_MESSAGE));
+        		_label.setLabel(l10n.getString(L10nConstants.keys.SMS_TEST_MSG));
         		
         		// Add the label to this screen.
         		append( _label );
         		
                 // Add the phone number box.
-                phoneNumber = new TextBox();
-                phoneNumber.setLabel( l10n.getString(L10nConstants.keys.PANIC_LBL_PHONE_NUMBER) );
-                phoneNumber.setForPhoneNumber();
-                phoneNumber.setMaxSize( 20 );
-                append( phoneNumber );
-               
+                _tbPhoneNumber = new TextBox();
+                _tbPhoneNumber.setLabel( l10n.getString(L10nConstants.keys.SMS_TEST_LBL_PHONE) );
+                _tbPhoneNumber.setForAnyText();                
+                append( _tbPhoneNumber );
+
+                // the message for testing
+                _tbTestMessage = new TextBox();
+                _tbTestMessage.setLabel( l10n.getString(L10nConstants.keys.SMS_TEST_LBL_MSG) );
+                _tbTestMessage.setForAnyText();
+                _tbTestMessage.setString(l10n.getString(L10nConstants.keys.SMS_TEST_MSG_DEFAULT));
+                append( _tbTestMessage );
         }
 
         /**
@@ -68,7 +78,7 @@ public class SMSSendTestForm
          */
         protected void declineNotify ()
         {
-                midlet.showShoutConfigMenu();
+                _midlet.showPrev();
         }
         
         protected void acceptNotify() 
@@ -80,24 +90,41 @@ public class SMSSendTestForm
         public void run ()
         {
         	sendSMSTestMessage();
-        	midlet.showAlert("Success!", "It seems like your message went through. Please check with the recipient to make sure.", midlet.getShoutConfigMenu());
 
         }
         
         private void sendSMSTestMessage ()
         {
-        	String recip = phoneNumber.getString();
-        	String msg = "This is a test message. Reply if you get it!";
-        	ShoutController sc = new ShoutController();
+        	String recip = _tbPhoneNumber.getString();
+
+        	if (recip.trim().length() == 0)
+        	{
+				_midlet.showAlert(l10n.getString(L10nConstants.keys.TITLE_ERROR),  l10n.getString(L10nConstants.keys.ERROR_NOT_COMPLETE), _midlet.getCurrentScreenIdx());
+
+        	}
+        	else
+        	{
         	
-        	try {
-				sc.sendSMSShout(recip, msg, null);
-				
-			} catch (Exception e) {
-				
-				midlet.showAlert("Error!", "Unable to send SMS message", this);
-				e.printStackTrace();
-			}
+	    		
+	        	String msg = _tbTestMessage.getString();
+	        	ShoutController sc = new ShoutController();
+	        	
+	        	try {
+	        		
+					sc.sendSMSShout(recip, msg, null);
+	
+					//save the phone number if the SMS sends okay
+		    		_midlet.savePref(PanicConstants.PREFS_KEY_RECIPIENT, recip);    
+		    		
+		        	_midlet.showAlert(l10n.getString(L10nConstants.keys.TITLE_SUCCESS), l10n.getString(L10nConstants.keys.ERROR_SMS_SUCCESS), _midlet.getNextScreenIdx());
+
+	        		
+				} catch (Exception e) {
+					
+					_midlet.showAlert(l10n.getString(L10nConstants.keys.TITLE_ERROR),  l10n.getString(L10nConstants.keys.ERROR_SMS_FAILURE), _midlet.getCurrentScreenIdx());
+					e.printStackTrace();
+				}
+        	}
         }
         
 }

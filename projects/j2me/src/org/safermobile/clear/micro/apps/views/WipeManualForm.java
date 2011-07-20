@@ -37,9 +37,7 @@ public class WipeManualForm
         
         private CheckBox _cbContacts;
         private CheckBox _cbCalendar;
-        private CheckBox _cbToDo;
         private CheckBox _cbPhotos;
-        private CheckBox _cbVideos;
         private CheckBox _cbAllStorage;
         
         private WipeController _wControl;
@@ -95,27 +93,17 @@ public class WipeManualForm
         		_cbPhotos.setChecked( false );
         		append( _cbPhotos );
         		
-        		_cbVideos = new CheckBox();
-        		_cbVideos.setLabel( l10n.getString(L10nConstants.keys.WIPE_MENU_VIDEOS) );
-        		_cbVideos.setChecked( false );
-        		append( _cbVideos );
         		
         		_cbAllStorage = new CheckBox();
         		_cbAllStorage.setLabel( l10n.getString(L10nConstants.keys.WIPE_MENU_FILES) );
         		_cbAllStorage.setChecked( false );
         		append( _cbAllStorage );
         		
-        		
-        		
         		_cbCalendar = new CheckBox();
         		_cbCalendar.setLabel( l10n.getString(L10nConstants.keys.WIPE_MENU_CALENDAR) );
         		_cbCalendar.setChecked( false );
         		append( _cbCalendar );
         		
-        		_cbToDo = new CheckBox();
-        		_cbToDo.setLabel( l10n.getString(L10nConstants.keys.WIPE_MENU_TODO) );
-        		_cbToDo.setChecked( false );
-        		append( _cbToDo );
         		
         		load();
 
@@ -129,20 +117,14 @@ public class WipeManualForm
 			
 			prefBool = _prefs.get(PanicConstants.PREFS_KEY_WIPE_EVENTS);
 			boolean wipeEvents = (prefBool != null && prefBool.equals("true"));
+			boolean wipeToDos = wipeEvents; //grouped together
 			_cbCalendar.setChecked(wipeEvents);
-			
-			prefBool = _prefs.get(PanicConstants.PREFS_KEY_WIPE_TODOS);
-			boolean wipeToDos = (prefBool != null && prefBool.equals("true"));
-			_cbToDo.setChecked(wipeToDos);
 			
 			prefBool = _prefs.get(PanicConstants.PREFS_KEY_WIPE_PHOTOS);
 			boolean wipePhotos = (prefBool != null && prefBool.equals("true"));
+			boolean wipeVideos = wipePhotos; //grouped together
 			_cbPhotos.setChecked(wipePhotos);
-			
-			prefBool = _prefs.get(PanicConstants.PREFS_KEY_WIPE_VIDEOS);
-			boolean wipeVideos = (prefBool != null && prefBool.equals("true"));
-			_cbVideos.setChecked(wipeVideos);
-			
+						
 			prefBool = _prefs.get(PanicConstants.PREFS_KEY_WIPE_ALL_FILES);
 			boolean wipeAllFiles = (prefBool != null && prefBool.equals("true"));
 			_cbAllStorage.setChecked(wipeAllFiles);
@@ -182,7 +164,7 @@ public class WipeManualForm
                 	
             		_lsCanvas.setLargeString(l10n.getString(L10nConstants.keys.WIPE_STATUS_PERSONAL));
             		currentType = l10n.getString(L10nConstants.keys.WIPE_TYPE_PERSONAL);
-            		_wControl.wipePIMData(_cbContacts.isChecked(), _cbCalendar.isChecked(), _cbToDo.isChecked());
+            		_wControl.wipePIMData(_cbContacts.isChecked(), _cbCalendar.isChecked(), _cbCalendar.isChecked());
                 	
             		try
             		{
@@ -192,6 +174,10 @@ public class WipeManualForm
 	                		_lsCanvas.setLargeString(l10n.getString(L10nConstants.keys.WIPE_STATUS_PHOTOS));
 	            			
 	                		_wControl.wipePhotos(this);
+	                		
+	                		_lsCanvas.setLargeString(l10n.getString(L10nConstants.keys.WIPE_STATUS_VIDEOS));
+	
+	                		_wControl.wipeVideos(this);
 	                	}
             		}
                 	catch (Exception e)
@@ -199,20 +185,6 @@ public class WipeManualForm
                 		_lsCanvas.setLargeString(e.getMessage());
                 	}
                 	
-                	try
-                	{
-	                	if (_cbVideos.isChecked())
-	                	{
-	                		currentType = l10n.getString(L10nConstants.keys.WIPE_TYPE_PHOTOS);
-	                		_lsCanvas.setLargeString(l10n.getString(L10nConstants.keys.WIPE_STATUS_VIDEOS));
-	
-	                		_wControl.wipeVideos(this);
-	                	}
-                	}
-                	catch (Exception e)
-                	{
-                		_lsCanvas.setLargeString(e.getMessage());
-                	}
                 	
                 	try
                 	{

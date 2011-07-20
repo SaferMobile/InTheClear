@@ -144,7 +144,7 @@ public class ShoutController {
 						
 			SMSManager.sendSMSAlert(recp, panicMsg);		
 			
-			if (panicData == null)
+			if (panicData != null)
 				SMSManager.sendSMSAlert(recp, panicData);
 		
 		}

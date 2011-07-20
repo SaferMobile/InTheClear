@@ -78,8 +78,8 @@
                 vendor="${vendor}"
                 version="${version}">
 
-          <midlet name="Panic!"  icon="/res/redbutton.png" class="org.safermobile.clear.micro.apps.PanicActivateMIDlet" />
-          <midlet name="InTheClear Setup" icon="/res/config.gif" class="org.safermobile.clear.micro.apps.PanicConfigMIDlet" />
+          <midlet name="InTheClear Setup" class="PanicConfigMIDlet" />
+          <midlet name="One-Touch Panic" class="PanicActivateMIDlet" />                    
           <attribute name="URL" value="http://safermobile.org/" />
         </wtkjad>
         
@@ -140,11 +140,11 @@
    
 <!-- generic targets -->
    <target name="build"
-	   depends="build-blackberry, build-j2me">
+	   depends="build-j2me, build-blackberry">
    </target>
 
    <target name="sign"
-	   depends="sign-blackberry, sign-j2me">
+	   depends="sign-j2me, sign-blackberry">
    </target>
 
    <target name="clean">

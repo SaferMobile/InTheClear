@@ -1,10 +1,10 @@
 MIDlet-2: Panic!,/redbutton.png,org.safermobile.clear.micro.apps.PanicActivateMIDlet
-MIDlet-1: InTheClear,/logo.gif,org.safermobile.clear.micro.apps.PanicConfigMIDlet
+MIDlet-1: InTheClear,/itcicon32.png,org.safermobile.clear.micro.apps.PanicConfigMIDlet
 MIDlet-Jar-URL: intheclear.jar
 MIDlet-Permissions-Opt: javax.microedition.location.Orientation,javax.microedition.location.Location,javax.microedition.location.ProximityListener
 MIDlet-Icon: logo.gif
 MicroEdition-Configuration: CLDC-1.0
-MIDlet-Version: 0.2.97
+MIDlet-Version: 0.2.99
 MIDlet-Info-URL: https://lab.safermobile.org/intheclear
 MIDlet-Name: InTheClear
 MIDlet-Vendor: https://lab.safermobile.org/

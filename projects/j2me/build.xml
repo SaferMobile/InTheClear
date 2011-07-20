@@ -78,10 +78,8 @@
                 vendor="${vendor}"
                 version="${version}">
 
-          <midlet name="Panic! Button"  icon="/res/alert.gif" class="org.safermobile.clear.micro.apps.PanicActivateMIDlet" />
-          <midlet name="Panic! Setup Wizard" icon="/res/config.gif" class="org.safermobile.clear.micro.apps.PanicConfigMIDlet" />
-          <midlet name="Manual Wipe" icon="/res/social.gif" class="org.safermobile.clear.micro.apps.WipeMIDlet" />
-          <midlet name="Shout! Message" icon="/res/netcheck.gif" class="org.safermobile.clear.micro.apps.ShoutMIDlet" />
+          <midlet name="Panic!"  icon="/res/redbutton.png" class="org.safermobile.clear.micro.apps.PanicActivateMIDlet" />
+          <midlet name="InTheClear Setup" icon="/res/config.gif" class="org.safermobile.clear.micro.apps.PanicConfigMIDlet" />
           <attribute name="URL" value="http://safermobile.org/" />
         </wtkjad>
         

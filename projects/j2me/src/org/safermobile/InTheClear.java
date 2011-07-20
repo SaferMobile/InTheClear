@@ -1,6 +1,6 @@
 package org.safermobile;
 
-//#ifndef BB
+//#ifndef RIM
 /*
 //#endif
 import net.rim.device.api.ui.UiApplication;
@@ -23,7 +23,7 @@ public class InTheClear extends UiApplication
         pushScreen(new ITCScreen());
     }    
 }
-//#ifndef BB
+//#ifndef RIM
 */
 //#endif
 

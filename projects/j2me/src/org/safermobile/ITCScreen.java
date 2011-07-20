@@ -1,5 +1,5 @@
 package org.safermobile;
-//#ifndef BB
+//#ifndef RIM
 /*
 //#endif
 import net.rim.device.api.ui.container.MainScreen;
@@ -14,6 +14,6 @@ public final class ITCScreen extends MainScreen
         setTitle("In The Clear");
     }
 }
-//#ifndef BB
+//#ifndef RIM
 */
 //#endif

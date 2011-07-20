@@ -80,6 +80,7 @@ public class PanicActivateMIDlet extends MIDlet implements CommandListener, Wipe
 	private void startPanic ()
 	{
 		
+		_tbMain.removeCommand(_cmdPanic);
 		_tbMain.removeCommand(_cmdExit);
 		_tbMain.addCommand(_cmdCancel);
 	

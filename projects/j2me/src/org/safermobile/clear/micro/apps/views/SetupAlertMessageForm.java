@@ -21,13 +21,18 @@ public class SetupAlertMessageForm
          * The previous screen.
          */
         private PanicConfigMIDlet _midlet;
-        
+
+
         /**
-         * The number box used by this example for entering phone numbers.
+         * The textbox for the list of comma-sep numbers to send the alert to
+         */        
+        private TextBox _tbRecipients;
+
+        /*
+         * The textbox for the alert message sent
          */
-        private TextBox alertMsg;
+        private TextBox _tbAlertMsg;
         
-    	private Label _label = new Label();
 
     	L10nResources l10n = LocaleManager.getResources();
 
@@ -45,27 +50,38 @@ public class SetupAlertMessageForm
                 setMenuText(  l10n.getString(L10nConstants.keys.MENU_BACK) ,  l10n.getString(L10nConstants.keys.MENU_NEXT) );
 
              // Center the text.
-        		_label.setHorizontalAlignment( Graphics.LEFT );
-
-        		_label.setLabel(l10n.getString(L10nConstants.keys.PANIC_MESSAGE_INFO));
+                Label label = new Label();
+        		label.setHorizontalAlignment( Graphics.LEFT );
+        		label.setLabel(l10n.getString(L10nConstants.keys.PANIC_MESSAGE_INFO));
         		
         		// Add the label to this screen.
-        		append( _label );
+        		append( label );
         		
+        	    // Add the phone number box.
+        		_tbRecipients = new TextBox();
+        		_tbRecipients.setLabel(l10n.getString(L10nConstants.keys.PANIC_MSG_LBL_PHONE));                
+                append( _tbRecipients );
                 
-                // Add the phone number box.
-                alertMsg = new TextBox();
-                alertMsg.setLabel(l10n.getString(L10nConstants.keys.PANIC_MESSAGE_LBL_MSG));                
-                append( alertMsg );
+                // Add the message box
+        		_tbAlertMsg = new TextBox();
+        		_tbAlertMsg.setLabel(l10n.getString(L10nConstants.keys.PANIC_MESSAGE_LBL_MSG));                
+                append( _tbAlertMsg );
                
                 load();
         }
 
         private boolean persist ()
         {
-        	if (alertMsg.getString().length() > 0)
+        	String recips = _tbRecipients.getString();
+        	String alertmsg = _tbAlertMsg.getString();
+        	
+        	if (recips.length() > 0 && alertmsg.length() > 0)
         	{
-        		_midlet.savePref(PanicConstants.PREFS_KEY_MESSAGE, alertMsg.getString());
+
+				//save the phone number if the SMS sends okay
+	    		_midlet.savePref(PanicConstants.PREFS_KEY_RECIPIENT, recips);    
+	    		
+        		_midlet.savePref(PanicConstants.PREFS_KEY_MESSAGE, alertmsg);
         		return true;
         	}
         	
@@ -78,9 +94,9 @@ public class SetupAlertMessageForm
         	String alertMsgString = _midlet.loadPref(PanicConstants.PREFS_KEY_MESSAGE);
         	
         	if (alertMsgString != null && alertMsgString.length() > 0)
-        		alertMsg.setString(alertMsgString);
+        		_tbAlertMsg.setString(alertMsgString);
         	else
-        		alertMsg.setString(l10n.getString(L10nConstants.keys.DEFAULT_ALERT_MSG));
+        		_tbAlertMsg.setString(l10n.getString(L10nConstants.keys.DEFAULT_ALERT_MSG));
         }
         
         
@@ -92,7 +108,7 @@ public class SetupAlertMessageForm
         	}
         	else
         	{
-            	_midlet.showAlert(l10n.getString(L10nConstants.keys.TITLE_ERROR), l10n.getString(L10nConstants.keys.ERROR_PREFS), 0);
+            	_midlet.showAlert(l10n.getString(L10nConstants.keys.TITLE_ERROR), l10n.getString(L10nConstants.keys.ERROR_NOT_COMPLETE), _midlet.getCurrentScreenIdx());
         		
         	}
         }

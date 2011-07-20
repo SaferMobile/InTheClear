@@ -27,12 +27,16 @@ public class Splash extends Canvas {
 	 * 
 	 * @param background
 	 */
-	public Splash(String image, int background) {
+	public Splash(String imageSmall, String imageLarge, int background) {
 		this.setFullScreenMode(true);
 		this.color = background;
 		
 		try {
-			this.image = Image.createImage(image);
+			
+			if (getWidth() > 160)			
+				image = Image.createImage(imageLarge);
+			else
+				image = Image.createImage(imageSmall);
 			
 			/*Calculate center position*/
 			this.centerX = (this.getWidth() - this.image.getWidth())/2;

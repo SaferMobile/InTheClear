@@ -28,10 +28,6 @@ public class SMSSendTestForm
          */
         private TextBox _tbPhoneNumber;
         
-        /**
-         * The test message to send
-         */
-        private TextBox _tbTestMessage;
 
         
     	private Label _label = new Label();
@@ -62,15 +58,9 @@ public class SMSSendTestForm
                 // Add the phone number box.
                 _tbPhoneNumber = new TextBox();
                 _tbPhoneNumber.setLabel( l10n.getString(L10nConstants.keys.SMS_TEST_LBL_PHONE) );
-                _tbPhoneNumber.setForAnyText();                
+                _tbPhoneNumber.setForPhoneNumber();                
                 append( _tbPhoneNumber );
 
-                // the message for testing
-                _tbTestMessage = new TextBox();
-                _tbTestMessage.setLabel( l10n.getString(L10nConstants.keys.SMS_TEST_LBL_MSG) );
-                _tbTestMessage.setForAnyText();
-                _tbTestMessage.setString(l10n.getString(L10nConstants.keys.SMS_TEST_MSG_DEFAULT));
-                append( _tbTestMessage );
         }
 
         /**
@@ -106,16 +96,13 @@ public class SMSSendTestForm
         	{
         	
 	    		
-	        	String msg = _tbTestMessage.getString();
+	        	String msg =  l10n.getString(L10nConstants.keys.SMS_TEST_DEFAULT_MSG);
 	        	ShoutController sc = new ShoutController();
 	        	
 	        	try {
 	        		
 					sc.sendSMSShout(recip, msg, null);
 	
-					//save the phone number if the SMS sends okay
-		    		_midlet.savePref(PanicConstants.PREFS_KEY_RECIPIENT, recip);    
-		    		
 		        	_midlet.showAlert(l10n.getString(L10nConstants.keys.TITLE_SUCCESS), l10n.getString(L10nConstants.keys.ERROR_SMS_SUCCESS), _midlet.getNextScreenIdx());
 
 	        		

@@ -163,8 +163,7 @@ public class PanicConfigMIDlet extends MIDlet implements Runnable {
 
 		_display = Display.getDisplay(this);
 		
-		_splash = new Splash("/splash160.png",0xffffff);
-		
+		_splash = new Splash("/splash160.png","/splash320.png",0xffffff);
 		
 		_splash.show(_display, _screens[0].getCanvas(), 2000);
 		

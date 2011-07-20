@@ -96,6 +96,8 @@ public class L10nConstants {
 		public static final String ERROR_RUN_SETUP = "ERROR_RUN_SETUP";
 		public static final String MENU_PANIC = "MENU_PANIC";
 		public static final String PANIC_PRESS_TO_ACTIVATE = "PANIC_PRESS_TO_ACTIVATE";
+		public static final String SMS_TEST_DEFAULT_MSG = "SMS_TEST_DEFAULT_MSG";
+		public static final String PANIC_MSG_LBL_PHONE = "PANIC_MSG_LBL_PHONE";
 
     }
 }

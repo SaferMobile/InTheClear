@@ -2,19 +2,20 @@ package org.safermobile.intheclear;
 
 import android.provider.CallLog;
 import android.provider.ContactsContract.CommonDataKinds.Email;
-import android.provider.ContactsContract.CommonDataKinds.Im;
-import android.provider.ContactsContract.CommonDataKinds.Nickname;
-import android.provider.ContactsContract.CommonDataKinds.Note;
 import android.provider.ContactsContract.CommonDataKinds.Phone;
 import android.provider.ContactsContract.CommonDataKinds.Photo;
-import android.provider.ContactsContract.CommonDataKinds.StructuredName;
-import android.provider.ContactsContract.CommonDataKinds.StructuredPostal;
 import android.provider.ContactsContract.Contacts;
-import android.provider.ContactsContract.Data;
 import android.provider.MediaStore.Images;
 import android.provider.MediaStore.Video;
 
 public class ITCConstants {
+	public static class Wizard {
+		public static final String ACTION = "org.safermobile.intheclear.Wizard";
+		public static final String WIZARD_ACTION = "wizardAction";
+		public static final int LAUNCH_WIPE_SELECTOR = 1;
+		public static final int SAVE_PREFERENCE_DATA = 2;
+	}
+	
 	public static class Wipe {
 		public static final int CONTACTS = 1;
 		public static final int PHOTOS = 2;
@@ -22,6 +23,8 @@ public class ITCConstants {
 		public static final int SMS = 4;
 		public static final int CALENDAR = 5;
 		public static final int FOLDER = 6;
+		public static final int SDCARD = 7;
+		public static final int NONE = 0;
 	}
 	
 	public static class Results {
@@ -175,8 +178,9 @@ public class ITCConstants {
 		public static final String DEFAULT_WIPE_CALENDAR = "DefaultWipeCalendar";
 		public static final String DEFAULT_WIPE_FOLDERS = "DefaultWipeFolders";
 		public static final String DEFAULT_WIPE_FOLDER_LIST = "DefaultWipeFoldersList";
-		public static final int ONE_TOUCH = 7;
 		public static final String DEFAULT_ONE_TOUCH_PANIC = "DefaultOneTouchPanic";
+		public static final String IS_VIRGIN_USER = "IsVirginUser";
+		public static final String DEFAULT_ADD_TO_HOMESCREEN = "DefaultHomescreenPanicButton";
 	}
 	
 	public static class Log {

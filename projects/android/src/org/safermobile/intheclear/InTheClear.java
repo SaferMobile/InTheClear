@@ -1,40 +1,80 @@
 package org.safermobile.intheclear;
 
+import org.safermobile.intheclear.apps.Panic;
+import org.safermobile.intheclear.apps.Shout;
+import org.safermobile.intheclear.apps.Wipe;
 import org.safermobile.intheclear.screens.Splash;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.widget.Button;
+import android.widget.ImageButton;
+import android.widget.LinearLayout;
 
 public class InTheClear extends Activity implements OnClickListener {
-	Button toPrefs,toWizard;
+	SharedPreferences _sp;
+	LinearLayout launchWizard,launchPanic; 
+	ImageButton launchWipe,launchShout;
 	Splash splash;
 	
 	@Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        splash = new Splash(this,ITCConstants.Duriation.SPLASH);
+        
         setContentView(R.layout.main);
         
-        toPrefs = (Button) findViewById(R.id.toPrefs);
-        toPrefs.setOnClickListener(this);
-        toWizard = (Button) findViewById(R.id.toWizard);
-        toWizard.setOnClickListener(this);
+        _sp = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
+        if(_sp.getBoolean("IsVirginUser", true)) {
+        	launchWizard();
+      	}
+        
+        launchWizard = (LinearLayout) findViewById(R.id.launchWizard);
+        launchWizard.setOnClickListener(this);
+        
+        launchPanic = (LinearLayout) findViewById(R.id.launchPanic);
+        launchPanic.setOnClickListener(this);
+        
+        launchWipe = (ImageButton) findViewById(R.id.launchWipe);
+        launchWipe.setOnClickListener(this);
+        
+        launchShout = (ImageButton) findViewById(R.id.launchShout);
+        launchShout.setOnClickListener(this);
     }
+	
+	private void launchWizard() {
+		Intent i = new Intent(this,Wizard.class);
+		startActivity(i);
+	}
+	
+	private void launchWipe() {
+		Intent i = new Intent(this,Wipe.class);
+		startActivity(i);
+	}
+	
+	private void launchShout() {
+		Intent i = new Intent(this,Shout.class);
+		startActivity(i);
+	}
+	
+	private void launchPanic() {
+		Intent i = new Intent(this,Panic.class);
+		startActivity(i);
+	}
 
 	@Override
 	public void onClick(View v) {
-		if(v == toPrefs) {
-			Intent i = new Intent(this,ITCPreferences.class);
-			startActivity(i);
-		} else if(v == toWizard) {
-			Intent w = new Intent(this,Wizard.class);
-			w.putExtra("wNum", 1);
-			startActivity(w);
-		}
+		if(v == launchWizard)
+			launchWizard();
+		else if(v == launchShout)
+			launchShout();
+		else if(v == launchWipe)
+			launchWipe();
+		else if(v == launchPanic)
+			launchPanic();
 		
 	}
 }

@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <string name="app_name">In The Clear</string>
 	<string name="KEY_0">No</string>
 	<string name="KEY_1">Yes</string>
 	<string name="KEY_2">Home</string>
@@ -19,6 +20,10 @@
 	<string name="KEY_16">100 randomly generated contacts have been added to your phone.</string>
 	<string name="KEY_17">Zero</string>
 	<string name="KEY_18">100 \'zeroed\' contacts have been added to overwrite memory on your phone.</string>
+	<string name="KEY_OK">OK</string>
+	<string name="KEY_DETAILS">Details</string>
+	<string name="KEY_NONE">None</string>
+	<string name="KEY_WIPE_SETTINGS_TITLE">In The Clear Data Wipe Settings</string>
 	<string name="KEY_PANIC_TITLE">Panic!</string>
 	<string name="KEY_PANIC_MSG_TITLE">Panic Msg:</string>
 	<string name="KEY_PANIC_PROGRESS_1">Sending your Panic! message...</string>
@@ -97,6 +102,7 @@
 	<string name="KEY_WIPE_CALLLOG">Wipe Call Log</string>
 	<string name="KEY_WIPE_SMS">Wipe SMS Log</string>
 	<string name="KEY_WIPE_CALENDAR">Wipe Calendar</string>
+	<string name="KEY_WIPE_SDCARD">Wipe SD Card</string>
 	<string name="KEY_WIPE_BTN_TITLE">Wipe!</string>
 	<string name="KEY_WIPE_SELECTFOLDERS">Select Folders to Wipe</string>
 	<string name="KEY_WIPE_CONFIRMSELECT">Done</string>
@@ -113,30 +119,44 @@
 	<string name="KEY_HOME_INTRO">InTheClear is a mobile app designed to help improve your safety in difficult situations.  It does this with three main features that you must configure.\n\nPanic!, Shout &amp; Wipe\n\nThis wizard will walk you through the setup process for these features, and ensure your mobile is ready for an emergency situation.</string>
 	<string name="KEY_HOME_TOWIZARD">Start Wizard</string>
 	<string name="KEY_HOME_TOPREFS">Preferences</string>
+	<string name="KEY_WIZARD_TITLE">In The Clear Setup</string>
 	<string name="KEY_WIZARD_NEXT">Next</string>
 	<string name="KEY_WIZARD_BACK">Back</string>
 	<string name="KEY_WIZARD_ENABLE">Enable</string>
 	<string name="KEY_WIZARD_SEND">Send</string>
+	<string-array name="WIZARD_TITLES">
+		<item>In The Clear Setup</item>
+		<item>Testing Emergency SMS</item>
+		<item>Emergency SMS Setup</item>
+		<item>Data Wipe Setup</item>
+		<item>One-Touch Panic Setup</item>
+		<item>Homescreen Setup</item>
+		<item>In The Clear Setup Complete</item>
+	</string-array>
 	<string-array name="WIZARD_TEXT">
-		<item>If you\'d like In the Clear to include information about yourself when activated, you can configure that now.</item>
-		<item>Now we will make sure your phone is configured properly.</item>
-		<item>Enter a mobile number of your choosing below to test Shout! SMS sending.  Make sure you\'re able to verify delivery with the recipient!</item>
-		<item>When activated, Shout! will optionally send your location information along with your alert message.  This information could be essential for your safety, even if your phone does not have GPS.  Enable location permissions below.</item>
-		<item>Enter in one or more phone numbers, separated by a comma, to send the alert to, and a short alert message to send.</item>
-		<item>Wipe can be set up to erase or overwrite your phone\'s existing data when activated.  It requires permissions to access your contact list or SMS database to do so.\n\nChoose how you\'d like Wipe! to work below.  Caution-- erasing or overwriting data is an unrecoverable action, so choose your setup wisely.</item>
-		<item>You may also select certain folders on your SD card to be automatically wiped.  Please select them here.</item>
-		<item>Your configuration of the Panic! settings are now complete.  You may run this wizard again, or launch preferences from setup screen to change your settings.</item>
+		<item>In The Clear helps keep you safer in difficult situations by sending emergency SMS messages and wiping data off your phone at your command.\n\nThis one-time wizard will help you set up your phone to work properly in an emergency situation.</item>
+		<item>In The Clear sends emergency SMSes to your choice of recipients(s).  To make sure we will be able to send an emergency SMS, first send a test message to yourself.  Just enter your mobile phone number below and select Send.</item>
+		<item>Now that we\'ve tested Emergency SMS, we will personalize your actual message and recipients.  To send to multiple recipients, separate phone numbers with commas.</item>
+		<item>In The Clear can wipe data off your phone\'s memory when you activate it.  Select what data you want to erase below</item>
+		<item>One-Touch Panic is a feature of In The Clear that activates Emergency SMS and Data Wipe.  To avoid accidental usage, the default setting requires you to confirm activation once you start One-Touch Panic.  You can remove this prompt with the setting below.</item>
+		<item>Would you like to create a custom shortcut for One-Touch Panic?  This makes it even easier to send emergency SMSes and wipe your phone memory should you encounter a difficult situation.</item>
+		<item>Thanks for setting up In The Clear.  Remember that you can activate its features manually from within the app, or run them right away using One-Touch Panic shortcuts.</item>
 	</string-array>
-	<string-array name="WIZARD_CHECKS">
-		<item>Check SMS Permissions</item>
-		<item>Check Location Access</item>
-		<item>Setup Alert Message</item>
-		<item>Configure Wipe! Options</item>
-		<item>Enable Wipe! Access to Folders</item>
-	</string-array>
+	<string name="WIZARD_YOUR_MOBILE_NUMBER">Your mobile #</string>
+	<string name="WIZARD_SEND_TEST">Send Test</string>
+	<string name="WIZARD_CONFIRMATION_SMSTEST_TITLE">Success!</string>
+	<string name="WIZARD_CONFIRMATION_SMSTEST_FAIL_TITLE">SMS Test Failure</string>
+	<string name="WIZARD_SMS_TEST_FAILURES">In The Clear emergency SMSes are sent just like any other SMS.  Possible reasons for failure include:\n\nBad wireless reception\nNo airtime or credit\nMissing or damaged SIM card\n\nIf you\'ve checked all of the above and the test SMS is still not sending, In The Clear may not be supported on your handset.  Please email us at:\n</string>
 	<string name="WIZARD_CONFIRMATION_SMSTEST">It seems like your message went through.  Please check with the recipient to make sure.</string>
+	<string name="WIZARD_CONFIRMATION_SMSTEST_FAIL">It looks like your test SMS was NOT sent successfully.\nView details for more info.</string>
 	<string name="WIZARD_CONFIRMATION_LOCATIONTEST">This is the location data we could access:</string>
 	<string name="WIZARD_FAIL_SMSTEST_INVALIDNUMBER">This phone number doesn\'t appear valid.  Please try another number.</string>
+	<string name="WIZARD_RECIPIENT_MOBILE_NUMBERS">Recipient\nMobile #(s)</string>
+	<string name="WIZARD_EMERGENCY_MESSAGE">Your\nEmergency\nMessage</string>
+	<string name="WIZARD_WIPE_WARNING">Be careful!  You won\'t be able to recover the data once it\'s wiped.</string>
+	<string name="WIZARD_SELECT_DATA_BUTTON">Select Data to be Wiped</string>
+	<string name="WIZARD_ONE_TOUCH_PANIC_DESCRIPTION">When One-Touch Panic is activated, confirm before running.</string>
+	<string name="WIZARD_ONE_TOUCH_HOMESCREEN_DESCRIPTION">Yes, create a homescreen shortcut for One-Touch Panic.</string>
 	<string name="WIZARD_FAIL_LOCATIONTEST">We were unable to access any phone location data.</string>
 	<string name="WIZARD_CONFIRMATION_LOCALDATA">Great!  Seems like we can access your local data.</string>
 	<string name="KEY_WIZARD_YOURNAME">Your Name</string>

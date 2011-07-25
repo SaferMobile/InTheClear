@@ -23,7 +23,6 @@ public class ITCPreferences extends PreferenceActivity implements OnPreferenceCl
 	SharedPreferences _sp;
 	SharedPreferences.Editor _ed;
 	CheckBoxPreference cbp;
-	EditTextPreference etp;
 	PreferenceCategory pc;
 	
 	@Override
@@ -39,8 +38,8 @@ public class ITCPreferences extends PreferenceActivity implements OnPreferenceCl
 		
 		pc = (PreferenceCategory) findPreference(ITCConstants.Preference.WIPERCAT);
 		
-		etp = (EditTextPreference) findPreference("DefaultWipeFoldersList");
-		pc.removePreference(etp);
+		pc.removePreference((EditTextPreference) findPreference("DefaultWipeFoldersList"));
+		pc.removePreference((CheckBoxPreference) findPreference("IsVirginUser"));
 		
 		checkedFolders = new ArrayList<File>();
 	}

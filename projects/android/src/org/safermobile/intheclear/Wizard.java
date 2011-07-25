@@ -1,35 +1,48 @@
 package org.safermobile.intheclear;
 
+import org.safermobile.intheclear.screens.WipePreferences;
 import org.safermobile.intheclear.screens.WizardForm;
-import org.safermobile.intheclear.ui.WipeSelector;
 
 import android.app.Activity;
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.SharedPreferences;
+import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.ColorFilter;
+import android.graphics.Paint;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.util.Log;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.LinearLayout;
-import android.widget.ListView;
 import android.widget.EditText;
 import android.widget.ScrollView;
+import android.widget.TextView;
 
 public class Wizard extends Activity implements OnClickListener {
 	int wNum,nextWizard,lastWizard = 0;
 	
 	ScrollView sv;
 	WizardForm form;
-	LinearLayout formFrame;
+	LinearLayout wizardStatusTrack,formFrame,wizardNavigation;
+	TextView wizardTitle;
 
 	Button wizardForward,wizardBackward;
 	SharedPreferences _sp;
 	SharedPreferences.Editor _ed;
+	
+	boolean nextButtonClickable, backButtonClickable;
+	int[] statusColors;
+	
+	private BroadcastReceiver br;
 		
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -39,33 +52,151 @@ public class Wizard extends Activity implements OnClickListener {
 		_sp = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
 		_ed = _sp.edit();
 		
-		wizardForward = (Button) findViewById(R.id.wizardForward);
+		/* if this is the first time the user has launched the app,
+		 * the user will immediately be brought here (with a bundle from the main activity)
+		 * set the "IsVirginUser" preference to false now
+		 * that the user's cherry is sufficiently popped.
+		 */
+		if(_sp.getBoolean("IsVirginUser", true)) {
+			_ed.putBoolean(ITCConstants.Preference.IS_VIRGIN_USER, false);
+			_ed.commit();
+		}
+		
+		wizardForward = new Button(this);
+		wizardForward.setText(getResources().getString(R.string.KEY_WIZARD_NEXT));
 		wizardForward.setOnClickListener(this);
 		
-		wizardBackward = (Button) findViewById(R.id.wizardBackward);
+		wizardBackward = new Button(this);
+		wizardBackward.setText(getResources().getString(R.string.KEY_WIZARD_BACK));
 		wizardBackward.setOnClickListener(this);
+		
+		wizardStatusTrack = (LinearLayout) findViewById(R.id.wizardStatusTrack);
+		wizardNavigation = (LinearLayout) findViewById(R.id.wizardNavigation);
+		
+		if(getIntent().hasExtra("wNum")) {
+			wNum = getIntent().getIntExtra("wNum", 0);
+			wizardNavigation.addView(wizardBackward);
+			wizardNavigation.addView(wizardForward);
+		} else {
+			wNum = 1;
+			wizardNavigation.addView(wizardForward);
+		}
+		
+		wizardTitle = (TextView) findViewById(R.id.wizardTitle);
 		
 		sv = (ScrollView) findViewById(R.id.wizardDisplay);
 		
-		if(getIntent().hasExtra("wNum"))
-			wNum = getIntent().getIntExtra("wNum", 0);			
-		else
-			wNum = 1;
-		
-		form = new WizardForm(this,wNum);
+		initWizardFrame();
+		form = new WizardForm(
+				this,
+				wNum,
+				new int[] {
+					getWindowManager().getDefaultDisplay().getWidth(),
+					getWindowManager().getDefaultDisplay().getHeight()
+				}
+		);
+		sv.addView(form.returnForm());
 		if(form.hasPreferenceData())
-			formFrame = populateDefaults(form.returnForm());
-		else
-			formFrame = form.returnForm();
+			populateDefaults(sv);
 		
-		sv.addView(formFrame);
+		br = new BroadcastReceiver() {
+			@Override
+			public void onReceive(Context c, Intent i) {
+				if(i.hasExtra(ITCConstants.Wizard.WIZARD_ACTION)) {
+					switch(i.getIntExtra(ITCConstants.Wizard.WIZARD_ACTION, 0)) {
+					case ITCConstants.Wizard.LAUNCH_WIPE_SELECTOR:
+						sv.removeAllViews();
+						Intent w = new Intent(Wizard.this,WipePreferences.class);
+						Wizard.this.startActivityForResult(w,ITCConstants.Results.SELECTED_FOLDERS);
+						break;
+					case ITCConstants.Wizard.SAVE_PREFERENCE_DATA:
+						break;
+					}
+				}
+				
+			}
+			
+		};
 			
 	}
 	
+	@Override
+	public void onResume() {
+		super.onResume();
+		
+		// start broadcast receiver
+		IntentFilter filter = new IntentFilter();
+		filter.addAction(ITCConstants.Wizard.ACTION);
+		registerReceiver(br,filter);
+	}
+	
+	@Override
+	protected void onActivityResult(int requestCode, int resultCode, Intent intent) {
+		Log.d(ITCConstants.Log.ITC,"back from activity: " + requestCode);
+		if(resultCode == RESULT_OK) {
+			if(requestCode == ITCConstants.Results.SELECTED_FOLDERS) {
+				// save these prefs,
+				
+				// un-grey out the next button
+				
+			}
+		}
+	}
+	
+	private void populateDefaults(View view) {
+		/*
+		 *  iterate through the scroll view's content,
+		 *  and fill in the default/preference data
+		 *  if necessary
+		 */
+		
+		for(int x=0;x<((ViewGroup) view).getChildCount();x++) {
+			View v = ((ViewGroup) view).getChildAt(x);
+			//Log.d(ITCConstants.Log.ITC,"THIS VIEW IS: " + v.getClass().toString());
+			if(v instanceof EditText && ((String) v.getContentDescription()).compareTo("") != 0) {
+				((EditText) v).setHint(_sp.getString((String) v.getContentDescription(), ""));
+				Log.d(ITCConstants.Log.ITC,"data should be found for " + (String) v.getContentDescription() + "\n" + _sp.getString((String) v.getContentDescription(),""));
+			} else if(v instanceof Button && ((String) v.getContentDescription()).compareTo("") != 0) {
+				// actually, it's a checkbox, so we have to cast it.
+				((CheckBox) v).setSelected(_sp.getBoolean((String) v.getContentDescription(), false));
+				Log.d(ITCConstants.Log.ITC,"data should be found for " + (String) v.getContentDescription() + "\n" + _sp.getBoolean((String) v.getContentDescription(), false));
+
+			} else if(v instanceof LinearLayout) {
+				populateDefaults(v);
+			}
+		}
+		 
+	}
+	
+	private void savePreferenceData(View view) {
+		/*
+		 *  iterate through the scroll view's content,
+		 *  and commit the changes made to preference data
+		 *  if necessary
+		 */
+		
+		for(int x=0;x<((ViewGroup) view).getChildCount();x++) {
+			View v = ((ViewGroup) view).getChildAt(x);
+			if(v instanceof EditText && ((String) v.getContentDescription()).compareTo("") != 0 && ((EditText) v).getText().length() > 0) {
+				_ed.putString((String) v.getContentDescription(), ((EditText) v).getText().toString()).commit();
+			} else if(v instanceof Button && ((String) v.getContentDescription()).compareTo("") != 0) {
+				_ed.putBoolean((String) v.getContentDescription(), ((CheckBox) v).isSelected()).commit();
+			} else if(v instanceof LinearLayout) {
+				savePreferenceData(v);
+			}
+		}
+	}
+
+	/*
 	private LinearLayout populateDefaults(View view) {
+		Log.d(ITCConstants.Log.ITC,"updating view with data");
+		
 		LinearLayout ff = (LinearLayout) view;
 		for(int x=0;x<ff.getChildCount();x++) {
 			View v = ff.getChildAt(x);
+			Log.d(ITCConstants.Log.ITC,"view: " + v.getClass());
+			
+			// TODO: if it's a linearlayout, drill down into it...
 			if(v.getContentDescription() != null && v.getContentDescription().length() > 0) {
 				if(v instanceof EditText) {
 					EditText et = (EditText) v;
@@ -97,6 +228,9 @@ public class Wizard extends Activity implements OnClickListener {
 							break;
 						case ITCConstants.Preference.ONE_TOUCH:
 							w.setSelected(_sp.getBoolean(ITCConstants.Preference.DEFAULT_ONE_TOUCH_PANIC, false));
+							break;
+						default:
+							// TODO: handle individual folders selected for wipe
 							break;
 						}
 					}
@@ -151,6 +285,9 @@ public class Wizard extends Activity implements OnClickListener {
 								key = ITCConstants.Preference.DEFAULT_ONE_TOUCH_PANIC;
 								_ed.putBoolean(key, w.getSelected());
 								break;
+							default:
+								// TODO: handle individual folders for wiping
+								break;
 							}
 						}
 					}
@@ -159,45 +296,24 @@ public class Wizard extends Activity implements OnClickListener {
 		}
 		_ed.commit();
 	}
+	*/
 	
-	@Override
-	public boolean onCreateOptionsMenu(Menu m) {
-		MenuInflater mi = getMenuInflater();
-		mi.inflate(R.menu.wizard_menu, m);
-		return true;
-	}
-	
-	public boolean onOptionsItemSelected(MenuItem i) {
-		if(i.getItemId() == R.id.toHome) {
-			Intent h = new Intent(this,InTheClear.class);
-			startActivity(h);
-		}
-		return false;
+	@Override 
+	public void onPause() {
+		super.onPause();
+		// destroy broadcast receiver
+		unregisterReceiver(br);
 	}
 
 	@Override
 	public void onClick(View v) {
-		if(form.hasPreferenceData()) {			
-			savePreferenceState();
-		}
-		
 		if(v == wizardForward) {
-			if(wNum < ITCConstants.FormLength) {
+			if(form.hasPreferenceData())
+				savePreferenceData(sv);
+			if(wNum < getResources().getStringArray(R.array.WIZARD_TITLES).length) {
 				Intent i = new Intent(this,Wizard.class);
 				int nextTarget;
 				switch(wNum) {
-				case 3:
-					nextTarget = 2;
-					break;
-				case 4:
-					nextTarget = 2;
-					break;
-				case 5:
-					nextTarget = 2;
-					break;
-				case 6:
-					nextTarget = 2;
-					break;
 				default:
 					nextTarget = wNum + 1;
 					break;
@@ -210,21 +326,11 @@ public class Wizard extends Activity implements OnClickListener {
 				startActivity(i);
 			}
 		} else if(v == wizardBackward) {
+			savePreferenceData(sv);
 			if(wNum > 1) {
 				Intent i = new Intent(this,Wizard.class);
 				int backTarget;
 				switch(wNum) {
-				case 4:
-					backTarget = 2;
-					break;
-				case 5:
-					backTarget = 2;
-					break;
-				case 6:
-					backTarget = 2;
-					break;
-				case 7:
-					backTarget = 2;
 				default:
 					backTarget = wNum - 1;
 					break;
@@ -235,6 +341,65 @@ public class Wizard extends Activity implements OnClickListener {
 				Intent i = new Intent(this,InTheClear.class);
 				startActivity(i);
 			}
+		}
+	}
+	
+	private void initWizardFrame() {
+		/*
+		 * what page in the wizard are we on?
+		 * this block of code sets the indicator on top
+		 * and the title to be displayed
+		 */
+		String[] titles = getResources().getStringArray(R.array.WIZARD_TITLES);
+		
+		final StatusCircle[] circles = new StatusCircle[titles.length];
+		for(int c=0;c<titles.length;c++) {
+			int color = Color.GRAY;
+			if(c == (wNum - 1))
+				color = Color.YELLOW;
+			
+			circles[c] = new StatusCircle(color,c * 40);
+		}
+		
+		
+		
+		wizardStatusTrack.setBackgroundDrawable(new Drawable() {
+			private Paint p = new Paint();
+
+			@Override
+			public void draw(Canvas canvas) {
+				for(StatusCircle sc : circles) {
+					p.setColor(sc.color);
+					canvas.drawCircle(sc.x, sc.y, sc.r, p);
+				}
+				
+			}
+
+			@Override
+			public int getOpacity() {
+				return 0;
+			}
+
+			@Override
+			public void setAlpha(int alpha) {}
+
+			@Override
+			public void setColorFilter(ColorFilter cf) {}
+			
+		});
+		
+		wizardTitle.setText(titles[wNum - 1]);
+	}
+	
+	private class StatusCircle  {
+		float x;
+		int color;
+		float y = 30f;
+		float r = 8f;
+		
+		public StatusCircle(int color, float x) {
+			this.x = x + 20f;
+			this.color = color;
 		}
 	}
 }

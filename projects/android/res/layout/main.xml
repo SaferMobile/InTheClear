@@ -3,54 +3,77 @@
     android:orientation="vertical"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    android:weightSum="1.0"
     android:background="#ffffff"
-    >
-  <TextView
+    android:weightSum="1.0" >
+  <ImageView
   	android:layout_width="fill_parent"
   	android:layout_height="wrap_content"
-  	android:layout_weight="0.0"
-  	android:text="@string/KEY_HOME"
-  	android:textColor="#ffffffff"
-  	android:background="#aaaaff"
-  	android:textSize="40sp"
-  	android:textStyle="bold"
-  	android:paddingLeft="10px"
-  	android:paddingBottom="0px"  	
-  	android:layout_gravity="center_horizontal"
-  	 />
-  	 <ScrollView
-  	 	android:layout_width="fill_parent"
-  		android:layout_height="0dip"
-  	  	android:layout_weight=".85" >
-  <TextView
+  	android:src="@drawable/itc3cropped"
+  	android:layout_marginLeft="20dip"
+  	android:layout_marginRight="20dip" />
+  <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+  	android:orientation="vertical"
   	android:layout_width="fill_parent"
   	android:layout_height="0dip"
-  	android:text="@string/KEY_HOME_INTRO"
-  	android:layout_weight="0.8"
-  	android:textColor="#000000"
-  	android:textSize="20sp"
-  	android:paddingLeft="3sp"
-  	android:layout_margin="10px" />
-  	</ScrollView>
-  <LinearLayout
-  	android:layout_width="fill_parent"
-  	android:layout_height="0dip"
-  	android:layout_weight="0.35"
-  	android:weightSum="1"
-  	android:paddingTop="6sp"
-  	>
-	  <Button
-	  	android:id="@+id/toWizard"
-	  	android:layout_width="10sp"
+  	android:layout_weight="0.5"
+    android:id="@+id/launchPanic">
+	  <ImageView
+	  	android:layout_width="wrap_content"
 	  	android:layout_height="wrap_content"
-	  	android:layout_weight="0.5"
-	  	android:text="@string/KEY_HOME_TOWIZARD" />
-	  <Button
-	  	android:id="@+id/toPrefs"
+	  	android:layout_gravity="center_horizontal"
+	  	android:background="#00ffffff"
+	  	android:layout_marginLeft="65dip"
+	  	android:layout_marginRight="65dip"
+	  	android:padding="0dip"
+	  	android:src="@drawable/alert" />
+	  <TextView
+	  	android:layout_width="wrap_content"
+	  	android:layout_height="wrap_content"
+	  	android:layout_marginTop="20dip"
+	  	android:layout_gravity="center_horizontal"
+	  	android:text="@string/KEY_PANIC_BTN_PANIC" />
+  </LinearLayout>
+  <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="horizontal"
+  	android:layout_width="fill_parent"
+  	android:layout_height="0dip"
+  	android:layout_gravity="center_horizontal"
+  	android:layout_weight="0.2"
+  	android:weightSum="1.0"
+  	android:layout_marginBottom="30dip"
+  	android:layout_marginTop="30dip">
+  		<ImageButton
+  			android:layout_width="0dip"
+  			android:layout_height="wrap_content"
+  			android:src="@drawable/shout"
+  			android:id="@+id/launchShout"
+  			android:layout_weight="0.5"
+  			android:background="#00ffffff" />
+  		<ImageButton
+  			android:layout_width="0dip"
+  			android:layout_height="wrap_content"
+  			android:layout_weight="0.5"
+  			android:src="@drawable/wipe"
+  			android:id="@+id/launchWipe"
+  			android:background="#00ffffff" />
+  </LinearLayout>
+  <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+  	android:orientation="horizontal"
+  	android:layout_width="fill_parent"
+  	android:layout_height="0dip"
+  	android:layout_weight="0.15"
+  	android:layout_marginTop="30dip"
+  	android:weightSum="1.0"
+  	android:id="@+id/launchWizard" >
+	  <ImageView
 	  	android:layout_width="0dip"
 	  	android:layout_height="wrap_content"
-	  	android:layout_weight="0.5"
-	  	android:text="@string/KEY_HOME_TOPREFS" />
-  	</LinearLayout>
+	  	android:layout_weight="0.3"
+	  	android:src="@drawable/setup" />
+	  <TextView
+	  	android:layout_width="0dip"
+	  	android:layout_weight="0.7"
+	  	android:layout_height="wrap_content"
+	  	android:text="@string/KEY_MAIN_TOPREFS" />
+  </LinearLayout>
 </LinearLayout>

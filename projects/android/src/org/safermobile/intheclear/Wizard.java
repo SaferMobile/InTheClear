@@ -107,7 +107,7 @@ public class Wizard extends Activity implements OnClickListener {
 					case ITCConstants.Wizard.LAUNCH_WIPE_SELECTOR:
 						sv.removeAllViews();
 						Intent w = new Intent(Wizard.this,WipePreferences.class);
-						Wizard.this.startActivityForResult(w,ITCConstants.Results.SELECTED_FOLDERS);
+						Wizard.this.startActivityForResult(w,ITCConstants.Results.PREFERENCES_UPDATED);
 						break;
 					case ITCConstants.Wizard.SAVE_PREFERENCE_DATA:
 						break;
@@ -134,7 +134,7 @@ public class Wizard extends Activity implements OnClickListener {
 	protected void onActivityResult(int requestCode, int resultCode, Intent intent) {
 		Log.d(ITCConstants.Log.ITC,"back from activity: " + requestCode);
 		if(resultCode == RESULT_OK) {
-			if(requestCode == ITCConstants.Results.SELECTED_FOLDERS) {
+			if(requestCode == ITCConstants.Results.PREFERENCES_UPDATED) {
 				// save these prefs,
 				
 				// un-grey out the next button

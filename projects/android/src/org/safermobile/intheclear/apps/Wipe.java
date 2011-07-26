@@ -7,7 +7,6 @@ import java.util.StringTokenizer;
 import org.safermobile.intheclear.ITCConstants;
 import org.safermobile.intheclear.R;
 import org.safermobile.intheclear.controllers.WipeController;
-import org.safermobile.intheclear.screens.FolderSelector;
 import org.safermobile.intheclear.ui.WipeArrayAdaptor;
 import org.safermobile.intheclear.ui.WipeSelector;
 
@@ -44,14 +43,7 @@ public class Wipe extends Activity implements OnClickListener {
 		wipeButton = (Button) findViewById(R.id.wipeButton);
 		wipeButton.setOnClickListener(this);
 		
-		checkedFolderDialog = (TextView) findViewById(R.id.checkedFolderDialog);
-		
-		viewSelectedFolders = (Button) findViewById(R.id.viewSelectedFolders);
-		viewSelectedFolders.setOnClickListener(this);
-		
 		_sp = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
-
-		checkBoxHolder = (ListView) findViewById(R.id.checkBoxHolder);
 	}
 	
 	@Override
@@ -72,6 +64,7 @@ public class Wipe extends Activity implements OnClickListener {
 		shouldWipeCallLog = _sp.getBoolean(ITCConstants.Preference.DEFAULT_WIPE_CALLLOG, false);
 		shouldWipeSMS = _sp.getBoolean(ITCConstants.Preference.DEFAULT_WIPE_SMS, false);
 		shouldWipeCalendar = _sp.getBoolean(ITCConstants.Preference.DEFAULT_WIPE_CALENDAR, false);
+		shouldWipeFolders = _sp.getBoolean(ITCConstants.Preference.DEFAULT_WIPE_FOLDERS, false);
 		shouldWipeFolders = _sp.getBoolean(ITCConstants.Preference.DEFAULT_WIPE_FOLDERS, false);
 		
 		wipeSelector = new ArrayList<WipeSelector>();
@@ -97,23 +90,12 @@ public class Wipe extends Activity implements OnClickListener {
 				getString(R.string.KEY_WIPE_CALENDAR),
 				ITCConstants.Wipe.CALENDAR,
 				shouldWipeCalendar));
+		wipeSelector.add(new WipeSelector(
+				getString(R.string.KEY_WIPE_SDCARD),
+				ITCConstants.Wipe.SDCARD,
+				shouldWipeFolders));
 		
-		checkBoxHolder.setAdapter(new WipeArrayAdaptor(this, wipeSelector));
-		
-		checkedFolders = new ArrayList<File>();
-		
-		if(shouldWipeFolders) {
-			checkedFolderDialog.setText(R.string.KEY_WIPE_FOLDERSELECTIONTEXT);
-			
-			String cf = _sp.getString(ITCConstants.Preference.DEFAULT_WIPE_FOLDER_LIST, "");
-			StringTokenizer st = new StringTokenizer(cf,";");
-			while(st.hasMoreTokens())
-				checkedFolders.add(new File(st.nextToken()));
-			
-		} else {
-			checkedFolders.clear();
-			checkedFolderDialog.setText(R.string.KEY_WIPE_NOSELECTEDFOLDERS);
-		}
+		checkBoxHolder.setAdapter(new WipeArrayAdaptor(this, wipeSelector));		
 	}
 	
 	private void doWipe() {
@@ -127,17 +109,16 @@ public class Wipe extends Activity implements OnClickListener {
 				wipeSelector.get(2).getSelected(),
 				wipeSelector.get(3).getSelected(),
 				wipeSelector.get(4).getSelected(),
-				checkedFolders);
+				wipeSelector.get(5).getSelected()
+				);
 	}
 	
 	@SuppressWarnings("unchecked")
 	@Override
 	public void onActivityResult(int requestCode, int resultCode, Intent data) {
-		if(resultCode == RESULT_OK && requestCode == ITCConstants.Results.SELECTED_FOLDERS) {
-			if(data.hasExtra("selectedFolders")) {	
-				checkedFolders.clear();
-				checkedFolders = (ArrayList<File>) data.getSerializableExtra("selectedFolders");
-				checkedFolderDialog.setText(R.string.KEY_WIPE_FOLDERSELECTIONTEXT);
+		if(resultCode == RESULT_OK && requestCode == ITCConstants.Results.OVERRIDE_WIPE_PREFERENCES) {
+			if(data.hasExtra("newWipeSelection")) {	
+				// TODO: iterate through new wipe selection
 			}
 		}
 	}
@@ -147,9 +128,9 @@ public class Wipe extends Activity implements OnClickListener {
 		if(v == wipeButton) {
 			doWipe();
 		} else if(v == viewSelectedFolders) {
-			Intent i = new Intent(this,FolderSelector.class);
-			i.putExtra("selectedFolders", checkedFolders);
-			startActivityForResult(i,ITCConstants.Results.SELECTED_FOLDERS);
+			Intent i = new Intent(this,WipeSelector.class);
+			i.putExtra("wipeSelection", checkedFolders);
+			startActivityForResult(i,ITCConstants.Results.OVERRIDE_WIPE_PREFERENCES);
 		}
 	}
 }

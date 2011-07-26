@@ -50,9 +50,6 @@
 			android:title="@string/KEY_PREF_WIPEFILES"
 			android:summary="@string/KEY_PREF_WIPEDIALOG"
 			android:key="DefaultWipeFolders" />
-		<EditTextPreference
-			android:title="@string/KEY_PREF_WIPEFILESLIST"
-			android:key="DefaultWipeFoldersList" />
 		<CheckBoxPreference
 			android:key="IsVirginUser"
 			android:defaultValue="false" />

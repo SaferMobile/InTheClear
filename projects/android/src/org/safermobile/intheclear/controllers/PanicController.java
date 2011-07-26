@@ -76,14 +76,7 @@ public class PanicController extends Service {
 		shouldWipeCallLog = _sp.getBoolean(ITCConstants.Preference.DEFAULT_WIPE_CALLLOG, false);
 		shouldWipeSMS = _sp.getBoolean(ITCConstants.Preference.DEFAULT_WIPE_SMS, false);
 		shouldWipeCalendar = _sp.getBoolean(ITCConstants.Preference.DEFAULT_WIPE_CALENDAR, false);
-		
 		shouldWipeFolders = _sp.getBoolean(ITCConstants.Preference.DEFAULT_WIPE_FOLDERS, false);
-		if(shouldWipeFolders) {
-			String cf = _sp.getString(ITCConstants.Preference.DEFAULT_WIPE_FOLDER_LIST, "");
-			StringTokenizer st = new StringTokenizer(cf, ";");
-			while(st.hasMoreTokens())
-				selectedFolders.add(new File(st.nextToken()));
-		}
 		
 		configuredFriends = _sp.getString(ITCConstants.Preference.CONFIGURED_FRIENDS, "");
 	}
@@ -156,7 +149,7 @@ public class PanicController extends Service {
 						shouldWipeCallLog,
 						shouldWipeSMS,
 						shouldWipeCalendar,
-						selectedFolders
+						shouldWipeFolders
 				);
 			}
 		}).start();

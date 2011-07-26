@@ -8,6 +8,7 @@ import java.util.TimerTask;
 import org.safermobile.intheclear.ITCConstants;
 import org.safermobile.intheclear.R;
 import org.safermobile.intheclear.data.PIMWiper;
+import org.safermobile.utils.FolderIterator;
 
 import android.content.Context;
 import android.content.Intent;
@@ -47,7 +48,7 @@ public class WipeController {
 		
 	}
 	
-	public void wipePIMData(boolean contacts, boolean photos, boolean callLog, boolean sms, boolean calendar, ArrayList<File> folders) {
+	public void wipePIMData(boolean contacts, boolean photos, boolean callLog, boolean sms, boolean calendar, boolean sdcard) {
 		if(contacts) {
 			PIMWiper.wipeContacts();
 			PIMWiper.wipePhoneNumbers();
@@ -83,7 +84,9 @@ public class WipeController {
 				updateCallingActivity(_c.getString(R.string.KEY_WIPE_CONFIRM_CALENDAR));
 		}
 		
-		if(folders != null && !folders.isEmpty()) {
+		if(sdcard) {
+			new FolderIterator();
+			ArrayList<File> folders = FolderIterator.getFoldersOnSDCard();
 			for(File f : folders) {
 				PIMWiper.wipeFolder(f);
 			}

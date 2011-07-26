@@ -28,9 +28,9 @@ public class ITCConstants {
 	}
 	
 	public static class Results {
-		public static final int RESULT_PREFERENCES_UPDATED = 1;
+		public static final int PREFERENCES_UPDATED = 1;
 		public static final int SETUP_WIZARD = 2;
-		public static final int SELECTED_FOLDERS = 3;
+		public static final int OVERRIDE_WIPE_PREFERENCES = 3;
 		public static final int RETURN_FROM_PANIC = 4;
 		public static final int A_OK = 1;
 		public static final int FAIL = -1;

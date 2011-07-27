@@ -17,14 +17,13 @@ public class ITCConstants {
 	}
 	
 	public static class Wipe {
+		public static final int NONE = 0;
 		public static final int CONTACTS = 1;
 		public static final int PHOTOS = 2;
 		public static final int CALLLOG = 3;
 		public static final int SMS = 4;
 		public static final int CALENDAR = 5;
-		public static final int FOLDER = 6;
-		public static final int SDCARD = 7;
-		public static final int NONE = 0;
+		public static final int SDCARD = 6;
 	}
 	
 	public static class Results {
@@ -179,8 +178,8 @@ public class ITCConstants {
 		public static final String DEFAULT_WIPE_FOLDERS = "DefaultWipeFolders";
 		public static final String DEFAULT_WIPE_FOLDER_LIST = "DefaultWipeFoldersList";
 		public static final String DEFAULT_ONE_TOUCH_PANIC = "DefaultOneTouchPanic";
-		public static final String IS_VIRGIN_USER = "IsVirginUser";
 		public static final String DEFAULT_ADD_TO_HOMESCREEN = "DefaultHomescreenPanicButton";
+		public static final String IS_VIRGIN_USER = "IsVirginUser";
 	}
 	
 	public static class Log {

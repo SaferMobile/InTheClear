@@ -17,7 +17,7 @@ import android.widget.LinearLayout;
 
 public class InTheClear extends Activity implements OnClickListener {
 	SharedPreferences _sp;
-	LinearLayout launchWizard,launchPanic; 
+	LinearLayout launchWizard,launchPanic,launchPreferences; 
 	ImageButton launchWipe,launchShout;
 	Splash splash;
 	
@@ -35,6 +35,9 @@ public class InTheClear extends Activity implements OnClickListener {
         launchWizard = (LinearLayout) findViewById(R.id.launchWizard);
         launchWizard.setOnClickListener(this);
         
+        launchPreferences = (LinearLayout) findViewById(R.id.launchPreferences);
+        launchPreferences.setOnClickListener(this);
+        
         launchPanic = (LinearLayout) findViewById(R.id.launchPanic);
         launchPanic.setOnClickListener(this);
         
@@ -43,6 +46,8 @@ public class InTheClear extends Activity implements OnClickListener {
         
         launchShout = (ImageButton) findViewById(R.id.launchShout);
         launchShout.setOnClickListener(this);
+        
+        
     }
 	
 	private void launchWizard() {
@@ -64,6 +69,11 @@ public class InTheClear extends Activity implements OnClickListener {
 		Intent i = new Intent(this,Panic.class);
 		startActivity(i);
 	}
+	
+	private void launchPreferences() {
+		Intent i = new Intent(this,ITCPreferences.class);
+		startActivity(i);
+	}
 
 	@Override
 	public void onClick(View v) {
@@ -75,6 +85,8 @@ public class InTheClear extends Activity implements OnClickListener {
 			launchWipe();
 		else if(v == launchPanic)
 			launchPanic();
+		else if(v == launchPreferences)
+			launchPreferences();
 		
 	}
 }

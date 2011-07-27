@@ -1,7 +1,15 @@
 package org.safermobile.intheclear;
 
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.Map;
+import java.util.Map.Entry;
+import java.util.Set;
+
 import org.safermobile.intheclear.screens.WipePreferences;
 import org.safermobile.intheclear.screens.WizardForm;
+import org.safermobile.intheclear.ui.WipeSelector;
 
 import android.app.Activity;
 import android.content.BroadcastReceiver;
@@ -62,11 +70,11 @@ public class Wizard extends Activity implements OnClickListener {
 			_ed.commit();
 		}
 		
-		wizardForward = new Button(this);
+		wizardForward = (Button) findViewById(R.id.wizardForward);
 		wizardForward.setText(getResources().getString(R.string.KEY_WIZARD_NEXT));
 		wizardForward.setOnClickListener(this);
 		
-		wizardBackward = new Button(this);
+		wizardBackward = (Button) findViewById(R.id.wizardBackward);
 		wizardBackward.setText(getResources().getString(R.string.KEY_WIZARD_BACK));
 		wizardBackward.setOnClickListener(this);
 		
@@ -75,11 +83,9 @@ public class Wizard extends Activity implements OnClickListener {
 		
 		if(getIntent().hasExtra("wNum")) {
 			wNum = getIntent().getIntExtra("wNum", 0);
-			wizardNavigation.addView(wizardBackward);
-			wizardNavigation.addView(wizardForward);
 		} else {
 			wNum = 1;
-			wizardNavigation.addView(wizardForward);
+			wizardBackward.setClickable(false);
 		}
 		
 		wizardTitle = (TextView) findViewById(R.id.wizardTitle);
@@ -105,11 +111,8 @@ public class Wizard extends Activity implements OnClickListener {
 				if(i.hasExtra(ITCConstants.Wizard.WIZARD_ACTION)) {
 					switch(i.getIntExtra(ITCConstants.Wizard.WIZARD_ACTION, 0)) {
 					case ITCConstants.Wizard.LAUNCH_WIPE_SELECTOR:
-						sv.removeAllViews();
 						Intent w = new Intent(Wizard.this,WipePreferences.class);
 						Wizard.this.startActivityForResult(w,ITCConstants.Results.PREFERENCES_UPDATED);
-						break;
-					case ITCConstants.Wizard.SAVE_PREFERENCE_DATA:
 						break;
 					}
 				}
@@ -130,13 +133,25 @@ public class Wizard extends Activity implements OnClickListener {
 		registerReceiver(br,filter);
 	}
 	
+	@SuppressWarnings("unchecked")
 	@Override
-	protected void onActivityResult(int requestCode, int resultCode, Intent intent) {
+	protected void onActivityResult(int requestCode, int resultCode, Intent i) {
 		Log.d(ITCConstants.Log.ITC,"back from activity: " + requestCode);
 		if(resultCode == RESULT_OK) {
 			if(requestCode == ITCConstants.Results.PREFERENCES_UPDATED) {
 				// save these prefs,
+				ArrayList<Map<Integer,Boolean>> wipePreferencesHolder = 
+						(ArrayList<Map<Integer, Boolean>>) i.getSerializableExtra(ITCConstants.Preference.WIPE_SELECTOR);
 				
+				Map<Integer,Boolean> wipePreferences = wipePreferencesHolder.get(0);
+				
+				_ed.putBoolean(ITCConstants.Preference.DEFAULT_WIPE_CALENDAR, wipePreferences.get(ITCConstants.Wipe.CALENDAR)).commit();
+				_ed.putBoolean(ITCConstants.Preference.DEFAULT_WIPE_CALLLOG, wipePreferences.get(ITCConstants.Wipe.CALLLOG)).commit();	
+				_ed.putBoolean(ITCConstants.Preference.DEFAULT_WIPE_CONTACTS, wipePreferences.get(ITCConstants.Wipe.CONTACTS)).commit();
+				_ed.putBoolean(ITCConstants.Preference.DEFAULT_WIPE_FOLDERS, wipePreferences.get(ITCConstants.Wipe.SDCARD)).commit();
+				_ed.putBoolean(ITCConstants.Preference.DEFAULT_WIPE_PHOTOS, wipePreferences.get(ITCConstants.Wipe.PHOTOS)).commit();
+				_ed.putBoolean(ITCConstants.Preference.DEFAULT_WIPE_SMS, wipePreferences.get(ITCConstants.Wipe.SMS)).commit();
+
 				// un-grey out the next button
 				
 			}

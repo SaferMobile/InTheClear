@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">In The Clear</string>
+	<string name="app_name">In The Clear</string>
 	<string name="KEY_0">No</string>
 	<string name="KEY_1">Yes</string>
 	<string name="KEY_2">Home</string>
@@ -74,7 +74,7 @@
 	<string name="KEY_PREF_WIPECONTACTS">Wipe All Contacts</string>
 	<string name="KEY_PREF_WIPEPHOTOS">Wipe All Photos/Videos</string>
 	<string name="KEY_PREF_WIPEMEDIADIALOG">Wipe all images and video from your Media Gallery.</string>
-	<string name="KEY_PREF_WIPEFILES">Wipe Selected Folders</string>
+	<string name="KEY_PREF_WIPEFILES">Wipe SD Card</string>
 	<string name="KEY_PREF_WIPEDIALOG">Select the folders on your SD card that will be wiped when you press the PANIC! button</string>
 	<string name="KEY_PREF_WIPEFILESLIST">Folders to Wipe</string>
 	<string name="KEY_PREF_WIPECALLLOG">Wipe Your Call Log</string>
@@ -82,9 +82,12 @@
 	<string name="KEY_PREF_WIPESMS">Wipe Your SMS Log</string>
 	<string name="KEY_PREF_ONETOUCH">1-Touch Panic?</string>
 	<string name="KEY_PREF_ONETOUCH_DIALOG">Check this if you DO NOT want confirmation before executing Panic!  Otherwise, you will have to confirm before Panic! executes.</string>
+	<string name="KEY_PREF_HOMEPAGE">Homescreen Button</string>
+	<string name="KEY_PREF_HOMEPAGE_DIALOG">Place In The Clear Panic button on your homescreen?</string>
 	<string name="KEY_PREF_ACCESSFAIL">We couldn\'t access your settings.  Please check your preferences.</string>
 	<string name="KEY_PREF_SAVEFAIL">There was a problem saving your preferences.</string>
 	<string name="KEY_MAIN_TOPREFS">Launch Preferences</string>
+	<string name="KEY_MAIN_TOWIZARD">Start Wizard</string>
 	<string name="KEY_SHOUT_BTN_TITLE">Shout!</string>
 	<string name="KEY_SHOUT_PANICMSG_TITLE">Your Message:</string>
 	<string name="KEY_SHOUT_CHANGEPANICMSG_BTN">Change this message?</string>

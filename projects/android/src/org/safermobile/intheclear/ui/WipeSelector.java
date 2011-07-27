@@ -7,7 +7,7 @@ public class WipeSelector {
 	int _wipeType;
 	boolean _wipeSelect;
 	boolean _isToggleControl = false;
-	int _color = Color.SELECTABLE;
+	int _color = Color.UNSELECTABLE;
 	File _path;
 	
 	public static class Color {

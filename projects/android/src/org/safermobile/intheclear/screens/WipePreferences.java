@@ -1,6 +1,10 @@
 package org.safermobile.intheclear.screens;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Set;
+import java.util.Vector;
 
 import org.safermobile.intheclear.ITCConstants;
 import org.safermobile.intheclear.R;
@@ -21,6 +25,9 @@ public class WipePreferences extends Activity implements OnClickListener {
 	ArrayList<WipeSelector> wipeOptions;
 	ListView list;
 	
+	boolean defaultContacts, defaultPhotos, defaultCallLog, defaultSMS, defaultCalendar, defaultSDCard = false;
+	boolean defaultNone = true;
+	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -34,32 +41,32 @@ public class WipePreferences extends Activity implements OnClickListener {
 		wipeOptions.add(new WipeSelector(
 				getResources().getString(R.string.KEY_NONE),
 				ITCConstants.Wipe.NONE,
-				true
+				defaultNone
 		));
 		wipeOptions.add(new WipeSelector(
 				getResources().getString(R.string.KEY_WIPE_WIPECONTACTS), 
 				ITCConstants.Wipe.CONTACTS, 
-				false));
+				defaultContacts));
 		wipeOptions.add(new WipeSelector(
 						getResources().getString(R.string.KEY_WIPE_WIPEPHOTOS), 
 						ITCConstants.Wipe.PHOTOS, 
-						false));
+						defaultPhotos));
 		wipeOptions.add(new WipeSelector(
 				getResources().getString(R.string.KEY_WIPE_CALLLOG),
 				ITCConstants.Wipe.CALLLOG,
-				false));
+				defaultCallLog));
 		wipeOptions.add(new WipeSelector(
 				getResources().getString(R.string.KEY_WIPE_SMS),
 				ITCConstants.Wipe.SMS,
-				false));
+				defaultSMS));
 		wipeOptions.add(new WipeSelector(
 				getResources().getString(R.string.KEY_WIPE_CALENDAR),
 				ITCConstants.Wipe.CALENDAR,
-				false));
+				defaultCalendar));
 		wipeOptions.add(new WipeSelector(
 				getResources().getString(R.string.KEY_WIPE_SDCARD),
 				ITCConstants.Wipe.SDCARD,
-				false
+				defaultSDCard
 		));
 		
 		for(WipeSelector w : wipeOptions) {
@@ -77,11 +84,13 @@ public class WipePreferences extends Activity implements OnClickListener {
 	public void onClick(View v) {
 		if(v == confirmSelection) {
 			Intent i = new Intent();
-			// put the selected wipe options
-			
-			// put the selected folders
-			
-			// return to calling activity
+			ArrayList<Map<Integer,Boolean>> wipePreferencesHolder = new ArrayList<Map<Integer,Boolean>>();
+			Map<Integer,Boolean> wipePreferences = new HashMap<Integer,Boolean>();
+			for(WipeSelector ws : wipeOptions) {
+				wipePreferences.put(ws.getWipeType(), ws.getSelected());
+			}
+			wipePreferencesHolder.add(wipePreferences);
+			i.putExtra(ITCConstants.Preference.WIPE_SELECTOR, wipePreferencesHolder);
 			setResult(RESULT_OK,i);
 			finish();
 		}

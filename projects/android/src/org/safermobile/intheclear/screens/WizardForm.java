@@ -51,6 +51,7 @@ public class WizardForm extends View implements OnClickListener {
 						
 		TextView intro = new TextView(c);
 		intro.setText(wizardText[wNum - 1]);
+		intro.setTextColor(android.graphics.Color.BLACK);
 		views.add(intro);
 		
 		switch(wNum) {
@@ -62,6 +63,7 @@ public class WizardForm extends View implements OnClickListener {
 			TextView yourNumberTitle = new TextView(c);
 			yourNumberTitle.setWidth((int) (_screen[0] * 0.3));
 			yourNumberTitle.setText(c.getResources().getString(R.string.WIZARD_YOUR_MOBILE_NUMBER));
+			yourNumberTitle.setTextColor(android.graphics.Color.BLACK);
 			ynHolder.addView(yourNumberTitle);
 			
 			EditText yourNumberTxt = new EditText(c);
@@ -161,6 +163,7 @@ public class WizardForm extends View implements OnClickListener {
 			TextView recipientNumbersTitle = new TextView(c);
 			recipientNumbersTitle.setText(c.getResources().getString(R.string.WIZARD_RECIPIENT_MOBILE_NUMBERS));
 			recipientNumbersTitle.setWidth((int) (_screen[0] * 0.3));
+			recipientNumbersTitle.setTextColor(android.graphics.Color.BLACK);
 			rnHolder.addView(recipientNumbersTitle);
 			
 			EditText recipientNumbers = new EditText(c);
@@ -178,6 +181,7 @@ public class WizardForm extends View implements OnClickListener {
 			emergencyMessageTitle.setText(c.getResources().getString(R.string.WIZARD_EMERGENCY_MESSAGE));
 			emergencyMessageTitle.setWidth((int) (_screen[0] * 0.3));
 			emergencyMessageTitle.setPadding(0, 5, 0, 5);
+			emergencyMessageTitle.setTextColor(android.graphics.Color.BLACK);
 			emergencyMessageTitle.setGravity(Gravity.TOP);
 			emHolder.addView(emergencyMessageTitle);
 			
@@ -203,6 +207,7 @@ public class WizardForm extends View implements OnClickListener {
 			
 			TextView warningText = new TextView(c);
 			warningText.setText(c.getResources().getString(R.string.WIZARD_WIPE_WARNING));
+			warningText.setTextColor(android.graphics.Color.BLACK);
 			warningHolder.addView(warningText);
 			
 			views.add(warningHolder);
@@ -268,6 +273,7 @@ public class WizardForm extends View implements OnClickListener {
 			
 			TextView oneTouchText = new TextView(c);
 			oneTouchText.setText(c.getResources().getString(R.string.WIZARD_ONE_TOUCH_PANIC_DESCRIPTION));
+			oneTouchText.setTextColor(android.graphics.Color.BLACK);
 			oneTouchHolder.addView(oneTouchText);
 			
 			views.add(oneTouchHolder);
@@ -286,6 +292,7 @@ public class WizardForm extends View implements OnClickListener {
 			
 			TextView homeScreenText = new TextView(c);
 			homeScreenText.setText(c.getResources().getString(R.string.WIZARD_ONE_TOUCH_HOMESCREEN_DESCRIPTION));
+			homeScreenText.setTextColor(android.graphics.Color.BLACK);
 			homescreenHolder.addView(homeScreenText);
 			
 			views.add(homescreenHolder);
@@ -293,6 +300,9 @@ public class WizardForm extends View implements OnClickListener {
 			break;
 		case 7:
 			// TODO: change buttons from back/next to back/finish
+			break;
+		case 8:
+			// The result from the data wipe selection
 			break;
 			/*
 		case 6:

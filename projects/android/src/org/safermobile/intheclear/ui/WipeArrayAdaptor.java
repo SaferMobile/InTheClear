@@ -16,6 +16,7 @@ import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.CheckBox;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 public class WipeArrayAdaptor extends BaseAdapter {
@@ -28,13 +29,6 @@ public class WipeArrayAdaptor extends BaseAdapter {
 		li = LayoutInflater.from(c);
 		_wipeSelector = wipeSelector;
 		
-	}
-	
-	private void redrawItems() {
-		for(Map<Integer,Integer> m : associatedViews) {
-			Map.Entry pair = (Map.Entry) m;
-			// TODO: set the colors appropriately
-		}
 	}
 	
 	@Override
@@ -53,29 +47,50 @@ public class WipeArrayAdaptor extends BaseAdapter {
 	}
 
 	@Override
-	public View getView(final int position, View convertView, ViewGroup parent) {
+	public View getView(final int position, View convertView, final ViewGroup parent) {
 		convertView = li.inflate(R.layout.wipe_select, null);
 		CheckBox cb = (CheckBox) convertView.findViewById(R.id.wipeCheckBox);
 		TextView tv = (TextView) convertView.findViewById(R.id.wipeText);
 		tv.setTextColor(_wipeSelector.get(position)._color);
 		
 		cb.setChecked(_wipeSelector.get(position)._wipeSelect);
-		cb.setOnClickListener(new OnClickListener() {
+		cb.setClickable(_wipeSelector.get(position).isToggleControl());
 
+		cb.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
 				CheckBox cb = (CheckBox) v;
 				WipeSelector w = (WipeSelector) getItem(position);
 				w.setSelected(cb.isChecked());
 				if(w.isToggleControl()) {
+					int count = 0;
 					for(WipeSelector ws : _wipeSelector) {
+						CheckBox checkBox = (CheckBox) ((LinearLayout) parent.getChildAt(count)).getChildAt(0);
+						TextView textView = (TextView) ((LinearLayout) parent.getChildAt(count)).getChildAt(1);
+						
+						int newColor;
+						boolean newCheckedStatus, newLockedStatus;
+						
 						if(ws.getColor() == Color.SELECTABLE) {
-							ws.setColor(Color.UNSELECTABLE);
+							newColor = Color.UNSELECTABLE;
+							newCheckedStatus = false;
+							if(!ws.isToggleControl())
+								newLockedStatus = false;
+							else
+								newLockedStatus = true;
 						} else {
-							ws.setColor(Color.SELECTABLE);
+							newColor = Color.SELECTABLE;
+							newCheckedStatus = ws.getSelected();
+							newLockedStatus = true;
 						}
+						
+						ws.setColor(newColor);
+						ws.setSelected(newCheckedStatus);
+						checkBox.setChecked(newCheckedStatus);
+						checkBox.setClickable(newLockedStatus);
+						textView.setTextColor(newColor);
+						count++;
 					}
-					redrawItems();
 					
 				}
 			}
@@ -83,10 +98,6 @@ public class WipeArrayAdaptor extends BaseAdapter {
 		});
 		
 		tv.setText(_wipeSelector.get(position)._wipeTarget);
-		
-		Map<Integer,Integer> m = new HashMap<Integer,Integer>();
-		m.put(tv.getId(), _wipeSelector.get(position)._color);
-		associatedViews.add(m);
 		
 		return convertView;
 	}

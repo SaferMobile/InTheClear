@@ -3,7 +3,6 @@ package org.safermobile.intheclear;
 import org.safermobile.intheclear.apps.Panic;
 import org.safermobile.intheclear.apps.Shout;
 import org.safermobile.intheclear.apps.Wipe;
-import org.safermobile.intheclear.screens.Splash;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -19,7 +18,6 @@ public class InTheClear extends Activity implements OnClickListener {
 	SharedPreferences _sp;
 	LinearLayout launchWizard,launchPanic,launchPreferences; 
 	ImageButton launchWipe,launchShout;
-	Splash splash;
 	
 	@Override
     public void onCreate(Bundle savedInstanceState) {

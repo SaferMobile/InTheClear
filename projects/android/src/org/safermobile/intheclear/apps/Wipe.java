@@ -2,12 +2,11 @@ package org.safermobile.intheclear.apps;
 
 import java.io.File;
 import java.util.ArrayList;
-import java.util.StringTokenizer;
 
 import org.safermobile.intheclear.ITCConstants;
 import org.safermobile.intheclear.R;
 import org.safermobile.intheclear.controllers.WipeController;
-import org.safermobile.intheclear.ui.WipeArrayAdaptor;
+import org.safermobile.intheclear.screens.WipePreferences;
 import org.safermobile.intheclear.ui.WipeSelector;
 
 import android.app.Activity;
@@ -65,7 +64,6 @@ public class Wipe extends Activity implements OnClickListener {
 		shouldWipeSMS = _sp.getBoolean(ITCConstants.Preference.DEFAULT_WIPE_SMS, false);
 		shouldWipeCalendar = _sp.getBoolean(ITCConstants.Preference.DEFAULT_WIPE_CALENDAR, false);
 		shouldWipeFolders = _sp.getBoolean(ITCConstants.Preference.DEFAULT_WIPE_FOLDERS, false);
-		shouldWipeFolders = _sp.getBoolean(ITCConstants.Preference.DEFAULT_WIPE_FOLDERS, false);
 		
 		wipeSelector = new ArrayList<WipeSelector>();
 		
@@ -93,9 +91,7 @@ public class Wipe extends Activity implements OnClickListener {
 		wipeSelector.add(new WipeSelector(
 				getString(R.string.KEY_WIPE_SDCARD),
 				ITCConstants.Wipe.SDCARD,
-				shouldWipeFolders));
-		
-		checkBoxHolder.setAdapter(new WipeArrayAdaptor(this, wipeSelector));		
+				shouldWipeFolders));		
 	}
 	
 	private void doWipe() {
@@ -117,7 +113,7 @@ public class Wipe extends Activity implements OnClickListener {
 	@Override
 	public void onActivityResult(int requestCode, int resultCode, Intent data) {
 		if(resultCode == RESULT_OK && requestCode == ITCConstants.Results.OVERRIDE_WIPE_PREFERENCES) {
-			if(data.hasExtra("newWipeSelection")) {	
+			if(data.hasExtra(ITCConstants.Preference.WIPE_SELECTOR)) {	
 				// TODO: iterate through new wipe selection
 			}
 		}
@@ -128,7 +124,7 @@ public class Wipe extends Activity implements OnClickListener {
 		if(v == wipeButton) {
 			doWipe();
 		} else if(v == viewSelectedFolders) {
-			Intent i = new Intent(this,WipeSelector.class);
+			Intent i = new Intent(this,WipePreferences.class);
 			i.putExtra("wipeSelection", checkedFolders);
 			startActivityForResult(i,ITCConstants.Results.OVERRIDE_WIPE_PREFERENCES);
 		}

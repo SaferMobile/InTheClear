@@ -23,6 +23,7 @@
 	<string name="KEY_OK">OK</string>
 	<string name="KEY_DETAILS">Details</string>
 	<string name="KEY_NONE">None</string>
+	<string name="KEY_FINISH">Finish</string>
 	<string name="KEY_WIPE_SETTINGS_TITLE">In The Clear Data Wipe Settings</string>
 	<string name="KEY_PANIC_TITLE">Panic!</string>
 	<string name="KEY_PANIC_MSG_TITLE">Panic Msg:</string>

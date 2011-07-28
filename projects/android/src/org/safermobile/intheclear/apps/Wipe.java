@@ -1,13 +1,13 @@
 package org.safermobile.intheclear.apps;
 
-import java.io.File;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 import org.safermobile.intheclear.ITCConstants;
 import org.safermobile.intheclear.R;
 import org.safermobile.intheclear.controllers.WipeController;
 import org.safermobile.intheclear.screens.WipePreferences;
-import org.safermobile.intheclear.ui.WipeSelector;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -24,12 +24,11 @@ import android.widget.TextView;
 public class Wipe extends Activity implements OnClickListener {
 	private SharedPreferences _sp;
 	
-	Button wipeButton,viewSelectedFolders;
+	Button wipeButton,overrideWipePreferences;
 	ListView checkBoxHolder;
 	TextView checkedFolderDialog;
-	ArrayList<WipeSelector> wipeSelector;
-	ArrayList<File> checkedFolders;
 	
+	Map<Integer,Boolean> wipePreferences = new HashMap<Integer,Boolean>();
 	boolean shouldWipePhotos,shouldWipeContacts,shouldWipeCallLog,shouldWipeSMS,shouldWipeCalendar,shouldWipeFolders;
 	
 	WipeController wc;
@@ -41,6 +40,9 @@ public class Wipe extends Activity implements OnClickListener {
 		
 		wipeButton = (Button) findViewById(R.id.wipeButton);
 		wipeButton.setOnClickListener(this);
+		
+		overrideWipePreferences = (Button) findViewById(R.id.overrideWipePreferences);
+		overrideWipePreferences.setOnClickListener(this);
 		
 		_sp = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
 	}
@@ -59,39 +61,22 @@ public class Wipe extends Activity implements OnClickListener {
 	private void alignPreferences() {
 		Log.d(ITCConstants.Log.ITC,"WE ARE REALIGNING PREFs");
 		shouldWipeContacts = _sp.getBoolean(ITCConstants.Preference.DEFAULT_WIPE_CONTACTS,false);
+		wipePreferences.put(ITCConstants.Wipe.CONTACTS, shouldWipeContacts);
+		
 		shouldWipePhotos = _sp.getBoolean(ITCConstants.Preference.DEFAULT_WIPE_PHOTOS, false);
+		wipePreferences.put(ITCConstants.Wipe.PHOTOS, shouldWipePhotos);
+		
 		shouldWipeCallLog = _sp.getBoolean(ITCConstants.Preference.DEFAULT_WIPE_CALLLOG, false);
+		wipePreferences.put(ITCConstants.Wipe.CALLLOG, shouldWipeCallLog);
+		
 		shouldWipeSMS = _sp.getBoolean(ITCConstants.Preference.DEFAULT_WIPE_SMS, false);
+		wipePreferences.put(ITCConstants.Wipe.SMS, shouldWipeSMS);
+		
 		shouldWipeCalendar = _sp.getBoolean(ITCConstants.Preference.DEFAULT_WIPE_CALENDAR, false);
+		wipePreferences.put(ITCConstants.Wipe.CALENDAR, shouldWipeCalendar);
+		
 		shouldWipeFolders = _sp.getBoolean(ITCConstants.Preference.DEFAULT_WIPE_FOLDERS, false);
-		
-		wipeSelector = new ArrayList<WipeSelector>();
-		
-		wipeSelector.add(new WipeSelector(
-				getString(R.string.KEY_WIPE_WIPECONTACTS), 
-				ITCConstants.Wipe.CONTACTS, 
-				shouldWipeContacts));
-		wipeSelector.add(
-				new WipeSelector(
-						getString(R.string.KEY_WIPE_WIPEPHOTOS), 
-						ITCConstants.Wipe.PHOTOS, 
-						shouldWipePhotos));
-		wipeSelector.add(new WipeSelector(
-				getString(R.string.KEY_WIPE_CALLLOG),
-				ITCConstants.Wipe.CALLLOG,
-				shouldWipeCallLog));
-		wipeSelector.add(new WipeSelector(
-				getString(R.string.KEY_WIPE_SMS),
-				ITCConstants.Wipe.SMS,
-				shouldWipeSMS));
-		wipeSelector.add(new WipeSelector(
-				getString(R.string.KEY_WIPE_CALENDAR),
-				ITCConstants.Wipe.CALENDAR,
-				shouldWipeCalendar));
-		wipeSelector.add(new WipeSelector(
-				getString(R.string.KEY_WIPE_SDCARD),
-				ITCConstants.Wipe.SDCARD,
-				shouldWipeFolders));		
+		wipePreferences.put(ITCConstants.Wipe.SDCARD, shouldWipeFolders);
 	}
 	
 	private void doWipe() {
@@ -100,13 +85,12 @@ public class Wipe extends Activity implements OnClickListener {
 		
 		// wipe baby!
 		wc.wipePIMData(
-				wipeSelector.get(0).getSelected(),
-				wipeSelector.get(1).getSelected(),
-				wipeSelector.get(2).getSelected(),
-				wipeSelector.get(3).getSelected(),
-				wipeSelector.get(4).getSelected(),
-				wipeSelector.get(5).getSelected()
-				);
+			shouldWipeContacts,
+			shouldWipePhotos,
+			shouldWipeCallLog,
+			shouldWipeSMS,
+			shouldWipeCalendar,
+			shouldWipeFolders);
 	}
 	
 	@SuppressWarnings("unchecked")
@@ -114,7 +98,15 @@ public class Wipe extends Activity implements OnClickListener {
 	public void onActivityResult(int requestCode, int resultCode, Intent data) {
 		if(resultCode == RESULT_OK && requestCode == ITCConstants.Results.OVERRIDE_WIPE_PREFERENCES) {
 			if(data.hasExtra(ITCConstants.Preference.WIPE_SELECTOR)) {	
-				// TODO: iterate through new wipe selection
+				wipePreferences = 
+					((ArrayList<Map<Integer,Boolean>>)data.getSerializableExtra(ITCConstants.Preference.WIPE_SELECTOR)).get(0);
+				
+				shouldWipeContacts = wipePreferences.get(ITCConstants.Wipe.CONTACTS);
+				shouldWipePhotos = wipePreferences.get(ITCConstants.Wipe.PHOTOS);
+				shouldWipeCallLog = wipePreferences.get(ITCConstants.Wipe.CALLLOG);
+				shouldWipeSMS = wipePreferences.get(ITCConstants.Wipe.SMS);
+				shouldWipeCalendar = wipePreferences.get(ITCConstants.Wipe.CALENDAR);
+				shouldWipeFolders = wipePreferences.get(ITCConstants.Wipe.SDCARD);
 			}
 		}
 	}
@@ -123,9 +115,12 @@ public class Wipe extends Activity implements OnClickListener {
 	public void onClick(View v) {
 		if(v == wipeButton) {
 			doWipe();
-		} else if(v == viewSelectedFolders) {
+		} else if(v == overrideWipePreferences) {
+			ArrayList<Map<Integer,Boolean>> wp = new ArrayList<Map<Integer,Boolean>>();
+			wp.add(wipePreferences);
+			
 			Intent i = new Intent(this,WipePreferences.class);
-			i.putExtra("wipeSelection", checkedFolders);
+			i.putExtra(ITCConstants.Preference.WIPE_SELECTOR, wp);
 			startActivityForResult(i,ITCConstants.Results.OVERRIDE_WIPE_PREFERENCES);
 		}
 	}

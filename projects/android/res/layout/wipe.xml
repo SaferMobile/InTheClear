@@ -4,9 +4,7 @@
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     android:weightSum="1.0"
-    android:background="#ffffff"
-    
-    >
+    android:background="#ffffff" >
   <TextView
   	android:layout_width="fill_parent"
   	android:layout_height="wrap_content"
@@ -18,16 +16,14 @@
   	android:textStyle="bold"
   	android:paddingLeft="10px"
   	android:paddingBottom="0px"  	
-  	android:layout_gravity="center_horizontal"
-  	 />
+  	android:layout_gravity="center_horizontal" />
   <TextView
   	android:layout_width="fill_parent"
   	android:layout_height="0dip"
   	android:layout_weight="0.1"
   	android:layout_margin="10px"
   	android:text="@string/KEY_WIPE_ACTIVITYTEXT"
-  	android:textColor="#aa0000"
-  	 />
+  	android:textColor="#aa0000" />
   <ListView
   	xmlns:android="http://schemas.android.com/apk/res/android"
   	android:layout_width="fill_parent"
@@ -54,7 +50,7 @@
 	  	android:layout_height="wrap_content"
 	  	android:layout_weight="0.35"
 	  	android:text="@string/KEY_WIPE_VIEWSELECTEDFOLDERS"
-	  	android:id="@+id/viewSelectedFolders" />
+	  	android:id="@+id/overrideWipePreferences" />
   </LinearLayout>
   <Button
   	android:layout_width="fill_parent"

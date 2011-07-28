@@ -9,6 +9,10 @@ public class L10nConstants {
  	 */
     public class locales {
 		public static final String EN_US = "en-US";
+		public static final String AR_EG = "ar-EG";
+		public static final String FA_IR = "fa-IR";
+		public static final String ES_ES = "es-ES";
+		public static final String FR_FR = "fr-FR";
 
     }
 

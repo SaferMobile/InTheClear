@@ -33,7 +33,7 @@ public class Splash extends Canvas {
 		
 		try {
 			
-			if (getWidth() > 160)			
+			if (getWidth() > 200)			
 				image = Image.createImage(imageLarge);
 			else
 				image = Image.createImage(imageSmall);

@@ -27,13 +27,14 @@ import android.widget.Toast;
 
 public class Shout extends Activity implements OnClickListener, OnDismissListener {
 	private SharedPreferences _sp;
+	SharedPreferences.Editor _ed;
 	
 	int[] screen;
 	TextView configuredFriends,panicMessage,countdownReadout;
 	Button sendShout,cancelCountdown;
 	EditText configuredFriendsText,panicMessageText;
 	
-	String recipients,panicMsg,panicData;
+	String recipients,panicMsg;
 	
 	Dialog countdown;
 	CountDownTimer cd = null;
@@ -77,17 +78,29 @@ public class Shout extends Activity implements OnClickListener, OnDismissListene
 	}
 	
 	@Override
+	public void onStop() {
+		super.onStop();
+		updatePreferences();
+	}
+	
+	@Override
 	public void onStart() {
 		super.onStart();
 		alignPreferences();
 	}
 	
 	private void alignPreferences() {
-		panicMsg = _sp.getString("DefaultPanicMsg", "");
+		panicMsg = _sp.getString(ITCConstants.Preference.DEFAULT_PANIC_MSG, "");
         panicMessageText.setText(panicMsg);
 
-		recipients = _sp.getString("ConfiguredFriends","");
+		recipients = _sp.getString(ITCConstants.Preference.CONFIGURED_FRIENDS,"");
 		configuredFriendsText.setText(recipients);
+	}
+	
+	private void updatePreferences() {
+		_ed = _sp.edit();
+		_ed.putString(ITCConstants.Preference.DEFAULT_PANIC_MSG, panicMsg).commit();
+		_ed.putString(ITCConstants.Preference.CONFIGURED_FRIENDS, recipients).commit();
 	}
 	
 	public void doCountdown() {
@@ -106,7 +119,7 @@ public class Shout extends Activity implements OnClickListener, OnDismissListene
 		cd = new CountDownTimer(ITCConstants.Duriation.COUNTDOWN, ITCConstants.Duriation.COUNTDOWNINTERVAL) {
 			@Override
 			public void onFinish() {
-				// send the shout
+				sc.sendSMSShout(recipients, panicMsg, sc.buildShoutData());
 				countdown.dismiss();
 			}
 

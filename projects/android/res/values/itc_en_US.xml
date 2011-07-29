@@ -41,7 +41,7 @@
 	<string name="KEY_PANIC_TITLE_MAIN">Panic! Activated</string>
 	<string name="KEY_PANIC_RETURN">Select to cancel Panic!</string>
 	<string name="KEY_PANIC_ERROR_SMS">Unable to initiate SMS access</string>
-	<string name="KEY_PANIC_MSG_FROM">Panic! from</string>
+	<string name="KEY_PANIC_MSG_FROM">Emergency SMS Received</string>
 	<string name="KEY_PANIC_MSG_LOCATION">Location:</string>
 	<string name="KEY_PANIC_MSG_CID">cid:</string>
 	<string name="KEY_PANIC_MSG_LAC">lac:</string>

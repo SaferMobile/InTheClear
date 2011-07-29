@@ -69,7 +69,7 @@ public class PanicController extends Service {
 		
 		panicData = getResources().getString(R.string.KEY_PANIC_MSG_TITLE) +
 					"\n\n" + defaultPanicMsg +
-					"\n\n" + sc.buildShoutData(userDisplayName);
+					"\n\n" + sc.buildShoutData();
 
 		shouldWipeContacts = _sp.getBoolean(ITCConstants.Preference.DEFAULT_WIPE_CONTACTS, false);
 		shouldWipePhotos = _sp.getBoolean(ITCConstants.Preference.DEFAULT_WIPE_PHOTOS, false);
@@ -121,7 +121,7 @@ public class PanicController extends Service {
 							sc.sendSMSShout(
 									configuredFriends,
 									defaultPanicMsg,
-									sc.buildShoutData(userDisplayName)
+									sc.buildShoutData()
 							);
 							Log.d(ITCConstants.Log.ITC,"this is a shout going out...");
 							panicCount++;

@@ -108,6 +108,7 @@ public class Wipe extends Activity implements OnClickListener {
 			wipeDisplayHolder.removeView(wipeDisplay);
 		
 		wipeDisplay =  new ListView(this);
+		wipeDisplay.setDividerHeight(0);
 		ArrayList<WipeDisplay> wipeDisplayList = new ArrayList<WipeDisplay>();
 
 		wipeDisplayList.add(new WipeDisplay(getResources().getString(R.string.KEY_WIPE_WIPECONTACTS),shouldWipeContacts,this));
@@ -119,7 +120,6 @@ public class Wipe extends Activity implements OnClickListener {
 		wipeDisplay.setAdapter(new WipeDisplayAdaptor(this,wipeDisplayList));
 		
 		wipeDisplayHolder.addView(wipeDisplay);
-		
 	}
 	
 	private void doWipe() {

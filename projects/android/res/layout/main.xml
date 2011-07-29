@@ -22,10 +22,10 @@
 	  	android:layout_height="wrap_content"
 	  	android:layout_gravity="center_horizontal"
 	  	android:background="#00ffffff"
-	  	android:layout_marginLeft="65dip"
-	  	android:layout_marginRight="65dip"
+	  	android:layout_marginLeft="75dip"
+	  	android:layout_marginRight="75dip"
 	  	android:padding="0dip"
-	  	android:src="@drawable/alert" />
+	  	android:src="@drawable/paniccircle" />
 	  <TextView
 	  	android:layout_width="wrap_content"
 	  	android:layout_height="wrap_content"
@@ -38,7 +38,7 @@
   	android:layout_width="fill_parent"
   	android:layout_height="0dip"
   	android:layout_gravity="center_horizontal"
-  	android:layout_weight="0.2"
+  	android:layout_weight="0.1"
   	android:weightSum="1.0"
   	android:layout_marginBottom="30dip"
   	android:layout_marginTop="30dip">
@@ -61,8 +61,10 @@
   	android:orientation="horizontal"
   	android:layout_width="fill_parent"
   	android:layout_height="0dip"
-  	android:layout_weight="0.3"
-  	android:weightSum="1.0" >
+  	android:layout_weight="0.4"
+  	android:weightSum="1.0"
+  	android:layout_marginLeft="10dip"
+  	android:layout_marginRight="10dip" >
   		<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
   			android:orientation="vertical"
   			android:layout_width="0dip"
@@ -70,9 +72,10 @@
   			android:layout_weight="0.5"
   			android:id="@+id/launchPreferences">
   				<ImageView 
-  					android:src="@drawable/setup"
+  					android:src="@drawable/settings2"
   					android:layout_width="wrap_content"
-  					android:layout_height="wrap_content" />
+  					android:layout_height="wrap_content"
+  					android:layout_marginRight="45dip" android:layout_marginLeft="45dip"/>
   				<TextView
   					android:text="@string/KEY_MAIN_TOPREFS"
   					android:layout_width="wrap_content"
@@ -85,9 +88,11 @@
   			android:layout_weight="0.5"
   			android:id="@+id/launchWizard">
   				<ImageView 
-  					android:src="@drawable/setup"
+  					android:src="@drawable/basicssetup"
   					android:layout_width="wrap_content"
-  					android:layout_height="wrap_content" />
+  					android:layout_height="wrap_content"
+  					android:layout_marginLeft="45dip"
+  					android:layout_marginRight="45dip" />
   				<TextView
   					android:text="@string/KEY_MAIN_TOWIZARD"
   					android:layout_width="wrap_content"

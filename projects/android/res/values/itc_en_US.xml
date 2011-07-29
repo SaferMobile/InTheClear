@@ -90,6 +90,11 @@
 	<string name="KEY_PREF_SAVEFAIL">There was a problem saving your preferences.</string>
 	<string name="KEY_MAIN_TOPREFS">Launch Preferences</string>
 	<string name="KEY_MAIN_TOWIZARD">Start Wizard</string>
+	<string name="KEY_EMERGENCY_SMS_TITLE">Emergency SMS</string>
+	<string name="KEY_EMERGENCY_SMS_INTRO">Choose Send to begin broadcasting your Emergency SMS repeatedly until you manually stop it or your phone loses connectivity or power.  You can optionally change your message and recipient(s) below.</string>
+	<string name="KEY_EMERGENCY_SMS_SEND_BUTTON">Send Emergency SMS</string>
+	<string name="KEY_EMERGENCY_SMS_RECIPIENT_MOBILE">Recipient\nmobile #(s)</string>
+	<string name="KEY_EMERGENCY_SMS_EMERGENCY_MSG">Emergency Message</string>
 	<string name="KEY_SHOUT_BTN_TITLE">Shout!</string>
 	<string name="KEY_SHOUT_PANICMSG_TITLE">Your Message:</string>
 	<string name="KEY_SHOUT_CHANGEPANICMSG_BTN">Change this message?</string>

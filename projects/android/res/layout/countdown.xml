@@ -10,8 +10,8 @@
 		android:layout_width="fill_parent"
 		android:layout_height="0dip"
 		android:layout_weight="0.95"
-		android:textSize="20px"
-		android:layout_marginBottom="40px"
+		android:textSize="20dip"
+		android:layout_marginBottom="40dip"
 		android:id="@+id/countdownReadout" />
 	<Button
 		android:layout_width="fill_parent"

@@ -5,59 +5,66 @@
     android:layout_height="fill_parent"
     android:weightSum="1.0"
     android:background="#ffffff" >
-  <TextView
-  	android:layout_width="fill_parent"
-  	android:layout_height="wrap_content"
-  	android:layout_weight="0.0"
-  	android:text="@string/KEY_WIPE_BTN_TITLE"
-  	android:textColor="#ffffffff"
-  	android:background="#aaaaff"
-  	android:textSize="40sp"
-  	android:textStyle="bold"
-  	android:paddingLeft="10px"
-  	android:paddingBottom="0px"  	
-  	android:layout_gravity="center_horizontal" />
-  <TextView
-  	android:layout_width="fill_parent"
+	<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	android:layout_width="fill_parent"
   	android:layout_height="0dip"
-  	android:layout_weight="0.1"
-  	android:layout_margin="10px"
-  	android:text="@string/KEY_WIPE_ACTIVITYTEXT"
-  	android:textColor="#aa0000" />
-  <ListView
-  	xmlns:android="http://schemas.android.com/apk/res/android"
-  	android:layout_width="fill_parent"
-  	android:layout_height="0dip"
-	android:background="#ffffff"
-  	android:layout_weight="0.5"
-  	android:id="@+id/checkBoxHolder" />
-  <LinearLayout
-  	xmlns:android="http://schemas.android.com/apk/res/android"
-  	android:layout_width="fill_parent"
-  	android:layout_height="0dip"
-  	android:layout_weight="0.2"
-  	android:orientation="horizontal"
-  	android:layout_marginTop="10px"
-  	android:weightSum="1.0">
-	  <TextView
-	  	android:layout_width="0dip"
-	  	android:layout_height="wrap_content"
-	  	android:layout_weight="0.65"
-	  	android:layout_marginLeft="10px"
-	  	android:id="@+id/checkedFolderDialog" />
-	  <Button
-	  	android:layout_width="0dip"
-	  	android:layout_height="wrap_content"
-	  	android:layout_weight="0.35"
-	  	android:text="@string/KEY_WIPE_VIEWSELECTEDFOLDERS"
-	  	android:id="@+id/overrideWipePreferences" />
-  </LinearLayout>
-  <Button
-  	android:layout_width="fill_parent"
-  	android:layout_height="70sp"
-  	android:layout_weight="0.1"
-  	android:id="@+id/wipeButton"
-  	 android:textSize="16pt"
-  	 android:drawableLeft="@drawable/wipe"
-  	android:text="@string/KEY_WIPE_BTN_TITLE" />
+ 	android:layout_weight="0.15"
+ 	android:weightSum="1.0"
+  	android:orientation="horizontal">
+  		<ImageView
+  			android:layout_width="0dip"
+  			android:layout_height="wrap_content"
+  			android:layout_weight="0.25"
+  			android:layout_marginLeft="20dip"
+  			android:layout_marginRight="20dip"
+  			android:src="@drawable/sm3cropped" />
+  		<TextView 
+  			android:layout_width="0dip"
+  			android:layout_height="wrap_content"
+  			android:layout_weight="0.75"
+  			android:textSize="26dip"
+  			android:textColor="#ff000000"
+  			android:text="@string/KEY_WIPE_ACTIVITY_TITLE"
+  			android:id="@+id/wipeTitle" />
+  	</LinearLayout>
+  	<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+		android:layout_width="fill_parent"
+	  	android:layout_height="0dip"
+	 	android:layout_weight="0.7"
+	  	android:orientation="vertical">
+		<TextView
+			android:layout_width="fill_parent"
+			android:layout_height="wrap_content"
+			android:textColor="#ff000000"
+			android:text="@string/KEY_WIPE_ACTIVITYTEXT"
+			android:layout_marginBottom="20dip"
+			android:layout_marginLeft="5dip"
+			android:layout_marginRight="5dip" />
+		<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+			android:layout_width="fill_parent"
+	  		android:layout_height="wrap_content"
+	  		android:id="@+id/wipeDisplayHolder"
+	  		android:orientation="vertical" />
+	</LinearLayout>
+ 	<LinearLayout
+	 	android:layout_width="fill_parent"
+	 	android:layout_height="0dip"
+	 	android:layout_weight="0.15"
+	 	android:id="@+id/wipeOptions"
+	 	android:orientation="horizontal"
+	 	android:weightSum="1.0"
+	 	android:gravity="bottom">
+	 		<Button
+	 			android:layout_width="0dip"
+	 			android:layout_height="fill_parent"
+	 			android:layout_weight="0.5"
+	 			android:text="@string/KEY_WIPE_EDIT_WIPE"
+	 			android:id="@+id/overrideWipePreferences" />
+	 		<Button
+	 			android:layout_width="0dip"
+	 			android:layout_height="fill_parent"
+	 			android:layout_weight="0.5"
+	 			android:text="@string/KEY_WIPE_BTN_TITLE"
+	 			android:id="@+id/wipeButton" />
+	 </LinearLayout>
 </LinearLayout>

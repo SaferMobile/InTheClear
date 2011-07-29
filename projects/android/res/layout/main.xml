@@ -25,7 +25,7 @@
 	  	android:layout_marginLeft="75dip"
 	  	android:layout_marginRight="75dip"
 	  	android:padding="0dip"
-	  	android:src="@drawable/paniccircle" />
+	  	android:src="@drawable/paniccerclenew" />
 	  <TextView
 	  	android:layout_width="wrap_content"
 	  	android:layout_height="wrap_content"

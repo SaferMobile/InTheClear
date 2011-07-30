@@ -4,7 +4,7 @@ import java.util.Date;
 
 import org.safermobile.clear.micro.L10nConstants;
 import org.safermobile.clear.micro.L10nResources;
-import org.safermobile.clear.micro.apps.PanicConstants;
+import org.safermobile.clear.micro.apps.ITCConstants;
 import org.safermobile.clear.micro.data.PhoneInfo;
 import org.safermobile.clear.micro.sms.SMSManager;
 import org.safermobile.micro.utils.Preferences;
@@ -120,10 +120,10 @@ public class ShoutController {
 	
 	public void sendAutoSMSShout (Preferences prefs) throws Exception
 	{
-		String recipients = prefs.get(PanicConstants.PREFS_KEY_RECIPIENT);
-		String userName =  prefs.get(PanicConstants.PREFS_KEY_NAME);
-		String userMessage = prefs.get(PanicConstants.PREFS_KEY_MESSAGE);
-		String userLocation = prefs.get(PanicConstants.PREFS_KEY_LOCATION);
+		String recipients = prefs.get(ITCConstants.PREFS_KEY_RECIPIENT);
+		String userName =  prefs.get(ITCConstants.PREFS_KEY_NAME);
+		String userMessage = prefs.get(ITCConstants.PREFS_KEY_MESSAGE);
+		String userLocation = prefs.get(ITCConstants.PREFS_KEY_LOCATION);
 		
 		String shoutMsg = buildShoutMessage(userName, userMessage, userLocation);
 		String shoutData = buildShoutData (userName);

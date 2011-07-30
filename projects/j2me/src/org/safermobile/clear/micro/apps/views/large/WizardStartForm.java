@@ -1,27 +1,25 @@
-package org.safermobile.clear.micro.apps.views;
+package org.safermobile.clear.micro.apps.views.large;
 
 
 import javax.microedition.lcdui.Graphics;
-import javax.microedition.midlet.MIDlet;
 
-import org.j4me.ui.*;
-import org.j4me.ui.components.*;
-import org.safermobile.clear.micro.apps.LocaleManager;
-import org.safermobile.clear.micro.apps.PanicConfigMIDlet;
-import org.safermobile.clear.micro.apps.PanicConstants;
-import org.safermobile.clear.micro.L10nResources;
+import org.j4me.ui.Dialog;
+import org.j4me.ui.components.Label;
 import org.safermobile.clear.micro.L10nConstants;
+import org.safermobile.clear.micro.L10nResources;
+import org.safermobile.clear.micro.apps.LocaleManager;
+import org.safermobile.clear.micro.apps.ITCWizardMIDlet;
 
 /**
  * Example of a <code>TextBox</code> component.
  */
-public class SetupCompleteForm
+public class WizardStartForm
         extends Dialog
 {
         /**
          * The previous screen.
          */
-        private PanicConfigMIDlet _midlet;
+        private ITCWizardMIDlet _midlet;
 
     	/**
     	 * The label 
@@ -34,36 +32,40 @@ public class SetupCompleteForm
          * 
          * @param previous is the screen to return to once this done.
          */
-        public SetupCompleteForm (PanicConfigMIDlet midlet)
+        public WizardStartForm (ITCWizardMIDlet midlet)
         {
                 _midlet = midlet;
                 
                 // Set the title and menu.
-                setTitle( l10n.getString(L10nConstants.keys.SETUP_COMPLETE_TITLE) );
-                setMenuText(null, l10n.getString(L10nConstants.keys.MENU_EXIT));
+                setTitle( l10n.getString(L10nConstants.keys.SETUP_TITLE) );
+                setMenuText( l10n.getString(L10nConstants.keys.MENU_EXIT), l10n.getString(L10nConstants.keys.MENU_NEXT));
                 
             	// Center the text.
         		_label.setHorizontalAlignment( Graphics.LEFT );
 
-        		// Make the label be mutliple paragraphs.
-        		_label.setLabel(l10n.getString(L10nConstants.keys.SETUP_COMPLETE_MSG));
+        		_label.setLabel(l10n.getString(L10nConstants.keys.SETUP_INTRO));
         		
         		// Add the label to this screen.
         		append( _label );
 
-        		
-
         }
         
      
-   
+        /**
+         * Takes the user to the previous screen.
+         */
+        protected void declineNotify ()
+        {
+        	_midlet.notifyDestroyed();
+        }
+        
         
         /**
          * Takes the user to the previous screen.
          */
         protected void acceptNotify ()
         {
-        	_midlet.notifyDestroyed();
+        	_midlet.showNext();
         }
         
       

@@ -1,4 +1,4 @@
-package org.safermobile.clear.micro.apps.views;
+package org.safermobile.clear.micro.apps.views.small;
 
 
 import javax.microedition.lcdui.Command;
@@ -14,8 +14,8 @@ import org.j4me.ui.components.*;
 import org.safermobile.clear.micro.L10nResources;
 import org.safermobile.clear.micro.L10nConstants;
 import org.safermobile.clear.micro.apps.LocaleManager;
-import org.safermobile.clear.micro.apps.PanicConfigMIDlet;
-import org.safermobile.clear.micro.apps.PanicConstants;
+import org.safermobile.clear.micro.apps.ITCWizardMIDlet;
+import org.safermobile.clear.micro.apps.ITCConstants;
 import org.safermobile.clear.micro.apps.WipeMIDlet;
 import org.safermobile.clear.micro.apps.controllers.WipeController;
 import org.safermobile.clear.micro.apps.controllers.WipeListener;
@@ -34,7 +34,7 @@ public class OneTouchPanicForm
         /**
          * The previous screen.
          */
-        private PanicConfigMIDlet _midlet;
+        private ITCWizardMIDlet _midlet;
         
         private CheckBox _cbOneTouch;
         		
@@ -45,7 +45,7 @@ public class OneTouchPanicForm
          * 
          * @param previous is the screen to return to once this done.
          */
-        public OneTouchPanicForm (PanicConfigMIDlet midlet)
+        public OneTouchPanicForm (ITCWizardMIDlet midlet)
         {
                 _midlet = midlet;
                 
@@ -87,7 +87,7 @@ public class OneTouchPanicForm
 	     private void persist ()
 	        {
 	        
-	    	 	_midlet.savePref(PanicConstants.PREFS_KEY_ONE_TOUCH_PANIC, _cbOneTouch.isChecked()+"");
+	    	 	_midlet.savePref(ITCConstants.PREFS_KEY_ONE_TOUCH_PANIC, _cbOneTouch.isChecked()+"");
 	    	 
 	    	 	
 	        }

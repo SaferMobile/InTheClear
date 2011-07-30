@@ -1,4 +1,4 @@
-package org.safermobile.clear.micro.apps.views;
+package org.safermobile.clear.micro.apps.views.small;
 
 
 import java.util.Enumeration;
@@ -13,8 +13,8 @@ import org.j4me.ui.components.*;
 import org.safermobile.clear.micro.L10nResources;
 import org.safermobile.clear.micro.L10nConstants;
 import org.safermobile.clear.micro.apps.LocaleManager;
-import org.safermobile.clear.micro.apps.PanicConfigMIDlet;
-import org.safermobile.clear.micro.apps.PanicConstants;
+import org.safermobile.clear.micro.apps.ITCWizardMIDlet;
+import org.safermobile.clear.micro.apps.ITCConstants;
 import org.safermobile.clear.micro.apps.controllers.WipeController;
 import org.safermobile.clear.micro.apps.models.WipeDataType;
 import org.safermobile.clear.micro.data.PIMWiper;
@@ -29,7 +29,7 @@ public class WipeSelectionForm
         /**
          * The previous screen.
          */
-        private PanicConfigMIDlet _midlet;
+        private ITCWizardMIDlet _midlet;
         
         private Vector _wipeDataTypes;
         private Vector _checkBoxes;        
@@ -41,7 +41,7 @@ public class WipeSelectionForm
          * 
          * @param previous is the screen to return to once this done.
          */
-        public WipeSelectionForm (PanicConfigMIDlet midlet, Vector wipeDataTypes)
+        public WipeSelectionForm (ITCWizardMIDlet midlet, Vector wipeDataTypes)
         {
                 _midlet = midlet;
                 _wipeDataTypes = wipeDataTypes;
@@ -109,18 +109,18 @@ public class WipeSelectionForm
 			
 			try
 			{
-				Preferences prefs = new Preferences (PanicConstants.PANIC_PREFS_DB);
+				Preferences prefs = new Preferences (ITCConstants.PANIC_PREFS_DB);
 	
-				String prefBool = prefs.get(PanicConstants.PREFS_KEY_WIPE_CONTACTS);
+				String prefBool = prefs.get(ITCConstants.PREFS_KEY_WIPE_CONTACTS);
 				boolean wipeContacts = (prefBool != null && prefBool.equals("true"));
 				
-				prefBool = prefs.get(PanicConstants.PREFS_KEY_WIPE_EVENTS);
+				prefBool = prefs.get(ITCConstants.PREFS_KEY_WIPE_EVENTS);
 				boolean wipeEvents = (prefBool != null && prefBool.equals("true"));
 				
-				prefBool = prefs.get(PanicConstants.PREFS_KEY_WIPE_PHOTOS);
+				prefBool = prefs.get(ITCConstants.PREFS_KEY_WIPE_PHOTOS);
 				boolean wipePhotos = (prefBool != null && prefBool.equals("true"));
 							
-				prefBool = prefs.get(PanicConstants.PREFS_KEY_WIPE_ALL_FILES);
+				prefBool = prefs.get(ITCConstants.PREFS_KEY_WIPE_ALL_FILES);
 				boolean wipeAllFiles = (prefBool != null && prefBool.equals("true"));
 				
 	        	wipePermsOk = wc.checkPermissions(wipeContacts, wipeEvents, wipePhotos, wipeAllFiles);

@@ -1,4 +1,4 @@
-package org.safermobile.clear.micro.apps.views;
+package org.safermobile.clear.micro.apps.views.small;
 
 
 import javax.microedition.lcdui.Graphics;
@@ -8,8 +8,8 @@ import org.j4me.ui.components.*;
 import org.safermobile.clear.micro.L10nConstants;
 import org.safermobile.clear.micro.L10nResources;
 import org.safermobile.clear.micro.apps.LocaleManager;
-import org.safermobile.clear.micro.apps.PanicConfigMIDlet;
-import org.safermobile.clear.micro.apps.PanicConstants;
+import org.safermobile.clear.micro.apps.ITCWizardMIDlet;
+import org.safermobile.clear.micro.apps.ITCConstants;
 
 /**
  * Example of a <code>TextBox</code> component.
@@ -20,7 +20,7 @@ public class SetupAlertMessageForm
         /**
          * The previous screen.
          */
-        private PanicConfigMIDlet _midlet;
+        private ITCWizardMIDlet _midlet;
 
 
         /**
@@ -41,7 +41,7 @@ public class SetupAlertMessageForm
          * 
          * @param previous is the screen to return to once this done.
          */
-        public SetupAlertMessageForm (PanicConfigMIDlet midlet)
+        public SetupAlertMessageForm (ITCWizardMIDlet midlet)
         {
                _midlet = midlet;
                 
@@ -79,9 +79,9 @@ public class SetupAlertMessageForm
         	{
 
 				//save the phone number if the SMS sends okay
-	    		_midlet.savePref(PanicConstants.PREFS_KEY_RECIPIENT, recips);    
+	    		_midlet.savePref(ITCConstants.PREFS_KEY_RECIPIENT, recips);    
 	    		
-        		_midlet.savePref(PanicConstants.PREFS_KEY_MESSAGE, alertmsg);
+        		_midlet.savePref(ITCConstants.PREFS_KEY_MESSAGE, alertmsg);
         		return true;
         	}
         	
@@ -91,7 +91,7 @@ public class SetupAlertMessageForm
         private void load ()
         {
         	
-        	String alertMsgString = _midlet.loadPref(PanicConstants.PREFS_KEY_MESSAGE);
+        	String alertMsgString = _midlet.loadPref(ITCConstants.PREFS_KEY_MESSAGE);
         	
         	if (alertMsgString != null && alertMsgString.length() > 0)
         		_tbAlertMsg.setString(alertMsgString);

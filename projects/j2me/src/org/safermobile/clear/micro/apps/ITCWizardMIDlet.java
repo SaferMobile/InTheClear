@@ -15,12 +15,6 @@ import org.j4me.ui.UIManager;
 import org.safermobile.clear.micro.L10nConstants;
 import org.safermobile.clear.micro.L10nResources;
 import org.safermobile.clear.micro.apps.models.WipeDataType;
-import org.safermobile.clear.micro.apps.views.OneTouchPanicForm;
-import org.safermobile.clear.micro.apps.views.PanicWizardForm;
-import org.safermobile.clear.micro.apps.views.SMSSendTestForm;
-import org.safermobile.clear.micro.apps.views.SetupAlertMessageForm;
-import org.safermobile.clear.micro.apps.views.SetupCompleteForm;
-import org.safermobile.clear.micro.apps.views.WipeSelectionForm;
 import org.safermobile.clear.micro.ui.ClearTheme;
 import org.safermobile.clear.micro.ui.ErrorAlert;
 import org.safermobile.micro.ui.Splash;
@@ -29,7 +23,7 @@ import org.safermobile.micro.utils.Preferences;
 
 
 //release.build = false
-public class PanicConfigMIDlet extends MIDlet implements Runnable {
+public class ITCWizardMIDlet extends MIDlet implements Runnable {
 
 	private Display _display;
 	private Splash _splash;
@@ -47,20 +41,25 @@ public class PanicConfigMIDlet extends MIDlet implements Runnable {
 	/**
 	 * Creates several screens and navigates between them.
 	 */
-	public PanicConfigMIDlet() {
+	public ITCWizardMIDlet() {
 	
 		try
 		{
-		 _prefs = new Preferences (PanicConstants.PANIC_PREFS_DB);
+		 _prefs = new Preferences (ITCConstants.PANIC_PREFS_DB);
 		} catch (RecordStoreException e) {
 			
-			Logger.error(PanicConstants.TAG, "a problem saving the prefs: " + e, e);
+			Logger.error(ITCConstants.TAG, "a problem saving the prefs: " + e, e);
 		}
 		
 		setupWipeDataTypes();
 		
+		int screenWidth = 320;
 		
-		setupUI();
+		if (screenWidth < ITCConstants.SCREEN_WIDTH_LARGE)
+			setupUISmall();
+		else
+			setupUILarge();
+		
 		showSplash();
 	}
 	
@@ -70,21 +69,21 @@ public class PanicConfigMIDlet extends MIDlet implements Runnable {
 		_wipeDataTypes = new Vector();
 		WipeDataType wdt = null;
 		
-		wdt = new WipeDataType(PanicConstants.PREFS_KEY_WIPE_CONTACTS, l10n.getString(L10nConstants.keys.WIPE_MENU_CONTACTS));
+		wdt = new WipeDataType(ITCConstants.PREFS_KEY_WIPE_CONTACTS, l10n.getString(L10nConstants.keys.WIPE_MENU_CONTACTS));
 		_wipeDataTypes.addElement(wdt);
 		
-		wdt = new WipeDataType(PanicConstants.PREFS_KEY_WIPE_PHOTOS, l10n.getString(L10nConstants.keys.WIPE_MENU_PHOTOS));
+		wdt = new WipeDataType(ITCConstants.PREFS_KEY_WIPE_PHOTOS, l10n.getString(L10nConstants.keys.WIPE_MENU_PHOTOS));
 		_wipeDataTypes.addElement(wdt);
 		
 
 		//for BB this is where we will add CallLogs and Messages
 		/*
 		 * 
-		 * wdt = new WipeDataType(PanicConstants.PREFS_KEY_WIPE_MESSAGES, l10n.getString(L10nConstants.keys.WIPE_MENU_MESSAGES));
+		 * wdt = new WipeDataType(ITCConstants.PREFS_KEY_WIPE_MESSAGES, l10n.getString(L10nConstants.keys.WIPE_MENU_MESSAGES));
 		_wipeDataTypes.addElement(wdt);
 		
 		
-		wdt = new WipeDataType(PanicConstants.PREFS_KEY_WIPE_CALLLOGS, l10n.getString(L10nConstants.keys.WIPE_MENU_CALLLOGS));
+		wdt = new WipeDataType(ITCConstants.PREFS_KEY_WIPE_CALLLOGS, l10n.getString(L10nConstants.keys.WIPE_MENU_CALLLOGS));
 		_wipeDataTypes.addElement(wdt);
 		
 		 * 
@@ -93,29 +92,48 @@ public class PanicConfigMIDlet extends MIDlet implements Runnable {
 		
 		//
 		
-		wdt = new WipeDataType(PanicConstants.PREFS_KEY_WIPE_ALL_FILES, l10n.getString(L10nConstants.keys.WIPE_MENU_FILES));
+		wdt = new WipeDataType(ITCConstants.PREFS_KEY_WIPE_ALL_FILES, l10n.getString(L10nConstants.keys.WIPE_MENU_FILES));
 		_wipeDataTypes.addElement(wdt);
 		
-		wdt = new WipeDataType(PanicConstants.PREFS_KEY_WIPE_EVENTS, l10n.getString(L10nConstants.keys.WIPE_MENU_CALENDAR));
+		wdt = new WipeDataType(ITCConstants.PREFS_KEY_WIPE_EVENTS, l10n.getString(L10nConstants.keys.WIPE_MENU_CALENDAR));
 		_wipeDataTypes.addElement(wdt);
 		
 		
 	}
 	
-	private void setupUI ()
+	private void setupUISmall ()
 	{
 		UIManager.init(this);
 		 UIManager.setTheme( new ClearTheme()  );
 
 		 
 		 _screens = new DeviceScreen[6];
-		 _screens[0] = new PanicWizardForm (this);
+		 _screens[0] = new org.safermobile.clear.micro.apps.views.small.WizardStartForm (this);
+		 _screens[1] = new org.safermobile.clear.micro.apps.views.small.SMSSendTestForm (this);
+		 _screens[2] = new org.safermobile.clear.micro.apps.views.small.SetupAlertMessageForm (this);
+		 _screens[3] = new org.safermobile.clear.micro.apps.views.small.WipeSelectionForm (this, _wipeDataTypes);
+		 _screens[4] = new org.safermobile.clear.micro.apps.views.small.OneTouchPanicForm (this);
+		 _screens[5] = new org.safermobile.clear.micro.apps.views.small.SetupCompleteForm (this);
+		 
+		 
+	}
+	
+	private void setupUILarge ()
+	{
+		UIManager.init(this);
+		 UIManager.setTheme( new ClearTheme()  );
+
+		 _screens = new DeviceScreen[6];
+		 _screens[0] = new org.safermobile.clear.micro.apps.views.large.WizardStartForm (this);
+		 
+		 /*
+		 
 		 _screens[1] = new SMSSendTestForm (this);
 		 _screens[2] = new SetupAlertMessageForm (this);
 		 _screens[3] = new WipeSelectionForm (this, _wipeDataTypes);
 		 _screens[4] = new OneTouchPanicForm (this);
 		 _screens[5] = new SetupCompleteForm (this);
-		 
+		 */
 		 
 	}
 		
@@ -184,7 +202,7 @@ public class PanicConfigMIDlet extends MIDlet implements Runnable {
 	{
 		try {
 
-			Logger.debug(PanicConstants.TAG, "saving " + key + "='" + value + "' to: " + PanicConstants.PANIC_PREFS_DB);
+			Logger.debug(ITCConstants.TAG, "saving " + key + "='" + value + "' to: " + ITCConstants.PANIC_PREFS_DB);
 			
 			_prefs.put(key, value);
 			
@@ -194,7 +212,7 @@ public class PanicConfigMIDlet extends MIDlet implements Runnable {
 		} catch (RecordStoreException e) {
 			
 			showAlert("Error!","We couldn't save your settings!",0);
-			Logger.error(PanicConstants.TAG, "a problem saving the prefs: " + e, e);
+			Logger.error(ITCConstants.TAG, "a problem saving the prefs: " + e, e);
 		}
 	}
 	
@@ -215,7 +233,7 @@ public class PanicConfigMIDlet extends MIDlet implements Runnable {
 				key = keys[i];
 				value = values[i];
 				
-				Logger.debug(PanicConstants.TAG, "saving " + key + "='" + value + "' to: " + PanicConstants.PANIC_PREFS_DB);
+				Logger.debug(ITCConstants.TAG, "saving " + key + "='" + value + "' to: " + ITCConstants.PANIC_PREFS_DB);
 			
 				_prefs.put(key, value);
 			}
@@ -226,7 +244,7 @@ public class PanicConfigMIDlet extends MIDlet implements Runnable {
 		} catch (RecordStoreException e) {
 			
 			showAlert("Error!","We couldn't save your settings!",0);
-			Logger.error(PanicConstants.TAG, "a problem saving the prefs: " + e, e);
+			Logger.error(ITCConstants.TAG, "a problem saving the prefs: " + e, e);
 		}
 	}
 	

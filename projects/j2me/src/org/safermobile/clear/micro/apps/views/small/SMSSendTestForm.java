@@ -1,4 +1,4 @@
-package org.safermobile.clear.micro.apps.views;
+package org.safermobile.clear.micro.apps.views.small;
 
 
 import javax.microedition.lcdui.Graphics;
@@ -8,8 +8,8 @@ import org.j4me.ui.components.*;
 import org.safermobile.clear.micro.L10nConstants;
 import org.safermobile.clear.micro.L10nResources;
 import org.safermobile.clear.micro.apps.LocaleManager;
-import org.safermobile.clear.micro.apps.PanicConfigMIDlet;
-import org.safermobile.clear.micro.apps.PanicConstants;
+import org.safermobile.clear.micro.apps.ITCWizardMIDlet;
+import org.safermobile.clear.micro.apps.ITCConstants;
 import org.safermobile.clear.micro.apps.controllers.ShoutController;
 
 /**
@@ -21,7 +21,7 @@ public class SMSSendTestForm
         /**
          * The previous screen.
          */
-        private PanicConfigMIDlet _midlet;
+        private ITCWizardMIDlet _midlet;
         
         /**
          * The number box used by this example for entering phone numbers.
@@ -39,7 +39,7 @@ public class SMSSendTestForm
          * 
          * @param previous is the screen to return to once this done.
          */
-        public SMSSendTestForm (PanicConfigMIDlet midlet)
+        public SMSSendTestForm (ITCWizardMIDlet midlet)
         {
                 _midlet = midlet;
                 

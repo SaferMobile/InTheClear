@@ -1,4 +1,4 @@
-package org.safermobile.clear.micro.apps.views;
+package org.safermobile.clear.micro.apps.views.small;
 
 
 import javax.microedition.lcdui.Command;
@@ -14,8 +14,8 @@ import org.j4me.ui.components.*;
 import org.safermobile.clear.micro.L10nResources;
 import org.safermobile.clear.micro.L10nConstants;
 import org.safermobile.clear.micro.apps.LocaleManager;
-import org.safermobile.clear.micro.apps.PanicConfigMIDlet;
-import org.safermobile.clear.micro.apps.PanicConstants;
+import org.safermobile.clear.micro.apps.ITCWizardMIDlet;
+import org.safermobile.clear.micro.apps.ITCConstants;
 import org.safermobile.clear.micro.apps.WipeMIDlet;
 import org.safermobile.clear.micro.apps.controllers.WipeController;
 import org.safermobile.clear.micro.apps.controllers.WipeListener;
@@ -67,10 +67,10 @@ public class WipeManualForm
                 
                 try
         		{
-        		 _prefs = new Preferences (PanicConstants.PANIC_PREFS_DB);
+        		 _prefs = new Preferences (ITCConstants.PANIC_PREFS_DB);
         		} catch (RecordStoreException e) {
         			
-        			Logger.error(PanicConstants.TAG, "a problem saving the prefs: " + e, e);
+        			Logger.error(ITCConstants.TAG, "a problem saving the prefs: " + e, e);
         		}
                 
                 // Set the title and menu.
@@ -111,21 +111,21 @@ public class WipeManualForm
 
         public void load ()
         {
-        	String prefBool = _prefs.get(PanicConstants.PREFS_KEY_WIPE_CONTACTS);
+        	String prefBool = _prefs.get(ITCConstants.PREFS_KEY_WIPE_CONTACTS);
 			boolean wipeContacts = (prefBool != null && prefBool.equals("true"));
 			_cbContacts.setChecked(wipeContacts);
 			
-			prefBool = _prefs.get(PanicConstants.PREFS_KEY_WIPE_EVENTS);
+			prefBool = _prefs.get(ITCConstants.PREFS_KEY_WIPE_EVENTS);
 			boolean wipeEvents = (prefBool != null && prefBool.equals("true"));
 			boolean wipeToDos = wipeEvents; //grouped together
 			_cbCalendar.setChecked(wipeEvents);
 			
-			prefBool = _prefs.get(PanicConstants.PREFS_KEY_WIPE_PHOTOS);
+			prefBool = _prefs.get(ITCConstants.PREFS_KEY_WIPE_PHOTOS);
 			boolean wipePhotos = (prefBool != null && prefBool.equals("true"));
 			boolean wipeVideos = wipePhotos; //grouped together
 			_cbPhotos.setChecked(wipePhotos);
 						
-			prefBool = _prefs.get(PanicConstants.PREFS_KEY_WIPE_ALL_FILES);
+			prefBool = _prefs.get(ITCConstants.PREFS_KEY_WIPE_ALL_FILES);
 			boolean wipeAllFiles = (prefBool != null && prefBool.equals("true"));
 			_cbAllStorage.setChecked(wipeAllFiles);
 			

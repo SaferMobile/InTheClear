@@ -1,6 +1,6 @@
 package org.safermobile.clear.micro.apps;
 
-public interface PanicConstants {
+public interface ITCConstants {
 
 
 	public final static String TAG = "Panic";
@@ -19,6 +19,8 @@ public interface PanicConstants {
 	public final static String PREFS_KEY_WIPE_ALL_FILES = "wipe.allfiles";
 	
 	public final static String PREFS_KEY_ONE_TOUCH_PANIC = "panic.onetouch";
+	
+	public final static int SCREEN_WIDTH_LARGE = 320;
 	
 	
 }

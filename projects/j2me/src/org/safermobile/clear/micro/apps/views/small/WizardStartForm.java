@@ -1,4 +1,4 @@
-package org.safermobile.clear.micro.apps.views;
+package org.safermobile.clear.micro.apps.views.small;
 
 
 import javax.microedition.lcdui.Graphics;
@@ -8,18 +8,18 @@ import org.j4me.ui.components.Label;
 import org.safermobile.clear.micro.L10nConstants;
 import org.safermobile.clear.micro.L10nResources;
 import org.safermobile.clear.micro.apps.LocaleManager;
-import org.safermobile.clear.micro.apps.PanicConfigMIDlet;
+import org.safermobile.clear.micro.apps.ITCWizardMIDlet;
 
 /**
  * Example of a <code>TextBox</code> component.
  */
-public class PanicWizardForm
+public class WizardStartForm
         extends Dialog
 {
         /**
          * The previous screen.
          */
-        private PanicConfigMIDlet _midlet;
+        private ITCWizardMIDlet _midlet;
 
     	/**
     	 * The label 
@@ -32,7 +32,7 @@ public class PanicWizardForm
          * 
          * @param previous is the screen to return to once this done.
          */
-        public PanicWizardForm (PanicConfigMIDlet midlet)
+        public WizardStartForm (ITCWizardMIDlet midlet)
         {
                 _midlet = midlet;
                 

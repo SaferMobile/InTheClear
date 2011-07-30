@@ -1,4 +1,4 @@
-package org.safermobile.clear.micro.apps.views;
+package org.safermobile.clear.micro.apps.views.small;
 
 
 import javax.microedition.lcdui.Graphics;
@@ -9,8 +9,8 @@ import org.j4me.ui.components.*;
 import org.safermobile.clear.micro.L10nConstants;
 import org.safermobile.clear.micro.L10nResources;
 import org.safermobile.clear.micro.apps.LocaleManager;
-import org.safermobile.clear.micro.apps.PanicConfigMIDlet;
-import org.safermobile.clear.micro.apps.PanicConstants;
+import org.safermobile.clear.micro.apps.ITCWizardMIDlet;
+import org.safermobile.clear.micro.apps.ITCConstants;
 import org.safermobile.clear.micro.apps.ShoutMIDlet;
 import org.safermobile.clear.micro.apps.controllers.ShoutController;
 import org.safermobile.clear.micro.ui.ErrorAlert;
@@ -51,10 +51,10 @@ public class ShoutManualForm
                 
                 try
         		{
-        		 _prefs = new Preferences (PanicConstants.PANIC_PREFS_DB);
+        		 _prefs = new Preferences (ITCConstants.PANIC_PREFS_DB);
         		} catch (RecordStoreException e) {
         			
-        			Logger.error(PanicConstants.TAG, "a problem saving the prefs: " + e, e);
+        			Logger.error(ITCConstants.TAG, "a problem saving the prefs: " + e, e);
         		}
                 
                 // Set the title and menu.
@@ -108,10 +108,10 @@ public class ShoutManualForm
         
         private void load ()
         {
-        	if (_prefs.get(PanicConstants.PREFS_KEY_RECIPIENT) != null)
+        	if (_prefs.get(ITCConstants.PREFS_KEY_RECIPIENT) != null)
         	{
-        		tbPhoneNumber.setString(_prefs.get(PanicConstants.PREFS_KEY_RECIPIENT));
-        		tbMessage.setString(_prefs.get(PanicConstants.PREFS_KEY_MESSAGE));
+        		tbPhoneNumber.setString(_prefs.get(ITCConstants.PREFS_KEY_RECIPIENT));
+        		tbMessage.setString(_prefs.get(ITCConstants.PREFS_KEY_MESSAGE));
         	}
         }
         

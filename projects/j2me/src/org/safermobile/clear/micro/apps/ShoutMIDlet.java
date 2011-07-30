@@ -13,7 +13,7 @@ import javax.microedition.midlet.MIDletStateChangeException;
 
 import org.j4me.ui.UIManager;
 import org.safermobile.clear.micro.L10nResources;
-import org.safermobile.clear.micro.apps.views.ShoutManualForm;
+import org.safermobile.clear.micro.apps.views.small.ShoutManualForm;
 import org.safermobile.clear.micro.ui.ClearTheme;
 import org.safermobile.clear.micro.ui.LargeStringCanvas;
 import org.safermobile.micro.ui.DisplayManager;
@@ -107,7 +107,7 @@ public class ShoutMIDlet extends MIDlet implements CommandListener {
 	
 	private void showMessage (String msg)
 	{
-		Logger.debug(PanicConstants.TAG, "msg: " + msg);
+		Logger.debug(ITCConstants.TAG, "msg: " + msg);
 
 		if (_display.getCurrent() == _tbMain)
 		{

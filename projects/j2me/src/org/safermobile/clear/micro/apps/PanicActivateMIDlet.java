@@ -109,9 +109,9 @@ public class PanicActivateMIDlet extends MIDlet implements CommandListener, Wipe
 		try
 		{
 		
-			_prefs = new Preferences (PanicConstants.PANIC_PREFS_DB);
-			String oneTouch = _prefs.get(PanicConstants.PREFS_KEY_ONE_TOUCH_PANIC);
-			String recipients = _prefs.get(PanicConstants.PREFS_KEY_RECIPIENT);
+			_prefs = new Preferences (ITCConstants.PANIC_PREFS_DB);
+			String oneTouch = _prefs.get(ITCConstants.PREFS_KEY_ONE_TOUCH_PANIC);
+			String recipients = _prefs.get(ITCConstants.PREFS_KEY_RECIPIENT);
 
 			if (recipients == null)
 			{
@@ -131,7 +131,7 @@ public class PanicActivateMIDlet extends MIDlet implements CommandListener, Wipe
 		
 		} catch (RecordStoreException e) {
 			
-			Logger.error(PanicConstants.TAG, "error access preferences", e);
+			Logger.error(ITCConstants.TAG, "error access preferences", e);
 			showAlert(l10n.getString(L10nConstants.keys.TITLE_ERROR),l10n.getString(L10nConstants.keys.ERROR_PREFS),null);
 		}
 		
@@ -203,12 +203,12 @@ public class PanicActivateMIDlet extends MIDlet implements CommandListener, Wipe
 	{
 		ShoutController sControl = new ShoutController();
 		
-		Logger.debug(PanicConstants.TAG, "starting panic run(); loading prefs...");
+		Logger.debug(ITCConstants.TAG, "starting panic run(); loading prefs...");
 		
-		String recipients = _prefs.get(PanicConstants.PREFS_KEY_RECIPIENT);
-		String userName =  _prefs.get(PanicConstants.PREFS_KEY_NAME);
-		String userMessage = _prefs.get(PanicConstants.PREFS_KEY_MESSAGE);
-		String userLocation = _prefs.get(PanicConstants.PREFS_KEY_LOCATION);
+		String recipients = _prefs.get(ITCConstants.PREFS_KEY_RECIPIENT);
+		String userName =  _prefs.get(ITCConstants.PREFS_KEY_NAME);
+		String userMessage = _prefs.get(ITCConstants.PREFS_KEY_MESSAGE);
+		String userLocation = _prefs.get(ITCConstants.PREFS_KEY_LOCATION);
 		
 		String panicMsg = sControl.buildShoutMessage(userName, userMessage, userLocation);
 		String panicData = sControl.buildShoutData (userName);
@@ -229,7 +229,7 @@ public class PanicActivateMIDlet extends MIDlet implements CommandListener, Wipe
 			doSecPause (1);
 		}
 		
-		int resendTimeout = PanicConstants.DEFAULT_RESEND_TIMEOUT; //one minute
+		int resendTimeout = ITCConstants.DEFAULT_RESEND_TIMEOUT; //one minute
 		
 		boolean wipeComplete = false;
 		
@@ -258,18 +258,18 @@ public class PanicActivateMIDlet extends MIDlet implements CommandListener, Wipe
 				showMessage("Preparing to wipe data...");
 				WipeController wc = new WipeController();
 				
-				String prefBool = _prefs.get(PanicConstants.PREFS_KEY_WIPE_CONTACTS);
+				String prefBool = _prefs.get(ITCConstants.PREFS_KEY_WIPE_CONTACTS);
 				boolean wipeContacts = (prefBool != null && prefBool.equals("true"));
 				
-				prefBool = _prefs.get(PanicConstants.PREFS_KEY_WIPE_EVENTS);
+				prefBool = _prefs.get(ITCConstants.PREFS_KEY_WIPE_EVENTS);
 				boolean wipeEvents = (prefBool != null && prefBool.equals("true"));
 				boolean wipeToDos = wipeEvents; //grouped together
 				
-				prefBool = _prefs.get(PanicConstants.PREFS_KEY_WIPE_PHOTOS);
+				prefBool = _prefs.get(ITCConstants.PREFS_KEY_WIPE_PHOTOS);
 				boolean wipePhotos = (prefBool != null && prefBool.equals("true"));
 				boolean wipeVideos = wipePhotos; //grouped together
 				
-				prefBool = _prefs.get(PanicConstants.PREFS_KEY_WIPE_ALL_FILES);
+				prefBool = _prefs.get(ITCConstants.PREFS_KEY_WIPE_ALL_FILES);
 				boolean wipeAllFiles = (prefBool != null && prefBool.equals("true"));
 				
 				doSecPause (1);
@@ -357,7 +357,7 @@ public class PanicActivateMIDlet extends MIDlet implements CommandListener, Wipe
 	
 	private void showMessage (String msg)
 	{
-		Logger.debug(PanicConstants.TAG, "msg: " + msg);
+		Logger.debug(ITCConstants.TAG, "msg: " + msg);
 
 		if (_display.getCurrent() == _tbMain)
 		{
@@ -380,14 +380,14 @@ public class PanicActivateMIDlet extends MIDlet implements CommandListener, Wipe
 	public void wipingFileSuccess(String path) {
 		
 		showMessage("wiping: " + path);
-		Logger.debug(PanicConstants.TAG, "wiping: " + path);
+		Logger.debug(ITCConstants.TAG, "wiping: " + path);
 
 	}
 	
 	public void wipingFileError(String path, String msg) {
 		
 		showMessage("ERROR wiping: " + path);
-		Logger.debug(PanicConstants.TAG, "wiping error: " + path + ": " + msg);
+		Logger.debug(ITCConstants.TAG, "wiping error: " + path + ": " + msg);
 
 	}
 

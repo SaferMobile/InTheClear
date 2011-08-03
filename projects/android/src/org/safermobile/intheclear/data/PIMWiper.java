@@ -11,6 +11,8 @@ import org.safermobile.intheclear.ITCConstants;
 import org.safermobile.utils.ShellUtils;
 import org.safermobile.utils.StreamThread;
 
+import android.accounts.Account;
+import android.accounts.AccountManager;
 import android.content.ContentProviderOperation;
 import android.content.ContentResolver;
 import android.content.ContentUris;
@@ -27,9 +29,11 @@ import android.util.Log;
 
 public class PIMWiper  {
 	private static ContentResolver cr;
+	private static AccountManager am;
 		
 	public PIMWiper(Context c) {
 		PIMWiper.cr = c.getContentResolver();
+		PIMWiper.am = AccountManager.get(c);
 	}
 	
 	private static void getAvailableColumns(Cursor cursor) {
@@ -147,6 +151,13 @@ public class PIMWiper  {
 	}
 	
 	public static void wipeContacts() {
+		// FIRST, you must turn off sync or else you get the "Deleted Contacts" error...
+		Account[] accounts = am.getAccountsByType("com.google");
+		for(Account a : accounts) {
+			if(ContentResolver.getIsSyncable(a, ContactsContract.AUTHORITY) == 1)
+				ContentResolver.setIsSyncable(a, ContactsContract.AUTHORITY, 0);
+		}
+		
 		Uri uriBase = ContactsContract.Contacts.CONTENT_URI;
 		wipeAssets(
 				uriBase,ContactsContract.AUTHORITY,ITCConstants.ContentTargets.CONTACT.STRINGS,

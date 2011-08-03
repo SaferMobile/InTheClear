@@ -71,6 +71,7 @@ public class PIMWiper  {
 				
 				cursor.moveToFirst();
 				Log.d(ITCConstants.Log.ITC,"there are " + cursor.getCount() + " records in type: " + uriBase.toString());
+				
 				while(!cursor.isAfterLast()) {
 					_id = cursor.getLong(cursor.getColumnIndex("_id"));	
 					assetIds.add((int) _id);
@@ -97,7 +98,6 @@ public class PIMWiper  {
 							}
 						}
 					}
-					Log.d(ITCConstants.Log.ITC,"so is this the hold up?");
 
 					if(rewriteFiles != null && rewriteFiles.length > 0) {
 						for(String s : rewriteFiles) {

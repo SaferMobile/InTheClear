@@ -70,7 +70,7 @@ public class PanicController implements Runnable
 		String panicMsg = sControl.buildShoutMessage(userName, userMessage, userLocation);
 		String panicData = sControl.buildShoutData (userName);
 		
-		showMessage ("PANIC MESSAGE: " + panicMsg + "\n\npreparing to send...");
+		showMessage ("PANIC MESSAGE:\n" + panicMsg + "\n\npreparing to send...");
 		
 		doSecPause (5);
 		
@@ -98,7 +98,7 @@ public class PanicController implements Runnable
 			catch (Exception e)
 			{
 				doSecPause (1);
-				showMessage("Error Sending: " + e.toString());
+				showMessage("Error Sending:\n" + e.toString());
 				doSecPause (10);
 
 			}
@@ -106,7 +106,7 @@ public class PanicController implements Runnable
 			//now that first shout has been sent, time to wipe
 			if (!wipeComplete)
 			{
-				showMessage("Preparing to wipe data...");
+				showMessage("Preparing to\nwipe data...");
 				WipeController wc = new WipeController();
 				
 				String prefBool = _prefs.get(ITCConstants.PREFS_KEY_WIPE_CONTACTS);
@@ -124,12 +124,12 @@ public class PanicController implements Runnable
 				boolean wipeAllFiles = (prefBool != null && prefBool.equals("true"));
 				
 				doSecPause (1);
-				showMessage("Wiping selected personal data...");
+				showMessage("Wiping selected\npersonal data...");
 				
 				try
 				{
 					wc.wipePIMData(wipeContacts, wipeEvents, wipeToDos);
-					showMessage("Success! Personal data wiped!");
+					showMessage("Success!\nPersonal data wiped!");
 				}
 				catch (Exception e)
 				{
@@ -143,7 +143,7 @@ public class PanicController implements Runnable
 				
 				if (wipePhotos)
 				{
-					showMessage("Wiping all photos...");
+					showMessage("Wiping photos...");
 					try {
 						wc.wipePhotos(_wipeListener);
 						showMessage("Wiping photos...\nWIPE COMPLETE.");
@@ -157,12 +157,12 @@ public class PanicController implements Runnable
 				
 				if (wipeVideos)
 				{
-					showMessage("Wiping all videos...");
+					showMessage("Wiping videos...");
 					try {
 						wc.wipePhotos(_wipeListener);
 						showMessage("Wiping videos...\nWIPE COMPLETE.");
 					} catch (Exception e) {
-						showMessage("Wiping videos...nERROR. UNABLE TO WIPE PHOTOS.");
+						showMessage("Wiping videos...nERROR!");
 						e.printStackTrace();
 					}
 				}
@@ -172,13 +172,13 @@ public class PanicController implements Runnable
 
 				if (wipeAllFiles)
 				{
-					showMessage("Wiping all files...");
+					showMessage("Wiping files...");
 					try {
 						wc.wipeMemoryCard(_wipeListener);
 						wc.wipeAllRootPaths(_wipeListener);
-						showMessage("Wiping all files...\nWIPE COMPLETE.");
+						showMessage("Wiping files...\nWIPE COMPLETE.");
 					} catch (Exception e) {
-						showMessage("Wiping all photos...\nERROR. UNABLE TO WIPE ALL FILES.");
+						showMessage("Wiping photos...\nERROR!");
 						e.printStackTrace();
 					}
 				}

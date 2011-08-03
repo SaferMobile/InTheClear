@@ -594,11 +594,11 @@ public class TextBox
 			Theme theme = UIManager.getTheme();
 
 			String cancelText = theme.getMenuTextForCancel();
-			cancel = new Command( cancelText, Command.CANCEL, 1 );
+			cancel = new Command( cancelText, Command.CANCEL, 2 );
 			addCommand( cancel );
 			
 			String okText = theme.getMenuTextForOK();
-			ok = new Command( okText, Command.OK, 2 );
+			ok = new Command( okText, Command.OK, 1 );
 			addCommand( ok );
 			
 			setCommandListener( this );

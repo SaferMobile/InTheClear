@@ -1056,10 +1056,9 @@ devices the name consists of “Nokia”, the device
 		//  There are special cases, like BlackBerry's and IBM's J9
 		//  on Windows Mobile, where this is not true.  These are
 		//  handled by setMenuText() and other methods.
-		setFullScreenMode( DeviceScreen.FULLSCREEN_MODE_DEFAULT );
+		setFullScreenMode(true);
 		
-		// Register for getting LCDUI menu commands.
-		setCommandListener( this );
+		
 	}
 
 	/**
@@ -1432,6 +1431,11 @@ devices the name consists of “Nokia”, the device
 	 */
 	public void setMenuText (String left, String right)
 	{
+	
+		/*
+		// Register for getting LCDUI menu commands.
+		setCommandListener( this );
+				
 		// Does this JVM support our own menu bar?
 		if ( supportsMenuBar() == false )
 		{
@@ -1503,6 +1507,7 @@ devices the name consists of “Nokia”, the device
 				}
 			}
 		}
+		*/
 	}
 
 	/**

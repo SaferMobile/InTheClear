@@ -47,7 +47,7 @@ public class SetupAlertMessageForm
                 
                 // Set the title and menu.
                 setTitle(l10n.getString(L10nConstants.keys.PANIC_MESSAGE_TITLE) );
-                setMenuText(  l10n.getString(L10nConstants.keys.MENU_BACK) ,  l10n.getString(L10nConstants.keys.MENU_NEXT) );
+                //setMenuText(  l10n.getString(L10nConstants.keys.MENU_BACK) ,  l10n.getString(L10nConstants.keys.MENU_NEXT) );
 
              // Center the text.
                 Label label = new Label();
@@ -59,7 +59,8 @@ public class SetupAlertMessageForm
         		
         	    // Add the phone number box.
         		_tbRecipients = new TextBox();
-        		_tbRecipients.setLabel(l10n.getString(L10nConstants.keys.PANIC_MSG_LBL_PHONE));                
+        		_tbRecipients.setLabel(l10n.getString(L10nConstants.keys.PANIC_MSG_LBL_PHONE));        
+        		_tbRecipients.setForPhoneNumber();
                 append( _tbRecipients );
                 
                 // Add the message box

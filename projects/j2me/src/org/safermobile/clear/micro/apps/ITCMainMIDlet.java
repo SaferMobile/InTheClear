@@ -64,18 +64,14 @@ public class ITCMainMIDlet extends MIDlet implements Runnable {
 
 		UIManager.init(this);
 		_display = Display.getDisplay(this);
-		
+		setupUI();
 		
 		String recips = _prefs.get(ITCConstants.PREFS_KEY_RECIPIENT);
 		if (recips == null || recips.length() == 0)
 		{
 		
-			_splash = new Splash("/splash160.png","/splash320.png",0xffffff);
-			
-			screenWidth = _splash.getWidth();
-			
-			setupUI();
-			
+			_splash = new Splash("/splash160.png","/splash320.png",0xffffff);			
+			screenWidth = _splash.getWidth();			
 			_splash.show(_display, _screens[0].getCanvas(), 2000);
 			
 		}
@@ -85,6 +81,11 @@ public class ITCMainMIDlet extends MIDlet implements Runnable {
 			
 				
 		}
+	}
+	
+	public Display getCurrentDisplay ()
+	{
+		return _display;
 	}
 	
 	private void setupWipeDataTypes ()
@@ -167,8 +168,6 @@ public class ITCMainMIDlet extends MIDlet implements Runnable {
 	{
 		_screens[_screenIdx].show();
 		
-		
-			
 	}
 	
 	public int getNextScreenIdx()

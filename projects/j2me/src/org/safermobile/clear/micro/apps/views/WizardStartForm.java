@@ -76,5 +76,8 @@ public class WizardStartForm
 			
 		}
         
+		protected void declineNotify() {
+			_midlet.showMainForm();
+		}
       
 }

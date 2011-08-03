@@ -31,6 +31,7 @@ public class L10nConstants {
 		public static final String MENU_NEXT = "MENU_NEXT";
 		public static final String MENU_SEND = "MENU_SEND";
 		public static final String PANIC_ERROR_SMS = "PANIC_ERROR_SMS";
+		public static final String PANIC_MSG_PRE = "PANIC_MSG_PRE";
 		public static final String PANIC_MSG_FROM = "PANIC_MSG_FROM";
 		public static final String PANIC_MSG_LOCATION = "PANIC_MSG_LOCATION";
 		public static final String PANIC_MSG_CID = "PANIC_MSG_CID";

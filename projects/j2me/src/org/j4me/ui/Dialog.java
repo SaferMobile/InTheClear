@@ -103,9 +103,12 @@ public abstract class Dialog
 		
 		// Set the default menu options.
 		Theme theme = UIManager.getTheme();
+		
+		/*
 		String cancel = theme.getMenuTextForCancel();
 		String ok = theme.getMenuTextForOK();
 		setMenuText( cancel, ok );
+		*/
 	}
 
 	/**

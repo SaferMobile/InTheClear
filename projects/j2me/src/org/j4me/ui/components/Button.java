@@ -20,15 +20,18 @@ public class Button
 	private String strLabel = new String ();
 
 	private Font fontButton = Font.getFont(Font.FACE_MONOSPACE, 
-            Font.STYLE_BOLD, Font.SIZE_LARGE);
+            Font.STYLE_BOLD, Font.SIZE_MEDIUM);
 	
-	private javax.microedition.lcdui.CommandListener cl;
+	private int buttonHeight = 30; //default value;
+	
 	/**
 	 * 
 	 * Constructs a <code>CheckBox</code> component.
 	 */
 	public Button ()
 	{
+		buttonHeight = fontButton.getHeight()+(fontButton.getHeight()/2);
+		
 	}
 
 
@@ -112,7 +115,7 @@ public class Button
 	{
 
 		
-		return new int[] { viewportWidth, 30 };
+		return new int[] { viewportWidth, buttonHeight };
 	}
 	
 	/**
@@ -130,14 +133,8 @@ public class Button
 	 */
 	public void keyPressed (int keyCode)
 	{
-		// Was it an input character?
-		//   Otherwise it was a menu button of special character.
-		if ( (keyCode > 0) || (keyCode == DeviceScreen.FIRE) )
-		{
-			repaint();
-		}
-		
-		
+	
+		repaint();
 		
 		// Continue processing the key event.
 		super.keyPressed( keyCode );

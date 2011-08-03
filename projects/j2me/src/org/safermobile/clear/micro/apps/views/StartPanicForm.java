@@ -79,8 +79,7 @@ public class StartPanicForm
         {
         	super.show();
         	
-        	Display display = Display.getDisplay(_midlet);
-    		DisplayManager manager = new DisplayManager(display);
+    		DisplayManager manager = new DisplayManager(_midlet.getCurrentDisplay());
 
     		_pc = new PanicController(_prefs, this, this, manager, _cmdCancel);
     		_thread = new Thread(_pc);

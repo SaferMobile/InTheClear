@@ -24,17 +24,23 @@ public class ShoutController {
 		
 		StringBuffer sbPanicMsg = new StringBuffer();
 		
-		sbPanicMsg.append(l10n.getString(L10nConstants.keys.PANIC_MSG_FROM));
-		sbPanicMsg.append(' ');
-		sbPanicMsg.append(userName);
-		sbPanicMsg.append(':');
-		sbPanicMsg.append(' ');
+		sbPanicMsg.append(l10n.getString(L10nConstants.keys.PANIC_MSG_PRE));
+		
+		if (userName != null)
+		{
+			sbPanicMsg.append(l10n.getString(L10nConstants.keys.PANIC_MSG_FROM));
+			sbPanicMsg.append(':');
+			sbPanicMsg.append(userName);						
+		}
+		
 		sbPanicMsg.append(userMessage);
 
-		sbPanicMsg.append(' ');
-		sbPanicMsg.append(l10n.getString(L10nConstants.keys.PANIC_MSG_LOCATION));
-		sbPanicMsg.append(userLocation);
-		
+		if (userLocation != null)
+		{
+			sbPanicMsg.append(' ');
+			sbPanicMsg.append(l10n.getString(L10nConstants.keys.PANIC_MSG_LOCATION));
+			sbPanicMsg.append(userLocation);
+		}
 		
 		//append timestamp
 		sbPanicMsg.append(' ');

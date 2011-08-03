@@ -27,7 +27,7 @@
 	<string name="KEY_FINISH">Finish</string>
 	<string name="KEY_WIPE_SETTINGS_TITLE">In The Clear Data Wipe Settings</string>
 	<string name="KEY_PANIC_TITLE">Panic!</string>
-	<string name="KEY_PANIC_MSG_TITLE">Panic Msg:</string>
+	<string name="KEY_PANIC_MSG_TITLE">Panic Message:</string>
 	<string name="KEY_PANIC_PROGRESS_1">Sending your Panic! message...</string>
 	<string name="KEY_PANIC_PROGRESS_2">Wiping selected data from your phone...</string>
 	<string name="KEY_PANIC_ERROR_CONFIGUREDFRIENDS">Please setup preferences first to enter your alert information.</string>
@@ -50,6 +50,7 @@
 	<string name="KEY_PANIC_MSG_LAT">latitude:</string>
 	<string name="KEY_PANIC_MSG_LNG">longitude:</string>
 	<string name="KEY_PANIC_MSG_TIMESTAMP">ts:</string>
+	<string name="KEY_PANIC_WIPE_TITLE">Data to be wiped:</string>
 	<string name="KEY_PANIC_MSG_SENT">Panic Sent</string>
 	<string name="KEY_PANIC_MSG_SENTTO">Sent to:</string>
 	<string name="KEY_NC_TITLE">NetCheck</string>

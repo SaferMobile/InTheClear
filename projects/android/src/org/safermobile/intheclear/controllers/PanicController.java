@@ -9,6 +9,8 @@ import java.util.TimerTask;
 import org.safermobile.intheclear.ITCConstants;
 import org.safermobile.intheclear.R;
 import org.safermobile.intheclear.apps.Panic;
+import org.safermobile.intheclear.ui.WipeDisplay;
+
 import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
@@ -38,6 +40,7 @@ public class PanicController extends Service {
 	ShoutController sc;
 	
 	ArrayList<File> selectedFolders;
+	ArrayList<WipeDisplay> wipeDisplayList;
 	String userDisplayName,defaultPanicMsg,configuredFriends,panicData;
 	boolean shouldWipePhotos,shouldWipeContacts,shouldWipeCallLog,shouldWipeSMS,shouldWipeCalendar,shouldWipeFolders;
 		
@@ -67,8 +70,7 @@ public class PanicController extends Service {
 		defaultPanicMsg = _sp.getString(ITCConstants.Preference.DEFAULT_PANIC_MSG, "");
 		userDisplayName = _sp.getString(ITCConstants.Preference.USER_DISPLAY_NAME, "");
 		
-		panicData = getResources().getString(R.string.KEY_PANIC_MSG_TITLE) +
-					"\n\n" + defaultPanicMsg +
+		panicData = "\n\n" + defaultPanicMsg +
 					"\n\n" + sc.buildShoutData();
 
 		shouldWipeContacts = _sp.getBoolean(ITCConstants.Preference.DEFAULT_WIPE_CONTACTS, false);
@@ -79,10 +81,23 @@ public class PanicController extends Service {
 		shouldWipeFolders = _sp.getBoolean(ITCConstants.Preference.DEFAULT_WIPE_FOLDERS, false);
 		
 		configuredFriends = _sp.getString(ITCConstants.Preference.CONFIGURED_FRIENDS, "");
+		
+		wipeDisplayList = new ArrayList<WipeDisplay>();
+
+		wipeDisplayList.add(new WipeDisplay(getResources().getString(R.string.KEY_WIPE_WIPECONTACTS),shouldWipeContacts,this));
+		wipeDisplayList.add(new WipeDisplay(getResources().getString(R.string.KEY_WIPE_WIPEPHOTOS),shouldWipePhotos,this));
+		wipeDisplayList.add(new WipeDisplay(getResources().getString(R.string.KEY_WIPE_CALLLOG),shouldWipeCallLog,this));
+		wipeDisplayList.add(new WipeDisplay(getResources().getString(R.string.KEY_WIPE_SMS),shouldWipeSMS,this));
+		wipeDisplayList.add(new WipeDisplay(getResources().getString(R.string.KEY_WIPE_CALENDAR),shouldWipeCalendar,this));
+		wipeDisplayList.add(new WipeDisplay(getResources().getString(R.string.KEY_WIPE_SDCARD),shouldWipeFolders,this));
 	}
 	
 	public String returnPanicData() {
 		return panicData;
+	}
+	
+	public ArrayList<WipeDisplay> returnWipeSettings() {
+		return wipeDisplayList;
 	}
 	
 	public int returnPanicProgress() {

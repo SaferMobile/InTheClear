@@ -1,0 +1,12 @@
+MIDlet-Name: InTheClear
+MIDlet-Version: 1.0.0
+MIDlet-Vendor: SaferMobile.org
+MIDlet-Jar-URL: InTheClear.jar
+MIDlet-Jar-Size: 0
+MicroEdition-Profile: MIDP-2.0
+MicroEdition-Configuration: CLDC-1.1
+MIDlet-1: In The Clear (Setup Wizard),itcicon.png,org.safermobile.clear.micro.apps.ITCMainMIDlet
+RIM-MIDlet-Flags-1: 0
+MIDlet-2: Panic!,panic.png,org.safermobile.clear.micro.apps.PanicActivateMIDlet
+RIM-MIDlet-Flags-2: 0
+

@@ -1,6 +1,5 @@
 package org.safermobile.clear.micro.ui;
 
-import java.awt.Color;
 import java.io.IOException;
 
 import javax.microedition.lcdui.Font;

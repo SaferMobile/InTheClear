@@ -1,6 +1,5 @@
 package org.j4me.ui.components;
 
-import java.awt.Color;
 
 import javax.microedition.lcdui.*;
 

@@ -58,7 +58,7 @@
          <workspaceSymbolSet name="Nokia_6120_classic"/>
          <workspaceSymbolSet name="Nokia_7200"/>
       </configuration>
-      <configuration active="false" name="QwertyDevice">
+      <configuration active="true" name="QwertyDevice">
          <device group="Sun Java(TM) Wireless Toolkit 2.5.2_01 for CLDC" name="QwertyDevice"/>
          <symbolSet name="QwertyDevice">
             <symbol name="MMAPI" value="1.1"/>
@@ -91,7 +91,7 @@
             <symbol name="screen.height" value="320"/>
          </symbolSet>
       </configuration>
-      <configuration active="true" name="MediaControlSkin">
+      <configuration active="false" name="MediaControlSkin">
          <device group="Sun Java(TM) Wireless Toolkit 2.5.2_01 for CLDC" name="MediaControlSkin"/>
          <symbolSet name="MediaControlSkin">
             <symbol name="screen.isColor" value="true"/>

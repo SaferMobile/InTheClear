@@ -153,6 +153,13 @@ public class ITCConstants {
 				"body"
 			};
 		}
+		
+		public static class CALENDAR {
+			public static final String[] STRINGS = {
+				"displayName",
+				"sync_events"
+			};
+		}
 	}
 	
 	public static class Duriation {

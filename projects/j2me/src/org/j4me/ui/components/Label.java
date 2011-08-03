@@ -61,6 +61,12 @@ public class Label
 	 */
 	private int fontColor = -1;
 	
+	
+	/**
+	 * a picture to draw with the label
+	 */
+	private Picture picture;
+	
 	/**
 	 * Constructs an empty label.  The test should be set using <code>setLabel</code>.
 	 */
@@ -204,6 +210,19 @@ public class Label
 	 */
 	protected synchronized void paintComponent (Graphics g, Theme theme, int width, int height, boolean selected)
 	{
+		int xOffset = 0;
+		
+		if ( picture != null)
+		{
+			int anchor = Graphics.LEFT | Graphics.TOP;
+
+			//picture.paint(g, theme, getScreen(), 0, 0, picture.getWidth(), picture.getHeight(), selected);
+			g.drawImage(picture.getImage(), 0, 0, anchor);
+			
+			xOffset = picture.getImage().getWidth();
+			
+		}
+		
 		if ( text != null )
 		{
 			// Set the font on the graphics object.
@@ -224,11 +243,11 @@ public class Label
 			
 			if ( horizontalAlignment == Graphics.LEFT )
 			{
-				x = 0;
+				x = 0 + xOffset;
 			}
 			else if ( horizontalAlignment == Graphics.HCENTER )
 			{
-				x = width / 2;
+				x = width / 2 + xOffset;
 			}
 			else  // horizontalAlignment == Graphics.RIGHT
 			{
@@ -268,6 +287,12 @@ public class Label
 			
 			// Record the height of this component.
 			this.height = y;
+	
+		}
+		
+		if (picture != null)
+		{
+			this.height = Math.max(picture.getImage().getHeight(), this.height);
 		}
 	}
 
@@ -488,5 +513,13 @@ public class Label
 		}
 		
 		return lines;
+	}
+
+	public Picture getPicture() {
+		return picture;
+	}
+
+	public void setPicture(Picture picture) {
+		this.picture = picture;
 	}
 }

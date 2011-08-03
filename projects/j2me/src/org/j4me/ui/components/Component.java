@@ -64,6 +64,12 @@ public abstract class Component
 	 */
 	private int height;
 	
+	/*
+	 * OnClickListener for custom handling of events
+	 */
+	private OnClickListener onClickListener;
+	
+
 	/**
 	 * Constructs a component and attaches it to a screen.
 	 */
@@ -404,6 +410,14 @@ public abstract class Component
 	 */
 	public void keyPressed (int keyCode)
 	{
+		if ( (keyCode == DeviceScreen.FIRE)) 
+		{
+
+			if (onClickListener != null)
+				onClickListener.onClick(this);
+		}
+		
+		
 	}
 
 	/**
@@ -448,6 +462,8 @@ public abstract class Component
 	 */
 	public void pointerPressed (int x, int y)
 	{
+		if (onClickListener != null)
+			onClickListener.onClick(this);
 	}
 	
 	/**
@@ -527,5 +543,14 @@ public abstract class Component
 		// Return the offset from the edges of the component to the inside.
 		int offset = Math.max( HIGHLIGHTED_BORDER_WIDTH, rounding / 2 );
 		return offset;
+	}
+	
+
+	public OnClickListener getOnClickListener() {
+		return onClickListener;
+	}
+
+	public void setOnClickListener(OnClickListener onClickListener) {
+		this.onClickListener = onClickListener;
 	}
 }

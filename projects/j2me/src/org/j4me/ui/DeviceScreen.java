@@ -36,7 +36,7 @@ import org.j4me.logging.*;
 public abstract class DeviceScreen
 {
 	/**custom for SaferMobile **/
-	public static boolean FULLSCREEN_MODE_DEFAULT = true;
+	public static boolean FULLSCREEN_MODE_DEFAULT = false;
 	
 	/**
 	 * Constant for the <code>LEFT</code> game action.
@@ -291,7 +291,8 @@ public abstract class DeviceScreen
 	 * @param mode is <code>true</code> if the <code>DeviceScreen</code> is to be in full
 	 *  screen mode, <code>false</code> otherwise.
 	 */
-	private void setFullScreenMode (boolean mode)
+	
+	public void setFullScreenMode (boolean mode)
 	{
 		this.fullScreenMode = mode;
 	}
@@ -334,6 +335,7 @@ public abstract class DeviceScreen
 		// Notify the slave screen.
 		slave.setTitle( title );
 		slave.repaint();
+		
 	}
 	
 	/**
@@ -989,7 +991,6 @@ devices the name consists of “Nokia”, the device
 			if (platform.indexOf("S60")!=-1)
 			{
 				series60 = true;
-				DeviceScreen.FULLSCREEN_MODE_DEFAULT = false;
 
 			}
 			else
@@ -997,7 +998,6 @@ devices the name consists of “Nokia”, the device
 				try{
 						Class.forName("com.symbian.gcf.NativeInputStream");
 						series60 = true;
-						DeviceScreen.FULLSCREEN_MODE_DEFAULT = false;
 					}catch(Exception e){
 						series60 = false;
 					}
@@ -1126,7 +1126,7 @@ devices the name consists of “Nokia”, the device
 		master.keyPressed( translatedKey );
 		
 		// If this is a menu key raise an event.
-		if ( translatedKey == DeviceScreen.MENU_LEFT )
+		if ( translatedKey == DeviceScreen.MENU_LEFT || translatedKey == DeviceScreen.LEFT)
 		{
 			// Highlight the menu option immediately.
 			if ( master.hasMenuBar() )
@@ -1138,7 +1138,7 @@ devices the name consists of “Nokia”, the device
 			// Raise a menu event.
 			master.declineNotify();
 		}
-		else if ( translatedKey == DeviceScreen.MENU_RIGHT )
+		else if ( translatedKey == DeviceScreen.MENU_RIGHT || translatedKey == DeviceScreen.RIGHT)
 		{
 			// Highlight the menu option immediately.
 			if ( master.hasMenuBar() )
@@ -1542,7 +1542,7 @@ devices the name consists of “Nokia”, the device
 	 */
 	public boolean supportsMenuBar ()
 	{
-		if ( blackberry || ibmJ9 || tao || series60 )
+		if ( blackberry || ibmJ9 || tao )
 		{
 			// These JVMs do not show our menu bar at the bottom of the
 			// screen.  Instead they use the LCDUI menu system.

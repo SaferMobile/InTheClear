@@ -1,4 +1,4 @@
-package org.safermobile.clear.micro.apps.views.small;
+package org.safermobile.clear.micro.apps.views;
 
 
 import java.util.Enumeration;
@@ -13,7 +13,7 @@ import org.j4me.ui.components.*;
 import org.safermobile.clear.micro.L10nResources;
 import org.safermobile.clear.micro.L10nConstants;
 import org.safermobile.clear.micro.apps.LocaleManager;
-import org.safermobile.clear.micro.apps.ITCWizardMIDlet;
+import org.safermobile.clear.micro.apps.ITCMainMIDlet;
 import org.safermobile.clear.micro.apps.ITCConstants;
 import org.safermobile.clear.micro.apps.controllers.WipeController;
 import org.safermobile.clear.micro.apps.models.WipeDataType;
@@ -24,12 +24,12 @@ import org.safermobile.micro.utils.Preferences;
  * Example of a <code>TextBox</code> component.
  */
 public class WipeSelectionForm
-        extends Dialog implements Runnable
+        extends Dialog implements Runnable, OnClickListener
 {
         /**
          * The previous screen.
          */
-        private ITCWizardMIDlet _midlet;
+        private ITCMainMIDlet _midlet;
         
         private Vector _wipeDataTypes;
         private Vector _checkBoxes;        
@@ -41,14 +41,14 @@ public class WipeSelectionForm
          * 
          * @param previous is the screen to return to once this done.
          */
-        public WipeSelectionForm (ITCWizardMIDlet midlet, Vector wipeDataTypes)
+        public WipeSelectionForm (ITCMainMIDlet midlet, Vector wipeDataTypes)
         {
                 _midlet = midlet;
                 _wipeDataTypes = wipeDataTypes;
                 
                 // Set the title and menu.
                 setTitle( l10n.getString(L10nConstants.keys.WIPE_SELECT_TITLE) );
-                setMenuText( l10n.getString(L10nConstants.keys.MENU_BACK), l10n.getString(L10nConstants.keys.MENU_NEXT) );
+               // setMenuText( l10n.getString(L10nConstants.keys.MENU_BACK), l10n.getString(L10nConstants.keys.MENU_NEXT) );
 
                 // Center the text.
                 Label label = new Label();
@@ -73,6 +73,10 @@ public class WipeSelectionForm
             		_checkBoxes.addElement(cb);
         		}
 
+        		Button btn = new Button();
+        		btn.setOnClickListener(this);
+        		btn.setLabel(l10n.getString(L10nConstants.keys.BUTTON_CONTINUE));
+        		append (btn);
 
         }
 
@@ -88,17 +92,18 @@ public class WipeSelectionForm
         	}
         	
         }
-        /**
-         * Takes the user to the previous screen.
-         */
-        protected void declineNotify ()
+        
+        public boolean hasMenuBar ()
         {
-        	_midlet.showStartScreen();
+        	return false;
         }
-
-		protected void acceptNotify() {
+        
+		public void onClick(Component c) {
 			new Thread (this).start();
+			
 		}
+		
+      
 		
 		public void run ()
 		{

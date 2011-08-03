@@ -237,7 +237,6 @@ public class L10nResources {
           }
           String key 	 = line.substring(0x00, separator);
           String value = line.substring(++separator, line.length());
-          value = new String(value.getBytes(),"UTF-8");
           values.put(key, value);
           buffer.delete(0x00, buffer.length());
         }

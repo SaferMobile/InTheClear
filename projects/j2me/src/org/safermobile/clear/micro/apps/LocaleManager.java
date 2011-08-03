@@ -5,7 +5,7 @@ import org.safermobile.clear.micro.L10nResources;
 
 public class LocaleManager {
 
-	public static String DEFAULT_LOCALE = L10nConstants.locales.AR_EG;
+	public static String DEFAULT_LOCALE = L10nConstants.locales.EN_US;
 
 	private static L10nResources lResources;
 	

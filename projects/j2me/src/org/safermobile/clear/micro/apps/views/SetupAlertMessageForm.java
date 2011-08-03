@@ -1,4 +1,4 @@
-package org.safermobile.clear.micro.apps.views.small;
+package org.safermobile.clear.micro.apps.views;
 
 
 import javax.microedition.lcdui.Graphics;
@@ -8,19 +8,19 @@ import org.j4me.ui.components.*;
 import org.safermobile.clear.micro.L10nConstants;
 import org.safermobile.clear.micro.L10nResources;
 import org.safermobile.clear.micro.apps.LocaleManager;
-import org.safermobile.clear.micro.apps.ITCWizardMIDlet;
+import org.safermobile.clear.micro.apps.ITCMainMIDlet;
 import org.safermobile.clear.micro.apps.ITCConstants;
 
 /**
  * Example of a <code>TextBox</code> component.
  */
 public class SetupAlertMessageForm
-        extends Dialog implements Runnable
+        extends Dialog implements Runnable, OnClickListener
 {
         /**
          * The previous screen.
          */
-        private ITCWizardMIDlet _midlet;
+        private ITCMainMIDlet _midlet;
 
 
         /**
@@ -41,7 +41,7 @@ public class SetupAlertMessageForm
          * 
          * @param previous is the screen to return to once this done.
          */
-        public SetupAlertMessageForm (ITCWizardMIDlet midlet)
+        public SetupAlertMessageForm (ITCMainMIDlet midlet)
         {
                _midlet = midlet;
                 
@@ -67,6 +67,11 @@ public class SetupAlertMessageForm
         		_tbAlertMsg.setLabel(l10n.getString(L10nConstants.keys.PANIC_MESSAGE_LBL_MSG));                
                 append( _tbAlertMsg );
                
+                Button btn = new Button();
+        		btn.setOnClickListener(this);
+        		btn.setLabel(l10n.getString(L10nConstants.keys.BUTTON_CONTINUE));
+        		append (btn);
+        		
                 load();
         }
 
@@ -113,16 +118,14 @@ public class SetupAlertMessageForm
         	}
         }
         
-        /**
-         * Takes the user to the previous screen.
-         */
-        protected void declineNotify ()
+        public boolean hasMenuBar ()
         {
-               _midlet.showPrev();
+        	return false;
         }
         
-        protected void acceptNotify() 
-        {		
-        	new Thread(this).start();
+		public void onClick(Component c) {
+			new Thread(this).start();
+			
 		}
+       
 }

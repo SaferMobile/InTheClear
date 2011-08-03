@@ -1,4 +1,4 @@
-package org.safermobile.clear.micro.apps.views.small;
+package org.safermobile.clear.micro.apps.views;
 
 
 import javax.microedition.lcdui.Graphics;
@@ -7,7 +7,7 @@ import javax.microedition.midlet.MIDlet;
 import org.j4me.ui.*;
 import org.j4me.ui.components.*;
 import org.safermobile.clear.micro.apps.LocaleManager;
-import org.safermobile.clear.micro.apps.ITCWizardMIDlet;
+import org.safermobile.clear.micro.apps.ITCMainMIDlet;
 import org.safermobile.clear.micro.apps.ITCConstants;
 import org.safermobile.clear.micro.L10nResources;
 import org.safermobile.clear.micro.L10nConstants;
@@ -16,12 +16,12 @@ import org.safermobile.clear.micro.L10nConstants;
  * Example of a <code>TextBox</code> component.
  */
 public class SetupCompleteForm
-        extends Dialog
+        extends Dialog implements OnClickListener
 {
         /**
          * The previous screen.
          */
-        private ITCWizardMIDlet _midlet;
+        private ITCMainMIDlet _midlet;
 
     	/**
     	 * The label 
@@ -34,13 +34,13 @@ public class SetupCompleteForm
          * 
          * @param previous is the screen to return to once this done.
          */
-        public SetupCompleteForm (ITCWizardMIDlet midlet)
+        public SetupCompleteForm (ITCMainMIDlet midlet)
         {
                 _midlet = midlet;
                 
                 // Set the title and menu.
                 setTitle( l10n.getString(L10nConstants.keys.SETUP_COMPLETE_TITLE) );
-                setMenuText(null, l10n.getString(L10nConstants.keys.MENU_EXIT));
+               
                 
             	// Center the text.
         		_label.setHorizontalAlignment( Graphics.LEFT );
@@ -51,20 +51,25 @@ public class SetupCompleteForm
         		// Add the label to this screen.
         		append( _label );
 
-        		
+        		Button btn = new Button();
+        		btn.setOnClickListener(this);
+        		btn.setLabel(l10n.getString(L10nConstants.keys.BUTTON_CONTINUE));
+        		append (btn);
 
         }
         
-     
+        public boolean hasMenuBar ()
+        {
+        	return false;
+        }
+        
+		public void onClick(Component c) {
+			_midlet.showMainForm();
+			
+		}
    
         
-        /**
-         * Takes the user to the previous screen.
-         */
-        protected void acceptNotify ()
-        {
-        	_midlet.notifyDestroyed();
-        }
+      
         
       
 }

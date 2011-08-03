@@ -1,7 +1,8 @@
-package org.safermobile.clear.micro.apps.views.small;
+package org.safermobile.clear.micro.apps.views;
 
 
 import javax.microedition.lcdui.Graphics;
+import javax.microedition.midlet.MIDlet;
 import javax.microedition.rms.RecordStoreException;
 
 import org.j4me.ui.*;
@@ -9,9 +10,8 @@ import org.j4me.ui.components.*;
 import org.safermobile.clear.micro.L10nConstants;
 import org.safermobile.clear.micro.L10nResources;
 import org.safermobile.clear.micro.apps.LocaleManager;
-import org.safermobile.clear.micro.apps.ITCWizardMIDlet;
+import org.safermobile.clear.micro.apps.ITCMainMIDlet;
 import org.safermobile.clear.micro.apps.ITCConstants;
-import org.safermobile.clear.micro.apps.ShoutMIDlet;
 import org.safermobile.clear.micro.apps.controllers.ShoutController;
 import org.safermobile.clear.micro.ui.ErrorAlert;
 import org.safermobile.micro.utils.Logger;
@@ -21,12 +21,12 @@ import org.safermobile.micro.utils.Preferences;
  * Example of a <code>TextBox</code> component.
  */
 public class ShoutManualForm
-        extends Dialog implements Runnable
+        extends Dialog implements Runnable, OnClickListener
 {
         /**
          * The previous screen.
          */
-        private ShoutMIDlet midlet;
+        private ITCMainMIDlet _midlet;
         
         /**
          * The number box used by this example for entering phone numbers.
@@ -45,9 +45,9 @@ public class ShoutManualForm
          * 
          * @param previous is the screen to return to once this done.
          */
-        public ShoutManualForm (ShoutMIDlet midlet)
+        public ShoutManualForm (ITCMainMIDlet midlet)
         {
-                this.midlet = midlet;
+               _midlet = midlet;
                 
                 try
         		{
@@ -58,13 +58,13 @@ public class ShoutManualForm
         		}
                 
                 // Set the title and menu.
-                setTitle( "Shout!" );
-                setMenuText( "Exit" ,  l10n.getString(L10nConstants.keys.MENU_SEND) );
+                setTitle( "Send Emergency Message" );
+               // setMenuText( "Cancel" ,  l10n.getString(L10nConstants.keys.MENU_SEND) );
 
              // Center the text.
         		_label.setHorizontalAlignment( Graphics.LEFT );
 
-        		_label.setLabel("Send a Shout! Message");
+        		_label.setLabel("Emergency Message");
         		
         		// Add the label to this screen.
         		append( _label );
@@ -80,26 +80,33 @@ public class ShoutManualForm
         		tbMessage = new TextBox();
         		tbMessage.setLabel(l10n.getString(L10nConstants.keys.SMS_TEST_LBL_MSG));        		
                 append( tbMessage );
-                
+
+                Button btn = new Button();
+        		btn.setOnClickListener(this);
+        		btn.setLabel(l10n.getString(L10nConstants.keys.MENU_SEND));
+        		append (btn);
+
                 load();
                
         }
 
-        /**
-         * Takes the user to the previous screen.
-         */
-        protected void declineNotify ()
+        public boolean hasMenuBar ()
         {
-        	midlet.notifyDestroyed();
-
+        	return false;
         }
         
-        protected void acceptNotify() 
-        {		
-        	//do SMS test
-        	new Thread(this).start();
-        }
-        
+		public void onClick(Component c) 
+		{
+			new Thread(this).start();
+			
+		}
+		
+		protected void declineNotify ()
+		{
+			_midlet.showMainForm();
+		}
+		
+      
         public void run ()
         {
         	sendShoutMessage();

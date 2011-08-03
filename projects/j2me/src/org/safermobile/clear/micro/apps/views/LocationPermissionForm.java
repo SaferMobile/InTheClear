@@ -1,4 +1,4 @@
-package org.safermobile.clear.micro.apps.views.small;
+package org.safermobile.clear.micro.apps.views;
 
 
 import javax.microedition.lcdui.Graphics;
@@ -8,7 +8,7 @@ import org.j4me.ui.components.*;
 import org.safermobile.clear.micro.L10nConstants;
 import org.safermobile.clear.micro.L10nResources;
 import org.safermobile.clear.micro.apps.LocaleManager;
-import org.safermobile.clear.micro.apps.ITCWizardMIDlet;
+import org.safermobile.clear.micro.apps.ITCMainMIDlet;
 import org.safermobile.clear.micro.apps.ITCConstants;
 import org.safermobile.clear.micro.apps.controllers.ShoutController;
 import org.safermobile.clear.micro.data.PhoneInfo;
@@ -22,7 +22,7 @@ public class LocationPermissionForm
         /**
          * The previous screen.
          */
-        private ITCWizardMIDlet midlet;
+        private ITCMainMIDlet midlet;
         
     	private Label _label = new Label();
 
@@ -33,7 +33,7 @@ public class LocationPermissionForm
          * 
          * @param previous is the screen to return to once this done.
          */
-        public LocationPermissionForm (ITCWizardMIDlet midlet)
+        public LocationPermissionForm (ITCMainMIDlet midlet)
         {
                 this.midlet = midlet;
                 

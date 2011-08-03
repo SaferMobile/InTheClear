@@ -15,7 +15,7 @@ public class CheckBox
 	 * The ratio of the side of the checkbox square to the height of
 	 * the current font.
 	 */
-	private static final double CHECKBOX_TO_FONT_RATIO = 0.70;  // 70% 
+	private static final double CHECKBOX_TO_FONT_RATIO = 0.95;  // 70% 
 	
 	/**
 	 * The text that appears to the right of the check box.

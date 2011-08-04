@@ -27,8 +27,8 @@ public class LocaleManager {
 				lResources = L10nResources.getL10nResources(DEFAULT_LOCALE);
 			else if (locale.startsWith("en"))
 				lResources = L10nResources.getL10nResources(DEFAULT_LOCALE);
-			else if (locale.startsWith("ar"))
-				lResources = L10nResources.getL10nResources(L10nConstants.locales.AR_EG);		
+		//	else if (locale.startsWith("ar"))
+			//	lResources = L10nResources.getL10nResources(L10nConstants.locales.AR_EG);		
 			else
 				lResources = L10nResources.getL10nResources(DEFAULT_LOCALE);
 	

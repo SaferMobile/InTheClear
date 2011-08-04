@@ -36,7 +36,7 @@ import org.j4me.logging.*;
 public abstract class DeviceScreen
 {
 	/**custom for SaferMobile **/
-	public static boolean FULLSCREEN_MODE_DEFAULT = false;
+	public static boolean FULLSCREEN_MODE_DEFAULT = true;
 	
 	/**
 	 * Constant for the <code>LEFT</code> game action.
@@ -1056,7 +1056,7 @@ devices the name consists of “Nokia”, the device
 		//  There are special cases, like BlackBerry's and IBM's J9
 		//  on Windows Mobile, where this is not true.  These are
 		//  handled by setMenuText() and other methods.
-		setFullScreenMode(true);
+		setFullScreenMode(DeviceScreen.FULLSCREEN_MODE_DEFAULT);
 		
 		
 	}

@@ -538,6 +538,8 @@ public class TextBox
 		// Display the text entry screen.
 		Display display = UIManager.getDisplay();
 		display.setCurrent( entry );
+		
+		entry.setString(contents);
 	}
 	
 	/**

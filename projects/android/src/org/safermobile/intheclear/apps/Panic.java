@@ -1,9 +1,13 @@
 package org.safermobile.intheclear.apps;
 
+import java.util.ArrayList;
+
 import org.safermobile.intheclear.ITCConstants;
 import org.safermobile.intheclear.R;
 import org.safermobile.intheclear.controllers.PanicController;
 import org.safermobile.intheclear.controllers.PanicController.LocalBinder;
+import org.safermobile.intheclear.ui.WipeDisplay;
+import org.safermobile.intheclear.ui.WipeDisplayAdaptor;
 import org.safermobile.utils.EndActivity;
 
 import android.app.Activity;
@@ -25,6 +29,7 @@ import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
+import android.widget.ListView;
 import android.widget.TextView;
 
 public class Panic extends Activity implements OnClickListener, OnDismissListener {
@@ -33,8 +38,8 @@ public class Panic extends Activity implements OnClickListener, OnDismissListene
 	boolean oneTouchPanic;
 	
 	TextView panicReadout,panicProgress,countdownReadout;
+	ListView wipeDisplayList;
 	Button controlPanic,cancelCountdown,panicControl;	
-	
 	
 	Intent panic,toKill;
 	int panicState = ITCConstants.PanicState.AT_REST;
@@ -52,6 +57,8 @@ public class Panic extends Activity implements OnClickListener, OnDismissListene
 			pc = lb.getService();
 			isBound = true;
 			panicReadout.setText(pc.returnPanicData());
+			wipeDisplayList.setAdapter(new WipeDisplayAdaptor(Panic.this,pc.returnWipeSettings()));
+			
 			Log.d(ITCConstants.Log.ITC,"i bound the service");
 		}
 
@@ -73,6 +80,8 @@ public class Panic extends Activity implements OnClickListener, OnDismissListene
 		panicReadout = (TextView) findViewById(R.id.panicReadout);
 		panicControl = (Button) findViewById(R.id.panicControl);
 		
+		wipeDisplayList = (ListView) findViewById(R.id.wipeDisplayList);
+				
 		bindService(new Intent(Panic.this,PanicController.class),sc,Context.BIND_AUTO_CREATE);
 		panicReceiver = new BroadcastReceiver() {
 

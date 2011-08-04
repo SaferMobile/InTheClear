@@ -9,7 +9,8 @@
 		android:id="@+id/confirmationTitle"
 		android:layout_width="fill_parent"
 		android:layout_height="wrap_content"
-		android:layout_weight="0.2" />
+		android:layout_weight="0.2"
+		android:textSize="30dip" />
 	<TextView 
 		android:id="@+id/confirmationText"
 		android:layout_width="fill_parent"
@@ -22,12 +23,6 @@
   		android:layout_height="0dip"
   		android:layout_weight="0.1"
   		android:weightSum="1"
-  		android:gravity="center_horizontal">
-	    <Button
-	    	android:id="@+id/dismissConfirmation"
-	    	android:layout_width="wrap_content"
-	    	android:layout_height="wrap_content"
-	    	android:layout_weight="0.5"
-	    	android:gravity="center_horizontal" />
-    </LinearLayout>
+  		android:gravity="center_horizontal"
+  		android:id="@+id/confirmationHolder" />
 </LinearLayout>

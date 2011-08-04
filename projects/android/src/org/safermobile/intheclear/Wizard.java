@@ -1,21 +1,15 @@
 package org.safermobile.intheclear;
 
-import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.Map;
-import java.util.Map.Entry;
-import java.util.Set;
 
 import org.safermobile.intheclear.screens.WipePreferences;
-import org.safermobile.intheclear.screens.WizardForm;
-import org.safermobile.intheclear.ui.WipeSelector;
+import org.safermobile.intheclear.sms.SMSSender;
 
 import android.app.Activity;
-import android.content.BroadcastReceiver;
+import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
-import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.graphics.Canvas;
 import android.graphics.Color;
@@ -25,15 +19,19 @@ import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.util.Log;
+import android.view.Gravity;
+import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.EditText;
 import android.widget.ScrollView;
 import android.widget.TextView;
+import android.widget.LinearLayout.LayoutParams;
 
 public class Wizard extends Activity implements OnClickListener {
 	int wNum,nextWizard,lastWizard = 0;
@@ -49,9 +47,7 @@ public class Wizard extends Activity implements OnClickListener {
 	
 	boolean nextButtonClickable, backButtonClickable;
 	int[] statusColors;
-	
-	private BroadcastReceiver br;
-		
+			
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -89,10 +85,9 @@ public class Wizard extends Activity implements OnClickListener {
 		}
 		
 		wizardTitle = (TextView) findViewById(R.id.wizardTitle);
+		initWizardFrame();
 		
 		sv = (ScrollView) findViewById(R.id.wizardDisplay);
-		
-		initWizardFrame();
 		form = new WizardForm(
 				this,
 				wNum,
@@ -104,33 +99,12 @@ public class Wizard extends Activity implements OnClickListener {
 		sv.addView(form.returnForm());
 		if(form.hasPreferenceData())
 			populateDefaults(sv);
-		
-		br = new BroadcastReceiver() {
-			@Override
-			public void onReceive(Context c, Intent i) {
-				if(i.hasExtra(ITCConstants.Wizard.WIZARD_ACTION)) {
-					switch(i.getIntExtra(ITCConstants.Wizard.WIZARD_ACTION, 0)) {
-					case ITCConstants.Wizard.LAUNCH_WIPE_SELECTOR:
-						Intent w = new Intent(Wizard.this,WipePreferences.class);
-						Wizard.this.startActivityForResult(w,ITCConstants.Results.PREFERENCES_UPDATED);
-						break;
-					}
-				}
-				
-			}
-			
-		};
 			
 	}
 	
 	@Override
 	public void onResume() {
 		super.onResume();
-		
-		// start broadcast receiver
-		IntentFilter filter = new IntentFilter();
-		filter.addAction(ITCConstants.Wizard.ACTION);
-		registerReceiver(br,filter);
 	}
 	
 	@SuppressWarnings("unchecked")
@@ -153,7 +127,7 @@ public class Wizard extends Activity implements OnClickListener {
 				_ed.putBoolean(ITCConstants.Preference.DEFAULT_WIPE_SMS, wipePreferences.get(ITCConstants.Wipe.SMS)).commit();
 
 				// un-grey out the next button
-				
+				wizardForward.setEnabled(true);
 			}
 		}
 	}
@@ -201,130 +175,19 @@ public class Wizard extends Activity implements OnClickListener {
 			}
 		}
 	}
-
-	/*
-	private LinearLayout populateDefaults(View view) {
-		Log.d(ITCConstants.Log.ITC,"updating view with data");
-		
-		LinearLayout ff = (LinearLayout) view;
-		for(int x=0;x<ff.getChildCount();x++) {
-			View v = ff.getChildAt(x);
-			Log.d(ITCConstants.Log.ITC,"view: " + v.getClass());
-			
-			// TODO: if it's a linearlayout, drill down into it...
-			if(v.getContentDescription() != null && v.getContentDescription().length() > 0) {
-				if(v instanceof EditText) {
-					EditText et = (EditText) v;
-					String hint = _sp.getString((String) v.getContentDescription(), "");
-					et.setHint(hint);
-
-				} else if(v instanceof ListView) {
-					ListView lv = (ListView) v;
-					for(int l=0;l<lv.getCount();l++) {
-						WipeSelector w = (WipeSelector) lv.getItemAtPosition(l);
-						switch(w.getWipeType()) {
-						case ITCConstants.Wipe.CALENDAR:
-							w.setSelected(_sp.getBoolean(ITCConstants.Preference.DEFAULT_WIPE_CALENDAR, false));
-							break;
-						case ITCConstants.Wipe.CALLLOG:
-							w.setSelected(_sp.getBoolean(ITCConstants.Preference.DEFAULT_WIPE_CALLLOG, false));
-							break;
-						case ITCConstants.Wipe.CONTACTS:
-							w.setSelected(_sp.getBoolean(ITCConstants.Preference.DEFAULT_WIPE_CONTACTS, false));
-							break;
-						case ITCConstants.Wipe.FOLDER:
-							w.setSelected(_sp.getBoolean(ITCConstants.Preference.DEFAULT_WIPE_FOLDERS, false));
-							break;
-						case ITCConstants.Wipe.PHOTOS:
-							w.setSelected(_sp.getBoolean(ITCConstants.Preference.DEFAULT_WIPE_PHOTOS, false));
-							break;
-						case ITCConstants.Wipe.SMS:
-							w.setSelected(_sp.getBoolean(ITCConstants.Preference.DEFAULT_WIPE_SMS, false));
-							break;
-						case ITCConstants.Preference.ONE_TOUCH:
-							w.setSelected(_sp.getBoolean(ITCConstants.Preference.DEFAULT_ONE_TOUCH_PANIC, false));
-							break;
-						default:
-							// TODO: handle individual folders selected for wipe
-							break;
-						}
-					}
-				}
-			}
-		}
-		return ff;
-	}
-	
-	private void savePreferenceState() {
-		for(int x=0;x<form.returnForm().getChildCount();x++) {
-			View v = form.returnForm().getChildAt(x);
-			if(v.getContentDescription() != null && v.getContentDescription().length() > 0) {
-				if(v instanceof EditText) {
-					String key = (String) v.getContentDescription();
-					String val = ((EditText)v).getText().toString();
-					
-					if(val.compareTo("") != 0) {
-						_ed.putString(key, val);
-					}
-				} else if(v instanceof ListView) {
-					if(v.getContentDescription().toString().compareTo(ITCConstants.Preference.WIPE_SELECTOR) == 0 ||
-							v.getContentDescription().toString().compareTo(ITCConstants.Preference.DEFAULT_ONE_TOUCH_PANIC) == 0) {
-						ListView lv = (ListView) v;
-						for(int l=0;l<lv.getCount();l++) {
-							WipeSelector w = (WipeSelector) lv.getItemAtPosition(l);
-							String key;
-							switch(w.getWipeType()) {
-							case ITCConstants.Wipe.CALENDAR:
-								key = ITCConstants.Preference.DEFAULT_WIPE_CALENDAR;
-								_ed.putBoolean(key, w.getSelected());
-								break;
-							case ITCConstants.Wipe.CALLLOG:
-								key = ITCConstants.Preference.DEFAULT_WIPE_CALLLOG;
-								_ed.putBoolean(key, w.getSelected());
-								break;
-							case ITCConstants.Wipe.CONTACTS:
-								key = ITCConstants.Preference.DEFAULT_WIPE_CONTACTS;
-								_ed.putBoolean(key, w.getSelected());
-								break;
-							case ITCConstants.Wipe.FOLDER:
-								break;
-							case ITCConstants.Wipe.PHOTOS:
-								key = ITCConstants.Preference.DEFAULT_WIPE_PHOTOS;
-								_ed.putBoolean(key, w.getSelected());
-								break;
-							case ITCConstants.Wipe.SMS:
-								key = ITCConstants.Preference.DEFAULT_WIPE_SMS;
-								_ed.putBoolean(key, w.getSelected());
-								break;
-							case ITCConstants.Preference.ONE_TOUCH:
-								key = ITCConstants.Preference.DEFAULT_ONE_TOUCH_PANIC;
-								_ed.putBoolean(key, w.getSelected());
-								break;
-							default:
-								// TODO: handle individual folders for wiping
-								break;
-							}
-						}
-					}
-				}
-			}
-		}
-		_ed.commit();
-	}
-	*/
 	
 	@Override 
 	public void onPause() {
 		super.onPause();
-		// destroy broadcast receiver
-		unregisterReceiver(br);
 	}
 
 	@Override
 	public void onClick(View v) {
 		if(v == wizardForward) {
 			if(form.hasPreferenceData())
-				savePreferenceData(sv);
+				try {
+					savePreferenceData(sv);
+				} catch(NullPointerException e) {}
 			if(wNum < getResources().getStringArray(R.array.WIZARD_TITLES).length) {
 				Intent i = new Intent(this,Wizard.class);
 				int nextTarget;
@@ -341,7 +204,9 @@ public class Wizard extends Activity implements OnClickListener {
 				startActivity(i);
 			}
 		} else if(v == wizardBackward) {
-			savePreferenceData(sv);
+			try {
+				savePreferenceData(sv);
+			} catch(NullPointerException e) {}
 			if(wNum > 1) {
 				Intent i = new Intent(this,Wizard.class);
 				int backTarget;
@@ -375,8 +240,6 @@ public class Wizard extends Activity implements OnClickListener {
 			
 			circles[c] = new StatusCircle(color,c * 40);
 		}
-		
-		
 		
 		wizardStatusTrack.setBackgroundDrawable(new Drawable() {
 			private Paint p = new Paint();
@@ -415,6 +278,283 @@ public class Wizard extends Activity implements OnClickListener {
 		public StatusCircle(int color, float x) {
 			this.x = x + 20f;
 			this.color = color;
+		}
+	}
+	
+	private class WizardForm extends View {
+		ArrayList<View> views;
+		String[] wizardText;
+		LinearLayout _l;
+		LayoutParams lp;	
+		int[] _screen;
+		
+		Context c;
+		
+		boolean _hasPreferenceData = false;
+		
+		public WizardForm(Context c, int wNum, int[] screen) {
+			super(c);
+			this.c = c;
+			
+			views = new ArrayList<View>();
+			wizardText = getResources().getStringArray(R.array.WIZARD_TEXT);
+					
+			lp = new LayoutParams(LinearLayout.LayoutParams.FILL_PARENT,LinearLayout.LayoutParams.WRAP_CONTENT);
+			_screen = screen;
+			
+			_l = new LinearLayout(c);		
+			_l.setOrientation(LinearLayout.VERTICAL);
+			_l.setLayoutParams(lp);
+							
+			TextView intro = new TextView(c);
+			intro.setText(wizardText[wNum - 1]);
+			intro.setTextColor(android.graphics.Color.BLACK);
+			views.add(intro);
+			
+			switch(wNum) {
+			case 1:
+				
+				break;
+			case 2:
+				wizardForward.setEnabled(false);
+				LinearLayout ynHolder = new LinearLayout(c);
+				ynHolder.setLayoutParams(lp);
+				ynHolder.setOrientation(LinearLayout.HORIZONTAL);
+				
+				TextView yourNumberTitle = new TextView(c);
+				yourNumberTitle.setWidth((int) (_screen[0] * 0.3));
+				yourNumberTitle.setText(getResources().getString(R.string.WIZARD_YOUR_MOBILE_NUMBER));
+				yourNumberTitle.setTextColor(android.graphics.Color.BLACK);
+				ynHolder.addView(yourNumberTitle);
+				
+				EditText yourNumberTxt = new EditText(c);
+				yourNumberTxt.setWidth((int) (_screen[0] * 0.6));
+				yourNumberTxt.setId(R.string.yourNumberStatic);
+				ynHolder.addView(yourNumberTxt);
+				
+				views.add(ynHolder);
+				
+				Button send = new Button(c);
+				send.setText(getResources().getString(R.string.WIZARD_SEND_TEST));
+				send.setOnClickListener(new OnClickListener() {
+					@Override
+					public void onClick(View v) {
+						// Test SMS message
+						testSMS();
+						
+					}
+				});
+				views.add(send);
+				
+				break;
+			case 3:
+				LinearLayout rnHolder = new LinearLayout(c);
+				rnHolder.setLayoutParams(lp);
+				rnHolder.setOrientation(LinearLayout.HORIZONTAL);
+				
+				TextView recipientNumbersTitle = new TextView(c);
+				recipientNumbersTitle.setText(getResources().getString(R.string.WIZARD_RECIPIENT_MOBILE_NUMBERS));
+				recipientNumbersTitle.setWidth((int) (_screen[0] * 0.3));
+				recipientNumbersTitle.setTextColor(android.graphics.Color.BLACK);
+				rnHolder.addView(recipientNumbersTitle);
+				
+				EditText recipientNumbers = new EditText(c);
+				recipientNumbers.setContentDescription(ITCConstants.Preference.CONFIGURED_FRIENDS);
+				recipientNumbers.setWidth((int) (_screen[0] * 0.6));
+				rnHolder.addView(recipientNumbers);
+				views.add(rnHolder);
+				
+				LinearLayout emHolder = new LinearLayout(c);
+				emHolder.setLayoutParams(lp);
+				emHolder.setOrientation(LinearLayout.HORIZONTAL);
+				emHolder.setPadding(0, 10, 0, 10);
+				
+				TextView emergencyMessageTitle = new TextView(c);
+				emergencyMessageTitle.setText(getResources().getString(R.string.WIZARD_EMERGENCY_MESSAGE));
+				emergencyMessageTitle.setWidth((int) (_screen[0] * 0.3));
+				emergencyMessageTitle.setPadding(0, 5, 0, 5);
+				emergencyMessageTitle.setTextColor(android.graphics.Color.BLACK);
+				emergencyMessageTitle.setGravity(Gravity.TOP);
+				emHolder.addView(emergencyMessageTitle);
+				
+				EditText emergencyMessage = new EditText(c);
+				emergencyMessage.setContentDescription(ITCConstants.Preference.DEFAULT_PANIC_MSG);
+				emergencyMessage.setWidth((int) (_screen[0] * 0.6));
+				emergencyMessage.setHeight((int) (_screen[1] * 0.25));
+				emergencyMessage.setPadding(0, 5, 0, 5);
+				emergencyMessage.setOnKeyListener(new OnKeyListener() {
+
+					@Override
+					public boolean onKey(View v, int i, KeyEvent k) {
+						if(((EditText) v).getText().length() > 0)
+							if(!wizardForward.isEnabled())
+								wizardForward.setEnabled(true);
+						else
+							wizardForward.setEnabled(false);
+						return false;
+					}
+					
+				});
+				emHolder.addView(emergencyMessage);
+				
+				views.add(emHolder);
+				_hasPreferenceData = true;
+				
+				break;
+			case 4:
+				wizardForward.setEnabled(false);
+				LinearLayout warningHolder = new LinearLayout(c);
+				warningHolder.setLayoutParams(lp);
+				warningHolder.setOrientation(LinearLayout.HORIZONTAL);
+				
+				ImageView warningImg = new ImageView(c);
+				warningImg.setBackgroundDrawable(getResources().getDrawable(R.drawable.warning));
+				warningHolder.addView(warningImg);
+				
+				TextView warningText = new TextView(c);
+				warningText.setText(getResources().getString(R.string.WIZARD_WIPE_WARNING));
+				warningText.setTextColor(android.graphics.Color.BLACK);
+				warningHolder.addView(warningText);
+				
+				views.add(warningHolder);
+				
+				Button selectWipeData = new Button(c);
+				selectWipeData.setText(getResources().getString(R.string.WIZARD_SELECT_DATA_BUTTON));
+				selectWipeData.setOnClickListener(new OnClickListener() {
+					
+					@Override
+					public void onClick(View v) {
+						Intent i = new Intent(Wizard.this,WipePreferences.class);
+						Wizard.this.startActivityForResult(i, ITCConstants.Results.PREFERENCES_UPDATED);
+					}
+				});
+				
+				views.add(selectWipeData);
+				break;
+			case 5:
+				LinearLayout oneTouchHolder = new LinearLayout(c);
+				oneTouchHolder.setLayoutParams(lp);
+				oneTouchHolder.setOrientation(LinearLayout.HORIZONTAL);
+				
+				CheckBox oneTouch = new CheckBox(c);
+				oneTouch.setChecked(true);
+				oneTouch.setContentDescription(ITCConstants.Preference.DEFAULT_ONE_TOUCH_PANIC);
+				oneTouchHolder.addView(oneTouch);
+				
+				TextView oneTouchText = new TextView(c);
+				oneTouchText.setText(getResources().getString(R.string.WIZARD_ONE_TOUCH_PANIC_DESCRIPTION));
+				oneTouchText.setTextColor(android.graphics.Color.BLACK);
+				oneTouchHolder.addView(oneTouchText);
+				
+				views.add(oneTouchHolder);
+				_hasPreferenceData = true;
+				
+				break;
+			case 6:
+				LinearLayout homescreenHolder = new LinearLayout(c);
+				homescreenHolder.setLayoutParams(lp);
+				homescreenHolder.setOrientation(LinearLayout.HORIZONTAL);
+				
+				CheckBox homeScreen = new CheckBox(c);
+				homeScreen.setChecked(true);
+				homeScreen.setContentDescription(ITCConstants.Preference.DEFAULT_ADD_TO_HOMESCREEN);
+				homescreenHolder.addView(homeScreen);
+				
+				TextView homeScreenText = new TextView(c);
+				homeScreenText.setText(getResources().getString(R.string.WIZARD_ONE_TOUCH_HOMESCREEN_DESCRIPTION));
+				homeScreenText.setTextColor(android.graphics.Color.BLACK);
+				homescreenHolder.addView(homeScreenText);
+				
+				views.add(homescreenHolder);
+				_hasPreferenceData = true;
+				break;
+			case 7:
+				// change buttons from back/next to back/finish
+				wizardForward.setText(getResources().getString(R.string.KEY_FINISH));
+				break;
+			case 8:
+				// The result from the data wipe selection
+				break;
+			}
+			
+			for(View v : views) {
+				_l.addView(v);
+			}
+		}
+		
+		public void testSMS() {
+			SMSSender sms = new SMSSender(c);
+			final Dialog d = new Dialog(c);
+			d.setContentView(R.layout.confirmation);
+			
+			LinearLayout confirmationHolder = (LinearLayout) d.findViewById(R.id.confirmationHolder);
+			TextView confirmationTitle = (TextView) d.findViewById(R.id.confirmationTitle);
+			TextView confirmationText = (TextView) d.findViewById(R.id.confirmationText);
+			
+			Button dismissConfirmation = new Button(c);
+			dismissConfirmation.setText(getResources().getString(R.string.KEY_OK));
+			dismissConfirmation.setOnClickListener(new OnClickListener() {
+
+				@Override
+				public void onClick(View v) {
+					d.dismiss();
+				}
+			});
+			
+			String testSmsNumber = ((EditText) ((LinearLayout) views.get(1)).getChildAt(1)).getText().toString();
+			
+			if(sms.sendSMS(testSmsNumber,
+					getResources().getString(R.string.KEY_WIZARD_SMSTESTMSG))) {
+						
+				confirmationTitle.setText(getResources().getString(R.string.WIZARD_CONFIRMATION_SMSTEST_TITLE));
+				confirmationText.setText(getResources().getString(R.string.WIZARD_CONFIRMATION_SMSTEST));
+				
+				confirmationHolder.addView(dismissConfirmation);
+				wizardForward.setEnabled(true);
+				((Button) views.get(2)).setVisibility(View.GONE);
+			} else {
+				confirmationTitle.setText(getResources().getString(R.string.WIZARD_CONFIRMATION_SMSTEST_FAIL_TITLE));
+				confirmationText.setText(getResources().getString(R.string.WIZARD_CONFIRMATION_SMSTEST_FAIL));
+				
+				Button details = new Button(c);
+				details.setText(getResources().getString(R.string.KEY_DETAILS));
+				details.setOnClickListener(new OnClickListener() {
+
+					@Override
+					public void onClick(View v) {
+						d.dismiss();
+					}
+					
+				});
+				
+				confirmationHolder.addView(details);
+				confirmationHolder.addView(dismissConfirmation);
+				
+				/*
+				 *  TODO: fix error notification
+				
+				TextView titleHolder = (TextView) findViewById(R.id.wizardTitle);
+				titleHolder.setText(c.getResources().getString(R.string.WIZARD_CONFIRMATION_SMSTEST_FAIL));
+				
+				confirmationText = new TextView(c);
+				confirmationText.setText(R.string.WIZARD_SMS_TEST_FAILURES);
+				
+				TextView supportEmail = new TextView(c);
+				supportEmail.setText(R.string.SAFERMOBILE_EMAIL);
+				supportEmail.setAutoLinkMask(Linkify.EMAIL_ADDRESSES);
+				
+				*/
+				
+			}
+			d.show();
+		}
+		
+		public boolean hasPreferenceData() {
+			return _hasPreferenceData;
+		}
+		
+		public LinearLayout returnForm() {
+			return _l;
 		}
 	}
 }

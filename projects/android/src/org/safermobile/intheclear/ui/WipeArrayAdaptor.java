@@ -54,7 +54,7 @@ public class WipeArrayAdaptor extends BaseAdapter {
 		tv.setTextColor(_wipeSelector.get(position)._color);
 		
 		cb.setChecked(_wipeSelector.get(position)._wipeSelect);
-		cb.setClickable(_wipeSelector.get(position).isToggleControl());
+		cb.setEnabled(_wipeSelector.get(position).isToggleControl());
 
 		cb.setOnClickListener(new OnClickListener() {
 			@Override
@@ -87,7 +87,7 @@ public class WipeArrayAdaptor extends BaseAdapter {
 						ws.setColor(newColor);
 						ws.setSelected(newCheckedStatus);
 						checkBox.setChecked(newCheckedStatus);
-						checkBox.setClickable(newLockedStatus);
+						checkBox.setEnabled(newLockedStatus);
 						textView.setTextColor(newColor);
 						count++;
 					}

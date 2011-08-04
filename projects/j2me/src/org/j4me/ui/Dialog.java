@@ -103,9 +103,12 @@ public abstract class Dialog
 		
 		// Set the default menu options.
 		Theme theme = UIManager.getTheme();
+		
+		/*
 		String cancel = theme.getMenuTextForCancel();
 		String ok = theme.getMenuTextForOK();
 		setMenuText( cancel, ok );
+		*/
 	}
 
 	/**
@@ -994,13 +997,13 @@ public abstract class Dialog
 	 * @param mode is <code>true</code> if the <code>DeviceScreen</code> is to be in full
 	 *  screen mode, <code>false</code> otherwise.
 	 */
-	/*
+	
 	public void setFullScreenMode (boolean mode)
 	{
 		super.setFullScreenMode( mode );
 		invalidate();
 	}
-*/
+
 	/**
 	 * Sets the menu bar text.
 	 * <p>

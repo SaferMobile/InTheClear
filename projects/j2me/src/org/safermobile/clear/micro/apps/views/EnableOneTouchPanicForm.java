@@ -14,9 +14,8 @@ import org.j4me.ui.components.*;
 import org.safermobile.clear.micro.L10nResources;
 import org.safermobile.clear.micro.L10nConstants;
 import org.safermobile.clear.micro.apps.LocaleManager;
-import org.safermobile.clear.micro.apps.PanicConfigMIDlet;
-import org.safermobile.clear.micro.apps.PanicConstants;
-import org.safermobile.clear.micro.apps.WipeMIDlet;
+import org.safermobile.clear.micro.apps.ITCMainMIDlet;
+import org.safermobile.clear.micro.apps.ITCConstants;
 import org.safermobile.clear.micro.apps.controllers.WipeController;
 import org.safermobile.clear.micro.apps.controllers.WipeListener;
 import org.safermobile.clear.micro.apps.models.WipeDataType;
@@ -28,13 +27,13 @@ import org.safermobile.micro.utils.Preferences;
 /**
  * Example of a <code>TextBox</code> component.
  */
-public class OneTouchPanicForm
-        extends Dialog
+public class EnableOneTouchPanicForm
+        extends Dialog implements OnClickListener
 {
         /**
          * The previous screen.
          */
-        private PanicConfigMIDlet _midlet;
+        private ITCMainMIDlet _midlet;
         
         private CheckBox _cbOneTouch;
         		
@@ -45,13 +44,13 @@ public class OneTouchPanicForm
          * 
          * @param previous is the screen to return to once this done.
          */
-        public OneTouchPanicForm (PanicConfigMIDlet midlet)
+        public EnableOneTouchPanicForm (ITCMainMIDlet midlet)
         {
                 _midlet = midlet;
                 
                 // Set the title and menu.
                 setTitle( l10n.getString(L10nConstants.keys.ONE_TOUCH_TITLE) );
-                setMenuText( l10n.getString(L10nConstants.keys.MENU_BACK), l10n.getString(L10nConstants.keys.MENU_NEXT));
+        //        setMenuText( l10n.getString(L10nConstants.keys.MENU_BACK), l10n.getString(L10nConstants.keys.MENU_NEXT));
 
                 // Center the text.
                 Label label = new Label();
@@ -64,33 +63,34 @@ public class OneTouchPanicForm
         		_cbOneTouch.setChecked( false );
         		append( _cbOneTouch );
 
+        		Button btn = new Button();
+        		btn.setOnClickListener(this);
+        		btn.setLabel(l10n.getString(L10nConstants.keys.BUTTON_CONTINUE));
+        		append (btn);
         }
 
       
-        
-        protected void declineNotify ()
+        public boolean hasMenuBar ()
         {
-        	_midlet.showPrev();
+        	return false;
         }
-
         
-		protected void acceptNotify() {
-			
-			
+		public void onClick(Component c) 
+		{
 			persist();
 			
 			_midlet.showNext();
 			
 		}
 		
-
-	     private void persist ()
-	        {
-	        
-	    	 	_midlet.savePref(PanicConstants.PREFS_KEY_ONE_TOUCH_PANIC, _cbOneTouch.isChecked()+"");
-	    	 
-	    	 	
-	        }
+      
+	    private void persist ()
+        {
+        
+    	 	_midlet.savePref(ITCConstants.PREFS_KEY_ONE_TOUCH_PANIC, _cbOneTouch.isChecked()+"");
+    	 
+    	 	
+        }
         
         
 }

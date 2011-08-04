@@ -6,54 +6,6 @@
    <property name="src.dir" location="src" />
    <property name="build.dir" location="build" />
 
-<!-- bb-ant-tool targets -->
-
-   <taskdef resource="bb-ant-defs.xml" />
-   <property name="blackberry.build.dir" location="${build.dir}/blackberry" />
-
-   <target name="build-blackberry">
-      <mkdir dir="${blackberry.build.dir}" />
-      <rapc output="${output}"
-	    srcdir="${src.dir}"
-	    destdir="${blackberry.build.dir}"
-            quiet="false">
-        <jdp title="Panic!"
-	     icon="/alert.gif"
-	     vendor="${vendor}"
-	     version="${version}"
-             description="${desc}"
-	     type="midlet"
-	     midletclass="org.safermobile.clear.micro.apps.PanicActivateMIDlet"
-	     />
-      </rapc>
-   </target>
-
-
-    <target name="alx" depends="build-blackberry">
-        <alx destdir="${blackberry.build.dir}/alx" filename="${output}.alx">
-            <application id="org.safermobile.sms.InTheClear" name="${title}"
-                         description="${desc}"
-                         version="${version}"
-                         vendor="${vendor}">
-                <codset>
-                    <fileset dir="${blackberry.build.dir}" includes="*.cod" />
-                </codset>
-            </application>
-        </alx>
-
-        <zip zipfile="${blackberry.build.dir}/${output}.zip">
-            <zipfileset dir="${blackberry.build.dir}/alx" includes="*.cod, *.alx" />
-        </zip>
-    </target>
-
-
-   <target name="sign-blackberry" depends="build-blackberry">
-      <sigtool codfile="${blackberry.build.dir}/${output}.cod" 
-	       password="${blackberry.password}"
-	       forceclose="true" />
-      <delete file="LogFile.txt" />
-   </target>
-
 
 <!-- antenna J2ME targets -->
 
@@ -101,7 +53,7 @@
         <wtkpackage jadfile="${jad.name}"
                     jarfile="${jar.name}"
                     obfuscate="false"
-                    preverify="false">
+                    preverify="true">
 
             <!-- Package our newly compiled classes. -->
 
@@ -140,21 +92,16 @@
    
 <!-- generic targets -->
    <target name="build"
-	   depends="build-j2me, build-blackberry">
+	   depends="build-j2me">
    </target>
 
    <target name="sign"
-	   depends="sign-j2me, sign-blackberry">
+	   depends="sign-j2me">
    </target>
 
    <target name="clean">
       <delete dir="${build.dir}" />
    </target>
 
-   <target name="load-simulator" depends="build">
-      <copy todir="${simulator.dir}">
-         <fileset dir="${blackberry.build.dir}"
-		  includes="*.cod,*.csl,*.cso,*.debug,*.jar" />
-      </copy>
-   </target>
+   
 </project>

@@ -8,20 +8,20 @@ import org.j4me.ui.components.*;
 import org.safermobile.clear.micro.L10nConstants;
 import org.safermobile.clear.micro.L10nResources;
 import org.safermobile.clear.micro.apps.LocaleManager;
-import org.safermobile.clear.micro.apps.PanicConfigMIDlet;
-import org.safermobile.clear.micro.apps.PanicConstants;
+import org.safermobile.clear.micro.apps.ITCMainMIDlet;
+import org.safermobile.clear.micro.apps.ITCConstants;
 import org.safermobile.clear.micro.apps.controllers.ShoutController;
 
 /**
  * Example of a <code>TextBox</code> component.
  */
 public class SMSSendTestForm
-        extends Dialog implements Runnable
+        extends Dialog implements Runnable, OnClickListener
 {
         /**
          * The previous screen.
          */
-        private PanicConfigMIDlet _midlet;
+        private ITCMainMIDlet _midlet;
         
         /**
          * The number box used by this example for entering phone numbers.
@@ -39,13 +39,13 @@ public class SMSSendTestForm
          * 
          * @param previous is the screen to return to once this done.
          */
-        public SMSSendTestForm (PanicConfigMIDlet midlet)
+        public SMSSendTestForm (ITCMainMIDlet midlet)
         {
                 _midlet = midlet;
                 
                 // Set the title and menu.
                 setTitle( l10n.getString(L10nConstants.keys.SMS_TEST_TITLE) );
-                setMenuText(  l10n.getString(L10nConstants.keys.MENU_BACK) ,  l10n.getString(L10nConstants.keys.MENU_SEND) );
+              //  setMenuText(  l10n.getString(L10nConstants.keys.MENU_BACK) , "");
 
              // Center the text.
         		_label.setHorizontalAlignment( Graphics.LEFT );
@@ -61,21 +61,18 @@ public class SMSSendTestForm
                 _tbPhoneNumber.setForPhoneNumber();                
                 append( _tbPhoneNumber );
 
+                Button btn = new Button();
+        		btn.setOnClickListener(this);
+        		btn.setLabel(l10n.getString(L10nConstants.keys.MENU_SEND));
+        		append (btn);
         }
 
-        /**
-         * Takes the user to the previous screen.
-         */
-        protected void declineNotify ()
+
+        public boolean hasMenuBar ()
         {
-                _midlet.showPrev();
+        	return false;
         }
         
-        protected void acceptNotify() 
-        {		
-        	//do SMS test
-        	new Thread(this).start();
-        }
         
         public void run ()
         {
@@ -113,5 +110,17 @@ public class SMSSendTestForm
 				}
         	}
         }
+
+
+		public void onClick(Component c) {
+			//do SMS test
+        	new Thread(this).start();
+			
+		}
+
+
+		protected void declineNotify() {
+			_midlet.showPrev();
+		}
         
 }

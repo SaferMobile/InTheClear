@@ -34,7 +34,7 @@ public class Theme
 	/** Light green */	public static final int LIGHT_GREEN = 0x0030C020;
 	/** Dark green */	public static final int DARK_GREEN = 0x001F432D;
 	/** Forest green*/	public static final int FOREST_GREEN = 0x0033773A;
-	/** Blue-green */	public static final int BLUE_GREEN = 0x00008080;
+	/** Blue-green */	public static final int BLUE_GREEN = 0x00008080;	
 	/** Cyan */			public static final int CYAN = 0x0033FFFF;
 	/** Silver */		public static final int SILVER = 0x00C0C0C0;
 	/** Gray */			public static final int GRAY = 0x00808080;

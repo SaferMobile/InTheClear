@@ -8,8 +8,8 @@ import org.j4me.ui.components.*;
 import org.safermobile.clear.micro.L10nConstants;
 import org.safermobile.clear.micro.L10nResources;
 import org.safermobile.clear.micro.apps.LocaleManager;
-import org.safermobile.clear.micro.apps.PanicConfigMIDlet;
-import org.safermobile.clear.micro.apps.PanicConstants;
+import org.safermobile.clear.micro.apps.ITCMainMIDlet;
+import org.safermobile.clear.micro.apps.ITCConstants;
 import org.safermobile.clear.micro.apps.controllers.ShoutController;
 import org.safermobile.clear.micro.data.PhoneInfo;
 
@@ -22,7 +22,7 @@ public class LocationPermissionForm
         /**
          * The previous screen.
          */
-        private PanicConfigMIDlet midlet;
+        private ITCMainMIDlet midlet;
         
     	private Label _label = new Label();
 
@@ -33,7 +33,7 @@ public class LocationPermissionForm
          * 
          * @param previous is the screen to return to once this done.
          */
-        public LocationPermissionForm (PanicConfigMIDlet midlet)
+        public LocationPermissionForm (ITCMainMIDlet midlet)
         {
                 this.midlet = midlet;
                 

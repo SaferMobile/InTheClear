@@ -15,6 +15,7 @@ import javax.microedition.rms.RecordStoreException;
 
 import org.safermobile.clear.micro.L10nConstants;
 import org.safermobile.clear.micro.L10nResources;
+import org.safermobile.clear.micro.apps.controllers.PanicController;
 import org.safermobile.clear.micro.apps.controllers.ShoutController;
 import org.safermobile.clear.micro.apps.controllers.WipeController;
 import org.safermobile.clear.micro.apps.controllers.WipeListener;
@@ -25,14 +26,13 @@ import org.safermobile.micro.utils.Preferences;
 
 // hasLocationCapability=false
 //release.build = false
-public class PanicActivateMIDlet extends MIDlet implements CommandListener, WipeListener, Runnable {
+public class PanicActivateMIDlet extends MIDlet implements CommandListener, WipeListener {
 
 	
 	private DisplayManager _manager;
 	private Display _display;
 
 	private TextBox _tbMain;
-	private LargeStringCanvas _lsCanvas;
 
 	private Command	 _cmdPanic;
 	private Command	 _cmdCancel;
@@ -44,11 +44,7 @@ public class PanicActivateMIDlet extends MIDlet implements CommandListener, Wipe
 	 * the thread which manages the panic sending
 	 */
 	private Thread _thread;
-	
-	/*
-	 * used to cancel the panic loop
-	 */
-	private boolean _keepPanicing = false; 
+	private PanicController _pc;
 	
 	/*
 	 * stores the user data between the config app and this one
@@ -84,17 +80,16 @@ public class PanicActivateMIDlet extends MIDlet implements CommandListener, Wipe
 		_tbMain.removeCommand(_cmdExit);
 		_tbMain.addCommand(_cmdCancel);
 	
-		_keepPanicing = true;
-		
-		_thread = new Thread(this);
+		_pc = new PanicController(_prefs, this, this, _manager, _cmdCancel);
+		_thread = new Thread(_pc);
 		_thread.start();
 		
 	}
 	
 	private void stopPanic ()
 	{
-
-		_keepPanicing = false;
+		_pc.stopPanic();
+		
 		_thread.interrupt();
 	}
 
@@ -109,9 +104,9 @@ public class PanicActivateMIDlet extends MIDlet implements CommandListener, Wipe
 		try
 		{
 		
-			_prefs = new Preferences (PanicConstants.PANIC_PREFS_DB);
-			String oneTouch = _prefs.get(PanicConstants.PREFS_KEY_ONE_TOUCH_PANIC);
-			String recipients = _prefs.get(PanicConstants.PREFS_KEY_RECIPIENT);
+			_prefs = new Preferences (ITCConstants.PANIC_PREFS_DB);
+			String oneTouch = _prefs.get(ITCConstants.PREFS_KEY_ONE_TOUCH_PANIC);
+			String recipients = _prefs.get(ITCConstants.PREFS_KEY_RECIPIENT);
 
 			if (recipients == null)
 			{
@@ -131,7 +126,7 @@ public class PanicActivateMIDlet extends MIDlet implements CommandListener, Wipe
 		
 		} catch (RecordStoreException e) {
 			
-			Logger.error(PanicConstants.TAG, "error access preferences", e);
+			Logger.error(ITCConstants.TAG, "error access preferences", e);
 			showAlert(l10n.getString(L10nConstants.keys.TITLE_ERROR),l10n.getString(L10nConstants.keys.ERROR_PREFS),null);
 		}
 		
@@ -193,171 +188,10 @@ public class PanicActivateMIDlet extends MIDlet implements CommandListener, Wipe
 	protected void pauseApp() {}
 	
 	
-	private void doSecPause (int secs)
-	{
-		try { Thread.sleep(secs * 1000);}
-		catch(Exception e){}
-	}
-	
-	public void run ()
-	{
-		ShoutController sControl = new ShoutController();
-		
-		Logger.debug(PanicConstants.TAG, "starting panic run(); loading prefs...");
-		
-		String recipients = _prefs.get(PanicConstants.PREFS_KEY_RECIPIENT);
-		String userName =  _prefs.get(PanicConstants.PREFS_KEY_NAME);
-		String userMessage = _prefs.get(PanicConstants.PREFS_KEY_MESSAGE);
-		String userLocation = _prefs.get(PanicConstants.PREFS_KEY_LOCATION);
-		
-		String panicMsg = sControl.buildShoutMessage(userName, userMessage, userLocation);
-		String panicData = sControl.buildShoutData (userName);
-		
-		showMessage ("PANIC MESSAGE: " + panicMsg + "\n\npreparing to send...");
-		
-		doSecPause (5);
-		
-		_lsCanvas = new LargeStringCanvas("");
-		_lsCanvas.setCommandListener(this);
-		_lsCanvas.addCommand(_cmdCancel);
-		
-		_manager.next(_lsCanvas);
-		
-		for (int i = 5; i > 0; i--)
-		{
-			showMessage("Sending in " + i + "...");			
-			doSecPause (1);
-		}
-		
-		int resendTimeout = PanicConstants.DEFAULT_RESEND_TIMEOUT; //one minute
-		
-		boolean wipeComplete = false;
-		
-		while (_keepPanicing)
-		{
-			try
-			{
-				showMessage ("Sending messages...");
-				sControl.sendSMSShout (recipients, panicMsg, panicData);			
-				showMessage ("Panic Sent!");
-
-				doSecPause (2);
-			}
-			catch (Exception e)
-			{
-				_display.setCurrent(_tbMain);
-				doSecPause (1);
-				showMessage("Error Sending: " + e.toString());
-				doSecPause (10);
-
-			}
-
-			//now that first shout has been sent, time to wipe
-			if (!wipeComplete)
-			{
-				showMessage("Preparing to wipe data...");
-				WipeController wc = new WipeController();
-				
-				String prefBool = _prefs.get(PanicConstants.PREFS_KEY_WIPE_CONTACTS);
-				boolean wipeContacts = (prefBool != null && prefBool.equals("true"));
-				
-				prefBool = _prefs.get(PanicConstants.PREFS_KEY_WIPE_EVENTS);
-				boolean wipeEvents = (prefBool != null && prefBool.equals("true"));
-				boolean wipeToDos = wipeEvents; //grouped together
-				
-				prefBool = _prefs.get(PanicConstants.PREFS_KEY_WIPE_PHOTOS);
-				boolean wipePhotos = (prefBool != null && prefBool.equals("true"));
-				boolean wipeVideos = wipePhotos; //grouped together
-				
-				prefBool = _prefs.get(PanicConstants.PREFS_KEY_WIPE_ALL_FILES);
-				boolean wipeAllFiles = (prefBool != null && prefBool.equals("true"));
-				
-				doSecPause (1);
-				showMessage("Wiping selected personal data...");
-				
-				try
-				{
-					wc.wipePIMData(wipeContacts, wipeEvents, wipeToDos);
-					showMessage("Success! Personal data wiped!");
-				}
-				catch (Exception e)
-				{
-					showMessage("WARNING: There was an error wiping your personal data.");
-					e.printStackTrace();
-				}
-				
-				doSecPause (3);
-				
-				
-				
-				if (wipePhotos)
-				{
-					showMessage("Wiping all photos...");
-					try {
-						wc.wipePhotos(this);
-						showMessage("Wiping photos...\nWIPE COMPLETE.");
-					} catch (Exception e) {
-						showMessage("Wiping photos...nERROR. UNABLE TO WIPE PHOTOS.");
-						e.printStackTrace();
-					}
-				}
-				
-				doSecPause (3);
-				
-				if (wipeVideos)
-				{
-					showMessage("Wiping all videos...");
-					try {
-						wc.wipePhotos(this);
-						showMessage("Wiping videos...\nWIPE COMPLETE.");
-					} catch (Exception e) {
-						showMessage("Wiping videos...nERROR. UNABLE TO WIPE PHOTOS.");
-						e.printStackTrace();
-					}
-				}
-				
-				doSecPause (3);
-				
-
-				if (wipeAllFiles)
-				{
-					showMessage("Wiping all files...");
-					try {
-						wc.wipeMemoryCard(this);
-						wc.wipeAllRootPaths(this);
-						showMessage("Wiping all files...\nWIPE COMPLETE.");
-					} catch (Exception e) {
-						showMessage("Wiping all photos...\nERROR. UNABLE TO WIPE ALL FILES.");
-						e.printStackTrace();
-					}
-				}
-				
-				wipeComplete = true;
-			}
-			
-			int secs = resendTimeout/1000;
-			
-			while (secs > 0)
-			{
-				showMessage("Panic! again in\n" + secs + "secs...");
-				doSecPause (1);
-				secs--;
-			}
-			
-			//update message with new mobile cid, lac info
-			panicMsg = sControl.buildShoutMessage(userName, userMessage, userLocation);
-			
-		}
-		
-
-		_manager.next(_tbMain);
-	}
-	
-	
 	
 	private void showMessage (String msg)
 	{
-		Logger.debug(PanicConstants.TAG, "msg: " + msg);
+		Logger.debug(ITCConstants.TAG, "msg: " + msg);
 
 		if (_display.getCurrent() == _tbMain)
 		{
@@ -370,24 +204,20 @@ public class PanicActivateMIDlet extends MIDlet implements CommandListener, Wipe
 				e.printStackTrace();
 			}
 		}
-		else if (_display.getCurrent() == _lsCanvas)
-		{
-			_lsCanvas.setLargeString(msg);
-		}
 	}
 
 
 	public void wipingFileSuccess(String path) {
 		
 		showMessage("wiping: " + path);
-		Logger.debug(PanicConstants.TAG, "wiping: " + path);
+		Logger.debug(ITCConstants.TAG, "wiping: " + path);
 
 	}
 	
 	public void wipingFileError(String path, String msg) {
 		
 		showMessage("ERROR wiping: " + path);
-		Logger.debug(PanicConstants.TAG, "wiping error: " + path + ": " + msg);
+		Logger.debug(ITCConstants.TAG, "wiping error: " + path + ": " + msg);
 
 	}
 

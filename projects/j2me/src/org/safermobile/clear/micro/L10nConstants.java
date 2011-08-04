@@ -27,6 +27,7 @@ public class L10nConstants {
 		public static final String MENU_NEXT = "MENU_NEXT";
 		public static final String MENU_SEND = "MENU_SEND";
 		public static final String PANIC_ERROR_SMS = "PANIC_ERROR_SMS";
+		public static final String PANIC_MSG_PRE = "PANIC_MSG_PRE";
 		public static final String PANIC_MSG_FROM = "PANIC_MSG_FROM";
 		public static final String PANIC_MSG_LOCATION = "PANIC_MSG_LOCATION";
 		public static final String PANIC_MSG_CID = "PANIC_MSG_CID";
@@ -98,6 +99,9 @@ public class L10nConstants {
 		public static final String PANIC_PRESS_TO_ACTIVATE = "PANIC_PRESS_TO_ACTIVATE";
 		public static final String SMS_TEST_DEFAULT_MSG = "SMS_TEST_DEFAULT_MSG";
 		public static final String PANIC_MSG_LBL_PHONE = "PANIC_MSG_LBL_PHONE";
+		public static final String BUTTON_CONTINUE = "BUTTON_CONTINUE";
+		public static final String BUTTON_SEND_TEST = "BUTTON_SEND_TEST";
+		public static final String MENU_OK = "MENU_OK";
 
     }
 }

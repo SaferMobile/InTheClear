@@ -8,19 +8,19 @@ import org.j4me.ui.components.*;
 import org.safermobile.clear.micro.L10nConstants;
 import org.safermobile.clear.micro.L10nResources;
 import org.safermobile.clear.micro.apps.LocaleManager;
-import org.safermobile.clear.micro.apps.PanicConfigMIDlet;
-import org.safermobile.clear.micro.apps.PanicConstants;
+import org.safermobile.clear.micro.apps.ITCMainMIDlet;
+import org.safermobile.clear.micro.apps.ITCConstants;
 
 /**
  * Example of a <code>TextBox</code> component.
  */
 public class SetupAlertMessageForm
-        extends Dialog implements Runnable
+        extends Dialog implements Runnable, OnClickListener
 {
         /**
          * The previous screen.
          */
-        private PanicConfigMIDlet _midlet;
+        private ITCMainMIDlet _midlet;
 
 
         /**
@@ -41,13 +41,13 @@ public class SetupAlertMessageForm
          * 
          * @param previous is the screen to return to once this done.
          */
-        public SetupAlertMessageForm (PanicConfigMIDlet midlet)
+        public SetupAlertMessageForm (ITCMainMIDlet midlet)
         {
                _midlet = midlet;
                 
                 // Set the title and menu.
                 setTitle(l10n.getString(L10nConstants.keys.PANIC_MESSAGE_TITLE) );
-                setMenuText(  l10n.getString(L10nConstants.keys.MENU_BACK) ,  l10n.getString(L10nConstants.keys.MENU_NEXT) );
+                //setMenuText(  l10n.getString(L10nConstants.keys.MENU_BACK) ,  l10n.getString(L10nConstants.keys.MENU_NEXT) );
 
              // Center the text.
                 Label label = new Label();
@@ -59,7 +59,8 @@ public class SetupAlertMessageForm
         		
         	    // Add the phone number box.
         		_tbRecipients = new TextBox();
-        		_tbRecipients.setLabel(l10n.getString(L10nConstants.keys.PANIC_MSG_LBL_PHONE));                
+        		_tbRecipients.setLabel(l10n.getString(L10nConstants.keys.PANIC_MSG_LBL_PHONE));        
+        		_tbRecipients.setForPhoneNumber();
                 append( _tbRecipients );
                 
                 // Add the message box
@@ -67,6 +68,11 @@ public class SetupAlertMessageForm
         		_tbAlertMsg.setLabel(l10n.getString(L10nConstants.keys.PANIC_MESSAGE_LBL_MSG));                
                 append( _tbAlertMsg );
                
+                Button btn = new Button();
+        		btn.setOnClickListener(this);
+        		btn.setLabel(l10n.getString(L10nConstants.keys.BUTTON_CONTINUE));
+        		append (btn);
+        		
                 load();
         }
 
@@ -79,9 +85,9 @@ public class SetupAlertMessageForm
         	{
 
 				//save the phone number if the SMS sends okay
-	    		_midlet.savePref(PanicConstants.PREFS_KEY_RECIPIENT, recips);    
+	    		_midlet.savePref(ITCConstants.PREFS_KEY_RECIPIENT, recips);    
 	    		
-        		_midlet.savePref(PanicConstants.PREFS_KEY_MESSAGE, alertmsg);
+        		_midlet.savePref(ITCConstants.PREFS_KEY_MESSAGE, alertmsg);
         		return true;
         	}
         	
@@ -91,7 +97,7 @@ public class SetupAlertMessageForm
         private void load ()
         {
         	
-        	String alertMsgString = _midlet.loadPref(PanicConstants.PREFS_KEY_MESSAGE);
+        	String alertMsgString = _midlet.loadPref(ITCConstants.PREFS_KEY_MESSAGE);
         	
         	if (alertMsgString != null && alertMsgString.length() > 0)
         		_tbAlertMsg.setString(alertMsgString);
@@ -113,16 +119,14 @@ public class SetupAlertMessageForm
         	}
         }
         
-        /**
-         * Takes the user to the previous screen.
-         */
-        protected void declineNotify ()
+        public boolean hasMenuBar ()
         {
-               _midlet.showPrev();
+        	return false;
         }
         
-        protected void acceptNotify() 
-        {		
-        	new Thread(this).start();
+		public void onClick(Component c) {
+			new Thread(this).start();
+			
 		}
+       
 }

@@ -6,6 +6,7 @@ import javax.microedition.lcdui.CommandListener;
 import javax.microedition.lcdui.Display;
 import javax.microedition.lcdui.Displayable;
 import javax.microedition.lcdui.Graphics;
+import javax.microedition.midlet.MIDlet;
 import javax.microedition.midlet.MIDletStateChangeException;
 import javax.microedition.rms.RecordStoreException;
 
@@ -14,9 +15,8 @@ import org.j4me.ui.components.*;
 import org.safermobile.clear.micro.L10nResources;
 import org.safermobile.clear.micro.L10nConstants;
 import org.safermobile.clear.micro.apps.LocaleManager;
-import org.safermobile.clear.micro.apps.PanicConfigMIDlet;
-import org.safermobile.clear.micro.apps.PanicConstants;
-import org.safermobile.clear.micro.apps.WipeMIDlet;
+import org.safermobile.clear.micro.apps.ITCMainMIDlet;
+import org.safermobile.clear.micro.apps.ITCConstants;
 import org.safermobile.clear.micro.apps.controllers.WipeController;
 import org.safermobile.clear.micro.apps.controllers.WipeListener;
 import org.safermobile.clear.micro.ui.ErrorAlert;
@@ -28,12 +28,12 @@ import org.safermobile.micro.utils.Preferences;
  * Example of a <code>TextBox</code> component.
  */
 public class WipeManualForm
-        extends Dialog implements Runnable, WipeListener, CommandListener
+        extends Dialog implements Runnable, WipeListener, CommandListener, OnClickListener
 {
         /**
          * The previous screen.
          */
-        private WipeMIDlet _midlet;
+        private ITCMainMIDlet _midlet;
         
         private CheckBox _cbContacts;
         private CheckBox _cbCalendar;
@@ -61,21 +61,21 @@ public class WipeManualForm
          * 
          * @param previous is the screen to return to once this done.
          */
-        public WipeManualForm (WipeMIDlet midlet)
+        public WipeManualForm (ITCMainMIDlet midlet)
         {
                 _midlet = midlet;
                 
                 try
         		{
-        		 _prefs = new Preferences (PanicConstants.PANIC_PREFS_DB);
+        		 _prefs = new Preferences (ITCConstants.PANIC_PREFS_DB);
         		} catch (RecordStoreException e) {
         			
-        			Logger.error(PanicConstants.TAG, "a problem saving the prefs: " + e, e);
+        			Logger.error(ITCConstants.TAG, "a problem saving the prefs: " + e, e);
         		}
                 
                 // Set the title and menu.
                 setTitle( l10n.getString(L10nConstants.keys.TITLE_WIPE_MANUAL) );
-                setMenuText( l10n.getString(L10nConstants.keys.MENU_EXIT), l10n.getString(L10nConstants.keys.MENU_WIPE_NOW));
+              //  setMenuText( l10n.getString(L10nConstants.keys.MENU_EXIT), l10n.getString(L10nConstants.keys.MENU_WIPE_NOW));
 
                 // Center the text.
                 Label label = new Label();
@@ -104,6 +104,10 @@ public class WipeManualForm
         		_cbCalendar.setChecked( false );
         		append( _cbCalendar );
         		
+        		Button btn = new Button();
+        		btn.setOnClickListener(this);
+        		btn.setLabel(l10n.getString(L10nConstants.keys.MENU_WIPE_NOW));
+        		append (btn);
         		
         		load();
 
@@ -111,21 +115,21 @@ public class WipeManualForm
 
         public void load ()
         {
-        	String prefBool = _prefs.get(PanicConstants.PREFS_KEY_WIPE_CONTACTS);
+        	String prefBool = _prefs.get(ITCConstants.PREFS_KEY_WIPE_CONTACTS);
 			boolean wipeContacts = (prefBool != null && prefBool.equals("true"));
 			_cbContacts.setChecked(wipeContacts);
 			
-			prefBool = _prefs.get(PanicConstants.PREFS_KEY_WIPE_EVENTS);
+			prefBool = _prefs.get(ITCConstants.PREFS_KEY_WIPE_EVENTS);
 			boolean wipeEvents = (prefBool != null && prefBool.equals("true"));
 			boolean wipeToDos = wipeEvents; //grouped together
 			_cbCalendar.setChecked(wipeEvents);
 			
-			prefBool = _prefs.get(PanicConstants.PREFS_KEY_WIPE_PHOTOS);
+			prefBool = _prefs.get(ITCConstants.PREFS_KEY_WIPE_PHOTOS);
 			boolean wipePhotos = (prefBool != null && prefBool.equals("true"));
 			boolean wipeVideos = wipePhotos; //grouped together
 			_cbPhotos.setChecked(wipePhotos);
 						
-			prefBool = _prefs.get(PanicConstants.PREFS_KEY_WIPE_ALL_FILES);
+			prefBool = _prefs.get(ITCConstants.PREFS_KEY_WIPE_ALL_FILES);
 			boolean wipeAllFiles = (prefBool != null && prefBool.equals("true"));
 			_cbAllStorage.setChecked(wipeAllFiles);
 			
@@ -218,21 +222,23 @@ public class WipeManualForm
 	        }
         }
         
-        protected void declineNotify ()
+        public boolean hasMenuBar ()
         {
-        	_midlet.notifyDestroyed();
+        	return false;
         }
-
         
-		protected void acceptNotify() {
-			
-			
+		public void onClick(Component c) 
+		{
 			successCount = 0;
 			errCount = 0;
 			
 			new Thread(this).start();
 			
-			
+		}
+		
+		protected void declineNotify ()
+		{
+			_midlet.showMainForm();
 		}
 		
 
@@ -265,7 +271,7 @@ public class WipeManualForm
 			if (command == _cmdExit)
 			{
 				_wControl.cancel();
-				_midlet.exit();
+				_midlet.notifyDestroyed();
 				
 			}
 		}

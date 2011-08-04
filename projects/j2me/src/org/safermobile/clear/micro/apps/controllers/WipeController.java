@@ -9,7 +9,7 @@ import javax.microedition.io.file.FileConnection;
 import javax.microedition.io.file.FileSystemRegistry;
 import javax.microedition.pim.PIMException;
 
-import org.safermobile.clear.micro.apps.PanicConstants;
+import org.safermobile.clear.micro.apps.ITCConstants;
 import org.safermobile.clear.micro.data.PIMWiper;
 import org.safermobile.micro.utils.Logger;
 
@@ -177,7 +177,7 @@ public class WipeController {
 		if (!keepRunning) //this should stop most everything
 			return false;
 		
-		Logger.debug(PanicConstants.TAG, "wipeFilePath called: " + path);
+		Logger.debug(ITCConstants.TAG, "wipeFilePath called: " + path);
 
 		   
 		   FileConnection fc = (FileConnection) Connector.open(path, Connector.READ);

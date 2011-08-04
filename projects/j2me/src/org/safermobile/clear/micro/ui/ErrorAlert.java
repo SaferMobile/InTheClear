@@ -3,13 +3,19 @@ package org.safermobile.clear.micro.ui;
 import javax.microedition.lcdui.*;
 import org.j4me.ui.*;
 import org.j4me.ui.components.*;
+import org.safermobile.clear.micro.L10nConstants;
+import org.safermobile.clear.micro.L10nResources;
+import org.safermobile.clear.micro.apps.LocaleManager;
 
 /**
  * Objects of this class alert the user about an error.
  */
 public class ErrorAlert
-	extends Dialog
+	extends Dialog implements OnClickListener
 {
+	
+	L10nResources l10n = LocaleManager.getResources();
+
 	/**
 	 * The screen that will be returned to once the user dismisses this error
 	 * alert.
@@ -42,13 +48,23 @@ public class ErrorAlert
 		append( label );
 		
 		// Add the menu buttons.
-		setMenuText( back != null?"Back":null, next!=null?"Next":null );
+		//setMenuText( back != null?"Back":null, next!=null?"Next":null );
 
+		Button btn = new Button();
+		btn.setOnClickListener(this);
+		btn.setLabel(l10n.getString(L10nConstants.keys.MENU_OK));
+		append (btn);
+		
 		// Record the parent screen.
 		this.back = back;
 		this.next = next;
 	}
 	
+   public boolean hasMenuBar ()
+   {
+   	return false;
+   }
+   
 	public void setText (String msg)
 	{
 		label.setLabel(msg);
@@ -102,5 +118,14 @@ public class ErrorAlert
 		
 		// Continue processing the event.
 		super.showNotify();
+	}
+
+	public void onClick(Component c) {
+		
+		if (next != null)
+			acceptNotify();
+		else
+			declineNotify();
+		
 	}
 }

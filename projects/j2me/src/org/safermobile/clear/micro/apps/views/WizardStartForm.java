@@ -1,21 +1,28 @@
 package org.safermobile.clear.micro.apps.views;
 
 
-import javax.microedition.lcdui.Graphics;
-import javax.microedition.midlet.MIDlet;
+import java.io.IOException;
 
-import org.j4me.ui.*;
-import org.j4me.ui.components.*;
+import javax.microedition.lcdui.Font;
+import javax.microedition.lcdui.Graphics;
+import javax.microedition.lcdui.Image;
+
+import org.j4me.ui.Dialog;
+import org.j4me.ui.components.Button;
+import org.j4me.ui.components.Component;
+import org.j4me.ui.components.HorizontalRule;
+import org.j4me.ui.components.Label;
+import org.j4me.ui.components.OnClickListener;
+import org.j4me.ui.components.Picture;
+import org.safermobile.clear.micro.L10nConstants;
+import org.safermobile.clear.micro.L10nResources;
 import org.safermobile.clear.micro.apps.LocaleManager;
 import org.safermobile.clear.micro.apps.ITCMainMIDlet;
-import org.safermobile.clear.micro.apps.ITCConstants;
-import org.safermobile.clear.micro.L10nResources;
-import org.safermobile.clear.micro.L10nConstants;
 
 /**
  * Example of a <code>TextBox</code> component.
  */
-public class SetupCompleteForm
+public class WizardStartForm
         extends Dialog implements OnClickListener
 {
         /**
@@ -34,19 +41,21 @@ public class SetupCompleteForm
          * 
          * @param previous is the screen to return to once this done.
          */
-        public SetupCompleteForm (ITCMainMIDlet midlet)
+        public WizardStartForm (ITCMainMIDlet midlet)
         {
+        	super();
                 _midlet = midlet;
                 
                 // Set the title and menu.
-                setTitle( l10n.getString(L10nConstants.keys.SETUP_COMPLETE_TITLE) );
+                setTitle( l10n.getString(L10nConstants.keys.SETUP_TITLE) );                
+         //       setMenuText( l10n.getString(L10nConstants.keys.MENU_EXIT), l10n.getString(L10nConstants.keys.MENU_NEXT));
                
-                
             	// Center the text.
         		_label.setHorizontalAlignment( Graphics.LEFT );
 
-        		// Make the label be mutliple paragraphs.
-        		_label.setLabel(l10n.getString(L10nConstants.keys.SETUP_COMPLETE_MSG));
+        		_label.setLabel(l10n.getString(L10nConstants.keys.SETUP_INTRO));
+        		
+        		_label.setFont(Font.getFont(Font.FACE_PROPORTIONAL, Font.STYLE_PLAIN, Font.SIZE_MEDIUM));
         		
         		// Add the label to this screen.
         		append( _label );
@@ -55,7 +64,6 @@ public class SetupCompleteForm
         		btn.setOnClickListener(this);
         		btn.setLabel(l10n.getString(L10nConstants.keys.BUTTON_CONTINUE));
         		append (btn);
-
         }
         
         public boolean hasMenuBar ()
@@ -64,12 +72,12 @@ public class SetupCompleteForm
         }
         
 		public void onClick(Component c) {
-			_midlet.showMainForm();
+			_midlet.showNext();
 			
 		}
-   
         
-      
-        
+		protected void declineNotify() {
+			_midlet.showMainForm();
+		}
       
 }

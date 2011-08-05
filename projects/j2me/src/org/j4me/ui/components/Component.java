@@ -410,7 +410,7 @@ public abstract class Component
 	 */
 	public void keyPressed (int keyCode)
 	{
-		if ( (keyCode != DeviceScreen.UP) && (keyCode != DeviceScreen.DOWN) ) 
+		if ( keyCode == DeviceScreen.FIRE ) 
 		{
 
 			if (onClickListener != null)

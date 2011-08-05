@@ -976,11 +976,11 @@ final class CanvasWrapper
      // Check if running on a series60 nokia.
         /*
          * The name of the host platform or device. In Nokia
-devices the name consists of “Nokia”, the device
-   model, and software version separated by “/”. There is
-      no space between “Nokia” and the model number nor
-         on either side of “/”. Formally, the syntax of the
-            platform string is: Nokia MODEL_NUMBER “/”
+devices the name consists of â€œNokiaâ€�, the device
+   model, and software version separated by â€œ/â€�. There is
+      no space between â€œNokiaâ€� and the model number nor
+         on either side of â€œ/â€�. Formally, the syntax of the
+            platform string is: Nokia MODEL_NUMBER â€œ/â€�
                SW_VERSION.
               For example, Nokia6310i/4.42 or
              Nokia3510i/p1.25.
@@ -1009,12 +1009,13 @@ devices the name consists of “Nokia”, the device
 			series60 = false;
 		}
 		
+		
 		// Check if running on a BlackBerry.
 		try
 		{
 			Class.forName( "net.rim.device.api.ui.UiApplication" );
 			blackberry = true;
-
+			
 		}
 		catch (Throwable e)  // ClassNotFoundException, NoClassDefFoundError
 		{
@@ -1027,7 +1028,7 @@ devices the name consists of “Nokia”, the device
 			Class.forName( "java.lang.J9VMInternals" );
 			ibmJ9 = true;
 		}
-		catch (Throwable e)  // ClassNotFoundException, NoClassDefFoundError
+		catch ( Exception e)
 		{
 			ibmJ9 = false;
 		}
@@ -1060,6 +1061,8 @@ devices the name consists of “Nokia”, the device
 		
 		if (blackberry)
 			addCommandBack ();
+		
+		setCommandListener( this );
 	}
 
 	private void addCommandBack ()

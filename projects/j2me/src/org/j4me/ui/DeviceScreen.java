@@ -1222,6 +1222,12 @@ devices the name consists of “Nokia”, the device
 			return key;
 		}
 		
+		//blackberry has an escape/back key that should be used as menu let
+		if (key == 27) //should be escape
+		{
+			return DeviceScreen.MENU_LEFT;
+		}
+		
 		// Is it a well defined game key such as a joystick movement?
 		int action;
 		

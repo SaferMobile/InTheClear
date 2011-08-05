@@ -160,7 +160,9 @@ public class ITCMainMIDlet extends MIDlet implements Runnable {
 	
 	public void showPrev ()
 	{
-		_screenIdx--;
+		if (_screenIdx > 0)
+			_screenIdx--;
+		
 		showScreen();
 	}
 	

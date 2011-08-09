@@ -70,10 +70,12 @@ public class PanicController implements Runnable
 		String panicMsg = sControl.buildShoutMessage(userName, userMessage, userLocation);
 		String panicData = sControl.buildShoutData (userName);
 		
-		showMessage ("PANIC MESSAGE:\n" + panicMsg + "\n\npreparing to send...");
+		showMessage ("EMERGENCY MESSAGE:\npreparing to send...");
 		
 		doSecPause (5);
 		
+		if (!_keepPanicing)
+			return;
 		
 		for (int i = 5; i > 0; i--)
 		{
@@ -91,7 +93,7 @@ public class PanicController implements Runnable
 			{
 				showMessage ("Sending messages...");
 				sControl.sendSMSShout (recipients, panicMsg, panicData);			
-				showMessage ("Panic Sent!");
+				showMessage ("Message Sent!");
 
 				doSecPause (2);
 			}
@@ -124,16 +126,16 @@ public class PanicController implements Runnable
 				boolean wipeAllFiles = (prefBool != null && prefBool.equals("true"));
 				
 				doSecPause (1);
-				showMessage("Wiping selected\npersonal data...");
+				showMessage("Wiping selected\n personal data...");
 				
 				try
 				{
 					wc.wipePIMData(wipeContacts, wipeEvents, wipeToDos);
-					showMessage("Success!\nPersonal data wiped!");
+					showMessage("Success - \nData wiped!");
 				}
 				catch (Exception e)
 				{
-					showMessage("WARNING: There was an error wiping your personal data.");
+					showMessage("WARNING: There was an error wiping your data.");
 					e.printStackTrace();
 				}
 				

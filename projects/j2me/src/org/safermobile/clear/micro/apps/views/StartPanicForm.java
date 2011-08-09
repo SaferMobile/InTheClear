@@ -37,15 +37,13 @@ public class StartPanicForm
          */
         private ITCMainMIDlet _midlet;
 
-        private WipeController _wControl;
 
-    	private Command	 _cmdCancel;
-    	
         String currentType;
         int successCount = 0;
         int errCount = 0;
         
-
+        Command _cmdCancel;
+        
         PanicController _pc;
         Thread _thread;
 		
@@ -81,6 +79,8 @@ public class StartPanicForm
         	
     		DisplayManager manager = new DisplayManager(_midlet.getCurrentDisplay());
 
+    		_cmdCancel = new Command(l10n.getString(L10nConstants.keys.MENU_CANCEL), Command.SCREEN,1);
+    	
     		_pc = new PanicController(_prefs, this, this, manager, _cmdCancel);
     		_thread = new Thread(_pc);
     		_thread.start();
@@ -132,8 +132,8 @@ public class StartPanicForm
 			
 			if (command == _cmdCancel)
 			{
-				_wControl.cancel();
-				_midlet.notifyDestroyed();
+				_pc.stopPanic();
+				_midlet.showMainForm();
 				
 			}
 		}

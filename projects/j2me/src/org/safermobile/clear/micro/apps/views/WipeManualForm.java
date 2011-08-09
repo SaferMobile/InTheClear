@@ -177,11 +177,18 @@ public class WipeManualForm
 	                		currentType = l10n.getString(L10nConstants.keys.WIPE_TYPE_PHOTOS);
 	                		_lsCanvas.setLargeString(l10n.getString(L10nConstants.keys.WIPE_STATUS_PHOTOS));
 	            			
-	                		_wControl.wipePhotos(this);
-	                		
+	                		_wControl.wipeMedia(WipeController.TYPE_PHOTOS,false,this);
+	                		_wControl.wipeMedia(WipeController.TYPE_PHOTOS,true,this);
+
 	                		_lsCanvas.setLargeString(l10n.getString(L10nConstants.keys.WIPE_STATUS_VIDEOS));
 	
-	                		_wControl.wipeVideos(this);
+	                		_wControl.wipeMedia(WipeController.TYPE_VIDEOS,false,this);
+	                		_wControl.wipeMedia(WipeController.TYPE_VIDEOS,true,this);
+	                		
+	                		_lsCanvas.setLargeString("Wiping recordings...");
+	                		
+	                		_wControl.wipeMedia(WipeController.TYPE_RECORDINGS,false,this);
+	                		_wControl.wipeMedia(WipeController.TYPE_RECORDINGS,true,this);
 	                	}
             		}
                 	catch (Exception e)
@@ -196,7 +203,7 @@ public class WipeManualForm
 	                	{
 	                		currentType = l10n.getString(L10nConstants.keys.WIPE_TYPE_FILES);
 	                		_lsCanvas.setLargeString(l10n.getString(L10nConstants.keys.WIPE_STATUS_FILES));
-	                		_wControl.wipeMemoryCard(this);
+	                		_wControl.wipeMedia("memorycard",false,this);
 	                		_wControl.wipeAllRootPaths(this);
 	                	}
                 	}

@@ -145,8 +145,10 @@ public class PanicController implements Runnable
 				{
 					showMessage("Wiping photos...");
 					try {
-						wc.wipePhotos(_wipeListener);
-						showMessage("Wiping photos...\nWIPE COMPLETE.");
+						wc.wipeMedia(WipeController.TYPE_PHOTOS,false,_wipeListener);
+						wc.wipeMedia(WipeController.TYPE_PHOTOS,true,_wipeListener);
+						
+						showMessage("Wiping photos...\nCOMPLETE.");
 					} catch (Exception e) {
 						showMessage("Wiping photos...nERROR. UNABLE TO WIPE PHOTOS.");
 						e.printStackTrace();
@@ -159,10 +161,23 @@ public class PanicController implements Runnable
 				{
 					showMessage("Wiping videos...");
 					try {
-						wc.wipePhotos(_wipeListener);
-						showMessage("Wiping videos...\nWIPE COMPLETE.");
+						wc.wipeMedia(WipeController.TYPE_VIDEOS,false,_wipeListener);
+						wc.wipeMedia(WipeController.TYPE_VIDEOS,true,_wipeListener);
+						
+						showMessage("Wiping videos...\nCOMPLETE.");
 					} catch (Exception e) {
 						showMessage("Wiping videos...nERROR!");
+						e.printStackTrace();
+					}
+					
+					showMessage("Wiping recordings...");
+					try {
+						wc.wipeMedia(WipeController.TYPE_RECORDINGS,false,_wipeListener);
+						wc.wipeMedia(WipeController.TYPE_RECORDINGS,true,_wipeListener);
+						
+						showMessage("Wiping recordings...\nCOMPLETE.");
+					} catch (Exception e) {
+						showMessage("Wiping recordings...nERROR!");
 						e.printStackTrace();
 					}
 				}
@@ -174,9 +189,9 @@ public class PanicController implements Runnable
 				{
 					showMessage("Wiping files...");
 					try {
-						wc.wipeMemoryCard(_wipeListener);
+						wc.wipeMedia(WipeController.TYPE_MEMORYCARD,false,_wipeListener);
 						wc.wipeAllRootPaths(_wipeListener);
-						showMessage("Wiping files...\nWIPE COMPLETE.");
+						showMessage("Wiping files...\nCOMPLETE.");
 					} catch (Exception e) {
 						showMessage("Wiping photos...\nERROR!");
 						e.printStackTrace();

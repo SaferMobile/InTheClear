@@ -15,12 +15,22 @@ import org.safermobile.micro.utils.Logger;
 
 public class WipeController {
 
+	/*
 	private final static String UP_DIRECTORY = "..";
 	  private final static String MEGA_ROOT = "/";
 	  private final static String SEP_STR = "/";
 	  private final static char   SEP = '/';
+	*/
 	
 	  private boolean keepRunning = true;
+	
+	public final static String TYPE_PHOTOS = "photos";
+	public final static String TYPE_VIDEOS = "videos";
+	public final static String TYPE_RECORDINGS = "recordings";
+	public final static String TYPE_MEMORYCARD = "memorycard";
+	
+	
+	  
 	  
 	public Vector getContacts () throws PIMException
 	{
@@ -241,36 +251,19 @@ public class WipeController {
 	
 	}
 	
-	public void wipeMemoryCard (WipeListener wl) throws Exception
+	public boolean wipeMedia (String type, boolean external, WipeListener wl) throws Exception
 	{
+		String pathKey = "fileconn.dir." + (external ? "memorycard." : "") + type;
 		
-		String memcardPath = System.getProperty("fileconn.dir.memorycard");
+		String path = System.getProperty(pathKey);
 		
-		if (memcardPath != null)
-			wipeFilePath(memcardPath, wl);
+		if (path != null)
+		{
+			return wipeFilePath(path, wl);
+		}
 		else
-			throw new IOException("Cannot find memory card folder");
-
-	}
-	
-	public void wipePhotos (WipeListener wl) throws Exception
-	{
-		String photosPath = System.getProperty("fileconn.dir.photos");
+			return false;
 		
-		if (photosPath != null)
-			wipeFilePath(photosPath, wl);
-		else
-			throw new IOException("Cannot find photos folder");
-	}
-	
-	public void wipeVideos (WipeListener wl) throws Exception
-	{
-		String videosPath = System.getProperty("fileconn.dir.videos");
-		
-		if (videosPath != null)
-			wipeFilePath(videosPath, wl);
-		else
-			throw new IOException("Cannot find videos folder");
 	}
 	
 	 
@@ -288,3 +281,30 @@ public class WipeController {
 		    return isAPIAvailable;
 	}
 }
+
+/*
+System.getProperty("fileconn.dir.photos"); 
+System.getProperty("fileconn.dir.photos.name"); 
+System.getProperty("fileconn.dir.memorycard.photos"); 
+System.getProperty("fileconn.dir.memorycard.photos.name"); 
+System.getProperty("fileconn.dir.videos"); 
+System.getProperty("fileconn.dir.videos.name"); 
+System.getProperty("fileconn.dir.memorycard.videos"); 
+System.getProperty("fileconn.dir.memorycard.videos.name"); 
+System.getProperty("fileconn.dir.tones"); 
+System.getProperty("fileconn.dir.tones.name"); 
+System.getProperty("fileconn.dir.memorycard.tones"); 
+System.getProperty("fileconn.dir.memorycard.tones.name"); 
+System.getProperty("fileconn.dir.graphics"); 
+System.getProperty("fileconn.dir.graphics.name"); 
+System.getProperty("fileconn.dir.memorycard.graphics"); 
+System.getProperty("fileconn.dir.memorycard.graphics.name"); 
+System.getProperty("fileconn.dir.music"); 
+System.getProperty("fileconn.dir.music.name"); 
+System.getProperty("fileconn.dir.memorycard.music"); 
+System.getProperty("fileconn.dir.memorycard.music.name"); 
+System.getProperty("fileconn.dir.recordings"); 
+System.getProperty("fileconn.dir.recordings.name"); 
+System.getProperty("fileconn.dir.memorycard.recordings"); 
+System.getProperty("fileconn.dir.memorycard.recordings.name"); 
+*/

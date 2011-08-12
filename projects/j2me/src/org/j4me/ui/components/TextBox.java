@@ -84,6 +84,11 @@ public class TextBox
 	 */
 	private int constraints = TextField.ANY;
 	
+	/*
+	 * The last key typed by the user. Used to set the initial value of the textbox.
+	 */
+	private int lastKey;
+	
 	/**
 	 * Creates a new <code>TextBox</code> component.
 	 */
@@ -490,6 +495,7 @@ public class TextBox
 		if ( (keyCode > 0) || (keyCode == DeviceScreen.FIRE) )
 		{
 			select();
+			lastKey = keyCode;
 		}
 	}
 	
@@ -539,7 +545,8 @@ public class TextBox
 		Display display = UIManager.getDisplay();
 		display.setCurrent( entry );
 		
-		entry.setString(contents);
+		entry.setString(entry.getString()+current.getCanvas().getKeyName(lastKey));
+		
 	}
 	
 	/**

@@ -12,7 +12,7 @@
       <entry key="menu_next" value="Next"/>
       <entry key="menu_send" value="Send"/>
       <entry key="panic_error_sms" value="Unable to initiate SMS access"/>
-      <entry key="panic_msg_pre" value="Emergency Message: "/>
+      <entry key="panic_msg_pre" value="Emergency Message:"/>
       <entry key="panic_msg_from" value="From"/>
       <entry key="panic_msg_location" value="Location:"/>
       <entry key="panic_msg_cid" value="cid:"/>
@@ -60,7 +60,7 @@
       <entry key="wipe_status_videos" value="Wiping videos..."/>
       <entry key="wipe_type_files" value="files"/>
       <entry key="wipe_status_files" value="Wiping files..."/>
-      <entry key="wipe_status_files_deleted" value="files deleted."/>
+      <entry key="wipe_status_files_deleted" value="items deleted."/>
       <entry key="wipe_status_errors" value="errors."/>
       <entry key="wipe_status_wiping_word" value="Wiping"/>
       <entry key="panic_title" value="Panic!"/>
@@ -87,5 +87,29 @@
       <entry key="button_continue" value="Continue &gt;&gt;"/>
       <entry key="button_send_test" value="Send Test Message"/>
       <entry key="MENU_OK" value="Okay"/>
+      <entry key="key_panic_start" value="EMERGENCY MESSAGE:\npreparing to send..."/>
+      <entry key="key_sending" value="Sending in"/>
+      <entry key="key_ellipse" value="..."/>
+      <entry key="key_sending_messages" value="Sending messages..."/>
+      <entry key="key_message_sent" value="Message Sent!"/>
+      <entry key="key_error_sending" value="Error Sending:\n"/>
+      <entry key="key_preparing)wipe" value="Preparing to\nwipe data..."/>
+      <entry key="key_wiping_starting" value="Wiping selected\n personal data..."/>
+      <entry key="key_wipe_success" value="Success - \nData wiped!"/>
+      <entry key="key_wipe_error" value="WARNING: There was an error wiping your data."/>
+      <entry key="key_wipe_photos" value="Wiping photos..."/>
+      <entry key="key_wipe_photos_complete" value="Wiping photos...\nCOMPLETE."/>
+      <entry key="key_wipe_photos_error" value="Wiping photos...nERROR. UNABLE TO WIPE PHOTOS."/>
+      <entry key="key_wipe_videos" value="Wiping videos..."/>
+      <entry key="key_wipe_videos_complete" value="Wiping videos...\nCOMPLETE."/>
+      <entry key="key_wipe_videos_error" value="Wiping videos...nERROR!"/>
+      <entry key="key_wipe_recordings" value="Wiping recordings..."/>
+      <entry key="key_wipe_recordings_complete" value="Wiping recordings...\nCOMPLETE."/>
+      <entry key="key_wipe_recordings_error" value="Wiping recordings...nERROR!"/>
+      <entry key="key_wipe_files" value="Wiping files..."/>
+      <entry key="key_wipe_files_complete" value="Wiping files...\nCOMPLETE."/>
+      <entry key="key_wipe_files_error" value="Wiping photos...\nERROR!"/>
+      <entry key="key_panic_again" value="Panic! again in\n"/>
+      <entry key="key_seconds" value="secs..."/>
    </locale>
 </locales>

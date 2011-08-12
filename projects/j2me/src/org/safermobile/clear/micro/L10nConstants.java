@@ -102,6 +102,30 @@ public class L10nConstants {
 		public static final String BUTTON_CONTINUE = "BUTTON_CONTINUE";
 		public static final String BUTTON_SEND_TEST = "BUTTON_SEND_TEST";
 		public static final String MENU_OK = "MENU_OK";
+		public static final String KEY_PANIC_START = "KEY_PANIC_START";
+		public static final String KEY_SENDING = "KEY_SENDING";
+		public static final String KEY_ELLIPSE = "KEY_ELLIPSE";
+		public static final String KEY_SENDING_MESSAGES = "KEY_SENDING_MESSAGES";
+		public static final String KEY_MESSAGE_SENT = "KEY_MESSAGE_SENT";
+		public static final String KEY_ERROR_SENDING = "KEY_ERROR_SENDING";
+		public static final String KEY_PREPARING_WIPE = "KEY_PREPARING_WIPE";
+		public static final String KEY_WIPING_STARTING = "KEY_WIPING_STARTING";
+		public static final String KEY_WIPE_SUCCESS = "KEY_WIPE_SUCCESS";
+		public static final String KEY_WIPE_ERROR = "KEY_WIPE_ERROR";
+		public static final String KEY_WIPE_PHOTOS = "KEY_WIPE_PHOTOS";
+		public static final String KEY_WIPE_PHOTOS_COMPLETE = "KEY_WIPE_PHOTOS_COMPLETE";
+		public static final String KEY_WIPE_PHOTOS_ERROR = "KEY_WIPE_PHOTOS_ERROR";
+		public static final String KEY_WIPE_VIDEOS = "KEY_WIPE_VIDEOS";
+		public static final String KEY_WIPE_VIDEOS_COMPLETE = "KEY_WIPE_VIDEOS_COMPLETE";
+		public static final String KEY_WIPE_VIDEOS_ERROR = "KEY_WIPE_VIDEOS_ERROR";
+		public static final String KEY_WIPE_RECORDINGS = "KEY_WIPE_RECORDINGS";
+		public static final String KEY_WIPE_RECORDINGS_COMPLETE = "KEY_WIPE_RECORDINGS_COMPLETE";
+		public static final String KEY_WIPE_RECORDINGS_ERROR = "KEY_WIPE_RECORDINGS_ERROR";
+		public static final String KEY_WIPE_FILES = "KEY_WIPE_FILES";
+		public static final String KEY_WIPE_FILES_COMPLETE = "KEY_WIPE_FILES_COMPLETE";
+		public static final String KEY_WIPE_FILES_ERROR = "KEY_WIPE_FILES_ERROR";
+		public static final String KEY_PANIC_AGAIN = "KEY_PANIC_AGAIN";
+		public static final String KEY_SECONDS = "KEY_SECONDS";
 
     }
 }

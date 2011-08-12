@@ -1,6 +1,9 @@
 package org.safermobile.clear.micro.apps.views;
 
 
+import java.util.Enumeration;
+
+import javax.microedition.io.file.FileSystemRegistry;
 import javax.microedition.lcdui.Command;
 import javax.microedition.lcdui.CommandListener;
 import javax.microedition.lcdui.Display;
@@ -103,6 +106,18 @@ public class WipeManualForm
         		_cbCalendar.setLabel( l10n.getString(L10nConstants.keys.WIPE_MENU_CALENDAR) );
         		_cbCalendar.setChecked( false );
         		append( _cbCalendar );
+        		
+        		/*
+        		Enumeration eRoots = FileSystemRegistry.listRoots();
+        		
+        		while (eRoots.hasMoreElements())
+        		{
+        			CheckBox cb = new CheckBox();
+            		cb.setLabel((String)eRoots.nextElement());
+            		cb.setChecked( false );
+            		append( cb );
+        		}
+        		*/
         		
         		Button btn = new Button();
         		btn.setOnClickListener(this);
@@ -212,9 +227,16 @@ public class WipeManualForm
                 		_lsCanvas.setLargeString(e.getMessage());
                 	}
                 	
+                	
                 	String msg = l10n.getString(L10nConstants.keys.WIPE_MSG_SUCCESS);
-                	msg += "\n" + successCount + l10n.getString(L10nConstants.keys.WIPE_STATUS_FILES_DELETED);
-                	msg += "\n" + errCount + l10n.getString(L10nConstants.keys.WIPE_STATUS_ERRORS);
+                	
+                	if (successCount > 0)
+                		msg += "\n" + successCount + ' ' + l10n.getString(L10nConstants.keys.WIPE_STATUS_FILES_DELETED);
+                	else
+                		msg += "\n" + "No items founds";
+                	
+                	if (errCount > 0)
+                		msg += "\n" + errCount + ' ' + l10n.getString(L10nConstants.keys.WIPE_STATUS_ERRORS);
                 	
                 	_lsCanvas.setLargeString(msg);
                 	

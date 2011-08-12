@@ -70,7 +70,7 @@
       <entry key="error_sms_failure" value="It looks like your test SMS was NOT sent successfully. View details for more info."/>
       <entry key="error_sms_success" value="It looks like your test SMS was sent successfully. Check with the recipient to be sure."/>
       <entry key="panic_message_title" value="Emergency SMS Setup"/>
-      <entry key="panic_message_info" value="Now that we&apos;ve tested Emergency SMS, we will personalize your actual message and recipients. To send to multiple recipients, separate phone numbers with commas."/>
+      <entry key="panic_message_info" value="Now you must setup the actual emergency mobile phone number to use and message to send in case of an emergency."/>
       <entry key="panic_message_lbl_msg" value="Emergency message"/>
       <entry key="setup_complete_title" value="InTheClear Setup Complete"/>
       <entry key="setup_complete_msg" value="Thanks for setting up InTheClear. Remember that you can activate its features manually from within the InTheClear app, or access the Panic! shortcut directly."/>
@@ -83,7 +83,7 @@
       <entry key="menu_panic" value="Start"/>
       <entry key="panic_press_to_activate" value="You must press the &apos;Start&apos; option to confirm you want to start the emergency alert and data wipe"/>
       <entry key="sms_test_default_msg" value="This is a test message"/>
-      <entry key="panic_msg_lbl_phone" value="Recipient Phone Number(s)"/>
+      <entry key="panic_msg_lbl_phone" value="Recipient Phone Number"/>
       <entry key="button_continue" value="Continue &gt;&gt;"/>
       <entry key="button_send_test" value="Send Test Message"/>
       <entry key="MENU_OK" value="Okay"/>

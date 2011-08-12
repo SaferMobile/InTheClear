@@ -21,7 +21,7 @@
       <entry key="panic_msg_sent" value="Panic Sent"/>
       <entry key="panic_msg_sentto" value="Sent to:"/>
       <entry key="setup_title" value="Setup Wizard"/>
-      <entry key="setup_intro" value="InTheClear keeps you safe in difficult situations by sending emergency messages and wiping data off your phone."/>
+      <entry key="setup_intro" value="InTheClear keeps you safer in difficult situations by sending emergency SMS messages and by wiping data off your phone."/>
       <entry key="sms_test_title" value="Emergency SMS"/>
       <entry key="sms_test_msg" value="The first step is to send a test SMS to yourself."/>
       <entry key="sms_test_lbl_phone" value="Enter your mobile phone number"/>

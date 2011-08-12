@@ -31,19 +31,6 @@ public class PIMWiper {
 	private static Random RAND = new Random(); 
 
 	
-	private final static String[] names = new String[]{
-			"Tom","Jacob","Jake",
-			"Ethan","Jonathan","Tyler","Samuel","Nicholas","Angel",
-			"Jayden","Nathan","Elijah","Christian","Gabriel","Benjamin",
-			"Emma","Aiden","Ryan","James","Abigail","Logan","John",
-			"Daniel","Alexander","Isabella","Anthony","William","Christopher","Matthew","Emily","Madison",
-			"Rob","Ava","Olivia","Andrew","Joseph","David","Sophia","Noah",
-			"Justin",
-			"Smith","Johnson","Williams","Jones","Brown","Davis","Miller","Wilson","Moore",
-			"Taylor","Anderson","Thomas","Jackson","White","Harris","Martin","Thompson","Garcia",
-			"Martinez","Robinson","Clark","Lewis","Lee","Walker","Hall","Allen","Young",
-			"King","Wright","Hill","Scott","Green","Adams","Baker","Carter","Turner",
-		};
 		
 	public void test ()
 	{
@@ -177,25 +164,42 @@ public class PIMWiper {
 	
 	public static void wipePIMItemsByType (int pimType) throws PIMException
 	{
-		PIMItem pItem = null;
 
 		PIMList pList = null;
 		
 		// Open default contact list
 		PIM pim = PIM.getInstance();
-		
-		pList = (PIMList) pim.openPIMList(pimType, PIM.READ_WRITE);
 
-		// Retrieve contact values
-		// The countValues() method returns the number of data values currently
-		// set in a particular field.
-		Enumeration enumItems = pList.items();
-		int idx = 0;
+		String[] pimLists = pim.listPIMLists(pimType);
+		
+		for (int i = 0; i < pimLists.length; i++)
+		{
+			pList = (PIMList) pim.openPIMList(pimType, PIM.READ_WRITE, pimLists[i]);
+	 
+
+			String[] cats = pList.getCategories();
+			
+			for (int n = 0; n < cats.length; n++)
+			{
+				wipeListCategory(pList, cats[n]);
+			}
+			
+			wipeList(pList);
+			
+			pList.close();
+		}
+		
+	}
+	
+	private static void wipeListCategory (PIMList pList, String category) throws PIMException
+	{
+		PIMItem pItem = null;
+
+		Enumeration enumItems = pList.itemsByCategory(category);
 		
 		while (enumItems.hasMoreElements())
 		{
 			pItem = (PIMItem) enumItems.nextElement();
-			log("removing pimItem: " + (idx++));
 			
 			if (pItem instanceof Contact)
 			{
@@ -211,8 +215,32 @@ public class PIMWiper {
 			}
 		}
 
-		pList.close();
+	}
+	
+	private static void wipeList (PIMList pList) throws PIMException
+	{
+		PIMItem pItem = null;
+
+		Enumeration enumItems = pList.items();
 		
+		while (enumItems.hasMoreElements())
+		{
+			pItem = (PIMItem) enumItems.nextElement();
+			
+			if (pItem instanceof Contact)
+			{
+				((ContactList)pList).removeContact((Contact)pItem);
+			}
+			else if (pItem instanceof Event)
+			{
+				((EventList)pList).removeEvent((Event)pItem);
+			}
+			else if (pItem instanceof ToDo)
+			{
+				((ToDoList)pList).removeToDo((ToDo)pItem);
+			}
+		}
+
 	}
 	
 	private static void log(String msg)
@@ -255,48 +283,7 @@ public class PIMWiper {
 		clist.close();
 	}
 	
-	public static void fillContacts (int max) throws Exception
-	{
-		log("filling contacts");
-
-		Contact c = null;
-
-		ContactList clist = null;
-		
-		// Open default contact list
-		PIM pim = PIM.getInstance();
-		
-		clist = (ContactList) pim.openPIMList(PIM.CONTACT_LIST, PIM.READ_WRITE);
-			
-
-		for (int i = 0; i < max; i++)
-		{
-
-			log("filling random contact: " + i);
-			
-			//Add contact values
-			c = clist.createContact();
-			int attrs = Contact.ATTR_HOME;
-			
-			String rNum = "+" + generateRandomNumber(12);
-			c.addString(Contact.TEL, attrs, rNum);
-			
-			String[] rName = {"",generateRandomName(),generateRandomName(),generateRandomName(),""};
-			c.addStringArray(Contact.NAME, PIMItem.ATTR_NONE, rName);
-
-			 
-			c.commit();
-		
-		}
-		
-		clist.close();
-	}
-
-	public static String generateRandomName(){
-		
-		int indexF = RAND.nextInt(names.length - 1);
-		return names[indexF];
-	}
+	
 	
 	public static String generateRandomNumber (int digits)
 	{

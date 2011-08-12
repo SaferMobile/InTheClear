@@ -95,23 +95,6 @@ public class ITCMainMIDlet extends MIDlet implements Runnable {
 		wdt = new WipeDataType(ITCConstants.PREFS_KEY_WIPE_PHOTOS, l10n.getString(L10nConstants.keys.WIPE_MENU_PHOTOS));
 		_wipeDataTypes.addElement(wdt);
 		
-
-		//for BB this is where we will add CallLogs and Messages
-		/*
-		 * 
-		 * wdt = new WipeDataType(ITCConstants.PREFS_KEY_WIPE_MESSAGES, l10n.getString(L10nConstants.keys.WIPE_MENU_MESSAGES));
-		_wipeDataTypes.addElement(wdt);
-		
-		
-		wdt = new WipeDataType(ITCConstants.PREFS_KEY_WIPE_CALLLOGS, l10n.getString(L10nConstants.keys.WIPE_MENU_CALLLOGS));
-		_wipeDataTypes.addElement(wdt);
-		
-		 * 
-		 * 
-		 */
-		
-		//
-		
 		wdt = new WipeDataType(ITCConstants.PREFS_KEY_WIPE_ALL_FILES, l10n.getString(L10nConstants.keys.WIPE_MENU_FILES));
 		_wipeDataTypes.addElement(wdt);
 		

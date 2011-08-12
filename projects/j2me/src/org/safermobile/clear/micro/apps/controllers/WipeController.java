@@ -138,11 +138,6 @@ public class WipeController {
 			PIMWiper.wipeToDos();
 	}
 	
-	public void fillContactsRandom (int fillItemCount) throws Exception
-	{
-		PIMWiper.fillContacts(fillItemCount);
-
-	}
 	
 	public void fillContactsZero (int fillItemCount) throws Exception
 	{
@@ -150,10 +145,6 @@ public class WipeController {
 
 	}
 	
-	public void fillSMS (int fillItemCount)
-	{
-		
-	}
 	
 	public boolean wipeAllRootPaths (WipeListener wl) throws IOException
 	{

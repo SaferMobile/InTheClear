@@ -24,7 +24,7 @@
       <entry key="setup_intro" value="InTheClear keeps you safe in difficult situations by sending emergency messages and wiping data off your phone."/>
       <entry key="sms_test_title" value="Emergency SMS"/>
       <entry key="sms_test_msg" value="The first step is to send a test SMS to yourself."/>
-      <entry key="sms_test_lbl_phone" value="Your Phone Number"/>
+      <entry key="sms_test_lbl_phone" value="Enter your mobile phone number"/>
       <entry key="sms_test_lbl_msg" value="Message"/>
       <entry key="wipe_select_title" value="Data Wipe Setup"/>
       <entry key="wipe_message" value="InTheClear can wipe data off your phone&apos;s memory when you activate it. Select what data you want to erase below. Be careful! You won&apos;t be able to recover this data once it is wiped."/>
@@ -93,7 +93,7 @@
       <entry key="key_sending_messages" value="Sending messages..."/>
       <entry key="key_message_sent" value="Message Sent!"/>
       <entry key="key_error_sending" value="Error Sending:\n"/>
-      <entry key="key_preparing)wipe" value="Preparing to\nwipe data..."/>
+      <entry key="key_preparing_wipe" value="Preparing to\nwipe data..."/>
       <entry key="key_wiping_starting" value="Wiping selected\n personal data..."/>
       <entry key="key_wipe_success" value="Success - \nData wiped!"/>
       <entry key="key_wipe_error" value="WARNING: There was an error wiping your data."/>

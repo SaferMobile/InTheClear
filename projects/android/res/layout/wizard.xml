@@ -16,6 +16,7 @@
    	<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
 	android:layout_width="fill_parent"
   	android:layout_height="0dip"
+  	android:layout_gravity="center_vertical"
  	android:layout_weight="0.15"
  	android:weightSum="1.0"
   	android:orientation="horizontal">
@@ -30,9 +31,10 @@
   			android:layout_width="0dip"
   			android:layout_height="wrap_content"
   			android:layout_weight="0.75"
+  			android:layout_gravity="center_vertical"
   			android:textSize="26dip"
   			android:textColor="#ff000000"
-  			android:id="@+id/wizardTitle" />
+  			android:id="@+id/wizardTitle" android:gravity="center_vertical"/>
   	</LinearLayout>
 	<ScrollView
 		android:layout_width="fill_parent"

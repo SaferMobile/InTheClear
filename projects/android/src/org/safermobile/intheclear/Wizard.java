@@ -240,7 +240,7 @@ public class Wizard extends Activity implements OnClickListener, SMSTesterConsta
 			if(c == (wNum - 1))
 				color = Color.YELLOW;
 			
-			circles[c] = new StatusCircle(color,c * 40);
+			circles[c] = new StatusCircle(color,c * 70);
 		}
 		
 		wizardStatusTrack.setBackgroundDrawable(new Drawable() {
@@ -353,6 +353,7 @@ public class Wizard extends Activity implements OnClickListener, SMSTesterConsta
 				LinearLayout rnHolder = new LinearLayout(c);
 				rnHolder.setLayoutParams(lp);
 				rnHolder.setOrientation(LinearLayout.HORIZONTAL);
+				rnHolder.setGravity(Gravity.CENTER_VERTICAL);
 				
 				TextView recipientNumbersTitle = new TextView(c);
 				recipientNumbersTitle.setText(getResources().getString(R.string.WIZARD_RECIPIENT_MOBILE_NUMBERS));
@@ -369,6 +370,7 @@ public class Wizard extends Activity implements OnClickListener, SMSTesterConsta
 				LinearLayout emHolder = new LinearLayout(c);
 				emHolder.setLayoutParams(lp);
 				emHolder.setOrientation(LinearLayout.HORIZONTAL);
+				emHolder.setGravity(Gravity.CENTER_VERTICAL);
 				emHolder.setPadding(0, 10, 0, 10);
 				
 				TextView emergencyMessageTitle = new TextView(c);
@@ -383,7 +385,7 @@ public class Wizard extends Activity implements OnClickListener, SMSTesterConsta
 				emergencyMessage.setContentDescription(ITCConstants.Preference.DEFAULT_PANIC_MSG);
 				emergencyMessage.setWidth((int) (_screen[0] * 0.6));
 				emergencyMessage.setHeight((int) (_screen[1] * 0.25));
-				emergencyMessage.setPadding(0, 5, 0, 5);
+				emergencyMessage.setPadding(10, 5, 5, 7);
 				emergencyMessage.setOnKeyListener(new OnKeyListener() {
 
 					@Override
@@ -408,6 +410,7 @@ public class Wizard extends Activity implements OnClickListener, SMSTesterConsta
 				LinearLayout warningHolder = new LinearLayout(c);
 				warningHolder.setLayoutParams(lp);
 				warningHolder.setOrientation(LinearLayout.HORIZONTAL);
+				warningHolder.setGravity(Gravity.CENTER_VERTICAL);
 				
 				ImageView warningImg = new ImageView(c);
 				warningImg.setBackgroundDrawable(getResources().getDrawable(R.drawable.warning));
@@ -437,6 +440,8 @@ public class Wizard extends Activity implements OnClickListener, SMSTesterConsta
 				LinearLayout oneTouchHolder = new LinearLayout(c);
 				oneTouchHolder.setLayoutParams(lp);
 				oneTouchHolder.setOrientation(LinearLayout.HORIZONTAL);
+				oneTouchHolder.setPadding(0, 10, 0, 0);
+				oneTouchHolder.setGravity(Gravity.CENTER_VERTICAL);
 				
 				CheckBox oneTouch = new CheckBox(c);
 				oneTouch.setChecked(true);
@@ -456,6 +461,8 @@ public class Wizard extends Activity implements OnClickListener, SMSTesterConsta
 				LinearLayout homescreenHolder = new LinearLayout(c);
 				homescreenHolder.setLayoutParams(lp);
 				homescreenHolder.setOrientation(LinearLayout.HORIZONTAL);
+				homescreenHolder.setPadding(0, 10, 0, 0);
+				homescreenHolder.setGravity(Gravity.CENTER_VERTICAL);
 				
 				CheckBox homeScreen = new CheckBox(c);
 				homeScreen.setChecked(true);

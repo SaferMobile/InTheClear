@@ -5,11 +5,13 @@ import java.util.Map;
 
 import org.safermobile.intheclear.screens.WipePreferences;
 import org.safermobile.intheclear.sms.SMSSender;
+import org.safermobile.intheclear.sms.SMSTesterConstants;
 
 import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.graphics.Canvas;
 import android.graphics.Color;
@@ -33,7 +35,7 @@ import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.LinearLayout.LayoutParams;
 
-public class Wizard extends Activity implements OnClickListener {
+public class Wizard extends Activity implements OnClickListener, SMSTesterConstants {
 	int wNum,nextWizard,lastWizard = 0;
 	
 	ScrollView sv;
@@ -483,7 +485,7 @@ public class Wizard extends Activity implements OnClickListener {
 		}
 		
 		public void testSMS() {
-			SMSSender sms = new SMSSender(c);
+			
 			final Dialog d = new Dialog(c);
 			d.setContentView(R.layout.confirmation);
 			
@@ -503,12 +505,21 @@ public class Wizard extends Activity implements OnClickListener {
 			
 			String testSmsNumber = ((EditText) ((LinearLayout) views.get(1)).getChildAt(1)).getText().toString();
 			
-			if(sms.sendSMS(testSmsNumber,
-					getResources().getString(R.string.KEY_WIZARD_SMSTESTMSG))) {
-						
+			// 1. start spinner
+			
+			// 2. get result
+			SMSSender sms = new SMSSender(c);
+			sms.sendSMS(testSmsNumber,getResources().getString(R.string.KEY_WIZARD_SMSTESTMSG));
+			
+			
+			boolean r = false;
+			if(r) {
+				
+				
 				confirmationTitle.setText(getResources().getString(R.string.WIZARD_CONFIRMATION_SMSTEST_TITLE));
 				confirmationText.setText(getResources().getString(R.string.WIZARD_CONFIRMATION_SMSTEST));
 				
+				dismissConfirmation.setWidth(_screen[0]);
 				confirmationHolder.addView(dismissConfirmation);
 				wizardForward.setEnabled(true);
 				((Button) views.get(2)).setVisibility(View.GONE);
@@ -523,15 +534,19 @@ public class Wizard extends Activity implements OnClickListener {
 					@Override
 					public void onClick(View v) {
 						d.dismiss();
+						
 					}
 					
 				});
 				
+				details.setWidth((int) (_screen[0] * 0.5));
+				dismissConfirmation.setWidth((int) (_screen[0] * 0.5));
 				confirmationHolder.addView(details);
 				confirmationHolder.addView(dismissConfirmation);
 				
 				/*
 				 *  TODO: fix error notification
+				
 				
 				TextView titleHolder = (TextView) findViewById(R.id.wizardTitle);
 				titleHolder.setText(c.getResources().getString(R.string.WIZARD_CONFIRMATION_SMSTEST_FAIL));
@@ -542,10 +557,12 @@ public class Wizard extends Activity implements OnClickListener {
 				TextView supportEmail = new TextView(c);
 				supportEmail.setText(R.string.SAFERMOBILE_EMAIL);
 				supportEmail.setAutoLinkMask(Linkify.EMAIL_ADDRESSES);
-				
 				*/
 				
+				
 			}
+
+			
 			d.show();
 		}
 		

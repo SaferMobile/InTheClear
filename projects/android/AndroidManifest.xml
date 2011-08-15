@@ -107,5 +107,6 @@
         	</intent-filter>
         </activity>
 		<service android:enabled="true" android:name=".controllers.PanicController" />
+		<receiver android:name=".sms.SMSConfirm" />
     </application>
 </manifest>

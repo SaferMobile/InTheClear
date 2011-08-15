@@ -14,15 +14,22 @@
   <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/launchPanic"
   	android:orientation="vertical"
-  	android:layout_below="@id/logoITC" android:layout_width="wrap_content" android:layout_height="200dp">
+  	android:layout_below="@id/logoITC"
+  	android:layout_width="fill_parent"
+  	android:layout_height="150dp"
+    android:gravity="center">
 	  <ImageView
 	  	android:id="@+id/logoPanic"
 	  	android:src="@drawable/panic" 
 	  	android:layout_width="wrap_content"
 	  	android:layout_height="wrap_content"
-	  	android:layout_gravity="center_horizontal"
 	  	android:background="#00ffffff"
 	  	android:padding="0dip" />
+	  <TextView 
+	  	android:text="@string/KEY_PANIC_BTN_PANIC"
+	  	android:layout_width="wrap_content"
+	  	android:layout_height="wrap_content"
+	  	android:textColor="#ff000000" />
   </LinearLayout>
   
   <GridView xmlns:android="http://schemas.android.com/apk/res/android"

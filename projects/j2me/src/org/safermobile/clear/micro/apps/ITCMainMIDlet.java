@@ -3,26 +3,23 @@
 /* See LICENSE for licensing information */
 
 package org.safermobile.clear.micro.apps;
-import java.io.IOException;
 import java.util.Vector;
 
 import javax.microedition.lcdui.Canvas;
 import javax.microedition.lcdui.Display;
 import javax.microedition.lcdui.Graphics;
-import javax.microedition.lcdui.Image;
 import javax.microedition.midlet.MIDlet;
 import javax.microedition.midlet.MIDletStateChangeException;
 import javax.microedition.rms.RecordStoreException;
 
 import org.j4me.ui.DeviceScreen;
 import org.j4me.ui.UIManager;
-import org.j4me.ui.components.Picture;
 import org.safermobile.clear.micro.L10nConstants;
 import org.safermobile.clear.micro.L10nResources;
 import org.safermobile.clear.micro.apps.models.WipeDataType;
 import org.safermobile.clear.micro.apps.views.ITCMainForm;
-import org.safermobile.clear.micro.ui.InTheClearTheme;
 import org.safermobile.clear.micro.ui.ErrorAlert;
+import org.safermobile.clear.micro.ui.InTheClearTheme;
 import org.safermobile.micro.ui.Splash;
 import org.safermobile.micro.utils.Logger;
 import org.safermobile.micro.utils.Preferences;
@@ -34,7 +31,6 @@ public class ITCMainMIDlet extends MIDlet implements Runnable {
 	private Display _display;
 	private Splash _splash;
 
-	private int screenWidth = -1;
 	
 	private DeviceScreen[] _screens;
 	
@@ -71,7 +67,6 @@ public class ITCMainMIDlet extends MIDlet implements Runnable {
 		{
 		
 			_splash = new Splash("/splash160.png","/splash320.png",0xffffff);			
-			screenWidth = _splash.getWidth();			
 			_splash.show(_display, _screens[0].getCanvas(), 2000);
 			
 		}
@@ -99,23 +94,6 @@ public class ITCMainMIDlet extends MIDlet implements Runnable {
 		
 		wdt = new WipeDataType(ITCConstants.PREFS_KEY_WIPE_PHOTOS, l10n.getString(L10nConstants.keys.WIPE_MENU_PHOTOS));
 		_wipeDataTypes.addElement(wdt);
-		
-
-		//for BB this is where we will add CallLogs and Messages
-		/*
-		 * 
-		 * wdt = new WipeDataType(ITCConstants.PREFS_KEY_WIPE_MESSAGES, l10n.getString(L10nConstants.keys.WIPE_MENU_MESSAGES));
-		_wipeDataTypes.addElement(wdt);
-		
-		
-		wdt = new WipeDataType(ITCConstants.PREFS_KEY_WIPE_CALLLOGS, l10n.getString(L10nConstants.keys.WIPE_MENU_CALLLOGS));
-		_wipeDataTypes.addElement(wdt);
-		
-		 * 
-		 * 
-		 */
-		
-		//
 		
 		wdt = new WipeDataType(ITCConstants.PREFS_KEY_WIPE_ALL_FILES, l10n.getString(L10nConstants.keys.WIPE_MENU_FILES));
 		_wipeDataTypes.addElement(wdt);
@@ -160,7 +138,9 @@ public class ITCMainMIDlet extends MIDlet implements Runnable {
 	
 	public void showPrev ()
 	{
-		_screenIdx--;
+		if (_screenIdx > 0)
+			_screenIdx--;
+		
 		showScreen();
 	}
 	

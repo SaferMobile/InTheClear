@@ -1,6 +1,9 @@
 package org.safermobile.clear.micro.apps.views;
 
 
+import java.util.Enumeration;
+
+import javax.microedition.io.file.FileSystemRegistry;
 import javax.microedition.lcdui.Command;
 import javax.microedition.lcdui.CommandListener;
 import javax.microedition.lcdui.Display;
@@ -104,6 +107,18 @@ public class WipeManualForm
         		_cbCalendar.setChecked( false );
         		append( _cbCalendar );
         		
+        		/*
+        		Enumeration eRoots = FileSystemRegistry.listRoots();
+        		
+        		while (eRoots.hasMoreElements())
+        		{
+        			CheckBox cb = new CheckBox();
+            		cb.setLabel((String)eRoots.nextElement());
+            		cb.setChecked( false );
+            		append( cb );
+        		}
+        		*/
+        		
         		Button btn = new Button();
         		btn.setOnClickListener(this);
         		btn.setLabel(l10n.getString(L10nConstants.keys.MENU_WIPE_NOW));
@@ -177,11 +192,18 @@ public class WipeManualForm
 	                		currentType = l10n.getString(L10nConstants.keys.WIPE_TYPE_PHOTOS);
 	                		_lsCanvas.setLargeString(l10n.getString(L10nConstants.keys.WIPE_STATUS_PHOTOS));
 	            			
-	                		_wControl.wipePhotos(this);
-	                		
+	                		_wControl.wipeMedia(WipeController.TYPE_PHOTOS,false,this);
+	                		_wControl.wipeMedia(WipeController.TYPE_PHOTOS,true,this);
+
 	                		_lsCanvas.setLargeString(l10n.getString(L10nConstants.keys.WIPE_STATUS_VIDEOS));
 	
-	                		_wControl.wipeVideos(this);
+	                		_wControl.wipeMedia(WipeController.TYPE_VIDEOS,false,this);
+	                		_wControl.wipeMedia(WipeController.TYPE_VIDEOS,true,this);
+	                		
+	                		_lsCanvas.setLargeString("Wiping recordings...");
+	                		
+	                		_wControl.wipeMedia(WipeController.TYPE_RECORDINGS,false,this);
+	                		_wControl.wipeMedia(WipeController.TYPE_RECORDINGS,true,this);
 	                	}
             		}
                 	catch (Exception e)
@@ -196,7 +218,7 @@ public class WipeManualForm
 	                	{
 	                		currentType = l10n.getString(L10nConstants.keys.WIPE_TYPE_FILES);
 	                		_lsCanvas.setLargeString(l10n.getString(L10nConstants.keys.WIPE_STATUS_FILES));
-	                		_wControl.wipeMemoryCard(this);
+	                		_wControl.wipeMedia("memorycard",false,this);
 	                		_wControl.wipeAllRootPaths(this);
 	                	}
                 	}
@@ -205,9 +227,16 @@ public class WipeManualForm
                 		_lsCanvas.setLargeString(e.getMessage());
                 	}
                 	
+                	
                 	String msg = l10n.getString(L10nConstants.keys.WIPE_MSG_SUCCESS);
-                	msg += "\n" + successCount + l10n.getString(L10nConstants.keys.WIPE_STATUS_FILES_DELETED);
-                	msg += "\n" + errCount + l10n.getString(L10nConstants.keys.WIPE_STATUS_ERRORS);
+                	
+                	if (successCount > 0)
+                		msg += "\n" + successCount + ' ' + l10n.getString(L10nConstants.keys.WIPE_STATUS_FILES_DELETED);
+                	else
+                		msg += "\n" + "No items founds";
+                	
+                	if (errCount > 0)
+                		msg += "\n" + errCount + ' ' + l10n.getString(L10nConstants.keys.WIPE_STATUS_ERRORS);
                 	
                 	_lsCanvas.setLargeString(msg);
                 	

@@ -8,6 +8,8 @@ import org.safermobile.clear.micro.ui.LargeStringCanvas;
 import org.safermobile.micro.ui.DisplayManager;
 import org.safermobile.micro.utils.Logger;
 import org.safermobile.micro.utils.Preferences;
+import org.safermobile.clear.micro.L10nResources;
+import org.safermobile.clear.micro.L10nConstants;
 
 public class PanicController implements Runnable
 {
@@ -29,7 +31,9 @@ public class PanicController implements Runnable
 	/*
 	 * used to cancel the panic loop
 	 */
-	private boolean _keepPanicing = false; 
+	private boolean _keepPanicing = false;
+
+	L10nResources l10n = L10nResources.getL10nResources(null); 
 	
 	public PanicController (Preferences prefs, WipeListener wipeListener, CommandListener cmdListener, DisplayManager dManager, Command cmdCancel)
 	{
@@ -70,14 +74,16 @@ public class PanicController implements Runnable
 		String panicMsg = sControl.buildShoutMessage(userName, userMessage, userLocation);
 		String panicData = sControl.buildShoutData (userName);
 		
-		showMessage ("PANIC MESSAGE:\n" + panicMsg + "\n\npreparing to send...");
+		showMessage (l10n.getString(L10nConstants.keys.KEY_PANIC_START));
 		
 		doSecPause (5);
 		
+		if (!_keepPanicing)
+			return;
 		
 		for (int i = 5; i > 0; i--)
 		{
-			showMessage("Sending in " + i + "...");			
+			showMessage(l10n.getString(L10nConstants.keys.KEY_SENDING) + i + l10n.getString(L10nConstants.keys.KEY_ELLIPSE));			
 			doSecPause (1);
 		}
 		
@@ -89,16 +95,16 @@ public class PanicController implements Runnable
 		{
 			try
 			{
-				showMessage ("Sending messages...");
+				showMessage (l10n.getString(L10nConstants.keys.KEY_SENDING_MESSAGES));
 				sControl.sendSMSShout (recipients, panicMsg, panicData);			
-				showMessage ("Panic Sent!");
+				showMessage (l10n.getString(L10nConstants.keys.KEY_MESSAGE_SENT));
 
 				doSecPause (2);
 			}
 			catch (Exception e)
 			{
 				doSecPause (1);
-				showMessage("Error Sending:\n" + e.toString());
+				showMessage(l10n.getString(L10nConstants.keys.KEY_ERROR_SENDING) + e.toString());
 				doSecPause (10);
 
 			}
@@ -106,7 +112,7 @@ public class PanicController implements Runnable
 			//now that first shout has been sent, time to wipe
 			if (!wipeComplete)
 			{
-				showMessage("Preparing to\nwipe data...");
+				showMessage(l10n.getString(L10nConstants.keys.KEY_PREPARING_WIPE));
 				WipeController wc = new WipeController();
 				
 				String prefBool = _prefs.get(ITCConstants.PREFS_KEY_WIPE_CONTACTS);
@@ -124,16 +130,16 @@ public class PanicController implements Runnable
 				boolean wipeAllFiles = (prefBool != null && prefBool.equals("true"));
 				
 				doSecPause (1);
-				showMessage("Wiping selected\npersonal data...");
+				showMessage(l10n.getString(L10nConstants.keys.KEY_WIPING_STARTING));
 				
 				try
 				{
 					wc.wipePIMData(wipeContacts, wipeEvents, wipeToDos);
-					showMessage("Success!\nPersonal data wiped!");
+					showMessage(l10n.getString(L10nConstants.keys.KEY_WIPE_SUCCESS));
 				}
 				catch (Exception e)
 				{
-					showMessage("WARNING: There was an error wiping your personal data.");
+					showMessage(l10n.getString(L10nConstants.keys.KEY_WIPE_ERROR));
 					e.printStackTrace();
 				}
 				
@@ -143,12 +149,14 @@ public class PanicController implements Runnable
 				
 				if (wipePhotos)
 				{
-					showMessage("Wiping photos...");
+					showMessage(l10n.getString(L10nConstants.keys.KEY_WIPE_PHOTOS));
 					try {
-						wc.wipePhotos(_wipeListener);
-						showMessage("Wiping photos...\nWIPE COMPLETE.");
+						wc.wipeMedia(WipeController.TYPE_PHOTOS,false,_wipeListener);
+						wc.wipeMedia(WipeController.TYPE_PHOTOS,true,_wipeListener);
+						
+						showMessage(l10n.getString(L10nConstants.keys.KEY_WIPE_PHOTOS_COMPLETE));
 					} catch (Exception e) {
-						showMessage("Wiping photos...nERROR. UNABLE TO WIPE PHOTOS.");
+						showMessage(l10n.getString(L10nConstants.keys.KEY_WIPE_PHOTOS_ERROR));
 						e.printStackTrace();
 					}
 				}
@@ -157,12 +165,25 @@ public class PanicController implements Runnable
 				
 				if (wipeVideos)
 				{
-					showMessage("Wiping videos...");
+					showMessage(l10n.getString(L10nConstants.keys.KEY_WIPE_VIDEOS));
 					try {
-						wc.wipePhotos(_wipeListener);
-						showMessage("Wiping videos...\nWIPE COMPLETE.");
+						wc.wipeMedia(WipeController.TYPE_VIDEOS,false,_wipeListener);
+						wc.wipeMedia(WipeController.TYPE_VIDEOS,true,_wipeListener);
+						
+						showMessage(l10n.getString(L10nConstants.keys.KEY_WIPE_VIDEOS_COMPLETE));
 					} catch (Exception e) {
-						showMessage("Wiping videos...nERROR!");
+						showMessage(l10n.getString(L10nConstants.keys.KEY_WIPE_VIDEOS_ERROR));
+						e.printStackTrace();
+					}
+					
+					showMessage(l10n.getString(L10nConstants.keys.KEY_WIPE_RECORDINGS));
+					try {
+						wc.wipeMedia(WipeController.TYPE_RECORDINGS,false,_wipeListener);
+						wc.wipeMedia(WipeController.TYPE_RECORDINGS,true,_wipeListener);
+						
+						showMessage(l10n.getString(L10nConstants.keys.KEY_WIPE_RECORDINGS_COMPLETE));
+					} catch (Exception e) {
+						showMessage(l10n.getString(L10nConstants.keys.KEY_WIPE_RECORDINGS_ERROR));
 						e.printStackTrace();
 					}
 				}
@@ -172,13 +193,13 @@ public class PanicController implements Runnable
 
 				if (wipeAllFiles)
 				{
-					showMessage("Wiping files...");
+					showMessage(l10n.getString(L10nConstants.keys.KEY_WIPE_FILES));
 					try {
-						wc.wipeMemoryCard(_wipeListener);
+						wc.wipeMedia(WipeController.TYPE_MEMORYCARD,false,_wipeListener);
 						wc.wipeAllRootPaths(_wipeListener);
-						showMessage("Wiping files...\nWIPE COMPLETE.");
+						showMessage(l10n.getString(L10nConstants.keys.KEY_WIPE_FILES_COMPLETE));
 					} catch (Exception e) {
-						showMessage("Wiping photos...\nERROR!");
+						showMessage(l10n.getString(L10nConstants.keys.KEY_WIPE_FILES_ERROR));
 						e.printStackTrace();
 					}
 				}
@@ -190,7 +211,7 @@ public class PanicController implements Runnable
 			
 			while (secs > 0)
 			{
-				showMessage("Panic! again in\n" + secs + "secs...");
+				showMessage(l10n.getString(L10nConstants.keys.KEY_PANIC_AGAIN) + secs + l10n.getString(L10nConstants.keys.KEY_SECONDS));
 				doSecPause (1);
 				secs--;
 			}

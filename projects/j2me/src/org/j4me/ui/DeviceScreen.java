@@ -1058,9 +1058,15 @@ devices the name consists of “Nokia”, the device
 		//  handled by setMenuText() and other methods.
 		setFullScreenMode(DeviceScreen.FULLSCREEN_MODE_DEFAULT);
 		
-		
+		if (blackberry)
+			addCommandBack ();
 	}
 
+	private void addCommandBack ()
+	{
+		Command cmdBack =  new Command("Back", Command.BACK, 0 );
+		addCommand (cmdBack);
+	}
 	/**
 	 * Causes the <code>keyRepeated</code> method to fire on devices that do
 	 * not natively support it.
@@ -1220,6 +1226,12 @@ devices the name consists of “Nokia”, the device
 		if ( key > 6 )
 		{
 			return key;
+		}
+		
+		//blackberry has an escape/back key that should be used as menu let
+		if (key == 27) //should be escape
+		{
+			return DeviceScreen.MENU_LEFT;
 		}
 		
 		// Is it a well defined game key such as a joystick movement?
@@ -1534,6 +1546,11 @@ devices the name consists of “Nokia”, the device
 		{
 			keyPressed( DeviceScreen.MENU_RIGHT );
 			keyReleased( DeviceScreen.MENU_RIGHT );
+		}
+		
+		if (c.getCommandType() == Command.BACK || c.getCommandType() == Command.CANCEL)
+		{
+			keyPressed( DeviceScreen.MENU_LEFT );
 		}
 	}
 	

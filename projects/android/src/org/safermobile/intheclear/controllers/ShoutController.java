@@ -13,7 +13,6 @@ import android.content.SharedPreferences;
 import android.content.res.Resources;
 import android.os.Handler;
 import android.os.Message;
-import android.util.Log;
 
 public class ShoutController {
 	Resources res;

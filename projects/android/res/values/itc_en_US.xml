@@ -106,7 +106,7 @@
 	<string name="KEY_SHOUT_ENTERSHOUTMSG">Enter the message you want to shout to your configured friends.</string>
 	<string name="KEY_SHOUT_COUNTDOWNMSG">Shout! in</string>
 	<string name="KEY_SECONDS">seconds...</string>
-	<string name="KEY_SHOUT_COUNTDOWNCANCEL">(Cancel this Shout the menu)</string>
+	<string name="KEY_SHOUT_COUNTDOWNCANCEL">Cancel this Emergency SMS</string>
 	<string name="KEY_WIPE_ACTIVITY_TITLE">Data Wipe</string>
 	<string name="KEY_WIPE_ACTIVITYTEXT">Select Wipe to erase the following portions of your phone\'s memory.  Choose \"Edit\" to change what\'s erased.</string>
 	<string name="KEY_WIPE_WIPECONTACTS">Wipe Contacts</string>

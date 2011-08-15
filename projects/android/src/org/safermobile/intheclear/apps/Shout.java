@@ -3,10 +3,12 @@ package org.safermobile.intheclear.apps;
 import org.safermobile.intheclear.ITCConstants;
 import org.safermobile.intheclear.R;
 import org.safermobile.intheclear.controllers.ShoutController;
+import org.safermobile.utils.EndActivity;
 
 import android.app.Activity;
 import android.app.Dialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.DialogInterface.OnDismissListener;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -121,6 +123,7 @@ public class Shout extends Activity implements OnClickListener, OnDismissListene
 			public void onFinish() {
 				sc.sendSMSShout(recipients, panicMsg, sc.buildShoutData());
 				countdown.dismiss();
+				killActivity();
 			}
 
 			@Override
@@ -158,5 +161,11 @@ public class Shout extends Activity implements OnClickListener, OnDismissListene
 	public void onDismiss(DialogInterface d) {
 		cd.cancel();
 		
+	}
+	
+	private void killActivity() {
+		Intent toKill = new Intent(this,EndActivity.class).setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+		finish();
+		startActivity(toKill);
 	}
 }

@@ -465,31 +465,11 @@ public class Wizard extends Activity implements OnClickListener, SMSTesterConsta
 				
 				break;
 			case 6:
-				LinearLayout homescreenHolder = new LinearLayout(c);
-				homescreenHolder.setLayoutParams(lp);
-				homescreenHolder.setOrientation(LinearLayout.HORIZONTAL);
-				homescreenHolder.setPadding(0, 10, 0, 0);
-				homescreenHolder.setGravity(Gravity.CENTER_VERTICAL);
-				
-				CheckBox homeScreen = new CheckBox(c);
-				homeScreen.setChecked(true);
-				homeScreen.setContentDescription(ITCConstants.Preference.DEFAULT_ADD_TO_HOMESCREEN);
-				homescreenHolder.addView(homeScreen);
-				
-				TextView homeScreenText = new TextView(c);
-				homeScreenText.setText(getResources().getString(R.string.WIZARD_ONE_TOUCH_HOMESCREEN_DESCRIPTION));
-				homeScreenText.setTextColor(android.graphics.Color.BLACK);
-				homescreenHolder.addView(homeScreenText);
-				
-				views.add(homescreenHolder);
-				_hasPreferenceData = true;
-				break;
-			case 7:
 				// change buttons from back/next to back/finish
 				wizardForward.setText(getResources().getString(R.string.KEY_FINISH));
 				break;
-			case 8:
-				// The result from the data wipe selection
+			case 7:
+				// The result from the data wipe selection?
 				break;
 			}
 			

@@ -11,6 +11,8 @@ import org.safermobile.intheclear.sms.SMSSender;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.res.Resources;
+import android.os.Handler;
+import android.os.Message;
 import android.util.Log;
 
 public class ShoutController {
@@ -18,13 +20,21 @@ public class ShoutController {
 	PhoneInfo pi;
 	SMSSender sms;
 	MovementTracker mt;
+	Handler h;
 
 	private final static String ITC = "[InTheClear:ShoutController] ************************ ";
 	
 	public ShoutController(Context c) {
+		h = new Handler() {
+			@Override
+			public void handleMessage(Message message) {
+				// TODO: handle confirmation of sent text
+			}
+		};
+		
 		res = c.getResources();
 		pi = new PhoneInfo(c);
-		sms = new SMSSender(c);
+		sms = new SMSSender(c,h);
 		mt = new MovementTracker(c);
 	}
 	

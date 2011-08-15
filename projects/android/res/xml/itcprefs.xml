@@ -21,10 +21,6 @@
 			android:title="@string/KEY_PREF_ONETOUCH"
 			android:summary="@string/KEY_PREF_ONETOUCH_DIALOG"
 			android:key="DefaultOneTouchPanic" />
-		<CheckBoxPreference
-			android:title="@string/KEY_PREF_HOMEPAGE"
-			android:summary="@string/KEY_PREF_HOMEPAGE_DIALOG"
-			android:key="DefaultHomescreenPanicButton" />	
 	</PreferenceCategory>
 	<PreferenceCategory android:title="@string/KEY_PREF_CONFIG_WIPE_TITLE" android:summary="@string/KEY_PREF_WIPEDIALOG" android:key="DefaultWipers">
 		<CheckBoxPreference

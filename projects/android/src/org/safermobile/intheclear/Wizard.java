@@ -9,6 +9,8 @@ import org.safermobile.intheclear.sms.SMSTesterConstants;
 
 import android.app.Activity;
 import android.app.Dialog;
+import android.app.ProgressDialog;
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
@@ -19,7 +21,10 @@ import android.graphics.ColorFilter;
 import android.graphics.Paint;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.preference.PreferenceManager;
+import android.text.util.Linkify;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.KeyEvent;
@@ -47,6 +52,9 @@ public class Wizard extends Activity implements OnClickListener, SMSTesterConsta
 	SharedPreferences _sp;
 	SharedPreferences.Editor _ed;
 	
+	public ProgressDialog pd;
+	public Dialog rd;
+			
 	boolean nextButtonClickable, backButtonClickable;
 	int[] statusColors;
 			
@@ -201,7 +209,6 @@ public class Wizard extends Activity implements OnClickListener, SMSTesterConsta
 				i.putExtra("wNum", nextTarget);
 				startActivity(i);
 			} else {
-				Log.d(ITCConstants.Log.ITC,"going back now!");
 				Intent i = new Intent(this,InTheClear.class);
 				startActivity(i);
 			}
@@ -484,14 +491,14 @@ public class Wizard extends Activity implements OnClickListener, SMSTesterConsta
 			}
 		}
 		
-		public void testSMS() {
+		@SuppressWarnings("unchecked")
+		public void displayTestSMSResults(Message message) {
+			rd = new Dialog(c);
+			rd.setContentView(R.layout.confirmation);
 			
-			final Dialog d = new Dialog(c);
-			d.setContentView(R.layout.confirmation);
-			
-			LinearLayout confirmationHolder = (LinearLayout) d.findViewById(R.id.confirmationHolder);
-			TextView confirmationTitle = (TextView) d.findViewById(R.id.confirmationTitle);
-			TextView confirmationText = (TextView) d.findViewById(R.id.confirmationText);
+			LinearLayout confirmationHolder = (LinearLayout) rd.findViewById(R.id.confirmationHolder);
+			TextView confirmationTitle = (TextView) rd.findViewById(R.id.confirmationTitle);
+			TextView confirmationText = (TextView) rd.findViewById(R.id.confirmationText);
 			
 			Button dismissConfirmation = new Button(c);
 			dismissConfirmation.setText(getResources().getString(R.string.KEY_OK));
@@ -499,23 +506,13 @@ public class Wizard extends Activity implements OnClickListener, SMSTesterConsta
 
 				@Override
 				public void onClick(View v) {
-					d.dismiss();
+					rd.dismiss();
 				}
 			});
 			
-			String testSmsNumber = ((EditText) ((LinearLayout) views.get(1)).getChildAt(1)).getText().toString();
-			
-			// 1. start spinner
-			
-			// 2. get result
-			SMSSender sms = new SMSSender(c);
-			sms.sendSMS(testSmsNumber,getResources().getString(R.string.KEY_WIZARD_SMSTESTMSG));
-			
-			
-			boolean r = false;
-			if(r) {
-				
-				
+			Map<String,Integer> msg = (Map<String, Integer>) message.obj;
+
+			if(msg.get("status") == Activity.RESULT_OK) {
 				confirmationTitle.setText(getResources().getString(R.string.WIZARD_CONFIRMATION_SMSTEST_TITLE));
 				confirmationText.setText(getResources().getString(R.string.WIZARD_CONFIRMATION_SMSTEST));
 				
@@ -533,7 +530,7 @@ public class Wizard extends Activity implements OnClickListener, SMSTesterConsta
 
 					@Override
 					public void onClick(View v) {
-						d.dismiss();
+						rd.dismiss();
 						
 					}
 					
@@ -545,9 +542,7 @@ public class Wizard extends Activity implements OnClickListener, SMSTesterConsta
 				confirmationHolder.addView(dismissConfirmation);
 				
 				/*
-				 *  TODO: fix error notification
-				
-				
+				 * TODO: handle this better.
 				TextView titleHolder = (TextView) findViewById(R.id.wizardTitle);
 				titleHolder.setText(c.getResources().getString(R.string.WIZARD_CONFIRMATION_SMSTEST_FAIL));
 				
@@ -558,12 +553,34 @@ public class Wizard extends Activity implements OnClickListener, SMSTesterConsta
 				supportEmail.setText(R.string.SAFERMOBILE_EMAIL);
 				supportEmail.setAutoLinkMask(Linkify.EMAIL_ADDRESSES);
 				*/
-				
-				
 			}
+			rd.show();
+		}
+		
+		public void testSMS() {			
+			// get the input phone number
+			String testSmsNumber = ((EditText) ((LinearLayout) views.get(1)).getChildAt(1)).getText().toString();
 
+			// create a progress dialog
+			pd = ProgressDialog.show(
+					c,
+					getResources().getString(R.string.KEY_WIZARD_PLEASE_WAIT),
+					getResources().getString(R.string.KEY_WIZARD_TESTING_SMS_TITLE),
+					true);
 			
-			d.show();
+			// initiate SMSSender instance with customized handler
+			// so UI will update according to SMSSender results
+			SMSSender sms = new SMSSender(c,new Handler() {
+				
+				@SuppressWarnings("unchecked")
+				public void handleMessage(Message message) {
+					pd.dismiss();
+					displayTestSMSResults(message);
+				}
+			});
+			
+			// send test
+			sms.sendSMS(testSmsNumber,getResources().getString(R.string.KEY_WIZARD_SMSTESTMSG));
 		}
 		
 		public boolean hasPreferenceData() {

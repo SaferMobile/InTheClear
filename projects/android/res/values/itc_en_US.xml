@@ -137,13 +137,14 @@
 	<string name="KEY_WIZARD_BACK">Back</string>
 	<string name="KEY_WIZARD_ENABLE">Enable</string>
 	<string name="KEY_WIZARD_SEND">Send</string>
+	<string name="KEY_WIZARD_TESTING_SMS_TITLE">Testing Emergency SMS</string>
+	<string name="KEY_WIZARD_PLEASE_WAIT">Please Wait...</string>
 	<string-array name="WIZARD_TITLES">
 		<item>In The Clear Setup</item>
 		<item>Testing Emergency SMS</item>
 		<item>Emergency SMS Setup</item>
 		<item>Data Wipe Setup</item>
 		<item>One-Touch Panic Setup</item>
-		<item>Homescreen Setup</item>
 		<item>In The Clear Setup Complete</item>
 	</string-array>
 	<string-array name="WIZARD_TEXT">
@@ -152,7 +153,6 @@
 		<item>Now that we\'ve tested Emergency SMS, we will personalize your actual message and recipients.  To send to multiple recipients, separate phone numbers with commas.</item>
 		<item>In The Clear can wipe data off your phone\'s memory when you activate it.  Select what data you want to erase below</item>
 		<item>One-Touch Panic is a feature of In The Clear that activates Emergency SMS and Data Wipe.  To avoid accidental usage, the default setting requires you to confirm activation once you start One-Touch Panic.  You can remove this prompt with the setting below.</item>
-		<item>Would you like to create a custom shortcut for One-Touch Panic?  This makes it even easier to send emergency SMSes and wipe your phone memory should you encounter a difficult situation.</item>
 		<item>Thanks for setting up In The Clear.  Remember that you can activate its features manually from within the app, or run them right away using One-Touch Panic shortcuts.</item>
 	</string-array>
 	<string name="WIZARD_YOUR_MOBILE_NUMBER">Your mobile #</string>

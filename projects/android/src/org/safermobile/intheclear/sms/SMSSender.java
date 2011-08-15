@@ -75,6 +75,8 @@ public class SMSSender implements SMSTesterConstants {
 			
 			smsStatus.obj = msg;
 			smsHandler.sendMessage(smsStatus);
+			
+			c.unregisterReceiver(smsconfirm);
 		}
 	}
 	

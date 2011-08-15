@@ -6,15 +6,24 @@ import java.util.Map;
 
 import org.safermobile.intheclear.ITCConstants;
 import org.safermobile.intheclear.R;
+import org.safermobile.intheclear.controllers.PanicController;
 import org.safermobile.intheclear.controllers.WipeController;
+import org.safermobile.intheclear.controllers.WipeController.LocalBinder;
 import org.safermobile.intheclear.screens.WipePreferences;
 import org.safermobile.intheclear.ui.WipeDisplay;
 import org.safermobile.intheclear.ui.WipeDisplayAdaptor;
+import org.safermobile.utils.EndActivity;
 
 import android.app.Activity;
+import android.content.BroadcastReceiver;
+import android.content.ComponentName;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
+import android.content.ServiceConnection;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.os.IBinder;
 import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.View;
@@ -34,7 +43,39 @@ public class Wipe extends Activity implements OnClickListener {
 	Map<Integer,Boolean> wipePreferences = new HashMap<Integer,Boolean>();
 	boolean shouldWipePhotos,shouldWipeContacts,shouldWipeCallLog,shouldWipeSMS,shouldWipeCalendar,shouldWipeFolders;
 	
-	WipeController wc;
+	private WipeController wc;
+	BroadcastReceiver br = new BroadcastReceiver() {
+
+		@Override
+		public void onReceive(Context context, Intent intent) {
+			
+				Intent toKill = new Intent(Wipe.this,EndActivity.class).setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+				finish();
+				startActivity(toKill);
+			
+		}
+		
+	};
+	IntentFilter killFilter = new IntentFilter();
+	boolean isBound = false;
+	
+	private ServiceConnection sc = new ServiceConnection() {
+
+		@Override
+		public void onServiceConnected(ComponentName cn, IBinder binder) {
+			LocalBinder lb = (WipeController.LocalBinder) binder;
+			wc = lb.getService();
+			isBound = true;
+		}
+
+		@Override
+		public void onServiceDisconnected(ComponentName cn) {
+			wc = null;
+			isBound = false;
+			
+		}
+		
+	};
 	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -50,6 +91,7 @@ public class Wipe extends Activity implements OnClickListener {
 		wipeDisplayHolder = (LinearLayout) findViewById(R.id.wipeDisplayHolder);
 		
 		_sp = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+		bindWipeService();
 	}
 	
 	@Override
@@ -61,11 +103,15 @@ public class Wipe extends Activity implements OnClickListener {
 	public void onStart() {
 		super.onStart();
 		alignPreferences();
+		killFilter.addAction(this.getClass().toString());
+		registerReceiver(br,killFilter);
 	}
 	
 	@Override
 	public void onStop() {
 		updatePreferences();
+		unbindWipeService();
+		unregisterReceiver(br);
 		super.onStop();
 	}
 	
@@ -123,11 +169,10 @@ public class Wipe extends Activity implements OnClickListener {
 	}
 	
 	private void doWipe() {
-		// create a wipe controller instance
-		wc = new WipeController(getBaseContext());
 		
 		// wipe baby!
 		wc.wipePIMData(
+			this,
 			shouldWipeContacts,
 			shouldWipePhotos,
 			shouldWipeCallLog,
@@ -168,5 +213,23 @@ public class Wipe extends Activity implements OnClickListener {
 			i.putExtra(ITCConstants.Preference.WIPE_SELECTOR, wp);
 			startActivityForResult(i,ITCConstants.Results.OVERRIDE_WIPE_PREFERENCES);
 		}
+	}
+	
+	private void bindWipeService() {
+		try {
+			if(!isBound) {
+				bindService(new Intent(Wipe.this,WipeController.class),sc,Context.BIND_AUTO_CREATE);
+				isBound = true;
+			}
+		} catch(IllegalArgumentException e) {}
+	}
+	
+	private void unbindWipeService() {
+		try {
+			if(isBound)
+				unbindService(sc);
+				isBound = false;
+				Log.d(ITCConstants.Log.ITC,"service is now unbound.");
+		} catch(IllegalArgumentException e) {}	
 	}
 }

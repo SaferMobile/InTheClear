@@ -56,7 +56,7 @@ public class PanicController extends Service {
 	public void onCreate() {
 		nm = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);		
 		sc = new ShoutController(getBaseContext());
-		wc = new WipeController(getBaseContext());
+		//wc = new WipeController(getBaseContext());
 		wc.addCallbackTo(Panic.class.getName());
 		backToPanic = new Intent(this,Panic.class);
 		alignPreferences();
@@ -112,7 +112,6 @@ public class PanicController extends Service {
 		ui = new TimerTask() {
 			@Override
 			public void run() {
-				// TODO Auto-generated method stub
 				sendBroadcast(i);
 			}
 			
@@ -159,6 +158,7 @@ public class PanicController extends Service {
 			@Override
 			public void run() {
 				wc.wipePIMData(
+						getBaseContext(),
 						shouldWipeContacts,
 						shouldWipePhotos,
 						shouldWipeCallLog,

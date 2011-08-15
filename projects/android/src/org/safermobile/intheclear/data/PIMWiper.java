@@ -8,6 +8,7 @@ import java.io.InputStream;
 import java.util.ArrayList;
 
 import org.safermobile.intheclear.ITCConstants;
+import org.safermobile.utils.FolderIterator;
 import org.safermobile.utils.ShellUtils;
 import org.safermobile.utils.StreamThread;
 
@@ -27,13 +28,58 @@ import android.provider.ContactsContract.Data;
 import android.provider.MediaStore;
 import android.util.Log;
 
-public class PIMWiper  {
+public class PIMWiper extends Thread {
 	private static ContentResolver cr;
 	private static AccountManager am;
+	private boolean contacts,photos,callLog,sms,calendar,sdcard;
+	
+	public PIMWiper(Context c,boolean contacts,boolean photos,boolean callLog,boolean sms,boolean calendar,boolean sdcard) {
+		this.contacts = contacts;
+		this.photos = photos;
+		this.callLog = callLog;
+		this.sms = sms;
+		this.calendar = calendar;
+		this.sdcard = sdcard;
 		
-	public PIMWiper(Context c) {
 		PIMWiper.cr = c.getContentResolver();
 		PIMWiper.am = AccountManager.get(c);
+	}
+	
+	@Override
+	public void run() {
+		if(contacts) {
+			PIMWiper.wipeContacts();
+			PIMWiper.wipePhoneNumbers();
+			PIMWiper.wipeEmail();
+		}
+		
+		if(photos) {
+			PIMWiper.wipePhotos();
+			PIMWiper.wipeVideos();
+			PIMWiper.wipeImageThumnbnails();
+			PIMWiper.wipeVideoThumbnails();
+		}
+		
+		if(callLog) {
+			PIMWiper.wipeCallLog();
+		}
+		
+		if(sms) {
+			PIMWiper.wipeSMS();
+		}
+		
+		if(calendar) {
+			PIMWiper.wipeCalendar();
+		}
+		
+		if(sdcard) {
+			new FolderIterator();
+			ArrayList<File> folders = FolderIterator.getFoldersOnSDCard();
+			for(File f : folders) {
+				PIMWiper.wipeFolder(f);
+			}
+			
+		}
 	}
 	
 	private static void getAvailableColumns(Cursor cursor) {

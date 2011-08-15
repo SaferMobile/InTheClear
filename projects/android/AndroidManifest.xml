@@ -107,6 +107,8 @@
         	</intent-filter>
         </activity>
 		<service android:enabled="true" android:name=".controllers.PanicController" />
+		<service android:enabled="true" android:name=".controllers.WipeController" />
+
 		<receiver android:name=".sms.SMSConfirm" />
     </application>
 </manifest>

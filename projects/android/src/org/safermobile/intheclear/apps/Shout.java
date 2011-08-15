@@ -100,6 +100,7 @@ public class Shout extends Activity implements OnClickListener, OnDismissListene
 	}
 	
 	private void updatePreferences() {
+		Log.d(ITCConstants.Log.ITC,"updating prefs?");
 		_ed = _sp.edit();
 		_ed.putString(ITCConstants.Preference.DEFAULT_PANIC_MSG, panicMsg).commit();
 		_ed.putString(ITCConstants.Preference.CONFIGURED_FRIENDS, recipients).commit();
@@ -121,6 +122,7 @@ public class Shout extends Activity implements OnClickListener, OnDismissListene
 		cd = new CountDownTimer(ITCConstants.Duriation.COUNTDOWN, ITCConstants.Duriation.COUNTDOWNINTERVAL) {
 			@Override
 			public void onFinish() {
+				recipients = configuredFriendsText.getText().toString();
 				sc.sendSMSShout(recipients, panicMsg, sc.buildShoutData());
 				countdown.dismiss();
 				killActivity();

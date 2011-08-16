@@ -238,7 +238,8 @@ public class WipeController {
 	    			  }
 	    			  catch (Exception e)
 	    			  {
-	    				  wl.wipingFileError(dirPath, e.getMessage());
+	    				  wl.wipingFileError(fc.getName(), e.getMessage());
+	    				  doSecPause(300);
 	    			  }
 	    		  }
 	    		  
@@ -260,7 +261,7 @@ public class WipeController {
     			  }
     			  catch (Exception e)
     			  {
-    				  wl.wipingFileError(path, e.getMessage());
+    				  wl.wipingFileError(fc.getName(), e.getMessage());
     				  doSecPause(300);
     				  //may not be able to delete all directories if they are permanent internal locations
     			  }
@@ -286,7 +287,7 @@ public class WipeController {
     			  }
     			  catch (Exception e)
     			  {
-    				  wl.wipingFileError(path,e.getMessage());
+    				  wl.wipingFileError(fc.getName(),e.getMessage());
     				  doSecPause(300);
     				  //may not be able to delete all directories if they are permanent internal locations
     				  return false;

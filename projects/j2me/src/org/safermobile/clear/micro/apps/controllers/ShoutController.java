@@ -5,6 +5,7 @@ import java.util.Date;
 import org.safermobile.clear.micro.L10nConstants;
 import org.safermobile.clear.micro.L10nResources;
 import org.safermobile.clear.micro.apps.ITCConstants;
+import org.safermobile.clear.micro.apps.LocaleManager;
 import org.safermobile.clear.micro.data.PhoneInfo;
 import org.safermobile.clear.micro.sms.SMSManager;
 import org.safermobile.micro.utils.Preferences;
@@ -12,11 +13,10 @@ import org.safermobile.micro.utils.StringTokenizer;
 
 public class ShoutController {
 
-	
 	/*
 	 * localized resources
 	 */
-	L10nResources l10n = L10nResources.getL10nResources("en-US");
+	L10nResources l10n = LocaleManager.getResources();
 	
 	public String buildShoutMessage (String userName, String userMessage, String userLocation)
 	{
@@ -50,7 +50,7 @@ public class ShoutController {
 		return sbPanicMsg.toString();
 	}
 	
-	public String buildShoutData (String userName)
+	public String buildDataMessage (String userName)
 	{
 		
 		
@@ -61,11 +61,12 @@ public class ShoutController {
 		sbPanicMsg.append(userName);
 		sbPanicMsg.append(':');
 		
+		boolean gotData = false;
 		
 		String IMEI = PhoneInfo.getIMEI();
 		if (IMEI != null && IMEI.length() > 0)
 		{
-
+			gotData = true;
 			sbPanicMsg.append(" ");
 			sbPanicMsg.append("IMEI:");
 			sbPanicMsg.append(IMEI);
@@ -75,6 +76,7 @@ public class ShoutController {
 		String IMSI = PhoneInfo.getIMSI();
 		if (IMSI != null && IMSI.length() > 0)
 		{
+			gotData = true;
 			sbPanicMsg.append(" ");
 			sbPanicMsg.append("IMSI:");
 			sbPanicMsg.append(IMSI);
@@ -84,6 +86,7 @@ public class ShoutController {
 		String cid = PhoneInfo.getCellId();
 		if (cid != null && cid.length() > 0)
 		{
+			gotData = true;
 			sbPanicMsg.append(" ");
 			sbPanicMsg.append(l10n.getString(L10nConstants.keys.PANIC_MSG_CID));
 			sbPanicMsg.append(cid);
@@ -93,6 +96,7 @@ public class ShoutController {
 		String lac = PhoneInfo.getLAC();
 		if (lac != null && lac.length() > 0)
 		{
+			gotData = true;
 			sbPanicMsg.append(" ");
 			sbPanicMsg.append(l10n.getString(L10nConstants.keys.PANIC_MSG_LAC));
 			sbPanicMsg.append(lac);
@@ -121,7 +125,10 @@ public class ShoutController {
 		sbPanicMsg.append(l10n.getString(L10nConstants.keys.PANIC_MSG_TIMESTAMP));
 		sbPanicMsg.append(new Date().toString());
 	
-		return sbPanicMsg.toString();
+		if (gotData)
+			return sbPanicMsg.toString();
+		else
+			return null;
 	}
 	
 	public void sendAutoSMSShout (Preferences prefs) throws Exception
@@ -132,7 +139,7 @@ public class ShoutController {
 		String userLocation = prefs.get(ITCConstants.PREFS_KEY_LOCATION);
 		
 		String shoutMsg = buildShoutMessage(userName, userMessage, userLocation);
-		String shoutData = buildShoutData (userName);
+		String shoutData = buildDataMessage (userName);
 		
 		
 		sendSMSShout (recipients, shoutMsg, shoutData);

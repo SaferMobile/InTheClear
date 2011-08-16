@@ -1,9 +1,13 @@
 package org.safermobile.clear.micro.apps.controllers;
 
+import java.util.Enumeration;
+
+import javax.microedition.io.file.FileSystemRegistry;
 import javax.microedition.lcdui.Command;
 import javax.microedition.lcdui.CommandListener;
 
 import org.safermobile.clear.micro.apps.ITCConstants;
+import org.safermobile.clear.micro.apps.LocaleManager;
 import org.safermobile.clear.micro.ui.LargeStringCanvas;
 import org.safermobile.micro.ui.DisplayManager;
 import org.safermobile.micro.utils.Logger;
@@ -15,14 +19,15 @@ public class PanicController implements Runnable
 {
 
 
-
+	public final static int PANIC_COUNTDOWN_TIME = 3;
+	
 	/*
 	 * stores the user data between the config app and this one
 	 */
 	private Preferences _prefs; 
 	
-	private WipeListener _wipeListener;
 	private CommandListener _cmdListener;
+	private WipeListener _wipeListener;
 	
 	private DisplayManager _dManager;
 	private LargeStringCanvas _lsCanvas;
@@ -33,7 +38,7 @@ public class PanicController implements Runnable
 	 */
 	private boolean _keepPanicing = false;
 
-	L10nResources l10n = L10nResources.getL10nResources(null); 
+	private static L10nResources l10n = LocaleManager.getResources(); 
 	
 	public PanicController (Preferences prefs, WipeListener wipeListener, CommandListener cmdListener, DisplayManager dManager, Command cmdCancel)
 	{
@@ -55,187 +60,112 @@ public class PanicController implements Runnable
 		_keepPanicing = true;
 		
 
+		try
+		{
 
-		_lsCanvas = new LargeStringCanvas("");
-		_lsCanvas.setCommandListener(_cmdListener);
-		_lsCanvas.addCommand(_cmdCancel);
-		
-		_dManager.next(_lsCanvas);
+			_lsCanvas = new LargeStringCanvas("");
+			_lsCanvas.setCommandListener(_cmdListener);
+			_lsCanvas.addCommand(_cmdCancel);
 			
-		ShoutController sControl = new ShoutController();
-		
-		Logger.debug(ITCConstants.TAG, "starting panic run(); loading prefs...");
-		
-		String recipients = _prefs.get(ITCConstants.PREFS_KEY_RECIPIENT);
-		String userName =  _prefs.get(ITCConstants.PREFS_KEY_NAME);
-		String userMessage = _prefs.get(ITCConstants.PREFS_KEY_MESSAGE);
-		String userLocation = _prefs.get(ITCConstants.PREFS_KEY_LOCATION);
-		
-		String panicMsg = sControl.buildShoutMessage(userName, userMessage, userLocation);
-		String panicData = sControl.buildShoutData (userName);
-		
-		showMessage (l10n.getString(L10nConstants.keys.KEY_PANIC_START));
-		
-		doSecPause (5);
-		
-		if (!_keepPanicing)
-			return;
-		
-		for (int i = 5; i > 0; i--)
-		{
-			showMessage(l10n.getString(L10nConstants.keys.KEY_SENDING) + i + l10n.getString(L10nConstants.keys.KEY_ELLIPSE));			
-			doSecPause (1);
-		}
-		
-		int resendTimeout = ITCConstants.DEFAULT_RESEND_TIMEOUT; //one minute
-		
-		boolean wipeComplete = false;
-		
-		while (_keepPanicing)
-		{
-			try
+			_dManager.next(_lsCanvas);
+				
+			ShoutController sControl = new ShoutController();
+			
+			Logger.debug(ITCConstants.TAG, "starting panic run(); loading prefs...");
+			
+			String recipients = _prefs.get(ITCConstants.PREFS_KEY_RECIPIENT);
+			String userName =  _prefs.get(ITCConstants.PREFS_KEY_NAME);
+			String userMessage = _prefs.get(ITCConstants.PREFS_KEY_MESSAGE);
+			String userLocation = _prefs.get(ITCConstants.PREFS_KEY_LOCATION);
+			
+			String panicMsg = sControl.buildShoutMessage(userName, userMessage, userLocation);
+			String panicData = sControl.buildDataMessage (userName);
+			
+			_lsCanvas.setLargeString(l10n.getString(L10nConstants.keys.KEY_PANIC_START));
+			
+			doSecPause (PANIC_COUNTDOWN_TIME);
+			
+			if (!_keepPanicing)
+				return;
+			
+			for (int i = PANIC_COUNTDOWN_TIME; i > 0; i--)
 			{
-				showMessage (l10n.getString(L10nConstants.keys.KEY_SENDING_MESSAGES));
-				sControl.sendSMSShout (recipients, panicMsg, panicData);			
-				showMessage (l10n.getString(L10nConstants.keys.KEY_MESSAGE_SENT));
-
-				doSecPause (2);
-			}
-			catch (Exception e)
-			{
+				_lsCanvas.setLargeString(l10n.getString(L10nConstants.keys.KEY_SENDING) + ' ' + i + l10n.getString(L10nConstants.keys.KEY_ELLIPSE));			
 				doSecPause (1);
-				showMessage(l10n.getString(L10nConstants.keys.KEY_ERROR_SENDING) + e.toString());
-				doSecPause (10);
-
 			}
-
-			//now that first shout has been sent, time to wipe
-			if (!wipeComplete)
+			
+			int resendTimeout = ITCConstants.DEFAULT_RESEND_TIMEOUT; //one minute
+			
+			boolean wipeComplete = false;
+			
+			while (_keepPanicing)
 			{
-				showMessage(l10n.getString(L10nConstants.keys.KEY_PREPARING_WIPE));
-				WipeController wc = new WipeController();
-				
-				String prefBool = _prefs.get(ITCConstants.PREFS_KEY_WIPE_CONTACTS);
-				boolean wipeContacts = (prefBool != null && prefBool.equals("true"));
-				
-				prefBool = _prefs.get(ITCConstants.PREFS_KEY_WIPE_EVENTS);
-				boolean wipeEvents = (prefBool != null && prefBool.equals("true"));
-				boolean wipeToDos = wipeEvents; //grouped together
-				
-				prefBool = _prefs.get(ITCConstants.PREFS_KEY_WIPE_PHOTOS);
-				boolean wipePhotos = (prefBool != null && prefBool.equals("true"));
-				boolean wipeVideos = wipePhotos; //grouped together
-				
-				prefBool = _prefs.get(ITCConstants.PREFS_KEY_WIPE_ALL_FILES);
-				boolean wipeAllFiles = (prefBool != null && prefBool.equals("true"));
-				
-				doSecPause (1);
-				showMessage(l10n.getString(L10nConstants.keys.KEY_WIPING_STARTING));
-				
 				try
 				{
-					wc.wipePIMData(wipeContacts, wipeEvents, wipeToDos);
-					showMessage(l10n.getString(L10nConstants.keys.KEY_WIPE_SUCCESS));
+					_lsCanvas.setLargeString (l10n.getString(L10nConstants.keys.KEY_SENDING_MESSAGES));
+					sControl.sendSMSShout (recipients, panicMsg, panicData);			
+					_lsCanvas.setLargeString (l10n.getString(L10nConstants.keys.KEY_MESSAGE_SENT));
+	
+					doSecPause (2);
 				}
 				catch (Exception e)
 				{
-					showMessage(l10n.getString(L10nConstants.keys.KEY_WIPE_ERROR));
-					e.printStackTrace();
+					doSecPause (1);
+					_lsCanvas.setLargeString(l10n.getString(L10nConstants.keys.KEY_ERROR_SENDING) + e.toString());
+					doSecPause (10);
+	
 				}
-				
-				doSecPause (3);
-				
-				
-				
-				if (wipePhotos)
+	
+				//now that first shout has been sent, time to wipe
+				if (!wipeComplete)
 				{
-					showMessage(l10n.getString(L10nConstants.keys.KEY_WIPE_PHOTOS));
-					try {
-						wc.wipeMedia(WipeController.TYPE_PHOTOS,false,_wipeListener);
-						wc.wipeMedia(WipeController.TYPE_PHOTOS,true,_wipeListener);
-						
-						showMessage(l10n.getString(L10nConstants.keys.KEY_WIPE_PHOTOS_COMPLETE));
-					} catch (Exception e) {
-						showMessage(l10n.getString(L10nConstants.keys.KEY_WIPE_PHOTOS_ERROR));
-						e.printStackTrace();
-					}
-				}
-				
-				doSecPause (3);
-				
-				if (wipeVideos)
-				{
-					showMessage(l10n.getString(L10nConstants.keys.KEY_WIPE_VIDEOS));
-					try {
-						wc.wipeMedia(WipeController.TYPE_VIDEOS,false,_wipeListener);
-						wc.wipeMedia(WipeController.TYPE_VIDEOS,true,_wipeListener);
-						
-						showMessage(l10n.getString(L10nConstants.keys.KEY_WIPE_VIDEOS_COMPLETE));
-					} catch (Exception e) {
-						showMessage(l10n.getString(L10nConstants.keys.KEY_WIPE_VIDEOS_ERROR));
-						e.printStackTrace();
-					}
 					
-					showMessage(l10n.getString(L10nConstants.keys.KEY_WIPE_RECORDINGS));
-					try {
-						wc.wipeMedia(WipeController.TYPE_RECORDINGS,false,_wipeListener);
-						wc.wipeMedia(WipeController.TYPE_RECORDINGS,true,_wipeListener);
-						
-						showMessage(l10n.getString(L10nConstants.keys.KEY_WIPE_RECORDINGS_COMPLETE));
-					} catch (Exception e) {
-						showMessage(l10n.getString(L10nConstants.keys.KEY_WIPE_RECORDINGS_ERROR));
-						e.printStackTrace();
-					}
+					String prefBool = _prefs.get(ITCConstants.PREFS_KEY_WIPE_CONTACTS);
+					boolean wipeContacts = (prefBool != null && prefBool.equals("true"));
+					
+					prefBool = _prefs.get(ITCConstants.PREFS_KEY_WIPE_EVENTS);
+					boolean wipeEvents = (prefBool != null && prefBool.equals("true"));
+										
+					prefBool = _prefs.get(ITCConstants.PREFS_KEY_WIPE_PHOTOS);
+					boolean wipePhotos = (prefBool != null && prefBool.equals("true"));
+					
+					prefBool = _prefs.get(ITCConstants.PREFS_KEY_WIPE_ALL_FILES);
+					boolean wipeAllFiles = (prefBool != null && prefBool.equals("true"));
+					
+					WipeController.doWipe (wipeContacts, wipeEvents, wipePhotos, wipeAllFiles, _lsCanvas, _wipeListener);
+					
+					wipeComplete = true;
 				}
 				
-				doSecPause (3);
+				int secs = resendTimeout/1000;
 				
-
-				if (wipeAllFiles)
+				while (secs > 0)
 				{
-					showMessage(l10n.getString(L10nConstants.keys.KEY_WIPE_FILES));
-					try {
-						wc.wipeMedia(WipeController.TYPE_MEMORYCARD,false,_wipeListener);
-						wc.wipeAllRootPaths(_wipeListener);
-						showMessage(l10n.getString(L10nConstants.keys.KEY_WIPE_FILES_COMPLETE));
-					} catch (Exception e) {
-						showMessage(l10n.getString(L10nConstants.keys.KEY_WIPE_FILES_ERROR));
-						e.printStackTrace();
-					}
+					_lsCanvas.setLargeString(l10n.getString(L10nConstants.keys.KEY_PANIC_AGAIN) + secs + l10n.getString(L10nConstants.keys.KEY_SECONDS));
+					doSecPause (1);
+					secs--;
 				}
 				
-				wipeComplete = true;
+				//update message with new mobile cid, lac info
+				panicMsg = sControl.buildShoutMessage(userName, userMessage, userLocation);
+				
 			}
-			
-			int secs = resendTimeout/1000;
-			
-			while (secs > 0)
-			{
-				showMessage(l10n.getString(L10nConstants.keys.KEY_PANIC_AGAIN) + secs + l10n.getString(L10nConstants.keys.KEY_SECONDS));
-				doSecPause (1);
-				secs--;
-			}
-			
-			//update message with new mobile cid, lac info
-			panicMsg = sControl.buildShoutMessage(userName, userMessage, userLocation);
-			
 		}
-		
+		catch (Exception ie)
+		{
+			//do nothing
+			Logger.error("PanicController", "error in run thread", ie);
+		}
 
 	}
 	
-	private void doSecPause (int secs)
+	
+	
+	private static void doSecPause (int secs)
 	{
 		try { Thread.sleep(secs * 1000);}
 		catch(Exception e){}
 	}
 	
-	private void showMessage (String msg)
-	{
-		Logger.debug(ITCConstants.TAG, "msg: " + msg);
-
-		_lsCanvas.setLargeString(msg);
-		
-	}
 
 }

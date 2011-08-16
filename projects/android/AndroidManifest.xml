@@ -23,7 +23,7 @@
 	
     <application 
     	android:label="@string/app_name" 
-    	android:icon="@drawable/sm3cropped">
+    	android:icon="@drawable/smlogo">
         <activity android:name=".InTheClear"
                   android:label="@string/app_name"
                   android:theme="@android:style/Theme.NoTitleBar"

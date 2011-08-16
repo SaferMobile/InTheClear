@@ -160,7 +160,7 @@
 	<string name="WIZARD_CONFIRMATION_SMSTEST_TITLE">Success!</string>
 	<string name="WIZARD_CONFIRMATION_SMSTEST_FAIL_TITLE">SMS Test Failure</string>
 	<string name="WIZARD_SMS_TEST_FAILURES">In The Clear emergency SMSes are sent just like any other SMS.  Possible reasons for failure include:\n\nBad wireless reception\nNo airtime or credit\nMissing or damaged SIM card\n\nIf you\'ve checked all of the above and the test SMS is still not sending, In The Clear may not be supported on your handset.  Please email us at:\n</string>
-	<string name="WIZARD_CONFIRMATION_SMSTEST">It seems like your message went through.  Please check with the recipient to make sure.</string>
+	<string name="WIZARD_CONFIRMATION_SMSTEST">It seems like your message went through.  Please check to make sure.</string>
 	<string name="WIZARD_CONFIRMATION_SMSTEST_FAIL">It looks like your test SMS was NOT sent successfully.\nView details for more info.</string>
 	<string name="WIZARD_CONFIRMATION_LOCATIONTEST">This is the location data we could access:</string>
 	<string name="WIZARD_FAIL_SMSTEST_INVALIDNUMBER">This phone number doesn\'t appear valid.  Please try another number.</string>

@@ -245,7 +245,7 @@ public class Wizard extends Activity implements OnClickListener, SMSTesterConsta
 		for(int c=0;c<titles.length;c++) {
 			int color = Color.GRAY;
 			if(c == (wNum - 1))
-				color = Color.YELLOW;
+				color = getResources().getColor(R.color.maGreen);
 			
 			circles[c] = new StatusCircle(color,c * 70);
 		}

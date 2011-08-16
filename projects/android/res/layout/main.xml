@@ -16,7 +16,7 @@
   	android:orientation="vertical"
   	android:layout_below="@id/logoITC"
   	android:layout_width="fill_parent"
-  	android:layout_height="150dp"
+  	android:layout_height="180dp"
     android:gravity="center">
 	  <ImageView
 	  	android:id="@+id/logoPanic"

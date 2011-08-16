@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+  xmlns:android="http://schemas.android.com/apk/res/android"
+  android:orientation="vertical"
+  android:layout_width="fill_parent"
+  android:layout_height="wrap_content"
+  android:padding="10dip"
+  android:weightSum="1">
+	<TextView
+		android:id="@+id/confirmationTitle"
+		android:layout_width="fill_parent"
+		android:layout_height="0dip"
+		android:layout_weight="0.2"
+		android:gravity="center"
+		android:textSize="30dip" />
+	<TextView 
+		android:id="@+id/confirmationText"
+		android:layout_width="fill_parent"
+		android:layout_height="0dip"
+		android:layout_weight="0.7"
+		android:gravity="center"
+		android:layout_marginBottom="5dip" />
+	<LinearLayout
+		xmlns:android="http://schemas.android.com/apk/res/android"
+  		android:orientation="horizontal"
+  		android:layout_width="fill_parent"
+  		android:layout_height="0dip"
+  		android:layout_weight="0.1"
+  		android:weightSum="1"
+  		android:gravity="center"
+  		android:id="@+id/confirmationHolder" />
+</LinearLayout>

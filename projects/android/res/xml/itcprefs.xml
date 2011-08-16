@@ -14,14 +14,6 @@
 			android:key="ConfiguredFriends"
 			android:summary="@string/KEY_PREF_ENTERPHONES" />
 		<EditTextPreference
-			android:title="@string/KEY_PREF_ENTERNAME_TITLE"
-			android:key="UserDisplayName"
-			android:summary="@string/KEY_PREF_ENTERNAME" />
-		<EditTextPreference
-			android:title="@string/KEY_PREF_ENTERLOCATION_TITLE"
-			android:key="UserDisplayLocation"
-			android:summary="@string/KEY_PREF_ENTERLOCATION" />
-		<EditTextPreference
 			android:title="@string/KEY_PREF_ENTERPANICMSG_TITLE"
 			android:key="DefaultPanicMsg"
 			android:summary="@string/KEY_PREF_ENTERPANICMSG" />
@@ -48,10 +40,9 @@
 			android:key="DefaultWipeCalendar" />
 		<CheckBoxPreference
 			android:title="@string/KEY_PREF_WIPEFILES"
-			android:summary="@string/KEY_PREF_WIPEDIALOG"
 			android:key="DefaultWipeFolders" />
-		<EditTextPreference
-			android:title="@string/KEY_PREF_WIPEFILESLIST"
-			android:key="DefaultWipeFoldersList" />
+		<CheckBoxPreference
+			android:key="IsVirginUser"
+			android:defaultValue="false" />
 	</PreferenceCategory>
 </PreferenceScreen>

@@ -541,11 +541,11 @@ public class TextBox
 		int maxSize = getMaxSize();
 		TextInput entry = new TextInput( current, this, label, contents, maxSize, constraints );
 
+		 
 		// Display the text entry screen.
 		Display display = UIManager.getDisplay();
 		display.setCurrent( entry );
 		
-		entry.setString(entry.getString()+current.getCanvas().getKeyName(lastKey));
 		
 	}
 	
@@ -629,5 +629,9 @@ public class TextBox
 			parent.show();
 			parent.repaint();
 		}
+	}
+
+	public void keyReleased(int keyCode) {
+		super.keyReleased(keyCode);
 	}
 }

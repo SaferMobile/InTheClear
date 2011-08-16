@@ -3,8 +3,6 @@ package org.safermobile.intheclear;
 import java.io.File;
 import java.util.ArrayList;
 
-import org.safermobile.intheclear.screens.FolderSelector;
-
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -23,7 +21,6 @@ public class ITCPreferences extends PreferenceActivity implements OnPreferenceCl
 	SharedPreferences _sp;
 	SharedPreferences.Editor _ed;
 	CheckBoxPreference cbp;
-	EditTextPreference etp;
 	PreferenceCategory pc;
 	
 	@Override
@@ -34,46 +31,23 @@ public class ITCPreferences extends PreferenceActivity implements OnPreferenceCl
 		_sp = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
 		_ed = _sp.edit();
 		
-		cbp = (CheckBoxPreference) findPreference("DefaultWipeFolders");
-		cbp.setOnPreferenceClickListener(this);
-		
 		pc = (PreferenceCategory) findPreference(ITCConstants.Preference.WIPERCAT);
-		
-		etp = (EditTextPreference) findPreference("DefaultWipeFoldersList");
-		pc.removePreference(etp);
+		pc.removePreference((CheckBoxPreference) findPreference("IsVirginUser"));
 		
 		checkedFolders = new ArrayList<File>();
 	}
 
-	@SuppressWarnings("unchecked")
 	@Override
 	public void onActivityResult(int requestCode, int resultCode, Intent data) {
-		if(resultCode == RESULT_OK && requestCode == ITCConstants.Results.SELECTED_FOLDERS) {
-			if(data.hasExtra("selectedFolders")) {
-				checkedFolders.clear();
-				checkedFolders = (ArrayList<File>) data.getSerializableExtra("selectedFolders");
-				
-				StringBuffer sb = new StringBuffer();
-				for(File f : checkedFolders) {
-					sb.append(f.getPath() + ";");
-				}
-				_ed.putString(ITCConstants.Preference.DEFAULT_WIPE_FOLDER_LIST, sb.toString());
-				_ed.commit();
+		if(resultCode == RESULT_OK && requestCode == ITCConstants.Results.PREFERENCES_UPDATED) {
+			if(data.hasExtra("newWipeSelection")) {
+				// TODO: iterate through new wipe selection and update preferences accordingly
 			}
 		}
 	}
 
 	@Override
 	public boolean onPreferenceClick(Preference preference) {
-		if(preference == cbp) {
-			if(cbp.isChecked()) {
-				Intent i = new Intent(this,FolderSelector.class);
-				if(checkedFolders != null && checkedFolders.size() > 0) {
-					i.putExtra("selectedFolders",checkedFolders);
-				}
-				startActivityForResult(i,ITCConstants.Results.SELECTED_FOLDERS);
-			}
-		}
 		return false;
 	}
 	

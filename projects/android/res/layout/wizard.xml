@@ -6,41 +6,59 @@
   android:weightSum="1.0"
   android:background="#ffffff"
   android:orientation="vertical">
-  <TextView
-  	android:layout_width="fill_parent"
-  	android:layout_height="wrap_content"
-  	android:layout_weight="0.0"
-  	android:text="@string/KEY_HOME"
-  	android:textColor="#ffffffff"
-  	android:background="#aaaaff"
-  	android:textSize="40sp"
-  	android:textStyle="bold"
-  	android:paddingLeft="10px"
-  	android:paddingBottom="0px"  	
-  	android:layout_gravity="center_horizontal"
-  	 />
+	<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	android:layout_width="fill_parent"
+  	android:layout_height="0dip"
+ 	android:layout_weight="0.1"
+  	android:orientation="horizontal"
+  	android:id="@+id/wizardStatusTrack"
+  	android:layout_gravity="center_horizontal" />
+   	<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	android:layout_width="fill_parent"
+  	android:layout_height="0dip"
+  	android:layout_gravity="center_vertical"
+ 	android:layout_weight="0.15"
+ 	android:weightSum="1.0"
+  	android:orientation="horizontal">
+  		<ImageView
+  			android:layout_width="0dip"
+  			android:layout_height="wrap_content"
+  			android:layout_weight="0.25"
+  			android:layout_marginLeft="20dip"
+  			android:layout_marginRight="20dip"
+  			android:src="@drawable/sm3cropped" />
+  		<TextView 
+  			android:layout_width="0dip"
+  			android:layout_height="wrap_content"
+  			android:layout_weight="0.75"
+  			android:layout_gravity="center_vertical"
+  			android:textSize="26dip"
+  			android:textColor="#ff000000"
+  			android:id="@+id/wizardTitle" android:gravity="center_vertical"/>
+  	</LinearLayout>
 	<ScrollView
 		android:layout_width="fill_parent"
 		android:layout_height="0dip"
-		android:layout_weight="0.8"
+		android:layout_weight="0.6"
 		android:padding="10px"
 		android:id="@+id/wizardDisplay" />
-  <LinearLayout
-  	android:layout_width="fill_parent"
-  	android:layout_height="0dip"
-  	android:layout_weight="0.15"
-  	android:weightSum="1.0">
-	  <Button
-	  	android:id="@+id/wizardBackward"
-	  	android:layout_width="0dip"
-	  	android:layout_height="wrap_content"
-	  	android:layout_weight="0.5"
-	  	android:text="@string/KEY_WIZARD_BACK" />
-	  <Button
-	  	android:id="@+id/wizardForward"
-	  	android:layout_width="0dip"
-	  	android:layout_height="wrap_content"
-	  	android:layout_weight="0.5"
-	  	android:text="@string/KEY_WIZARD_NEXT" />
-  	</LinearLayout>
+	<LinearLayout
+	 	android:layout_width="fill_parent"
+	 	android:layout_height="0dip"
+	 	android:layout_weight="0.15"
+	 	android:id="@+id/wizardNavigation"
+	 	android:orientation="horizontal"
+	 	android:weightSum="1.0"
+	 	android:gravity="bottom">
+	 		<Button
+	 			android:layout_width="0dip"
+	 			android:layout_height="fill_parent"
+	 			android:layout_weight="0.5"
+	 			android:id="@+id/wizardBackward" />
+	 		<Button
+	 			android:layout_width="0dip"
+	 			android:layout_height="fill_parent"
+	 			android:layout_weight="0.5"
+	 			android:id="@+id/wizardForward" />
+	 </LinearLayout>
 </LinearLayout>

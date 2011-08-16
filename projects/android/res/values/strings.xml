@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">InTheClear</string>
     <string name="remote_service_start_id">Remote Service Start Id</string>
+    <string name="wizard_form">itcwizardform</string>
+    <string name="yourNumberStatic">yourNumberStatic</string>
+    <string name="SAFERMOBILE_EMAIL">support&amp;safermobile.org</string>
 </resources>

@@ -11,34 +11,42 @@ import org.safermobile.intheclear.sms.SMSSender;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.res.Resources;
-import android.util.Log;
+import android.os.Handler;
+import android.os.Message;
 
 public class ShoutController {
 	Resources res;
 	PhoneInfo pi;
 	SMSSender sms;
 	MovementTracker mt;
+	Handler h;
 
 	private final static String ITC = "[InTheClear:ShoutController] ************************ ";
 	
 	public ShoutController(Context c) {
+		h = new Handler() {
+			@Override
+			public void handleMessage(Message message) {
+				// TODO: handle confirmation of sent text
+			}
+		};
+		
 		res = c.getResources();
 		pi = new PhoneInfo(c);
-		sms = new SMSSender(c);
+		sms = new SMSSender(c,h);
 		mt = new MovementTracker(c);
 	}
 	
-	public String buildShoutMessage(String userName, String userMessage, String userLocation) {
+	public String buildShoutMessage(String userMessage) {
 		StringBuffer sbPanicMsg = new StringBuffer();
-		sbPanicMsg.append(res.getString(R.string.KEY_PANIC_MSG_FROM) + " " + userName + ":\n" + userMessage + "\n\n");
-		sbPanicMsg.append(res.getString(R.string.KEY_PANIC_MSG_LOCATION) + " " + userLocation + "\n");
+		sbPanicMsg.append(res.getString(R.string.KEY_PANIC_MSG_FROM)+ ":\n" + userMessage + "\n\n");
 		sbPanicMsg.append(res.getString(R.string.KEY_PANIC_MSG_TIMESTAMP) + " " + new Date().toString());
 		return sbPanicMsg.toString();
 	}
 	
-	public String buildShoutData(String userName) {
+	public String buildShoutData() {
 		StringBuffer sbPanicMsg = new StringBuffer();
-		sbPanicMsg.append(res.getString(R.string.KEY_PANIC_MSG_FROM) + " " + userName + ":\n\n");
+		sbPanicMsg.append(res.getString(R.string.KEY_PANIC_MSG_FROM) + ":\n\n");
 		if(PhoneInfo.getIMEI().length() > 0)
 			sbPanicMsg.append("IMEI: " + PhoneInfo.getIMEI() + "\n");		
 		if(PhoneInfo.getIMSI().length() > 0)
@@ -62,12 +70,10 @@ public class ShoutController {
 	
 	public void sendAutoSMSShout(SharedPreferences sp) {
 		 String recipients = sp.getString("ConfiguredFriends", "");
-		 String userName = sp.getString("UserDisplayName", "");
-		 String userLocation = sp.getString("UserDisplayLocation", "");
 		 String userMessage = sp.getString("DefaultPanicMsg", "");
 		 
-		 String shoutMsg = buildShoutMessage(userName,userMessage,userLocation);
-		 String shoutData = buildShoutData(userName);
+		 String shoutMsg = buildShoutMessage(userMessage);
+		 String shoutData = buildShoutData();
 		 
 		 sendSMSShout(recipients,shoutMsg,shoutData);
 	}

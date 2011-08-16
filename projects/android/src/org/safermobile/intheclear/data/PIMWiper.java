@@ -8,9 +8,12 @@ import java.io.InputStream;
 import java.util.ArrayList;
 
 import org.safermobile.intheclear.ITCConstants;
+import org.safermobile.utils.FolderIterator;
 import org.safermobile.utils.ShellUtils;
 import org.safermobile.utils.StreamThread;
 
+import android.accounts.Account;
+import android.accounts.AccountManager;
 import android.content.ContentProviderOperation;
 import android.content.ContentResolver;
 import android.content.ContentUris;
@@ -25,11 +28,58 @@ import android.provider.ContactsContract.Data;
 import android.provider.MediaStore;
 import android.util.Log;
 
-public class PIMWiper  {
+public class PIMWiper extends Thread {
 	private static ContentResolver cr;
+	private static AccountManager am;
+	private boolean contacts,photos,callLog,sms,calendar,sdcard;
+	
+	public PIMWiper(Context c,boolean contacts,boolean photos,boolean callLog,boolean sms,boolean calendar,boolean sdcard) {
+		this.contacts = contacts;
+		this.photos = photos;
+		this.callLog = callLog;
+		this.sms = sms;
+		this.calendar = calendar;
+		this.sdcard = sdcard;
 		
-	public PIMWiper(Context c) {
 		PIMWiper.cr = c.getContentResolver();
+		PIMWiper.am = AccountManager.get(c);
+	}
+	
+	@Override
+	public void run() {
+		if(contacts) {
+			PIMWiper.wipeContacts();
+			PIMWiper.wipePhoneNumbers();
+			PIMWiper.wipeEmail();
+		}
+		
+		if(photos) {
+			PIMWiper.wipePhotos();
+			PIMWiper.wipeVideos();
+			PIMWiper.wipeImageThumnbnails();
+			PIMWiper.wipeVideoThumbnails();
+		}
+		
+		if(callLog) {
+			PIMWiper.wipeCallLog();
+		}
+		
+		if(sms) {
+			PIMWiper.wipeSMS();
+		}
+		
+		if(calendar) {
+			PIMWiper.wipeCalendar();
+		}
+		
+		if(sdcard) {
+			new FolderIterator();
+			ArrayList<File> folders = FolderIterator.getFoldersOnSDCard();
+			for(File f : folders) {
+				PIMWiper.wipeFolder(f);
+			}
+			
+		}
 	}
 	
 	private static void getAvailableColumns(Cursor cursor) {
@@ -41,38 +91,60 @@ public class PIMWiper  {
 		Log.d(ITCConstants.Log.ITC,"Available Columns: " + sbb.toString());
 	}
 	
-	private static void wipeAssets(Uri uriBase, String authority, String[] rewriteStrings, String[] rewriteFiles) {
+	private static void preventSync() {
+		Account[] accounts = am.getAccountsByType("com.google");
+		for(Account a : accounts) {
+			if(ContentResolver.getIsSyncable(a, ContactsContract.AUTHORITY) == 1)
+				ContentResolver.setIsSyncable(a, ContactsContract.AUTHORITY, 0);
+		}
+	}
+		
+	private static ArrayList<Integer> wipeAssets(Uri uriBase, String authority, String[] rewriteStrings, String[] rewriteFiles) {
+		/*
+		 * primarily for the sake of the calendar wipe,
+		 * return the list of asset IDs, should you need to drill down further
+		 * into the content resolver
+		 */
+		ArrayList<Integer> assetIds = new ArrayList<Integer>();
+		
 		Cursor cursor = null;
 		long _id = 0;
 		
 		try {
 			cursor = cr.query(uriBase, null, null, null, null);
 			if(cursor != null && cursor.getCount() > 0) {
+				getAvailableColumns(cursor);
+				
 				cursor.moveToFirst();
 				Log.d(ITCConstants.Log.ITC,"there are " + cursor.getCount() + " records in type: " + uriBase.toString());
-				while(!cursor.isAfterLast()) {					
-					_id = cursor.getLong(cursor.getColumnIndex("_id"));					
+				
+				while(!cursor.isAfterLast()) {
+					_id = cursor.getLong(cursor.getColumnIndex("_id"));	
+					assetIds.add((int) _id);
+					
 					ArrayList<ContentProviderOperation> cpo = new ArrayList<ContentProviderOperation>();
 
-					for(String s : rewriteStrings) {
-						if(cursor.getString(cursor.getColumnIndex(s)) != null && cursor.getString(cursor.getColumnIndex(s)).length() > 0) {
-							
-							StringBuffer sb = new StringBuffer();
-							for(@SuppressWarnings("unused") char c : cursor.getString(cursor.getColumnIndex(s)).toCharArray()) {
-								sb.append(0);
+					if(rewriteStrings != null) {
+						for(String s : rewriteStrings) {
+							if(cursor.getString(cursor.getColumnIndex(s)) != null && cursor.getString(cursor.getColumnIndex(s)).length() > 0) {
+								
+								StringBuffer sb = new StringBuffer();
+								for(@SuppressWarnings("unused") char c : cursor.getString(cursor.getColumnIndex(s)).toCharArray()) {
+									sb.append(0);
+								}
+								
+								cpo.add(ContentProviderOperation
+										.newUpdate(ContentUris.withAppendedId(uriBase, _id))
+										.withSelection(Data._ID + "=?", new String[] {Integer.toString((int) _id)})
+										.withValue(s,sb.toString())
+										.build()
+								);
+	
+								Log.d(ITCConstants.Log.ITC,"old " + s + " : " + cursor.getString(cursor.getColumnIndex(s)) + " | new " + s + " : " + sb.toString());
 							}
-							
-							cpo.add(ContentProviderOperation
-									.newUpdate(ContentUris.withAppendedId(uriBase, _id))
-									.withSelection(Data._ID + "=?", new String[] {Integer.toString((int) _id)})
-									.withValue(s,sb.toString())
-									.build()
-							);
-
-							Log.d(ITCConstants.Log.ITC,"old " + s + " : " + cursor.getString(cursor.getColumnIndex(s)) + " | new " + s + " : " + sb.toString());
 						}
 					}
-					
+
 					if(rewriteFiles != null && rewriteFiles.length > 0) {
 						for(String s : rewriteFiles) {
 							if(cursor.getString(cursor.getColumnIndex(s)) != null && cursor.getString(cursor.getColumnIndex(s)).length() > 0) {
@@ -100,7 +172,7 @@ public class PIMWiper  {
 					}
 					
 					// delete content
-					Log.d(ITCConstants.Log.ITC,"DELETE " + ContentUris.withAppendedId(uriBase, _id).toString() + " ?");
+					//Log.d(ITCConstants.Log.ITC,"DELETE " + ContentUris.withAppendedId(uriBase, _id).toString() + " ?");
 					try {
 						cr.delete(ContentUris.withAppendedId(uriBase, _id), null, null);
 					} catch(UnsupportedOperationException e) {
@@ -118,6 +190,7 @@ public class PIMWiper  {
 			}
 			cursor.close();
 		} catch(NullPointerException npe) {}
+		return assetIds;
 	}
 	
 	private static void rewriteAndDelete(File f) {
@@ -141,12 +214,28 @@ public class PIMWiper  {
 	}
 	
 	public static void wipeCalendar() {
-		// THIS CONTENT RESOLVER HAS BEEN DEPRECATED.  MUST FIND ANOTHER WAY...
-		Uri uriBase = Uri.parse("content://calendar/events");
-		wipeAssets(uriBase,"calendar",null,null);
+		preventSync();
+		
+		/*
+		 *  TODO: this needs help.  
+		 *  getting error "IllegalArgumentException:
+		 *  WHERE based updates not supported"
+		 *  
+		 *  however, we have finally pinpointed the correct
+		 *  content authority and URI base
+		 */
+		Uri uriBase = Uri.parse("content://com.android.calendar/calendars");
+		//wipeAssets(uriBase,"com.android.calendar",ITCConstants.ContentTargets.CALENDAR.STRINGS,null);
+		ArrayList<Integer> calIds = wipeAssets(uriBase,"com.android.calendar",null,null);
+		for(long cal : calIds) {
+			Log.d(ITCConstants.Log.ITC,"cal: " + cal);
+		}
 	}
 	
 	public static void wipeContacts() {
+		// FIRST, you must turn off sync or else you get the "Deleted Contacts" error...
+		preventSync();
+		
 		Uri uriBase = ContactsContract.Contacts.CONTENT_URI;
 		wipeAssets(
 				uriBase,ContactsContract.AUTHORITY,ITCConstants.ContentTargets.CONTACT.STRINGS,

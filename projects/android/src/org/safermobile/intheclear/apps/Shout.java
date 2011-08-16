@@ -3,16 +3,19 @@ package org.safermobile.intheclear.apps;
 import org.safermobile.intheclear.ITCConstants;
 import org.safermobile.intheclear.R;
 import org.safermobile.intheclear.controllers.ShoutController;
+import org.safermobile.utils.EndActivity;
 
 import android.app.Activity;
 import android.app.Dialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.DialogInterface.OnDismissListener;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.preference.PreferenceManager;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -26,16 +29,16 @@ import android.widget.Toast;
 
 public class Shout extends Activity implements OnClickListener, OnDismissListener {
 	private SharedPreferences _sp;
-		
-	TextView panicMsg,countdownReadout;
-	Button sendShout,changeMsg,cancelCountdown;
-	EditText panicEdit;
-	LinearLayout panicMsgHolder;
-	android.view.ViewGroup.LayoutParams lp;
+	SharedPreferences.Editor _ed;
+	
+	int[] screen;
+	TextView configuredFriends,panicMessage,countdownReadout;
+	Button sendShout,cancelCountdown;
+	EditText configuredFriendsText,panicMessageText;
+	
+	String recipients,panicMsg;
+	
 	Dialog countdown;
-	
-	String msg,shoutMsg,shoutData,configuredFriends,userDisplayName,userDisplayLocation;
-	
 	CountDownTimer cd = null;
 	int t;
 	
@@ -50,25 +53,36 @@ public class Shout extends Activity implements OnClickListener, OnDismissListene
         super.onCreate(savedInstanceState);
         setContentView(R.layout.shout);
         
+        screen = new int[] {
+        		getWindowManager().getDefaultDisplay().getWidth(),
+        		getWindowManager().getDefaultDisplay().getHeight()
+        };
+        
         _sp = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
         
-        panicMsg = (TextView) findViewById(R.id.panicMsg);
-        lp = panicMsg.getLayoutParams();
+        configuredFriends = (TextView) findViewById(R.id.configuredFriends);
         
-        changeMsg = (Button) findViewById(R.id.changePanicMsg_btn);
-        changeMsg.setOnClickListener(this);
+        configuredFriendsText = (EditText)findViewById(R.id.configuredFriendsText);
+        
+        panicMessage = (TextView) findViewById(R.id.panicMessage);
+        
+        panicMessageText = (EditText) findViewById(R.id.panicMessageText);
+        panicMessageText.setHeight((int) (screen[1] * 0.25));
         
         sendShout = (Button) findViewById(R.id.shoutBtn);
         sendShout.setOnClickListener(this);
         
-        panicMsgHolder = (LinearLayout) findViewById(R.id.panicMsgHolder);
-        panicEdit = new EditText(this);
-        panicEdit.setLayoutParams(lp);
     }
 	
 	@Override
 	public void onResume() {
 		super.onResume();
+	}
+	
+	@Override
+	public void onStop() {
+		super.onStop();
+		updatePreferences();
 	}
 	
 	@Override
@@ -78,12 +92,17 @@ public class Shout extends Activity implements OnClickListener, OnDismissListene
 	}
 	
 	private void alignPreferences() {
-		msg = _sp.getString("DefaultPanicMsg", "");
-        panicMsg.setText(panicMsg.getText() + "\n" + msg);
+		panicMsg = _sp.getString(ITCConstants.Preference.DEFAULT_PANIC_MSG, "");
+        panicMessageText.setText(panicMsg);
 
-		configuredFriends = _sp.getString("ConfiguredFriends","");
-		userDisplayName = _sp.getString("UserDisplayName", "");
-		userDisplayLocation = _sp.getString("UserDisplayLocation", "");
+		recipients = _sp.getString(ITCConstants.Preference.CONFIGURED_FRIENDS,"");
+		configuredFriendsText.setText(recipients);
+	}
+	
+	private void updatePreferences() {
+		_ed = _sp.edit();
+		_ed.putString(ITCConstants.Preference.DEFAULT_PANIC_MSG, panicMsg).commit();
+		_ed.putString(ITCConstants.Preference.CONFIGURED_FRIENDS, recipients).commit();
 	}
 	
 	public void doCountdown() {
@@ -93,25 +112,19 @@ public class Shout extends Activity implements OnClickListener, OnDismissListene
 		countdown.setOnDismissListener(this);
 		
 		countdownReadout = (TextView) countdown.findViewById(R.id.countdownReadout);
-		
 		cancelCountdown = (Button) countdown.findViewById(R.id.cancelCountdown);
-		cancelCountdown.setText(R.string.KEY_SHOUT_MENU_CANCEL);
-		cancelCountdown.setOnClickListener(new OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				if(v == cancelCountdown) {
-					countdown.dismiss();
-				}
-			}
-		});
+		cancelCountdown.setText(getResources().getString(R.string.KEY_SHOUT_COUNTDOWNCANCEL));
+		cancelCountdown.setOnClickListener(this);
 		countdown.show();
 		
 		t = 0;
 		cd = new CountDownTimer(ITCConstants.Duriation.COUNTDOWN, ITCConstants.Duriation.COUNTDOWNINTERVAL) {
 			@Override
 			public void onFinish() {
-				sc.sendSMSShout(configuredFriends, shoutMsg, shoutData);
+				recipients = configuredFriendsText.getText().toString();
+				sc.sendSMSShout(recipients, panicMsg, sc.buildShoutData());
 				countdown.dismiss();
+				killActivity();
 			}
 
 			@Override
@@ -119,8 +132,8 @@ public class Shout extends Activity implements OnClickListener, OnDismissListene
 				String secondString = 
 					getString(R.string.KEY_SHOUT_COUNTDOWNMSG) + " " + (5 - t) +
 					" " + getString(R.string.KEY_SECONDS);
-				Log.d(ITCConstants.Log.ITC,secondString);
 				countdownReadout.setText(secondString);
+				Log.d(ITCConstants.Log.ITC,secondString);
 				t++;
 			}
 		};
@@ -133,62 +146,15 @@ public class Shout extends Activity implements OnClickListener, OnDismissListene
 		mi.inflate(R.menu.shout_menu, m);
 		return true;
 	}
-	
-	public boolean onOptionsItemSelected(MenuItem i) {
-		Log.d(ITCConstants.Log.ITC,"CHOOSING " + i.getItemId());
-		switch(i.getItemId()) {
-		case R.id.cancelShout:
-			if(cd != null) {
-				cd.cancel();
-			}
-			return true;
-		case R.id.restoreDefaultMsg:
-			msg = _sp.getString("DefaultPanicMsg", "");
-			isEditable = true;
-			Log.d(ITCConstants.Log.ITC,"RESTORE DEFAULT PLS");
-			toggleMessageUI();
-			return true;
-		default:
-			return false;	
-		}
-	}
-	
-	public void toggleMessageUI() {
-		if(isEditable) {
-			if (panicMsgHolder.getChildAt(0) instanceof android.widget.EditText &&
-				!panicEdit.getText().toString().equals("")){
-					msg = panicEdit.getText().toString();
-			}
-			
-			panicMsgHolder.removeAllViews();
-			panicMsgHolder.addView(panicMsg);
-			panicMsgHolder.addView(changeMsg);
-			
-			panicMsg.setText(msg);
-			changeMsg.setText(R.string.KEY_SHOUT_CHANGEPANICMSG_BTN);
-			isEditable = false;
-		} else {
-			panicMsgHolder.removeAllViews();
-			panicMsgHolder.addView(panicEdit);
-			panicMsgHolder.addView(changeMsg);
-			changeMsg.setText(R.string.KEY_SHOUT_SAVECHANGEDPANICMSG_BTN);
-			isEditable = true;
-		}
-	}
-	
-	public void makeToast(String toast) {
-		Toast.makeText(this, toast, Toast.LENGTH_SHORT).show();
-	}
 
 	@Override
 	public void onClick(View v) {
 		if(v == sendShout) {
 			sc = new ShoutController(this);
-			shoutMsg = sc.buildShoutMessage(userDisplayName, msg,userDisplayLocation);
-			shoutData = sc.buildShoutData(userDisplayName);
 			doCountdown();
-		} else if(v == changeMsg) {
-			toggleMessageUI();
+		} else if(v == cancelCountdown) {
+			if(cd != null)
+				cd.cancel();
 		}
 	}
 
@@ -196,5 +162,11 @@ public class Shout extends Activity implements OnClickListener, OnDismissListene
 	public void onDismiss(DialogInterface d) {
 		cd.cancel();
 		
+	}
+	
+	private void killActivity() {
+		Intent toKill = new Intent(this,EndActivity.class).setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+		finish();
+		startActivity(toKill);
 	}
 }

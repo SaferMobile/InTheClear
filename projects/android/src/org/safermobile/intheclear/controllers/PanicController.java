@@ -9,6 +9,8 @@ import java.util.TimerTask;
 import org.safermobile.intheclear.ITCConstants;
 import org.safermobile.intheclear.R;
 import org.safermobile.intheclear.apps.Panic;
+import org.safermobile.intheclear.ui.WipeDisplay;
+
 import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
@@ -38,6 +40,7 @@ public class PanicController extends Service {
 	ShoutController sc;
 	
 	ArrayList<File> selectedFolders;
+	ArrayList<WipeDisplay> wipeDisplayList;
 	String userDisplayName,defaultPanicMsg,configuredFriends,panicData;
 	boolean shouldWipePhotos,shouldWipeContacts,shouldWipeCallLog,shouldWipeSMS,shouldWipeCalendar,shouldWipeFolders;
 		
@@ -53,7 +56,7 @@ public class PanicController extends Service {
 	public void onCreate() {
 		nm = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);		
 		sc = new ShoutController(getBaseContext());
-		wc = new WipeController(getBaseContext());
+		//wc = new WipeController(getBaseContext());
 		wc.addCallbackTo(Panic.class.getName());
 		backToPanic = new Intent(this,Panic.class);
 		alignPreferences();
@@ -67,29 +70,34 @@ public class PanicController extends Service {
 		defaultPanicMsg = _sp.getString(ITCConstants.Preference.DEFAULT_PANIC_MSG, "");
 		userDisplayName = _sp.getString(ITCConstants.Preference.USER_DISPLAY_NAME, "");
 		
-		panicData = getResources().getString(R.string.KEY_PANIC_MSG_TITLE) +
-					"\n\n" + defaultPanicMsg +
-					"\n\n" + sc.buildShoutData(userDisplayName);
+		panicData = "\n\n" + defaultPanicMsg +
+					"\n\n" + sc.buildShoutData();
 
 		shouldWipeContacts = _sp.getBoolean(ITCConstants.Preference.DEFAULT_WIPE_CONTACTS, false);
 		shouldWipePhotos = _sp.getBoolean(ITCConstants.Preference.DEFAULT_WIPE_PHOTOS, false);
 		shouldWipeCallLog = _sp.getBoolean(ITCConstants.Preference.DEFAULT_WIPE_CALLLOG, false);
 		shouldWipeSMS = _sp.getBoolean(ITCConstants.Preference.DEFAULT_WIPE_SMS, false);
 		shouldWipeCalendar = _sp.getBoolean(ITCConstants.Preference.DEFAULT_WIPE_CALENDAR, false);
-		
 		shouldWipeFolders = _sp.getBoolean(ITCConstants.Preference.DEFAULT_WIPE_FOLDERS, false);
-		if(shouldWipeFolders) {
-			String cf = _sp.getString(ITCConstants.Preference.DEFAULT_WIPE_FOLDER_LIST, "");
-			StringTokenizer st = new StringTokenizer(cf, ";");
-			while(st.hasMoreTokens())
-				selectedFolders.add(new File(st.nextToken()));
-		}
 		
 		configuredFriends = _sp.getString(ITCConstants.Preference.CONFIGURED_FRIENDS, "");
+		
+		wipeDisplayList = new ArrayList<WipeDisplay>();
+
+		wipeDisplayList.add(new WipeDisplay(getResources().getString(R.string.KEY_WIPE_WIPECONTACTS),shouldWipeContacts,this));
+		wipeDisplayList.add(new WipeDisplay(getResources().getString(R.string.KEY_WIPE_WIPEPHOTOS),shouldWipePhotos,this));
+		wipeDisplayList.add(new WipeDisplay(getResources().getString(R.string.KEY_WIPE_CALLLOG),shouldWipeCallLog,this));
+		wipeDisplayList.add(new WipeDisplay(getResources().getString(R.string.KEY_WIPE_SMS),shouldWipeSMS,this));
+		wipeDisplayList.add(new WipeDisplay(getResources().getString(R.string.KEY_WIPE_CALENDAR),shouldWipeCalendar,this));
+		wipeDisplayList.add(new WipeDisplay(getResources().getString(R.string.KEY_WIPE_SDCARD),shouldWipeFolders,this));
 	}
 	
 	public String returnPanicData() {
 		return panicData;
+	}
+	
+	public ArrayList<WipeDisplay> returnWipeSettings() {
+		return wipeDisplayList;
 	}
 	
 	public int returnPanicProgress() {
@@ -104,7 +112,6 @@ public class PanicController extends Service {
 		ui = new TimerTask() {
 			@Override
 			public void run() {
-				// TODO Auto-generated method stub
 				sendBroadcast(i);
 			}
 			
@@ -128,7 +135,7 @@ public class PanicController extends Service {
 							sc.sendSMSShout(
 									configuredFriends,
 									defaultPanicMsg,
-									sc.buildShoutData(userDisplayName)
+									sc.buildShoutData()
 							);
 							Log.d(ITCConstants.Log.ITC,"this is a shout going out...");
 							panicCount++;
@@ -151,12 +158,13 @@ public class PanicController extends Service {
 			@Override
 			public void run() {
 				wc.wipePIMData(
+						getBaseContext(),
 						shouldWipeContacts,
 						shouldWipePhotos,
 						shouldWipeCallLog,
 						shouldWipeSMS,
 						shouldWipeCalendar,
-						selectedFolders
+						shouldWipeFolders
 				);
 			}
 		}).start();

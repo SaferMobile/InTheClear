@@ -42,9 +42,8 @@ public class WipeManualForm
         private CheckBox _cbCalendar;
         private CheckBox _cbPhotos;
         private CheckBox _cbAllStorage;
+        private CheckBox _cbZeroStorage;
         
-        private WipeController _wControl;
-
         //ErrorAlert statusDialog;
         LargeStringCanvas _lsCanvas;
     	private Command	 _cmdExit;
@@ -55,6 +54,8 @@ public class WipeManualForm
 		
     	L10nResources l10n = LocaleManager.getResources();
         
+    	private Thread thread;
+    	
     	/*
     	 * stores the user data between the config app and this one
     	 */
@@ -90,7 +91,12 @@ public class WipeManualForm
         		_cbContacts.setLabel( l10n.getString(L10nConstants.keys.WIPE_MENU_CONTACTS) );
         		_cbContacts.setChecked( false );
         		append( _cbContacts );
-
+        		
+        		_cbCalendar = new CheckBox();
+        		_cbCalendar.setLabel( l10n.getString(L10nConstants.keys.WIPE_MENU_CALENDAR) );
+        		_cbCalendar.setChecked( false );
+        		append( _cbCalendar );
+        		
         		_cbPhotos = new CheckBox();
         		_cbPhotos.setLabel( l10n.getString(L10nConstants.keys.WIPE_MENU_PHOTOS) );
         		_cbPhotos.setChecked( false );
@@ -102,10 +108,10 @@ public class WipeManualForm
         		_cbAllStorage.setChecked( false );
         		append( _cbAllStorage );
         		
-        		_cbCalendar = new CheckBox();
-        		_cbCalendar.setLabel( l10n.getString(L10nConstants.keys.WIPE_MENU_CALENDAR) );
-        		_cbCalendar.setChecked( false );
-        		append( _cbCalendar );
+        		_cbZeroStorage = new CheckBox();
+        		_cbZeroStorage.setLabel("Extra Zero Wipe (Very Slow)");
+        		_cbZeroStorage.setChecked(false);
+        		append (_cbZeroStorage);
         		
         		/*
         		Enumeration eRoots = FileSystemRegistry.listRoots();
@@ -171,72 +177,41 @@ public class WipeManualForm
         		
         		Display.getDisplay(_midlet).setCurrent(_lsCanvas);
 
-        		//_lsCanvas.setCommandListener(this);
-        		//_lsCanvas.addCommand(_cmdCancel);
-        		
         		try
         		{
-        			
-        			_lsCanvas.setLargeString(l10n.getString(L10nConstants.keys.WIPE_STATUS_INPROGRESS));
-        			
-        			_wControl = new WipeController();
+        			String msg = "";
                 	
-            		_lsCanvas.setLargeString(l10n.getString(L10nConstants.keys.WIPE_STATUS_PERSONAL));
-            		currentType = l10n.getString(L10nConstants.keys.WIPE_TYPE_PERSONAL);
-            		_wControl.wipePIMData(_cbContacts.isChecked(), _cbCalendar.isChecked(), _cbCalendar.isChecked());
-                	
-            		try
-            		{
-	                	if (_cbPhotos.isChecked())
-	                	{
-	                		currentType = l10n.getString(L10nConstants.keys.WIPE_TYPE_PHOTOS);
-	                		_lsCanvas.setLargeString(l10n.getString(L10nConstants.keys.WIPE_STATUS_PHOTOS));
-	            			
-	                		_wControl.wipeMedia(WipeController.TYPE_PHOTOS,false,this);
-	                		_wControl.wipeMedia(WipeController.TYPE_PHOTOS,true,this);
+        			if (_cbContacts.isChecked() || _cbCalendar.isChecked() ||  _cbPhotos.isChecked() || _cbAllStorage.isChecked())
+        			{
+        			
+        				
+	                	WipeController.doWipe(_cbContacts.isChecked(), _cbCalendar.isChecked(), _cbPhotos.isChecked(), _cbAllStorage.isChecked(), _lsCanvas, this);
+	                	
 
-	                		_lsCanvas.setLargeString(l10n.getString(L10nConstants.keys.WIPE_STATUS_VIDEOS));
-	
-	                		_wControl.wipeMedia(WipeController.TYPE_VIDEOS,false,this);
-	                		_wControl.wipeMedia(WipeController.TYPE_VIDEOS,true,this);
-	                		
-	                		_lsCanvas.setLargeString("Wiping recordings...");
-	                		
-	                		_wControl.wipeMedia(WipeController.TYPE_RECORDINGS,false,this);
-	                		_wControl.wipeMedia(WipeController.TYPE_RECORDINGS,true,this);
-	                	}
-            		}
-                	catch (Exception e)
-                	{
-                		_lsCanvas.setLargeString(e.getMessage());
-                	}
-                	
-                	
-                	try
-                	{
-	                	if (_cbAllStorage.isChecked())
+	                	if (_cbZeroStorage.isChecked())
 	                	{
-	                		currentType = l10n.getString(L10nConstants.keys.WIPE_TYPE_FILES);
-	                		_lsCanvas.setLargeString(l10n.getString(L10nConstants.keys.WIPE_STATUS_FILES));
-	                		_wControl.wipeMedia("memorycard",false,this);
-	                		_wControl.wipeAllRootPaths(this);
+	                		_lsCanvas.setLargeString(l10n.getString(L10nConstants.keys.KEY_ZERO_FILES));	    				
+	                		WipeController.zeroFillStorage(FileSystemRegistry.listRoots(), this);
 	                	}
-                	}
-                	catch (Exception e)
-                	{
-                		_lsCanvas.setLargeString(e.getMessage());
-                	}
-                	
-                	
-                	String msg = l10n.getString(L10nConstants.keys.WIPE_MSG_SUCCESS);
-                	
-                	if (successCount > 0)
-                		msg += "\n" + successCount + ' ' + l10n.getString(L10nConstants.keys.WIPE_STATUS_FILES_DELETED);
-                	else
-                		msg += "\n" + "No items founds";
-                	
-                	if (errCount > 0)
-                		msg += "\n" + errCount + ' ' + l10n.getString(L10nConstants.keys.WIPE_STATUS_ERRORS);
+	    				
+	                	if (successCount > 0)
+	                	{
+	                		msg += l10n.getString(L10nConstants.keys.WIPE_MSG_SUCCESS);
+	                		msg += "\n" + successCount + ' ' + l10n.getString(L10nConstants.keys.WIPE_STATUS_FILES_DELETED);
+	                	}
+	                	else
+	                	{
+	                		msg += l10n.getString(L10nConstants.keys.WIPE_MSG_COMPLETE);
+	
+	                		msg += "\n" + "No items found";
+	                	}
+        			}
+        			else
+        			{
+        				msg = "You must select\nat least one\nwipe data type.";
+        			}
+                	//if (errCount > 0)
+                		//msg += "\n" + errCount + ' ' + l10n.getString(L10nConstants.keys.WIPE_STATUS_ERRORS);
                 	
                 	_lsCanvas.setLargeString(msg);
                 	
@@ -261,7 +236,8 @@ public class WipeManualForm
 			successCount = 0;
 			errCount = 0;
 			
-			new Thread(this).start();
+			thread = new Thread(this);
+			thread.start();
 			
 		}
 		
@@ -274,7 +250,7 @@ public class WipeManualForm
 		public void wipingFileSuccess(String path) {
 			successCount++;
 			
-    		_lsCanvas.setLargeString(l10n.getString(L10nConstants.keys.WIPE_STATUS_WIPING_WORD) + currentType + ": " + successCount);
+    		_lsCanvas.setLargeString(l10n.getString(L10nConstants.keys.WIPE_STATUS_WIPING_WORD) + ":\n" + path);
 
 		}
 		
@@ -282,7 +258,13 @@ public class WipeManualForm
 			
 			errCount++;
 			
-    		_lsCanvas.setLargeString(l10n.getString(L10nConstants.keys.WIPE_STATUS_WIPING_WORD) + currentType + " err: " + errCount);
+    		_lsCanvas.setLargeString(l10n.getString(L10nConstants.keys.WIPE_STATUS_WIPING_WORD) + " err:\n" + path + "\n" + err);
+
+		}
+		
+		public void wipeStatus (String message)
+		{
+    		_lsCanvas.setLargeString(message);
 
 		}
 
@@ -299,8 +281,13 @@ public class WipeManualForm
 			
 			if (command == _cmdExit)
 			{
-				_wControl.cancel();
-				_midlet.notifyDestroyed();
+				try
+				{
+					thread.interrupt();
+				}
+				catch (Exception e){}
+				
+				_midlet.showMainForm();
 				
 			}
 		}

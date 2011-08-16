@@ -28,10 +28,10 @@
       <entry key="sms_test_lbl_msg" value="Message"/>
       <entry key="wipe_select_title" value="Data Wipe Setup"/>
       <entry key="wipe_message" value="InTheClear can wipe data off your phone&apos;s memory when you activate it. Select what data you want to erase below. Be careful! You won&apos;t be able to recover this data once it is wiped."/>
-      <entry key="wipe_menu_contacts" value="Contacts"/>
-      <entry key="wipe_menu_photos" value="Photos &amp; Video"/>
-      <entry key="wipe_menu_files" value="SD Card"/>
-      <entry key="wipe_menu_calendar" value="Calendar &amp; Tasks"/>
+      <entry key="wipe_menu_contacts" value="Contacts &amp; Addresses"/>
+      <entry key="wipe_menu_photos" value="Photos, Video &amp; Recordings"/>
+      <entry key="wipe_menu_files" value="Memory Card"/>
+      <entry key="wipe_menu_calendar" value="Events, Calendar &amp; To-Do&apos;s"/>
       <entry key="wipe_message_saved" value="Your wipe settings have been saved. WARNING: If you have chosen to wipe important data, make sure it is backed up to another device or written on paper first."/>
       <entry key="title_location_permission" value="Location Permission"/>
       <entry key="permission_info" value="When activated, Shout! will optionally send your location information along with your alert message. This information could be essential for your safety, even if your phone does not have GPS. Enable location permissions below."/>
@@ -99,17 +99,22 @@
       <entry key="key_wipe_error" value="WARNING: There was an error wiping your data."/>
       <entry key="key_wipe_photos" value="Wiping photos..."/>
       <entry key="key_wipe_photos_complete" value="Wiping photos...\nCOMPLETE."/>
-      <entry key="key_wipe_photos_error" value="Wiping photos...nERROR. UNABLE TO WIPE PHOTOS."/>
+      <entry key="key_wipe_photos_error" value="Wiping photos...\nERROR. UNABLE TO WIPE PHOTOS."/>
       <entry key="key_wipe_videos" value="Wiping videos..."/>
       <entry key="key_wipe_videos_complete" value="Wiping videos...\nCOMPLETE."/>
-      <entry key="key_wipe_videos_error" value="Wiping videos...nERROR!"/>
+      <entry key="key_wipe_videos_error" value="Wiping videos...\nERROR!"/>
       <entry key="key_wipe_recordings" value="Wiping recordings..."/>
       <entry key="key_wipe_recordings_complete" value="Wiping recordings...\nCOMPLETE."/>
-      <entry key="key_wipe_recordings_error" value="Wiping recordings...nERROR!"/>
-      <entry key="key_wipe_files" value="Wiping files..."/>
-      <entry key="key_wipe_files_complete" value="Wiping files...\nCOMPLETE."/>
-      <entry key="key_wipe_files_error" value="Wiping photos...\nERROR!"/>
+      <entry key="key_wipe_recordings_error" value="Wiping recordings...\nERROR!"/>
+      <entry key="key_wipe_files" value="Wiping card..."/>
+      <entry key="key_wipe_files_complete" value="Wiping card...\nCOMPLETE."/>
+      <entry key="key_wipe_files_error" value="Wiping card...\nERROR!"/>
       <entry key="key_panic_again" value="Panic! again in\n"/>
       <entry key="key_seconds" value="secs..."/>
+      <entry key="wipe_status_recordings" value="Wiping recordings..."/>
+      <entry key="WIPE_STATUS_PERSONAL_COMPLETE" value="Wiping personal data...\nCOMPLETE"/>
+      <entry key="wipe_msg_complete" value="Wipe complete."/>
+      <entry key="key_wipe_roots" value="Wiping storage roots"/>
+      <entry key="key_zero_files" value="Zeroing out storage...\n(please be patient)"/>
    </locale>
 </locales>

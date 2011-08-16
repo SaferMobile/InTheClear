@@ -38,7 +38,7 @@ public class PanicActivateMIDlet extends MIDlet implements CommandListener, Wipe
 	private Command	 _cmdCancel;
 	private Command	 _cmdExit;
 	
-	L10nResources l10n = LocaleManager.getResources();
+	private L10nResources l10n = LocaleManager.getResources();
 
 	/*
 	 * the thread which manages the panic sending
@@ -90,7 +90,7 @@ public class PanicActivateMIDlet extends MIDlet implements CommandListener, Wipe
 	{
 		_pc.stopPanic();
 		
-		_thread.interrupt();
+		//_thread.interrupt();
 	}
 
 	
@@ -209,15 +209,20 @@ public class PanicActivateMIDlet extends MIDlet implements CommandListener, Wipe
 
 	public void wipingFileSuccess(String path) {
 		
-		showMessage("wiping: " + path);
-		Logger.debug(ITCConstants.TAG, "wiping: " + path);
+		showMessage(l10n.getString(L10nConstants.keys.WIPE_STATUS_WIPING_WORD) + ":\n" + path);
 
 	}
 	
-	public void wipingFileError(String path, String msg) {
+	public void wipingFileError(String path, String err) {
 		
-		showMessage("ERROR wiping: " + path);
-		Logger.debug(ITCConstants.TAG, "wiping error: " + path + ": " + msg);
+		
+		showMessage(l10n.getString(L10nConstants.keys.WIPE_STATUS_WIPING_WORD) + " err:\n" + path);
+
+	}
+	
+	public void wipeStatus (String message)
+	{
+		showMessage(message);
 
 	}
 

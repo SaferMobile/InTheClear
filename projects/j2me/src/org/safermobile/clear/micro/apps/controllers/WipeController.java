@@ -1,6 +1,8 @@
 package org.safermobile.clear.micro.apps.controllers;
 
 import java.io.IOException;
+import java.io.OutputStream;
+import java.util.Date;
 import java.util.Enumeration;
 import java.util.Vector;
 
@@ -9,9 +11,14 @@ import javax.microedition.io.file.FileConnection;
 import javax.microedition.io.file.FileSystemRegistry;
 import javax.microedition.pim.PIMException;
 
+import org.safermobile.clear.micro.L10nConstants;
+import org.safermobile.clear.micro.L10nResources;
 import org.safermobile.clear.micro.apps.ITCConstants;
+import org.safermobile.clear.micro.apps.LocaleManager;
 import org.safermobile.clear.micro.data.PIMWiper;
+import org.safermobile.clear.micro.ui.LargeStringCanvas;
 import org.safermobile.micro.utils.Logger;
+import org.safermobile.micro.utils.Preferences;
 
 public class WipeController {
 
@@ -22,21 +29,23 @@ public class WipeController {
 	  private final static char   SEP = '/';
 	*/
 	
-	  private boolean keepRunning = true;
-	
 	public final static String TYPE_PHOTOS = "photos";
 	public final static String TYPE_VIDEOS = "videos";
 	public final static String TYPE_RECORDINGS = "recordings";
 	public final static String TYPE_MEMORYCARD = "memorycard";
 	
 	
-	  
-	  
-	public Vector getContacts () throws PIMException
-	{
-		return PIMWiper.getContacts();
-		
-	}
+	private final static String[] POSSIBLE_WIPE_PATHS = 
+		{
+			"file:///store/home/user/",			
+			"file:///SDCard/Blackberry/",
+			"file:///SDCard/Blackberry/system/",
+			"file:///SDCard/Blackberry/system/appdata/",
+			"file:///SDCard/Blackberry/system/media/",
+			"file:///SDCard/",
+			"file:///C:/",
+			"file:///E:/"
+		};
 	
 	public boolean checkPermissions (boolean checkContacts, boolean checkEvents, boolean checkPhotos, boolean checkSDCard)
 	{
@@ -121,11 +130,6 @@ public class WipeController {
 
 	}
 	
-	public void cancel ()
-	{
-		keepRunning = false;
-	}
-	
 	public void wipePIMData (boolean contacts, boolean events, boolean toDos) throws PIMException
 	{
 		if (contacts)
@@ -151,23 +155,56 @@ public class WipeController {
 		Enumeration drives = FileSystemRegistry.listRoots();
 		boolean success = false;
 		
-		while (drives.hasMoreElements() && keepRunning)
+		while (drives.hasMoreElements())
 		{
-			String root =  drives.nextElement().toString();
-			String path = "file:///" + root;
+			String rootPath =  "file:///" + drives.nextElement().toString();
 			
-			try
+		    FileConnection fc = (FileConnection) Connector.open(rootPath, Connector.READ);
+		    
+		    if (fc.exists())
+		    {
+				try
+				{			
+					wipeFilePath(fc.getURL(), wl);
+					success = true;
+				}
+				catch (Exception e)
+				{
+					wl.wipingFileError(fc.getName(),e.getMessage());
+					
+				}
+		    }
+		}
+		
+		int i = 0;
+		
+		try
+		{
+			for (i = 0; i < POSSIBLE_WIPE_PATHS.length; i++)
 			{
-			
-				wipeFilePath(path, wl);
-				success = true;
-			}
-			catch (Exception e)
-			{
-				wl.wipingFileError(path,e.getMessage());
-				
+			    FileConnection fc = (FileConnection) Connector.open(POSSIBLE_WIPE_PATHS[i], Connector.READ);
+			    
+			    try
+				{
+			    	if (fc.exists())
+			    	{
+			    		success = wipeFilePath(fc.getURL(), wl);
+			    	}
+				}
+				catch (Exception e)
+				{
+					wl.wipingFileError(fc.getName(),e.getMessage());
+					success = false;
+				}
 			}
 		}
+		catch (Exception e)
+		{
+			//will catch these assuming it means that the file path does not exist
+			Logger.error("wipeController", "error wiping files: " + POSSIBLE_WIPE_PATHS[i], e);
+
+		}
+		
 		
 		return success;
 	}
@@ -175,71 +212,193 @@ public class WipeController {
 	public boolean wipeFilePath (String path, WipeListener wl) throws Exception
 	{
 
-		if (!keepRunning) //this should stop most everything
-			return false;
-		
-		Logger.debug(ITCConstants.TAG, "wipeFilePath called: " + path);
-
-		   
 		   FileConnection fc = (FileConnection) Connector.open(path, Connector.READ);
-
-		   wl.wipingFileSuccess(path);		   
 		   
-	      if (!fc.exists()) 
+	      if (fc.exists()) 
 	      {
-	    	  
-	        throw new IOException("File does not exists");
-	      }
-	      else
-	      {
-	    	  
+	    	
 	    	  if (fc.isDirectory())
 	    	  {
-	    		  Enumeration enumFiles = fc.list();
+
+	   		   	 wl.wipeStatus("Opening folder:\n" + fc.getName());
+	   			 doSecPause(100);
+	   		   
+	    		  //first iterate through the files in the directory
+	    		  String dirPath = fc.getURL();
+	    		  Enumeration enumFiles = fc.list("*", true);
+	    		  
 	    		  while (enumFiles.hasMoreElements())
 	    		  {
 	    			  String fcNext = enumFiles.nextElement().toString();
 	    			  
 	    			  try
 	    			  {
-	    				  wipeFilePath(fc.getURL() + fcNext, wl);
+	    				  //recursively call this method on each file, there may be nested directories
+	    				  wipeFilePath(dirPath + fcNext, wl);
 	    			  }
 	    			  catch (Exception e)
 	    			  {
-	    				  wl.wipingFileError(fc.getURL(),"ERROR: unable to delete: " + e.getMessage());
+	    				  wl.wipingFileError(dirPath, e.getMessage());
 	    			  }
 	    		  }
 	    		  
-	    		  if (fc.canWrite())
-	    		  {
+	    		  try
+    			  {
+	    			  wl.wipeStatus("Deleting folder:\n" + fc.getName());
+	    	   		  doSecPause(100);
+	    	   		   
+		    		  //if the directory itself is writeable, then delete it
+		    		  
 	    			  fc.close();
-	    			  fc = (FileConnection) Connector.open(path, Connector.READ_WRITE);
+	    			  fc = (FileConnection) Connector.open(path, Connector.READ_WRITE);	    			  
+	    			  
 	    			  fc.delete();
 	    			  fc.close();
-	    			  
-	    		  }
+
+	    			  wl.wipingFileSuccess(fc.getName());
+		    		 
+    			  }
+    			  catch (Exception e)
+    			  {
+    				  wl.wipingFileError(path, e.getMessage());
+    				  doSecPause(300);
+    				  //may not be able to delete all directories if they are permanent internal locations
+    			  }
 	    	  }
-	    	  else
+	    	  else if (fc.canWrite()) //it is a file!
 	    	  {
-	    		  if (fc.canWrite())
-	    		  {
-	    			  fc.close();
+    			  try
+    			  {
+        			  fc.close();
+        			
 	    			  fc = (FileConnection) Connector.open(path, Connector.READ_WRITE);
+	    			  String fileName = fc.getName();
+	    		
+	    			  wl.wipeStatus("Deleting file:\n" + fileName);
+	    			  doSecPause(100);
+
 	    			  fc.delete();
 	    			  fc.close();
+	
+	    			  wl.wipingFileSuccess(fileName);
 	    			  
-	    		  }
-	    		  else
-	    		  {
-	    			  wl.wipingFileError(path,"cannot wipe file (read only)");
-	    			  
-	    		  }
+	    			  return true;
+    			  }
+    			  catch (Exception e)
+    			  {
+    				  wl.wipingFileError(path,e.getMessage());
+    				  doSecPause(300);
+    				  //may not be able to delete all directories if they are permanent internal locations
+    				  return false;
+    			  }
+	    		  
 	    	  }
 	    	  
 	      }
 		
 		return true;
 	
+	}
+	
+	public static void zeroFile (FileConnection fc, long fileSize, WipeListener wl) throws Exception
+	{
+
+		  OutputStream outputStream= fc.openOutputStream();
+		  
+		  char zeroValue = 0;
+		  
+		  for (long i = 0; i < fileSize; i++)
+		  {
+			  outputStream.write(zeroValue);			  			 
+		  }
+          
+          outputStream.close();
+		  
+	}
+	
+	//
+	public static boolean zeroFillStorage (Enumeration paths, WipeListener wl)
+	{
+		boolean success = false;
+		FileConnection fc;
+		
+		while (paths.hasMoreElements())
+		{
+			try
+			{
+				String root = "file:///" + paths.nextElement().toString();
+				
+				fc = (FileConnection) Connector.open(root, Connector.READ);
+
+				if (!fc.canWrite())
+				{
+					zeroFillStorage (fc.list(),wl);
+				}
+				else
+				{
+					//make a timestamped name file that looks like an image
+					String zeroFileName = new Date().getTime() + ".jpg";
+					
+					String filePath = fc.getURL() + zeroFileName;
+					
+					fc = (FileConnection) Connector.open(filePath, Connector.READ_WRITE);
+					
+					if (!fc.canWrite())
+					{
+						zeroFillStorage (fc.list("*",true),wl);
+					}
+					else
+					{
+						fc.create();
+						long zeroFileSize = (fc.availableSize()/4)*3; //reduce by 1/4
+						zeroFile (fc, zeroFileSize, wl);
+						fc.close();
+					}
+				}
+				
+			}
+			catch (Exception e)
+			{
+				//we should catch exceptions for each path, so we can try multiple times
+				Logger.error(TYPE_MEMORYCARD, "error zero filling storage: " + e.getMessage(), e);
+			//	e.printStackTrace();
+			}
+		}
+		
+		String[] mediaPaths = {TYPE_PHOTOS, TYPE_VIDEOS}; //internal memory only for now
+		//, TYPE_MEMORYCARD, "memorycard." + TYPE_PHOTOS, "memorycard." + TYPE_VIDEOS};
+		
+		for (int i = 0; i < mediaPaths.length; i++)
+		{
+			try
+			{
+				String pathKey = "fileconn.dir." + mediaPaths[i];
+				String path = System.getProperty(pathKey);
+
+				if (path != null)
+				{
+					fc = (FileConnection) Connector.open(path, Connector.READ);
+					String zeroFileName = new Date().getTime() + ".jpg";				
+					String zeroPath = fc.getURL() + zeroFileName;
+					fc.close();
+					
+					fc = (FileConnection) Connector.open(zeroPath, Connector.READ_WRITE);
+					fc.create();
+					long zeroFileSize = (fc.availableSize()/4)*3; //reduce by 1/4
+					zeroFile (fc, zeroFileSize, wl);					
+					fc.close();
+				}
+			}
+			catch (Exception e)
+			{
+				Logger.error(mediaPaths[i], "error zero filling storage: " + e.getMessage(), e);
+				e.printStackTrace();
+			}
+			
+			
+		}
+		
+		return success;
 	}
 	
 	public boolean wipeMedia (String type, boolean external, WipeListener wl) throws Exception
@@ -250,7 +409,10 @@ public class WipeController {
 		
 		if (path != null)
 		{
-			return wipeFilePath(path, wl);
+			boolean success = wipeFilePath(path, wl);
+	
+			return success;
+			
 		}
 		else
 			return false;
@@ -270,6 +432,113 @@ public class WipeController {
 		    }
 		    
 		    return isAPIAvailable;
+	}
+	
+	
+	public static boolean doWipe (boolean wipeContacts, boolean wipeEventsTodos, boolean wipePhotos, boolean wipeMemoryCard, LargeStringCanvas canvas, WipeListener wipeListener)
+	{
+		
+		L10nResources l10n = LocaleManager.getResources(); 
+
+		canvas.setLargeString(l10n.getString(L10nConstants.keys.KEY_PREPARING_WIPE));
+		WipeController wc = new WipeController();
+		
+		
+		doSecPause (1);
+		
+		if (wipeContacts || wipeEventsTodos)
+		{
+			try
+			{
+				canvas.setLargeString(l10n.getString(L10nConstants.keys.WIPE_STATUS_PERSONAL));
+				doSecPause (1);
+				wc.wipePIMData(wipeContacts, wipeEventsTodos, wipeEventsTodos);
+				canvas.setLargeString(l10n.getString(L10nConstants.keys.WIPE_STATUS_PERSONAL_COMPLETE));
+			}
+			catch (Exception e)
+			{
+				canvas.setLargeString(l10n.getString(L10nConstants.keys.KEY_WIPE_ERROR));
+				e.printStackTrace();
+			}
+			
+			doSecPause (3);
+		}
+		
+		if (wipePhotos)
+		{
+			canvas.setLargeString(l10n.getString(L10nConstants.keys.KEY_WIPE_PHOTOS));
+			try {
+				wc.wipeMedia(WipeController.TYPE_PHOTOS,false,wipeListener);
+				wc.wipeMedia(WipeController.TYPE_PHOTOS,true,wipeListener);
+				
+				canvas.setLargeString(l10n.getString(L10nConstants.keys.KEY_WIPE_PHOTOS_COMPLETE));
+			} catch (Exception e) {
+				canvas.setLargeString(l10n.getString(L10nConstants.keys.KEY_WIPE_PHOTOS_ERROR)+'\n'+e.getMessage());
+				e.printStackTrace();
+			}
+			
+			doSecPause (3);
+		
+			canvas.setLargeString(l10n.getString(L10nConstants.keys.KEY_WIPE_VIDEOS));
+			try {
+				wc.wipeMedia(WipeController.TYPE_VIDEOS,false,wipeListener);
+				wc.wipeMedia(WipeController.TYPE_VIDEOS,true,wipeListener);
+				
+				canvas.setLargeString(l10n.getString(L10nConstants.keys.KEY_WIPE_VIDEOS_COMPLETE));
+			} catch (Exception e) {
+				canvas.setLargeString(l10n.getString(L10nConstants.keys.KEY_WIPE_VIDEOS_ERROR)+'\n'+e.getMessage());
+				e.printStackTrace();
+			}
+			
+			doSecPause (3);
+			
+			canvas.setLargeString(l10n.getString(L10nConstants.keys.KEY_WIPE_RECORDINGS));
+			try {
+				wc.wipeMedia(WipeController.TYPE_RECORDINGS,false,wipeListener);
+				wc.wipeMedia(WipeController.TYPE_RECORDINGS,true,wipeListener);
+				
+				canvas.setLargeString(l10n.getString(L10nConstants.keys.KEY_WIPE_RECORDINGS_COMPLETE));
+			} catch (Exception e) {
+				canvas.setLargeString(l10n.getString(L10nConstants.keys.KEY_WIPE_RECORDINGS_ERROR)+'\n'+e.getMessage());
+				e.printStackTrace();
+			}
+			
+			doSecPause (3);
+
+		}
+
+		if (wipeMemoryCard)
+		{
+			canvas.setLargeString(l10n.getString(L10nConstants.keys.KEY_WIPE_FILES));
+			try {
+				wc.wipeMedia(WipeController.TYPE_MEMORYCARD,false,wipeListener);
+				
+				canvas.setLargeString(l10n.getString(L10nConstants.keys.KEY_WIPE_ROOTS));
+				
+				wc.wipeAllRootPaths(wipeListener);
+
+				canvas.setLargeString(l10n.getString(L10nConstants.keys.KEY_WIPE_FILES_COMPLETE));
+				
+			} catch (Exception e) {
+				canvas.setLargeString(l10n.getString(L10nConstants.keys.KEY_WIPE_FILES_ERROR) + '\n' + e.getMessage());
+				Logger.error("wipeController", "error wiping files", e);
+
+			}
+			
+			doSecPause (3);
+
+		}
+		
+		
+		return true;
+		
+		
+	}
+	
+	private static void doSecPause (int secs)
+	{
+		try { Thread.sleep(secs);}
+		catch(Exception e){}
 	}
 }
 

@@ -1,56 +1,48 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    android:weightSum="1.0"
-    android:background="#ffffff"
-    >
-  <TextView
+    android:background="#ffffff">
+  <ImageView
+  	android:id="@+id/logoITC"
   	android:layout_width="fill_parent"
   	android:layout_height="wrap_content"
-  	android:layout_weight="0.0"
-  	android:text="@string/KEY_HOME"
-  	android:textColor="#ffffffff"
-  	android:background="#aaaaff"
-  	android:textSize="40sp"
-  	android:textStyle="bold"
-  	android:paddingLeft="10px"
-  	android:paddingBottom="0px"  	
-  	android:layout_gravity="center_horizontal"
-  	 />
-  	 <ScrollView
-  	 	android:layout_width="fill_parent"
-  		android:layout_height="0dip"
-  	  	android:layout_weight=".85" >
-  <TextView
+  	android:src="@drawable/itc3cropped"
+  	android:layout_marginLeft="20dip"
+  	android:layout_marginRight="20dip" />
+  <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/launchPanic"
+  	android:orientation="vertical"
+  	android:layout_below="@id/logoITC"
   	android:layout_width="fill_parent"
-  	android:layout_height="0dip"
-  	android:text="@string/KEY_HOME_INTRO"
-  	android:layout_weight="0.8"
-  	android:textColor="#000000"
-  	android:textSize="20sp"
-  	android:paddingLeft="3sp"
-  	android:layout_margin="10px" />
-  	</ScrollView>
-  <LinearLayout
+  	android:layout_height="180dp"
+    android:gravity="center">
+	  <ImageView
+	  	android:id="@+id/logoPanic"
+	  	android:src="@drawable/panic" 
+	  	android:layout_width="wrap_content"
+	  	android:layout_height="wrap_content"
+	  	android:background="#00ffffff"
+	  	android:padding="0dip" />
+	  <TextView 
+	  	android:text="@string/KEY_PANIC_BTN_PANIC"
+	  	android:layout_width="wrap_content"
+	  	android:layout_height="wrap_content"
+	  	android:textColor="#ff000000" />
+  </LinearLayout>
+  
+  <GridView xmlns:android="http://schemas.android.com/apk/res/android"
+  	android:id="@+id/launchGrid"
   	android:layout_width="fill_parent"
-  	android:layout_height="0dip"
-  	android:layout_weight="0.35"
-  	android:weightSum="1"
-  	android:paddingTop="6sp"
-  	>
-	  <Button
-	  	android:id="@+id/toWizard"
-	  	android:layout_width="10sp"
-	  	android:layout_height="wrap_content"
-	  	android:layout_weight="0.5"
-	  	android:text="@string/KEY_HOME_TOWIZARD" />
-	  <Button
-	  	android:id="@+id/toPrefs"
-	  	android:layout_width="0dip"
-	  	android:layout_height="wrap_content"
-	  	android:layout_weight="0.5"
-	  	android:text="@string/KEY_HOME_TOPREFS" />
-  	</LinearLayout>
-</LinearLayout>
+  	android:layout_height="fill_parent"
+  	android:numColumns="2"
+  	android:columnWidth="60dp"
+  	android:gravity="center_horizontal"
+  	android:layout_below="@id/launchPanic" 
+  	android:layout_marginTop="10dp" 
+  	android:verticalSpacing="30dp"
+  	android:listSelector="#00000000">
+ </GridView>
+  
+</RelativeLayout>

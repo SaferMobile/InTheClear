@@ -7,4 +7,7 @@ public interface WipeListener {
 	public void wipingFileError (String path, String err);
 
 	public void wipePercentComplete (int percent);
+	
+	public void wipeStatus (String message);
+
 }

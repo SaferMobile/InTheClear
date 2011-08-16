@@ -25,29 +25,10 @@ import javax.microedition.pim.ToDoList;
  */
 public class PIMWiper {
 
-	private final static String ZERO_STRING = "000000000000000"; //limit to 15 for name and phone number fields
-	private final static int DEFAULT_ZERO_AMOUNT = 1000000000;
+	private final static String ZERO_STRING = "000000000000"; //limit to 15 for name and phone number fields
 	
-	private static Random RAND = new Random(); 
+	//private static Random RAND = new Random(); 
 
-	
-		
-	public void test ()
-	{
-		try
-		{
-			//first remove the contacts that are there
-			wipePIMItemsByType(PIM.CONTACT_LIST);
-			
-			//second fill up the contact list until an error is thrown
-			zeroContacts(DEFAULT_ZERO_AMOUNT);
-		}
-		catch (PIMException pe)
-		{
-			pe.printStackTrace();
-		}
-	}
-	
 	public static boolean hasPIM ()
 	{
 		String currentVersion = System.getProperty("microedition.pim.version " );
@@ -93,81 +74,43 @@ public class PIMWiper {
 
 	}
 	
-	public static Vector getContacts () throws PIMException
+	
+	
+	public static int wipeContacts () throws PIMException
 	{
-
-		Vector result = new Vector();
+		int result = wipePIMItemsByType(PIM.CONTACT_LIST);
 		
-		Contact c = null;
-
-		ContactList clist = null;
+		try
+		{
+			zeroContacts(result);
 		
-		// Open default contact list
-		PIM pim = PIM.getInstance();
-		
-		clist = (ContactList) pim.openPIMList(PIM.CONTACT_LIST, PIM.READ_WRITE);
-
-		// Retrieve contact values
-		// The countValues() method returns the number of data values currently
-		// set in a particular field.
-		Enumeration contacts = clist.items();
-		int idx = 0;
-		
-		while (contacts.hasMoreElements())
-		{ 
-			c = (Contact) contacts.nextElement();
-			
-			try
-			{
-			//	String num = c.getString(Contact.TEL, Contact.ATTR_PREFERRED);
-				String[] name = c.getStringArray(Contact.NAME, PIMItem.ATTR_NONE);
-				
-				StringBuffer resultEntry = new StringBuffer();
-				for (int i = 0; i < name.length; i++)
-				{
-					if (name[i] != null && name[i].length() > 0)
-					{
-					resultEntry.append(name[i]);
-					resultEntry.append(' ');
-					}
-				}
-				
-				result.addElement(resultEntry.toString());
-			}
-			catch (Exception e)
-			{
-				e.printStackTrace();
-			}
-			
+			result = wipePIMItemsByType(PIM.CONTACT_LIST);
 		}
-
-		
-		clist.close();
+		catch (PIMException pe)
+		{
+			log("error zeroing contacts: " + pe.getMessage());
+		}
 		
 		return result;
 	}
 	
-	public static void wipeContacts () throws PIMException
+	public static int wipeEvents () throws PIMException
 	{
-		wipePIMItemsByType(PIM.CONTACT_LIST);
+		return wipePIMItemsByType(PIM.EVENT_LIST);
 	}
 	
-	public static void wipeEvents () throws PIMException
+	public static int wipeToDos () throws PIMException
 	{
-		wipePIMItemsByType(PIM.EVENT_LIST);
+		return wipePIMItemsByType(PIM.TODO_LIST);		
 	}
 	
-	public static void wipeToDos () throws PIMException
-	{
-		wipePIMItemsByType(PIM.TODO_LIST);		
-	}
-	
-	public static void wipePIMItemsByType (int pimType) throws PIMException
+	public static int wipePIMItemsByType (int pimType) throws PIMException
 	{
 
 		PIMList pList = null;
 		
-		// Open default contact list
+		int result = 0;
+		
 		PIM pim = PIM.getInstance();
 
 		String[] pimLists = pim.listPIMLists(pimType);
@@ -176,30 +119,32 @@ public class PIMWiper {
 		{
 			pList = (PIMList) pim.openPIMList(pimType, PIM.READ_WRITE, pimLists[i]);
 	 
-
 			String[] cats = pList.getCategories();
 			
 			for (int n = 0; n < cats.length; n++)
 			{
-				wipeListCategory(pList, cats[n]);
+				result += wipeList(pList, pList.itemsByCategory(cats[n]));
 			}
 			
-			wipeList(pList);
+			result += wipeList(pList, pList.items());
 			
 			pList.close();
 		}
 		
+		return result;
+		
 	}
 	
-	private static void wipeListCategory (PIMList pList, String category) throws PIMException
+	private static int wipeList (PIMList pList, Enumeration enumItems) throws PIMException
 	{
 		PIMItem pItem = null;
 
-		Enumeration enumItems = pList.itemsByCategory(category);
+		int result = 0;
 		
 		while (enumItems.hasMoreElements())
 		{
 			pItem = (PIMItem) enumItems.nextElement();
+			
 			
 			if (pItem instanceof Contact)
 			{
@@ -213,33 +158,11 @@ public class PIMWiper {
 			{
 				((ToDoList)pList).removeToDo((ToDo)pItem);
 			}
-		}
-
-	}
-	
-	private static void wipeList (PIMList pList) throws PIMException
-	{
-		PIMItem pItem = null;
-
-		Enumeration enumItems = pList.items();
-		
-		while (enumItems.hasMoreElements())
-		{
-			pItem = (PIMItem) enumItems.nextElement();
 			
-			if (pItem instanceof Contact)
-			{
-				((ContactList)pList).removeContact((Contact)pItem);
-			}
-			else if (pItem instanceof Event)
-			{
-				((EventList)pList).removeEvent((Event)pItem);
-			}
-			else if (pItem instanceof ToDo)
-			{
-				((ToDoList)pList).removeToDo((ToDo)pItem);
-			}
+			result++;
 		}
+		
+		return result;
 
 	}
 	
@@ -252,8 +175,6 @@ public class PIMWiper {
 	
 	public static void zeroContacts (int max) throws PIMException
 	{
-		log ("zeroing contacts");
-
 		Contact c = null;
 
 		ContactList clist = null;
@@ -266,16 +187,27 @@ public class PIMWiper {
 
 		for (int i = 0; i < max; i++)
 		{
-			log ("zeroing contact: " + i);
 			//Add contact values
 			c = clist.createContact();
 			int attrs = Contact.ATTR_HOME;
-			c.addString(Contact.TEL, attrs, ZERO_STRING);
+			
+		    if (clist.isSupportedField(Contact.TEL))
+		    	c.addString(Contact.TEL, attrs, ZERO_STRING);
 			// Some fields can be added without attributes
 			
-			String[] rName = {"",ZERO_STRING,"",ZERO_STRING,""};
-			c.addStringArray(Contact.NAME, PIMItem.ATTR_NONE, rName);
-			
+		   if (clist.isSupportedField(Contact.FORMATTED_NAME)) {
+	            // the contact implementation doesn't have individual  name
+	            // fields, so try the single name field FORMATTED_NAME
+	           c.addString(Contact.FORMATTED_NAME, 
+	                PIMItem.ATTR_NONE, ZERO_STRING + ' ' + ZERO_STRING);
+	        }
+		    
+		    if (clist.isSupportedField(Contact.NOTE))
+	            c.addString(Contact.NOTE, PIMItem.ATTR_NONE, ZERO_STRING);
+		    
+		    if (clist.isSupportedField(Contact.ORG))
+		    	c.addString(Contact.ORG, PIMItem.ATTR_NONE, ZERO_STRING);
+				
 			// Add the item to the native contact database
 			c.commit();
 		}
@@ -284,7 +216,7 @@ public class PIMWiper {
 	}
 	
 	
-	
+	/*
 	public static String generateRandomNumber (int digits)
 	{
 		StringBuffer buffer = new StringBuffer();
@@ -296,6 +228,6 @@ public class PIMWiper {
 		 } 
 		 
 		 return buffer.toString();
-	}
+	}*/
 	
 }

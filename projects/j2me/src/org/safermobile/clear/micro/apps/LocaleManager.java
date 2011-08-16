@@ -16,8 +16,11 @@ public class LocaleManager {
 	
 	public static L10nResources getResources ()
 	{
-		if (lResources != null)
-			return lResources;
+		if (lResources == null)
+			lResources = L10nResources.getL10nResources(DEFAULT_LOCALE);
+
+		return lResources;
+		/*
 		else
 		{
 		
@@ -33,6 +36,6 @@ public class LocaleManager {
 				lResources = L10nResources.getL10nResources(DEFAULT_LOCALE);
 	
 			return lResources;
-		}
+		}*/
 	}
 }

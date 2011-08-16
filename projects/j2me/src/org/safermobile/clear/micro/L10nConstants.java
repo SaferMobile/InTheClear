@@ -126,6 +126,11 @@ public class L10nConstants {
 		public static final String KEY_WIPE_FILES_ERROR = "KEY_WIPE_FILES_ERROR";
 		public static final String KEY_PANIC_AGAIN = "KEY_PANIC_AGAIN";
 		public static final String KEY_SECONDS = "KEY_SECONDS";
+		public static final String WIPE_STATUS_RECORDINGS = "WIPE_STATUS_RECORDINGS";
+		public static final String WIPE_STATUS_PERSONAL_COMPLETE = "WIPE_STATUS_PERSONAL_COMPLETE";
+		public static final String WIPE_MSG_COMPLETE = "WIPE_MSG_COMPLETE";
+		public static final String KEY_WIPE_ROOTS = "KEY_WIPE_ROOTS";
+		public static final String KEY_ZERO_FILES = "KEY_ZERO_FILES";
 
     }
 }

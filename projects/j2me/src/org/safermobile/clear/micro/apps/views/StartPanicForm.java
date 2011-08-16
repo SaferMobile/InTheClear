@@ -137,6 +137,11 @@ public class StartPanicForm
 				
 			}
 		}
+
+		public void wipeStatus(String message) {
+			// TODO Auto-generated method stub
+			
+		}
         
         
 }

@@ -131,8 +131,7 @@ public class ShoutManualForm
         	
         	ShoutController sc = new ShoutController();
         	
-
-        	String data = sc.buildShoutData(userName);
+        	String data = sc.buildDataMessage(userName);
         	
         	try {
 				sc.sendSMSShout(recip, msg, data);

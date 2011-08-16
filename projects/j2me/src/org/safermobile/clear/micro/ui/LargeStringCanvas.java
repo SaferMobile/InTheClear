@@ -7,17 +7,32 @@ import javax.microedition.lcdui.Displayable;
 import javax.microedition.lcdui.Font;
 import javax.microedition.lcdui.Graphics;
 
+import org.safermobile.micro.utils.CharTokenizer;
 import org.safermobile.micro.utils.StringTokenizer;
 
 public class LargeStringCanvas extends Canvas
 {
 	  private String _largeString;
 	  
+	  private final static String NEWLINE = "\n";
+	  
 	  public LargeStringCanvas (String largeString)
 	  {
-		  _largeString = largeString;
+		  _largeString = processString(largeString);
+		  
 	  }
 	  
+	  private static String processString (String input)
+	  {
+
+		  int nlIdx = input.indexOf("\\n");
+		  if (nlIdx !=-1)
+		  {
+			  input = input.substring(0,nlIdx) + '\n' + input.substring(nlIdx+2);
+		  }
+		  
+		  return input;
+	  }
 	  protected void paint(Graphics graphics)
 	  {
 	    graphics.setColor(0,0,0);
@@ -26,7 +41,7 @@ public class LargeStringCanvas extends Canvas
 	    graphics.setFont(Font.getFont(Font.FACE_PROPORTIONAL, 
 	                          Font.STYLE_BOLD, Font.SIZE_LARGE));
 	    
-	    StringTokenizer st = new StringTokenizer(_largeString,"\n");
+	    StringTokenizer st = new StringTokenizer(_largeString,NEWLINE);
 	    
 	    int startY = getHeight()/2;
 	    
@@ -39,7 +54,7 @@ public class LargeStringCanvas extends Canvas
 	  
 	  public void setLargeString (String largeString)
 	  {
-		  _largeString = largeString;
+		  _largeString = processString(largeString);
 		  repaint();
 	  }
 	    

@@ -7,6 +7,6 @@ MIDlet-Name: InTheClear
 MIDlet-Permissions: javax.microedition.pim.ContactList.read,javax.microedition.pim.ContactList.write,javax.microedition.io.Connector.sms,javax.wireless.messaging.sms.send,javax.microedition.io.Connector.file.read,javax.microedition.io.Connector.file.write,javax.microedition.pim.ToDoList.read,javax.microedition.pim.ToDoList.write
 MIDlet-Permissions-Opt: javax.microedition.location.Orientation,javax.microedition.location.Location,javax.microedition.location.ProximityListener,javax.microedition.pim.EventList.read,javax.microedition.pim.EventList.write,javax.microedition.io.Connector.http,javax.microedition.io.Connector.https,javax.microedition.io.Connector.ssl,javax.microedition.io.Connector.socket,javax.microedition.io.Connector.comm,javax.microedition.io.PushRegistry,javax.wireless.messaging.sms.receive
 MIDlet-Vendor: https://safermobile.org/
-MIDlet-Version: 0.3.84
+MIDlet-Version: 0.4.13
 MicroEdition-Configuration: CLDC-1.0
 MicroEdition-Profile: MIDP-2.0

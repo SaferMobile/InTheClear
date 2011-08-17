@@ -25,7 +25,7 @@ import android.widget.TextView;
 
 public class InTheClear extends Activity implements OnClickListener {
 	SharedPreferences _sp;
-	LinearLayout launchPanic;
+	ImageView logoPanic;
 	GridView launchGrid;
 	
 	@Override
@@ -39,11 +39,8 @@ public class InTheClear extends Activity implements OnClickListener {
         	launchWizard();
       	}
         
-        launchPanic = (LinearLayout) findViewById(R.id.launchPanic);
-        launchPanic.setOnClickListener(this);
-        
-        ImageView logoPanic = (ImageView) findViewById(R.id.logoPanic);
-        logoPanic.setImageResource(R.drawable.btn_panic);
+        logoPanic = (ImageView) findViewById(R.id.logoPanic);
+        logoPanic.setOnClickListener(this);
         
         launchGrid = (GridView)findViewById(R.id.launchGrid);
         launchGrid.setAdapter(new ImageAdapter(this));
@@ -88,7 +85,7 @@ public class InTheClear extends Activity implements OnClickListener {
 	
 	@Override
 	public void onClick(View v) {
-		if(v == launchPanic)
+		if(v == logoPanic)
 			launchPanic();			
 	}
 	

@@ -20,6 +20,7 @@
     android:gravity="center">
 	  <ImageView
 	  	android:id="@+id/logoPanic"
+	  	android:src="@drawable/btn_panic"
 	  	android:layout_width="wrap_content"
 	  	android:layout_height="wrap_content"
 	  	android:background="#00ffffff"

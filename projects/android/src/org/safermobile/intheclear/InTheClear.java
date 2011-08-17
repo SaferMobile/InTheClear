@@ -42,6 +42,9 @@ public class InTheClear extends Activity implements OnClickListener {
         launchPanic = (LinearLayout) findViewById(R.id.launchPanic);
         launchPanic.setOnClickListener(this);
         
+        ImageView logoPanic = (ImageView) findViewById(R.id.logoPanic);
+        logoPanic.setImageResource(R.drawable.btn_panic);
+        
         launchGrid = (GridView)findViewById(R.id.launchGrid);
         launchGrid.setAdapter(new ImageAdapter(this));
 		launchGrid.setOnItemClickListener(new OnItemClickListener() {
@@ -123,19 +126,19 @@ public class InTheClear extends Activity implements OnClickListener {
 				switch(position){
 				case 0:
 					tv.setText("Emergency SMS");
-					iv.setImageResource(R.drawable.emergency_sms);
+					iv.setImageResource(R.drawable.btn_shout);
 					break;
 				case 1:
 					tv.setText("Data Wipe");
-					iv.setImageResource(R.drawable.data_wipe);
+					iv.setImageResource(R.drawable.btn_wipe);
 					break;
 				case 2:
 					tv.setText("Setup Wizard");
-					iv.setImageResource(R.drawable.setup);
+					iv.setImageResource(R.drawable.btn_wizard);
 					break;
 				case 3:
 					tv.setText("Settings");
-					iv.setImageResource(R.drawable.settings);
+					iv.setImageResource(R.drawable.btn_settings);
 					break;
 				}
 			}

@@ -9,13 +9,17 @@ import java.util.TimerTask;
 import org.safermobile.intheclear.ITCConstants;
 import org.safermobile.intheclear.R;
 import org.safermobile.intheclear.apps.Panic;
+import org.safermobile.intheclear.controllers.WipeController.LocalBinder;
+import org.safermobile.intheclear.data.PIMWiper;
 import org.safermobile.intheclear.ui.WipeDisplay;
 
 import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.app.Service;
+import android.content.ComponentName;
 import android.content.Intent;
+import android.content.ServiceConnection;
 import android.content.SharedPreferences;
 import android.os.Binder;
 import android.os.Handler;
@@ -36,8 +40,8 @@ public class PanicController extends Service {
 	Intent backToPanic;
 	int panicCount = 0;
 	
-	WipeController wc;
-	ShoutController sc;
+	WipeController wipeController;
+	ShoutController shoutController;
 	
 	ArrayList<File> selectedFolders;
 	ArrayList<WipeDisplay> wipeDisplayList;
@@ -55,9 +59,7 @@ public class PanicController extends Service {
 	@Override
 	public void onCreate() {
 		nm = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);		
-		sc = new ShoutController(getBaseContext());
-		//wc = new WipeController(getBaseContext());
-		wc.addCallbackTo(Panic.class.getName());
+		shoutController = new ShoutController(getBaseContext());
 		backToPanic = new Intent(this,Panic.class);
 		alignPreferences();
 		showNotification();
@@ -71,7 +73,7 @@ public class PanicController extends Service {
 		userDisplayName = _sp.getString(ITCConstants.Preference.USER_DISPLAY_NAME, "");
 		
 		panicData = "\n\n" + defaultPanicMsg +
-					"\n\n" + sc.buildShoutData();
+					"\n\n" + shoutController.buildShoutData();
 
 		shouldWipeContacts = _sp.getBoolean(ITCConstants.Preference.DEFAULT_WIPE_CONTACTS, false);
 		shouldWipePhotos = _sp.getBoolean(ITCConstants.Preference.DEFAULT_WIPE_PHOTOS, false);
@@ -132,10 +134,10 @@ public class PanicController extends Service {
 					@Override
 					public void run() {
 						if(isPanicing) {
-							sc.sendSMSShout(
+							shoutController.sendSMSShout(
 									configuredFriends,
 									defaultPanicMsg,
-									sc.buildShoutData()
+									shoutController.buildShoutData()
 							);
 							Log.d(ITCConstants.Log.ITC,"this is a shout going out...");
 							panicCount++;
@@ -154,20 +156,7 @@ public class PanicController extends Service {
 	private int wipe() {
 		int result = ITCConstants.Results.FAIL;
 		updatePanicUi(getString(R.string.KEY_PANIC_PROGRESS_2));
-		new Thread(new Runnable() {
-			@Override
-			public void run() {
-				wc.wipePIMData(
-						getBaseContext(),
-						shouldWipeContacts,
-						shouldWipePhotos,
-						shouldWipeCallLog,
-						shouldWipeSMS,
-						shouldWipeCalendar,
-						shouldWipeFolders
-				);
-			}
-		}).start();
+		new PIMWiper(getBaseContext(),shouldWipeContacts, shouldWipePhotos, shouldWipeCallLog, shouldWipeSMS, shouldWipeCalendar,shouldWipeFolders).start();
 		result = ITCConstants.Results.A_OK;
 		return result;
 	}

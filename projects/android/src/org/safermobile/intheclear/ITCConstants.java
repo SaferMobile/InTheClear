@@ -1,5 +1,6 @@
 package org.safermobile.intheclear;
 
+import android.app.Activity;
 import android.provider.CallLog;
 import android.provider.ContactsContract.CommonDataKinds.Email;
 import android.provider.ContactsContract.CommonDataKinds.Phone;
@@ -24,6 +25,10 @@ public class ITCConstants {
 		public static final int SMS = 4;
 		public static final int CALENDAR = 5;
 		public static final int SDCARD = 6;
+	}
+	
+	public static class Panic {
+		public static final int RETURN = Activity.RESULT_OK;
 	}
 	
 	public static class Results {

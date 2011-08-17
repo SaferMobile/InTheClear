@@ -44,7 +44,7 @@ public class Wipe extends Activity implements OnClickListener {
 	boolean shouldWipePhotos,shouldWipeContacts,shouldWipeCallLog,shouldWipeSMS,shouldWipeCalendar,shouldWipeFolders;
 	
 	private WipeController wc;
-	BroadcastReceiver br = new BroadcastReceiver() {
+	BroadcastReceiver killReceiver = new BroadcastReceiver() {
 
 		@Override
 		public void onReceive(Context context, Intent intent) {
@@ -104,14 +104,14 @@ public class Wipe extends Activity implements OnClickListener {
 		super.onStart();
 		alignPreferences();
 		killFilter.addAction(this.getClass().toString());
-		registerReceiver(br,killFilter);
+		registerReceiver(killReceiver,killFilter);
 	}
 	
 	@Override
 	public void onStop() {
 		updatePreferences();
 		unbindWipeService();
-		unregisterReceiver(br);
+		unregisterReceiver(killReceiver);
 		super.onStop();
 	}
 	

@@ -12,6 +12,7 @@ import org.safermobile.utils.EndActivity;
 
 import android.app.Activity;
 import android.app.Dialog;
+import android.app.ProgressDialog;
 import android.content.BroadcastReceiver;
 import android.content.ComponentName;
 import android.content.Context;
@@ -46,6 +47,9 @@ public class Panic extends Activity implements OnClickListener, OnDismissListene
 	
 	Dialog countdown;
 	CountDownTimer cd;
+	
+	ProgressDialog panicStatus;
+	String currentPanicStatus;
 
 	private PanicController pc;
 	boolean isBound = false;
@@ -69,6 +73,16 @@ public class Panic extends Activity implements OnClickListener, OnDismissListene
 	};
 	
 	private BroadcastReceiver panicReceiver;
+	private BroadcastReceiver killReceiver = new BroadcastReceiver() {
+
+		@Override
+		public void onReceive(Context context, Intent intent) {
+			killActivity();
+		}
+		
+	};	
+	IntentFilter killFilter = new IntentFilter();
+
 	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -90,12 +104,26 @@ public class Panic extends Activity implements OnClickListener, OnDismissListene
 				if(intent.hasExtra(ITCConstants.UPDATE_UI)) {
 					String message = intent.getStringExtra(ITCConstants.UPDATE_UI);
 					Log.d(ITCConstants.Log.ITC,message);
-					countdownReadout.setText(message);
+					updateProgressWindow(message);
 				}
 				
 			}
 			
 		};
+		panicStatus = new ProgressDialog(this);
+		panicStatus.setButton(
+				getResources().getString(R.string.KEY_PANIC_MENU_CANCEL), 
+				new DialogInterface.OnClickListener() {
+			
+					@Override
+					public void onClick(DialogInterface dialog, int which) {
+						cancelPanic();
+					}
+				}
+		);
+		panicStatus.setMessage(currentPanicStatus);
+		panicStatus.setTitle(getResources().getString(R.string.KEY_PANIC_BTN_PANIC));
+		
 	}
 	
 	@Override
@@ -103,6 +131,9 @@ public class Panic extends Activity implements OnClickListener, OnDismissListene
 		IntentFilter filter = new IntentFilter();
 		filter.addAction(Panic.class.getName());
 		registerReceiver(panicReceiver,filter);
+		
+		killFilter.addAction(this.getClass().toString());
+		registerReceiver(killReceiver,killFilter);
 		super.onResume();
 	}
 	
@@ -120,10 +151,19 @@ public class Panic extends Activity implements OnClickListener, OnDismissListene
 		}
 	}
 	
+	@SuppressWarnings("static-access")
 	@Override
 	public void onNewIntent(Intent i) {
 		super.onNewIntent(i);
 		setIntent(i);
+		
+		if(i.hasExtra("ReturnFrom") && i.getIntExtra("ReturnFrom", 0) == ITCConstants.Panic.RETURN) {
+			// the app is being launched from the notification tray.
+			
+			// update UI with the panic controller's status.
+			updateProgressWindow(pc.getPanicProgress());
+			
+		}
 
 		if(i.hasExtra("PanicCount"))
 			Log.d(ITCConstants.Log.ITC,"Panic Count at: " + i.getIntExtra("PanicCount",0));
@@ -132,6 +172,7 @@ public class Panic extends Activity implements OnClickListener, OnDismissListene
 	@Override
 	public void onPause() {
 		unregisterReceiver(panicReceiver);
+		unregisterReceiver(killReceiver);
 		super.onPause();
 	}
 	
@@ -158,18 +199,6 @@ public class Panic extends Activity implements OnClickListener, OnDismissListene
 		finish();
 		startActivity(toKill);
 		
-	}
-	
-	private void doPanic() {
-		// setup broadcast receiver to service
-		
-		
-		// countdown to panic (5,4,3,2,1...)
-		launchPanic();
-		
-		// tell service to start panicing
-		
-			
 	}
 	
 	private void unbindPanicService() {
@@ -199,24 +228,37 @@ public class Panic extends Activity implements OnClickListener, OnDismissListene
 	}
 	
 	public void updateProgressWindow(String message) {
-		countdownReadout.setText(message);
+		panicStatus.setMessage(message);
 	}
 	
-	private void launchPanic() {		
+	public void killActivity() {
+		Intent toKill = new Intent(Panic.this,EndActivity.class).setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+		finish();
+		startActivity(toKill);
+	}
+	
+	private void doPanic() {		
 		panicState = ITCConstants.PanicState.IN_COUNTDOWN;
 		panicControl.setText(getString(R.string.KEY_PANIC_MENU_CANCEL));
 		cd = new CountDownTimer(ITCConstants.Duriation.COUNTDOWN,ITCConstants.Duriation.COUNTDOWNINTERVAL) {
 			int t = 5;
 			
+			@SuppressWarnings("static-access")
 			@Override
 			public void onFinish() {
 				// start the panic
+				countdown.dismiss();
+				
+				panicStatus.show();
 				pc.startPanic();
+				
+				// kill the activity
+				killActivity();
 			}
 
 			@Override
 			public void onTick(long millisUntilFinished) {
-				Panic.this.updateProgressWindow(
+				Panic.this.countdownReadout.setText(
 						getString(R.string.KEY_PANIC_COUNTDOWNMSG) + 
 						" " + t + " " +	
 						getString(R.string.KEY_SECONDS)
@@ -245,5 +287,6 @@ public class Panic extends Activity implements OnClickListener, OnDismissListene
 		});
 		countdown.show();
 		cd.start();
+		
 	}
 }

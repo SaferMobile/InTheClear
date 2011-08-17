@@ -2,14 +2,12 @@ package org.safermobile.intheclear.controllers;
 
 import java.io.File;
 import java.util.ArrayList;
-import java.util.StringTokenizer;
 import java.util.Timer;
 import java.util.TimerTask;
 
 import org.safermobile.intheclear.ITCConstants;
 import org.safermobile.intheclear.R;
 import org.safermobile.intheclear.apps.Panic;
-import org.safermobile.intheclear.controllers.WipeController.LocalBinder;
 import org.safermobile.intheclear.data.PIMWiper;
 import org.safermobile.intheclear.ui.WipeDisplay;
 
@@ -17,9 +15,7 @@ import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.app.Service;
-import android.content.ComponentName;
 import android.content.Intent;
-import android.content.ServiceConnection;
 import android.content.SharedPreferences;
 import android.os.Binder;
 import android.os.Handler;
@@ -55,6 +51,8 @@ public class PanicController extends Service {
 	}
 	
 	private final IBinder binder = new LocalBinder();
+	
+	String recentState;
 	
 	@Override
 	public void onCreate() {
@@ -102,8 +100,12 @@ public class PanicController extends Service {
 		return wipeDisplayList;
 	}
 	
-	public int returnPanicProgress() {
-		return 0;
+	public void setPanicProgress(String progress) {
+		recentState = progress;
+	}
+	
+	public String getPanicProgress() {
+		return recentState;
 	}
 	
 	public void updatePanicUi(String message) {
@@ -118,12 +120,13 @@ public class PanicController extends Service {
 			}
 			
 		};
-		u.schedule(ui,ITCConstants.Duriation.SPLASH);
+		u.schedule(ui,0);
 	}
 	
 	private int shout() {
 		int result = ITCConstants.Results.FAIL;
-		updatePanicUi(getString(R.string.KEY_PANIC_PROGRESS_1));
+		setPanicProgress(getString(R.string.KEY_PANIC_PROGRESS_1));
+		updatePanicUi(getPanicProgress());
 		
 		tt = new TimerTask() {
 			
@@ -134,6 +137,7 @@ public class PanicController extends Service {
 					@Override
 					public void run() {
 						if(isPanicing) {
+							// TODO: this should actually be confirmed.
 							shoutController.sendSMSShout(
 									configuredFriends,
 									defaultPanicMsg,
@@ -155,8 +159,16 @@ public class PanicController extends Service {
 	
 	private int wipe() {
 		int result = ITCConstants.Results.FAIL;
-		updatePanicUi(getString(R.string.KEY_PANIC_PROGRESS_2));
-		new PIMWiper(getBaseContext(),shouldWipeContacts, shouldWipePhotos, shouldWipeCallLog, shouldWipeSMS, shouldWipeCalendar,shouldWipeFolders).start();
+		setPanicProgress(getString(R.string.KEY_PANIC_PROGRESS_2));
+		updatePanicUi(getPanicProgress());
+		new PIMWiper(
+				getBaseContext(),
+				shouldWipeContacts,
+				shouldWipePhotos,
+				shouldWipeCallLog,
+				shouldWipeSMS,
+				shouldWipeCalendar,
+				shouldWipeFolders).start();
 		result = ITCConstants.Results.A_OK;
 		return result;
 	}
@@ -170,7 +182,6 @@ public class PanicController extends Service {
 	
 	@Override
 	public int onStartCommand(Intent i, int flags, int startId) {
-		Log.d(ITCConstants.Log.ITC,"service started hello!");		
 		return START_STICKY;
 	}
 	
@@ -178,7 +189,8 @@ public class PanicController extends Service {
 		isPanicing = true;
 		if(shout() == ITCConstants.Results.A_OK)			
 			if(wipe() == ITCConstants.Results.A_OK){
-				updatePanicUi(getString(R.string.KEY_PANIC_PROGRESS_3));
+				setPanicProgress(getString(R.string.KEY_PANIC_PROGRESS_3));
+				updatePanicUi(getPanicProgress());
 			} else {
 				Log.d(ITCConstants.Log.ITC,"SOMETHING WAS WRONG WITH WIPE");
 			}
@@ -189,6 +201,7 @@ public class PanicController extends Service {
 	
 	private void showNotification() {
 		backToPanic.putExtra("PanicCount", panicCount);
+		backToPanic.putExtra("ReturnFrom", ITCConstants.Panic.RETURN);
 		backToPanic.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
 		
 		Notification n = new Notification(

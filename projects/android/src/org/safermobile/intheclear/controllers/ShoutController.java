@@ -28,6 +28,7 @@ public class ShoutController {
 			@Override
 			public void handleMessage(Message message) {
 				// TODO: handle confirmation of sent text
+				// perhaps broadcast this to calling activity?
 			}
 		};
 		

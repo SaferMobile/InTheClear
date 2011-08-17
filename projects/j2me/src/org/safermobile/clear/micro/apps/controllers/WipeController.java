@@ -326,7 +326,7 @@ public class WipeController {
 			  if (i > 0)
 			  {				 
 				  percent = (((float)i) / ((float)fileSize)) * 100f;			  			 
-				  wl.wipeStatus("Creating Zero File:\n" + ((int)percent) + "% complete\n(please be patient)");
+				  wl.wipeStatus("Creating Zero File:\n" + fc.getPath() + "\n" + ((int)percent) + "% complete\n(please be patient)");
 			  }
 		  }
           

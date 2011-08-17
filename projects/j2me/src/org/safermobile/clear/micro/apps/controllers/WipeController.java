@@ -239,8 +239,9 @@ public class WipeController {
 	    			  }
 	    			  catch (Exception e)
 	    			  {
-	    				  wl.wipingFileError(fc.getName(), e.getMessage());
-	    				  doSecPause(300);
+	    				  //the user doesn't need to this
+	    				  //wl.wipingFileError(fc.getName(), e.getMessage());
+	    				 // doSecPause(300);
 	    			  }
 	    		  }
 	    		  
@@ -264,8 +265,9 @@ public class WipeController {
 	    			  }
 	    			  catch (Exception e)
 	    			  {
-	    				  wl.wipingFileError(fc.getName(), e.getMessage());
-	    				  doSecPause(100);
+	    				  //the user doesn't need to this
+	    				  //wl.wipingFileError(fc.getName(), e.getMessage());
+	    				 // doSecPause(300);
 	    				  //may not be able to delete all directories if they are permanent internal locations
 	    			  }
 	    		  }
@@ -291,8 +293,9 @@ public class WipeController {
     			  }
     			  catch (Exception e)
     			  {
-    				  wl.wipingFileError(fc.getName(),e.getMessage());
-    				  doSecPause(300);
+    				  //the user doesn't need to this
+    				  //wl.wipingFileError(fc.getName(), e.getMessage());
+    				 // doSecPause(300);
     				  //may not be able to delete all directories if they are permanent internal locations
     				  return false;
     			  }
@@ -313,7 +316,7 @@ public class WipeController {
 		  byte[] zeroValue = getZeroFile();
 		  long percent = 0;
 		  
-		  for (int i = 0; i < fileSize; i+=zeroValue.length)
+		  for (long i = 0; i < fileSize; i+=zeroValue.length)
 		  {
 			  outputStream.write(zeroValue);
 			 

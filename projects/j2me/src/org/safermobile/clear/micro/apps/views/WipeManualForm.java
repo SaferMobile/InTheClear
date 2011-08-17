@@ -203,7 +203,7 @@ public class WipeManualForm
 	                	{
 	                		msg += l10n.getString(L10nConstants.keys.WIPE_MSG_COMPLETE);
 	
-	                		msg += "\n" + "No items found";
+	                		msg += "\n" + "Nothing to wipe";
 	                	}
         			}
         			else

@@ -34,6 +34,7 @@ public class WipeController {
 	public final static String TYPE_RECORDINGS = "recordings";
 	public final static String TYPE_MEMORYCARD = "memorycard";
 	
+	private static byte[] zeroFile; //this is what we use to zero files out
 	
 	private final static String[] POSSIBLE_WIPE_PATHS = 
 		{
@@ -243,28 +244,31 @@ public class WipeController {
 	    			  }
 	    		  }
 	    		  
-	    		  try
-    			  {
-	    			  wl.wipeStatus("Deleting folder:\n" + fc.getName());
-	    	   		  doSecPause(100);
-	    	   		   
-		    		  //if the directory itself is writeable, then delete it
-		    		  
-	    			  fc.close();
-	    			  fc = (FileConnection) Connector.open(path, Connector.READ_WRITE);	    			  
-	    			  
-	    			  fc.delete();
-	    			  fc.close();
-
-	    			  wl.wipingFileSuccess(fc.getName());
-		    		 
-    			  }
-    			  catch (Exception e)
-    			  {
-    				  wl.wipingFileError(fc.getName(), e.getMessage());
-    				  doSecPause(300);
-    				  //may not be able to delete all directories if they are permanent internal locations
-    			  }
+	    		  if (!fc.list("*",true).hasMoreElements())
+	    		  {
+		    		  try
+	    			  {
+		    			  wl.wipeStatus("Deleting folder:\n" + fc.getName());
+		    	   		  doSecPause(100);
+		    	   		   
+			    		  //if the directory itself is writeable, then delete it
+			    		  
+		    			  fc.close();
+		    			  fc = (FileConnection) Connector.open(path, Connector.READ_WRITE);	    			  
+		    			  
+		    			  fc.delete();
+		    			  fc.close();
+	
+		    			  wl.wipingFileSuccess(fc.getName());
+			    		 
+	    			  }
+	    			  catch (Exception e)
+	    			  {
+	    				  wl.wipingFileError(fc.getName(), e.getMessage());
+	    				  doSecPause(100);
+	    				  //may not be able to delete all directories if they are permanent internal locations
+	    			  }
+	    		  }
 	    	  }
 	    	  else if (fc.canWrite()) //it is a file!
 	    	  {
@@ -306,15 +310,35 @@ public class WipeController {
 
 		  OutputStream outputStream= fc.openOutputStream();
 		  
-		  char zeroValue = 0;
+		  byte[] zeroValue = getZeroFile();
+		  long percent = 0;
 		  
-		  for (long i = 0; i < fileSize; i++)
+		  for (int i = 0; i < fileSize; i+=zeroValue.length)
 		  {
-			  outputStream.write(zeroValue);			  			 
+			  outputStream.write(zeroValue);
+			 
+			  if (i > 0)
+			  {				 
+				  percent = 100 / (fileSize / i);			  			 
+				  wl.wipeStatus("Creating Zero File:\n" + percent + "% complete\n(please be patient)");
+			  }
 		  }
           
           outputStream.close();
 		  
+	}
+	
+	private static byte[] getZeroFile ()
+	{
+		if (zeroFile == null)
+		{
+			zeroFile = new byte[1000];
+		  
+			for (int i = 0; i < zeroFile.length; i++)
+				zeroFile[i] = 0;
+		}
+		  
+		return zeroFile;
 	}
 	
 	//
@@ -351,7 +375,7 @@ public class WipeController {
 					else
 					{
 						fc.create();
-						long zeroFileSize = (fc.availableSize()/4)*3; //reduce by 1/4
+						long zeroFileSize = fc.availableSize(); //reduce by 1/4
 						zeroFile (fc, zeroFileSize, wl);
 						fc.close();
 					}
@@ -366,8 +390,7 @@ public class WipeController {
 			}
 		}
 		
-		String[] mediaPaths = {TYPE_PHOTOS, TYPE_VIDEOS}; //internal memory only for now
-		//, TYPE_MEMORYCARD, "memorycard." + TYPE_PHOTOS, "memorycard." + TYPE_VIDEOS};
+		String[] mediaPaths = {TYPE_PHOTOS, TYPE_VIDEOS, TYPE_MEMORYCARD, "memorycard." + TYPE_PHOTOS, "memorycard." + TYPE_VIDEOS};
 		
 		for (int i = 0; i < mediaPaths.length; i++)
 		{
@@ -385,7 +408,7 @@ public class WipeController {
 					
 					fc = (FileConnection) Connector.open(zeroPath, Connector.READ_WRITE);
 					fc.create();
-					long zeroFileSize = (fc.availableSize()/4)*3; //reduce by 1/4
+					long zeroFileSize = fc.availableSize(); //reduce by 1/4
 					zeroFile (fc, zeroFileSize, wl);					
 					fc.close();
 				}

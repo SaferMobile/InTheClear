@@ -311,19 +311,22 @@ public class WipeController {
 	public static void zeroFile (FileConnection fc, long fileSize, WipeListener wl) throws Exception
 	{
 
+		if (!fc.exists())
+				fc.create();
+		
 		  OutputStream outputStream= fc.openOutputStream();
 		  
 		  byte[] zeroValue = getZeroFile();
-		  long percent = 0;
+		  float percent = 0;
 		  
-		  for (long i = 0; i < fileSize; i+=zeroValue.length)
+		  for (long i = 0; i < fileSize; i += zeroValue.length)
 		  {
 			  outputStream.write(zeroValue);
 			 
 			  if (i > 0)
 			  {				 
-				  percent = 100 / (fileSize / i);			  			 
-				  wl.wipeStatus("Creating Zero File:\n" + percent + "% complete\n(please be patient)");
+				  percent = (((float)i) / ((float)fileSize)) * 100f;			  			 
+				  wl.wipeStatus("Creating Zero File:\n" + ((int)percent) + "% complete\n(please be patient)");
 			  }
 		  }
           
@@ -371,14 +374,10 @@ public class WipeController {
 					
 					fc = (FileConnection) Connector.open(filePath, Connector.READ_WRITE);
 					
-					if (!fc.canWrite())
+					if (fc.canWrite())					
 					{
-						zeroFillStorage (fc.list("*",true),wl);
-					}
-					else
-					{
-						fc.create();
-						long zeroFileSize = fc.availableSize(); //reduce by 1/4
+						
+						long zeroFileSize = fc.availableSize();
 						zeroFile (fc, zeroFileSize, wl);
 						fc.close();
 					}
@@ -394,7 +393,7 @@ public class WipeController {
 		}
 		
 		String[] mediaPaths = {TYPE_PHOTOS, TYPE_VIDEOS, TYPE_MEMORYCARD, "memorycard." + TYPE_PHOTOS, "memorycard." + TYPE_VIDEOS};
-		
+			
 		for (int i = 0; i < mediaPaths.length; i++)
 		{
 			try

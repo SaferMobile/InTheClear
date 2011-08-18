@@ -190,7 +190,6 @@ public class Panic extends Activity implements OnClickListener, OnDismissListene
 		if(panicState == ITCConstants.PanicState.IN_COUNTDOWN) {
 			// if panic hasn't started, then just kill the countdown
 			cd.cancel();
-			countdown.dismiss();
 		}
 		
 		unbindPanicService();
@@ -246,10 +245,7 @@ public class Panic extends Activity implements OnClickListener, OnDismissListene
 			@SuppressWarnings("static-access")
 			@Override
 			public void onFinish() {
-				// start the panic
-				countdown.dismiss();
-				
-				panicStatus.show();
+				// start the panic				
 				pc.startPanic();
 				
 				// kill the activity
@@ -258,7 +254,7 @@ public class Panic extends Activity implements OnClickListener, OnDismissListene
 
 			@Override
 			public void onTick(long millisUntilFinished) {
-				Panic.this.countdownReadout.setText(
+				panicStatus.setMessage(
 						getString(R.string.KEY_PANIC_COUNTDOWNMSG) + 
 						" " + t + " " +	
 						getString(R.string.KEY_SECONDS)
@@ -268,24 +264,7 @@ public class Panic extends Activity implements OnClickListener, OnDismissListene
 			
 		};
 		
-		countdown = new Dialog(this);
-		countdown.setContentView(R.layout.countdown);
-		countdown.setCancelable(false);
-		countdown.setOnDismissListener(this);
-		
-		countdownReadout = (TextView) countdown.findViewById(R.id.countdownReadout);
-		
-		cancelCountdown = (Button) countdown.findViewById(R.id.cancelCountdown);
-		cancelCountdown.setText(R.string.KEY_PANIC_MENU_CANCEL);
-		cancelCountdown.setOnClickListener(new OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				if(v == cancelCountdown) {
-					cancelPanic();
-				}
-			}
-		});
-		countdown.show();
+		panicStatus.show();
 		cd.start();
 		
 	}

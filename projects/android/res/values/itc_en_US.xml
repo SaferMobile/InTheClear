@@ -168,7 +168,7 @@
 	<string name="WIZARD_EMERGENCY_MESSAGE">Your\nEmergency\nMessage</string>
 	<string name="WIZARD_WIPE_WARNING">Be careful!  You won\'t be able to recover the data once it\'s wiped.</string>
 	<string name="WIZARD_SELECT_DATA_BUTTON">Select Data to be Wiped</string>
-	<string name="WIZARD_ONE_TOUCH_PANIC_DESCRIPTION">When One-Touch Panic is activated, confirm before running.</string>
+	<string name="WIZARD_ONE_TOUCH_PANIC_DESCRIPTION">When One-Touch Panic is activated, DO NOT prompt me to confirm before running.</string>
 	<string name="WIZARD_ONE_TOUCH_HOMESCREEN_DESCRIPTION">Yes, create a homescreen shortcut for One-Touch Panic.</string>
 	<string name="WIZARD_FAIL_LOCATIONTEST">We were unable to access any phone location data.</string>
 	<string name="WIZARD_CONFIRMATION_LOCALDATA">Great!  Seems like we can access your local data.</string>

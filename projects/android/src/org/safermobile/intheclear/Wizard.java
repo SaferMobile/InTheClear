@@ -451,7 +451,7 @@ public class Wizard extends Activity implements OnClickListener, SMSTesterConsta
 				oneTouchHolder.setGravity(Gravity.CENTER_VERTICAL);
 				
 				CheckBox oneTouch = new CheckBox(c);
-				oneTouch.setChecked(true);
+				oneTouch.setChecked(false);
 				oneTouch.setContentDescription(ITCConstants.Preference.DEFAULT_ONE_TOUCH_PANIC);
 				oneTouchHolder.addView(oneTouch);
 				

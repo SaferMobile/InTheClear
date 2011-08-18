@@ -46,8 +46,9 @@ public class ShoutController {
 	}
 	
 	public String buildShoutData() {
+		String timestamp = new Date().toString();
 		StringBuffer sbPanicMsg = new StringBuffer();
-		sbPanicMsg.append(res.getString(R.string.KEY_PANIC_MSG_FROM) + ":\n\n");
+		sbPanicMsg.append(res.getString(R.string.KEY_PANIC_MSG_FROM) + ":\n");
 		if(PhoneInfo.getIMEI().length() > 0)
 			sbPanicMsg.append("IMEI: " + PhoneInfo.getIMEI() + "\n");		
 		if(PhoneInfo.getIMSI().length() > 0)
@@ -62,9 +63,11 @@ public class ShoutController {
 			sbPanicMsg.append(res.getString(R.string.KEY_PANIC_MSG_MNC) + " " + PhoneInfo.getMNC() + "\n");
 		if(MovementTracker.updateLocation() != null) {
 			double[] location = MovementTracker.updateLocation();
-			sbPanicMsg.append(res.getString(R.string.KEY_PANIC_MSG_LATLNG) + " " + location[0] + "," + location[1]);
+			sbPanicMsg.append(res.getString(R.string.KEY_PANIC_MSG_LATLNG) + " " + location[0] + "," + location[1] + "\n");
 		}
-		sbPanicMsg.append(res.getString(R.string.KEY_PANIC_MSG_TIMESTAMP) + " " + new Date().toString());
+		
+		// I lopped off the timezone and year from the timestamp because we don't want to send a txt over 140 chars
+		sbPanicMsg.append(res.getString(R.string.KEY_PANIC_MSG_TIMESTAMP) + " " + timestamp.substring(0,timestamp.length() - 8));
 		return sbPanicMsg.toString();
 	}
 	

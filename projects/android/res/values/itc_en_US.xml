@@ -24,7 +24,7 @@
 	<string name="KEY_PANIC_ERROR_CONFIGUREDFRIENDS">Please setup preferences first to enter your alert information.</string>
 	<string name="KEY_PANIC_TITLE_MAIN">Panic! Activated</string>
 	<string name="KEY_PANIC_RETURN">Select to cancel Panic!</string>
-	<string name="KEY_PANIC_MSG_FROM">Emergency SMS Data</string>
+	<string name="KEY_PANIC_MSG_FROM">SMS Data</string>
 	<string name="KEY_PANIC_MSG_LOCATION">Location:</string>
 	<string name="KEY_PANIC_MSG_CID">cid:</string>
 	<string name="KEY_PANIC_MSG_LAC">lac:</string>

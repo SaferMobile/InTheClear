@@ -3,5 +3,7 @@
     <string name="remote_service_start_id">Remote Service Start Id</string>
     <string name="wizard_form">itcwizardform</string>
     <string name="yourNumberStatic">yourNumberStatic</string>
+    <string name="configuredFriendsStatic">Your Configured Friends</string>
+    <string name="defaultPanicMessageStatic">The one where the gang sets its default panic message.</string>
     <string name="SAFERMOBILE_EMAIL">support&amp;safermobile.org</string>
 </resources>

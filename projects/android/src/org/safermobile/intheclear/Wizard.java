@@ -154,12 +154,9 @@ public class Wizard extends Activity implements OnClickListener, SMSTesterConsta
 			//Log.d(ITCConstants.Log.ITC,"THIS VIEW IS: " + v.getClass().toString());
 			if(v instanceof EditText && ((String) v.getContentDescription()).compareTo("") != 0) {
 				((EditText) v).setHint(_sp.getString((String) v.getContentDescription(), ""));
-				Log.d(ITCConstants.Log.ITC,"data should be found for " + (String) v.getContentDescription() + "\n" + _sp.getString((String) v.getContentDescription(),""));
 			} else if(v instanceof Button && ((String) v.getContentDescription()).compareTo("") != 0) {
 				// actually, it's a checkbox, so we have to cast it.
 				((CheckBox) v).setSelected(_sp.getBoolean((String) v.getContentDescription(), false));
-				Log.d(ITCConstants.Log.ITC,"data should be found for " + (String) v.getContentDescription() + "\n" + _sp.getBoolean((String) v.getContentDescription(), false));
-
 			} else if(v instanceof LinearLayout) {
 				populateDefaults(v);
 			}
@@ -301,6 +298,19 @@ public class Wizard extends Activity implements OnClickListener, SMSTesterConsta
 		
 		boolean _hasPreferenceData = false;
 		
+		OnFocusChangeListener editTextFocusChangeListener = new OnFocusChangeListener() {
+
+			@Override
+			public void onFocusChange(View v, boolean hasFocus) {
+				if(v.hasFocus()) {
+					String textToEdit = ((EditText) v).getHint().toString();
+					((EditText) v).setText(textToEdit);
+				}
+				
+			}
+			
+		};
+		
 		public WizardForm(Context c, int wNum, int[] screen) {
 			super(c);
 			this.c = c;
@@ -371,6 +381,8 @@ public class Wizard extends Activity implements OnClickListener, SMSTesterConsta
 				EditText recipientNumbers = new EditText(c);
 				recipientNumbers.setContentDescription(ITCConstants.Preference.CONFIGURED_FRIENDS);
 				recipientNumbers.setWidth((int) (_screen[0] * 0.6));
+				recipientNumbers.setId(R.string.configuredFriendsStatic);
+				recipientNumbers.setOnFocusChangeListener(editTextFocusChangeListener);
 				rnHolder.addView(recipientNumbers);
 				views.add(rnHolder);
 				
@@ -392,7 +404,9 @@ public class Wizard extends Activity implements OnClickListener, SMSTesterConsta
 				emergencyMessage.setContentDescription(ITCConstants.Preference.DEFAULT_PANIC_MSG);
 				emergencyMessage.setWidth((int) (_screen[0] * 0.6));
 				emergencyMessage.setHeight((int) (_screen[1] * 0.25));
-				emergencyMessage.setPadding(10, 5, 5, 7);
+				//emergencyMessage.setPadding(10, 5, 5, 7);
+				emergencyMessage.setId(R.string.defaultPanicMessageStatic);
+				emergencyMessage.setOnFocusChangeListener(editTextFocusChangeListener);
 				emergencyMessage.setOnKeyListener(new OnKeyListener() {
 
 					@Override

@@ -67,20 +67,13 @@ public class WipePreferences extends Activity implements OnClickListener {
 					defaultSDCard == true
 				)
 					defaultNone = false;
-				
-				wipeOptions.add(new WipeSelector(
-						getResources().getString(R.string.KEY_EDIT),
-						ITCConstants.Wipe.NONE,
-						defaultNone
-				));
-			} else {
-				wipeOptions.add(new WipeSelector(
-						getResources().getString(R.string.KEY_NONE),
-						ITCConstants.Wipe.NONE,
-						defaultNone
-				));
-				
 			}
+			
+			wipeOptions.add(new WipeSelector(
+					getResources().getString(R.string.KEY_NONE),
+					ITCConstants.Wipe.NONE,
+					defaultNone
+			));
 		} catch(NullPointerException e) {}
 		
 		wipeOptions.add(new WipeSelector(

@@ -33,7 +33,6 @@ public class SMSSender implements SMSTesterConstants {
 		this.c = c;
 		this.smsHandler = callback;
 		this.smsconfirm = new SMSConfirm();
-		
 	}
 	
 	public void sendSMS(String recipient, String messageData) {
@@ -75,8 +74,6 @@ public class SMSSender implements SMSTesterConstants {
 			
 			smsStatus.obj = msg;
 			smsHandler.sendMessage(smsStatus);
-			
-			c.unregisterReceiver(smsconfirm);
 		}
 	}
 	
@@ -88,22 +85,27 @@ public class SMSSender implements SMSTesterConstants {
 		
 		@Override
 		public void onReceive(Context context, Intent intent) {
-			
 			if(intent.getAction().compareTo(SENT) == 0) {
 				if(getResultCode() != SMS_SENT) {
 					// the attempt to send has failed.
 					smsThread.exitWithResult(false, SMS_SENDING, getResultCode());
+					context.unregisterReceiver(this);
 				}
 			} else if(intent.getAction().compareTo(DELIVERED) == 0) {
 				if(getResultCode() != SMS_DELIVERED) {
 					// the attempt to deliver has failed.
 					smsThread.exitWithResult(false, SMS_DELIVERY, getResultCode());
+					context.unregisterReceiver(this);
 				} else {
 					smsThread.exitWithResult(true, SMS_DELIVERY, getResultCode());
+					context.unregisterReceiver(this);
+					
 				}
 			}
 			
 		}
+		
+		
 		
 	}
 	

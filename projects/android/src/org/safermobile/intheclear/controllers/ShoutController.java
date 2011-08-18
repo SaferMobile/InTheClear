@@ -62,8 +62,7 @@ public class ShoutController {
 			sbPanicMsg.append(res.getString(R.string.KEY_PANIC_MSG_MNC) + " " + PhoneInfo.getMNC() + "\n");
 		if(MovementTracker.updateLocation() != null) {
 			double[] location = MovementTracker.updateLocation();
-			sbPanicMsg.append(res.getString(R.string.KEY_PANIC_MSG_LAT) + " " + location[0] + "\n");
-			sbPanicMsg.append(res.getString(R.string.KEY_PANIC_MSG_LNG) + " " + location[1] + "\n");
+			sbPanicMsg.append(res.getString(R.string.KEY_PANIC_MSG_LATLNG) + " " + location[0] + "," + location[1]);
 		}
 		sbPanicMsg.append(res.getString(R.string.KEY_PANIC_MSG_TIMESTAMP) + " " + new Date().toString());
 		return sbPanicMsg.toString();

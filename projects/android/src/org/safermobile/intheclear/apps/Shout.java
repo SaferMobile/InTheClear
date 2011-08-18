@@ -108,7 +108,6 @@ public class Shout extends Activity implements OnClickListener, OnDismissListene
 	public void doCountdown() {
 		countdown = new Dialog(this);
 		countdown.setContentView(R.layout.countdown);
-		countdown.setCancelable(false);
 		countdown.setOnDismissListener(this);
 		
 		countdownReadout = (TextView) countdown.findViewById(R.id.countdownReadout);
@@ -139,13 +138,6 @@ public class Shout extends Activity implements OnClickListener, OnDismissListene
 		};
 		cd.start();
 	}
-	
-	@Override
-	public boolean onCreateOptionsMenu(Menu m) {
-		MenuInflater mi = getMenuInflater();
-		mi.inflate(R.menu.shout_menu, m);
-		return true;
-	}
 
 	@Override
 	public void onClick(View v) {
@@ -155,13 +147,14 @@ public class Shout extends Activity implements OnClickListener, OnDismissListene
 		} else if(v == cancelCountdown) {
 			if(cd != null)
 				cd.cancel();
+				countdown.dismiss();
 		}
 	}
 
 	@Override
 	public void onDismiss(DialogInterface d) {
 		cd.cancel();
-		
+		countdown.dismiss();
 	}
 	
 	private void killActivity() {

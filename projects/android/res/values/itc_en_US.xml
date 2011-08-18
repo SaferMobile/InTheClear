@@ -24,19 +24,17 @@
 	<string name="KEY_PANIC_ERROR_CONFIGUREDFRIENDS">Please setup preferences first to enter your alert information.</string>
 	<string name="KEY_PANIC_TITLE_MAIN">Panic! Activated</string>
 	<string name="KEY_PANIC_RETURN">Select to cancel Panic!</string>
-	<string name="KEY_PANIC_MSG_FROM">Emergency SMS Data:</string>
+	<string name="KEY_PANIC_MSG_FROM">Emergency SMS Data</string>
 	<string name="KEY_PANIC_MSG_LOCATION">Location:</string>
 	<string name="KEY_PANIC_MSG_CID">cid:</string>
 	<string name="KEY_PANIC_MSG_LAC">lac:</string>
 	<string name="KEY_PANIC_MSG_MCC">mcc:</string>
 	<string name="KEY_PANIC_MSG_MNC">mnc:</string>
-	<string name="KEY_PANIC_MSG_LAT">latitude:</string>
-	<string name="KEY_PANIC_MSG_LNG">longitude:</string>
+	<string name="KEY_PANIC_MSG_LATLNG">lat/lng:</string>
 	<string name="KEY_PANIC_MSG_TIMESTAMP">ts:</string>
 	<string name="KEY_PANIC_WIPE_TITLE">Data to be wiped:</string>
 	<string name="KEY_PANIC_MSG_SENT">Panic Sent</string>
 	<string name="KEY_PANIC_MSG_SENTTO">Sent to:</string>
-	
 	<string name="KEY_START">Start</string>
 	<string name="KEY_EXIT">Exit</string>
 	<string name="KEY_WARNING">Warning</string>
@@ -77,7 +75,7 @@
 	<string name="KEY_SHOUT_MENU_RESTOREDEFAULT">Restore Default Message</string>
 	<string name="KEY_SHOUT_PREFSFAIL">You do not have any friends configured.  Please check your preferences.</string>
 	<string name="KEY_SHOUT_ENTERSHOUTMSG">Enter the message you want to shout to your configured friends.</string>
-	<string name="KEY_SHOUT_COUNTDOWNMSG">Shout! in</string>
+	<string name="KEY_SHOUT_COUNTDOWNMSG">Sending Emergency SMS in</string>
 	<string name="KEY_SECONDS">seconds...</string>
 	<string name="KEY_SHOUT_COUNTDOWNCANCEL">Cancel this Emergency SMS</string>
 	<string name="KEY_WIPE_ACTIVITY_TITLE">Data Wipe</string>

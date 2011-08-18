@@ -12,7 +12,7 @@
 	  	android:layout_weight="0.1"
 	  	android:text="@string/KEY_WIPE_SETTINGS_TITLE"
 	  	android:textColor="#ffffffff"
-	  	android:background="#aaaaff"
+	  	android:background="@color/maPink"
 	  	android:textStyle="bold"
 	  	android:paddingLeft="10px"
 	  	android:paddingBottom="0px"  	

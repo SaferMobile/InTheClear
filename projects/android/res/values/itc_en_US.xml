@@ -148,7 +148,7 @@
 	<string name="KEY_WIZARD_ONETOUCH">1-Touch Panic?</string>
 	<string name="KEY_WIZARD_ONETOUCH_DIALOG">Check this if you DO NOT want confirmation before executing Panic!  Otherwise, you will have to confirm before Panic! executes.</string>
 	<string name="KEY_WIZARD_PHONENUMBER">Phone Number</string>
-	<string name="KEY_WIZARD_SMSTESTMSG">This is a test message.  Reply if you get it!</string>
+	<string name="KEY_WIZARD_SMSTESTMSG">This is a test message from InTheClear.</string>
 	<string name="KEY_WIZARD_PHONENUMBERS">Phone Numbers</string>
 	<string name="KEY_WIZARD_ALERTMSG">Alert Message</string>
 	<string name="KEY_WIZARD_CONFIGURE_SHOUT">Configure Alerts</string>

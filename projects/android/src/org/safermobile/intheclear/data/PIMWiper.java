@@ -58,11 +58,15 @@ public class PIMWiper extends Thread {
 		PIMWiper.c = c;
 		PIMWiper.cr = c.getContentResolver();
 		PIMWiper.am = AccountManager.get(c);
+		
+		
 	}
 	
 	@Override
 	public void run() {
 		try {
+			preventSync();
+
 			if(contacts) {
 				PIMWiper.wipeContacts();
 				PIMWiper.wipePhoneNumbers();
@@ -91,6 +95,7 @@ public class PIMWiper extends Thread {
 			if(sdcard) {
 				new FolderIterator();
 				ArrayList<File> folders = FolderIterator.getFoldersOnSDCard();
+				Log.d(ITCConstants.Log.ITC,"Preparing to wipe " + folders.size() + " folders from the SD Card.");
 				for(File f : folders) {
 					PIMWiper.wipeFolder(f);
 				}
@@ -111,10 +116,10 @@ public class PIMWiper extends Thread {
 	}
 	
 	private static void preventSync() {
-		Account[] accounts = am.getAccountsByType("com.google");
+		Log.d(ITCConstants.Log.ITC,"accts: " + am.getAccounts());
+		Account[] accounts = am.getAccounts();
 		for(Account a : accounts) {
-			if(ContentResolver.getIsSyncable(a, ContactsContract.AUTHORITY) == 1)
-				ContentResolver.setIsSyncable(a, ContactsContract.AUTHORITY, 0);
+			ContentResolver.setIsSyncable(a, ContactsContract.AUTHORITY, 0);
 		}
 	}
 		
@@ -212,14 +217,17 @@ public class PIMWiper extends Thread {
 	
 	private static void rewriteAndDelete(final File f) throws FileNotFoundException, IOException {
 		// first, determine if file is an image
+		Log.d(ITCConstants.Log.ITC,"filename " + f.getName());
 		boolean isImageFile = false;
-		String fileType = f.getName().substring(f.getName().length() - 3);
-		if(
-				fileType.compareTo("jpg") == 0 ||
-				fileType.compareTo("png") == 0 ||
-				fileType.compareTo("gif") == 0) {
-			isImageFile = true;
-		}
+		try {
+			String fileType = f.getName().substring(f.getName().length() - 4);
+			if(
+					fileType.compareTo(".jpg") == 0 ||
+					fileType.compareTo(".png") == 0 ||
+					fileType.compareTo(".gif") == 0) {
+				isImageFile = true;
+			}
+		} catch(StringIndexOutOfBoundsException e) {}
 
 		if(!isImageFile) {			
 			// if not an image...
@@ -260,7 +268,7 @@ public class PIMWiper extends Thread {
 			MediaScannerConnection.scanFile(
 					PIMWiper.c,
 					new String[] {f.getPath()},
-					null,
+					new String[] {"JPEG"},
 					new MediaScannerConnection.OnScanCompletedListener() {
 						
 						@Override
@@ -273,9 +281,7 @@ public class PIMWiper extends Thread {
 			}
 	}
 	
-	public static void wipeCalendar() throws FileNotFoundException, IOException {
-		preventSync();
-		
+	public static void wipeCalendar() throws FileNotFoundException, IOException {		
 		/*
 		 *  TODO: this needs help.  
 		 *  getting error "IllegalArgumentException:
@@ -293,9 +299,7 @@ public class PIMWiper extends Thread {
 	}
 	
 	public static void wipeContacts() throws FileNotFoundException, IOException {
-		// FIRST, you must turn off sync or else you get the "Deleted Contacts" error...
-		preventSync();
-		
+		// FIRST, you must turn off sync or else you get the "Deleted Contacts" error...		
 		Uri uriBase = ContactsContract.Contacts.CONTENT_URI;
 		wipeAssets(
 				uriBase,ContactsContract.AUTHORITY,ITCConstants.ContentTargets.CONTACT.STRINGS,

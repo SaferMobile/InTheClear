@@ -25,6 +25,8 @@ public class FolderIterator {
 		File[] folder = pathToSDCard.listFiles();
 		ArrayList<File> folders = new ArrayList<File>();
 		
+		folders.add(pathToSDCard);
+		
 		for(File f : folder) {
 			if(f.isDirectory() && f.canWrite()) {
 				folders.add(f);

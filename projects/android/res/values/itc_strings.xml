@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+	<string name="app_name">InTheClear</string>
+	<string name="KEY_0">No</string>
+	<string name="KEY_1">Yes</string>
+	<string name="KEY_2">Home</string>
+	<string name="KEY_OK">OK</string>
+	<string name="KEY_DETAILS">Details</string>
+	<string name="KEY_NONE">None</string>
+	<string name="KEY_EDIT">Edit</string>
+	<string name="KEY_FINISH">Finish</string>
+	<string name="KEY_WIPE_SETTINGS_TITLE">InTheClear Data Wipe Settings</string>
+	<string name="KEY_PANIC_TITLE">Panic!</string>
+	<string name="KEY_PANIC_MSG_TITLE">Panic Message:</string>
+	<string name="KEY_PANIC_PROGRESS_1">Sending your Panic! message...</string>
+	<string name="KEY_PANIC_PROGRESS_2">Wiping selected data from your phone...</string>
+	<string name="KEY_PANIC_PROGRESS_3">Your phone will continue to Panic! every 45 seconds until you cancel this process...</string>
+	<string name="KEY_PANIC_NEXT_PANIC">Next Panic! in </string>
+	<string name="KEY_PANIC_BTN_PANIC">Panic!</string>
+	<string name="KEY_PANIC_MENU_CANCEL">Cancel Panic!</string>
+	<string name="KEY_PANIC_COUNTDOWNMSG">Panic! in </string>
+	<string name="KEY_PANIC_TITLE_ERROR">Error</string>
+	<string name="KEY_PANIC_ERROR_PREFS">Unable to open preferences</string>
+	<string name="KEY_PANIC_ERROR_CONFIGUREDFRIENDS">Please setup preferences first to enter your alert information.</string>
+	<string name="KEY_PANIC_TITLE_MAIN">Panic! Activated</string>
+	<string name="KEY_PANIC_RETURN">Select to cancel Panic!</string>
+	<string name="KEY_PANIC_MSG_FROM">SMS Data</string>
+	<string name="KEY_PANIC_MSG_LOCATION">Location:</string>
+	<string name="KEY_PANIC_MSG_CID">cid:</string>
+	<string name="KEY_PANIC_MSG_LAC">lac:</string>
+	<string name="KEY_PANIC_MSG_MCC">mcc:</string>
+	<string name="KEY_PANIC_MSG_MNC">mnc:</string>
+	<string name="KEY_PANIC_MSG_LATLNG">lat/lng:</string>
+	<string name="KEY_PANIC_MSG_TIMESTAMP">ts:</string>
+	<string name="KEY_PANIC_WIPE_TITLE">Data to be wiped:</string>
+	<string name="KEY_PANIC_MSG_SENT">Panic Sent</string>
+	<string name="KEY_PANIC_MSG_SENTTO">Sent to:</string>
+	<string name="KEY_START">Start</string>
+	<string name="KEY_EXIT">Exit</string>
+	<string name="KEY_WARNING">Warning</string>
+	<string name="KEY_PREF_LANGUAGE_TITLE">Languages</string>
+	<string name="KEY_PREF_LANGUAGE_SUMMARY">What language should InTheClear display?</string>
+	<string name="KEY_PREF_CONFIG_PANIC_TITLE">PANIC! Preferences</string>
+	<string name="KEY_PREF_CONFIG_WIPE_TITLE">WIPE Preferences</string>
+	<string name="KEY_PREF_ENTERPHONES_TITLE">Configure Friends</string>
+	<string name="KEY_PREF_ENTERPHONES">Enter the mobile phone number(s), separated by comma, of who you want to alert via SMS</string>
+	<string name="KEY_PREF_ENTERPANICMSG_TITLE">Your PANIC! Message</string>
+	<string name="KEY_PREF_ENTERPANICMSG">Enter your PANIC! message here.</string>
+	<string name="KEY_PREF_WIPEDIALOG_TITLE">What to wipe</string>
+	<string name="KEY_PREF_WIPECONTACTS">Wipe All Contacts</string>
+	<string name="KEY_PREF_WIPEPHOTOS">Wipe All Photos/Videos</string>
+	<string name="KEY_PREF_WIPEMEDIADIALOG">Wipe all images and video from your Media Gallery.</string>
+	<string name="KEY_PREF_WIPEFILES">Wipe SD Card</string>
+	<string name="KEY_PREF_WIPEDIALOG">Select the folders on your SD card that will be wiped when you press the PANIC! button</string>
+	<string name="KEY_PREF_WIPEFILESLIST">Folders to Wipe</string>
+	<string name="KEY_PREF_WIPECALLLOG">Wipe Your Call Log</string>
+	<string name="KEY_PREF_WIPECALENDAR">Wipe Your Calendar</string>
+	<string name="KEY_PREF_WIPESMS">Wipe Your SMS Log</string>
+	<string name="KEY_PREF_ONETOUCH">1-Touch Panic?</string>
+	<string name="KEY_PREF_ONETOUCH_DIALOG">Check this if you DO NOT want confirmation before executing Panic!  Otherwise, you will have to confirm before Panic! executes.</string>
+	<string name="KEY_PREF_ACCESSFAIL">We couldn\'t access your settings.  Please check your preferences.</string>
+	<string name="KEY_PREF_SAVEFAIL">There was a problem saving your preferences.</string>
+	<string name="KEY_MAIN_TOPREFS">Launch Preferences</string>
+	<string name="KEY_MAIN_TOWIZARD">Start Wizard</string>
+	<string name="KEY_EMERGENCY_SMS_TITLE">Emergency SMS</string>
+	<string name="KEY_EMERGENCY_SMS_INTRO">Choose Send to begin broadcasting your Emergency SMS repeatedly until you manually stop it or your phone loses connectivity or power.  You can optionally change your message and recipient(s) below.</string>
+	<string name="KEY_EMERGENCY_SMS_SEND_BUTTON">Send Emergency SMS</string>
+	<string name="KEY_EMERGENCY_SMS_RECIPIENT_MOBILE">Recipient\nmobile #(s)</string>
+	<string name="KEY_EMERGENCY_SMS_EMERGENCY_MSG">Emergency Message</string>
+	<string name="KEY_SHOUT_BTN_TITLE">Shout!</string>
+	<string name="KEY_SHOUT_PANICMSG_TITLE">Your Message:</string>
+	<string name="KEY_SHOUT_CHANGEPANICMSG_BTN">Change this message?</string>
+	<string name="KEY_SHOUT_SAVECHANGEDPANICMSG_BTN">Save new message</string>
+	<string name="KEY_SHOUT_MENU_CANCEL">Cancel Shout!</string>
+	<string name="KEY_SHOUT_MENU_RESTOREDEFAULT">Restore Default Message</string>
+	<string name="KEY_SHOUT_PREFSFAIL">You do not have any friends configured.  Please check your preferences.</string>
+	<string name="KEY_SHOUT_ENTERSHOUTMSG">Enter the message you want to shout to your configured friends.</string>
+	<string name="KEY_SHOUT_COUNTDOWNMSG">Sending Emergency SMS in</string>
+	<string name="KEY_SECONDS">seconds...</string>
+	<string name="KEY_SHOUT_COUNTDOWNCANCEL">Cancel this Emergency SMS</string>
+	<string name="KEY_WIPE_ACTIVITY_TITLE">Data Wipe</string>
+	<string name="KEY_WIPE_ACTIVITYTEXT">Select Wipe to erase the following portions of your phone\'s memory.  Choose \"Edit\" to change what\'s erased.</string>
+	<string name="KEY_WIPE_WIPECONTACTS">Wipe Contacts</string>
+	<string name="KEY_WIPE_WIPEPHOTOS">Wipe Photos</string>
+	<string name="KEY_WIPE_CALLLOG">Wipe Call Log</string>
+	<string name="KEY_WIPE_SMS">Wipe SMS Log</string>
+	<string name="KEY_WIPE_CALENDAR">Wipe Calendar</string>
+	<string name="KEY_WIPE_SDCARD">Wipe SD Card</string>
+	<string name="KEY_WIPE_EDIT_WIPE">Edit Wipe</string>
+	<string name="KEY_WIPE_BTN_TITLE">WIPE!</string>
+	<string name="KEY_WIPE_SELECTFOLDERS">Select Folders to Wipe</string>
+	<string name="KEY_WIPE_CONFIRMSELECT">Done</string>
+	<string name="KEY_WIPE_FOLDERSELECTIONTEXT">You have selected folders on your SD Card to be wiped.</string>
+	<string name="KEY_WIPE_NOSELECTEDFOLDERS">You have not selected any folders, or have disabled folder wiping, so nothing on your SD Card will be wiped</string>
+	<string name="KEY_WIPE_VIEWSELECTEDFOLDERS">View/Modify selected folders...</string>
+	<string name="KEY_WIPE_CONFIRM_PHOTOS">Photos have been wiped!</string>
+	<string name="KEY_WIPE_CONFIRM_CONTACTS">All contacts have been wiped!</string>
+	<string name="KEY_WIPE_CONFIRM_CALLLOG">Your call log has been wiped!</string>
+	<string name="KEY_WIPE_CONFIRM_SMS">All SMS messages have been wiped!</string>
+	<string name="KEY_WIPE_CONFIRM_CALENDAR">Your calendar has been wiped!</string>
+	<string name="KEY_WIPE_CONFIRM_FOLDERS">Selected folders have been wiped!</string>
+	<string name="KEY_HOME">InTheClear</string>
+	<string name="KEY_HOME_INTRO">InTheClear is a mobile app designed to help improve your safety in difficult situations.  It does this with three main features that you must configure.\n\nPanic!, Shout &amp; Wipe\n\nThis wizard will walk you through the setup process for these features, and ensure your mobile is ready for an emergency situation.</string>
+	<string name="KEY_HOME_TOWIZARD">Start Wizard</string>
+	<string name="KEY_HOME_TOPREFS">Preferences</string>
+	<string name="KEY_WIZARD_TITLE">InTheClear Setup</string>
+	<string name="KEY_WIZARD_NEXT">Next</string>
+	<string name="KEY_WIZARD_BACK">Back</string>
+	<string name="KEY_WIZARD_ENABLE">Enable</string>
+	<string name="KEY_WIZARD_SEND">Send</string>
+	<string name="KEY_WIZARD_TESTING_SMS_TITLE">Testing Emergency SMS</string>
+	<string name="KEY_WIZARD_PLEASE_WAIT">Please Wait...</string>
+	<string-array name="WIZARD_TITLES">
+		<item>InTheClear Setup</item>
+		<item>Testing Emergency SMS</item>
+		<item>Emergency SMS Setup</item>
+		<item>Data Wipe Setup</item>
+		<item>One-Touch Panic Setup</item>
+		<item>InTheClear Setup Complete</item>
+	</string-array>
+	<string-array name="WIZARD_TEXT">
+		<item>InTheClear helps keep you safer in difficult situations by sending emergency SMS messages and wiping data off your phone at your command.\n\nThis one-time wizard will help you set up your phone to work properly in an emergency situation.</item>
+		<item>InTheClear sends emergency SMSes to your choice of recipients(s).  To make sure we will be able to send an emergency SMS, first send a test message to yourself.  Just enter your mobile phone number below and select Send.</item>
+		<item>Now that we\'ve tested Emergency SMS, we will personalize your actual message and recipients.  To send to multiple recipients, separate phone numbers with commas.</item>
+		<item>InTheClear can wipe data off your phone\'s memory when you activate it.  Select what data you want to erase below</item>
+		<item>One-Touch Panic is a feature of InTheClear that activates Emergency SMS and Data Wipe.  To avoid accidental usage, the default setting requires you to confirm activation once you start One-Touch Panic.  You can remove this prompt with the setting below.</item>
+		<item>Thanks for setting up InTheClear.  Remember that you can activate its features manually from within the app, or run them right away using One-Touch Panic shortcuts.</item>
+	</string-array>
+	<string name="WIZARD_YOUR_MOBILE_NUMBER">Your mobile #</string>
+	<string name="WIZARD_SEND_TEST">Send Test</string>
+	<string name="WIZARD_CONFIRMATION_SMSTEST_TITLE">Success!</string>
+	<string name="WIZARD_CONFIRMATION_SMSTEST_FAIL_TITLE">SMS Test Failure</string>
+	<string name="WIZARD_SMS_TEST_FAILURES">InTheClear emergency SMSes are sent just like any other SMS.  Possible reasons for failure include:\n\nBad wireless reception\nNo airtime or credit\nMissing or damaged SIM card\n\nIf you\'ve checked all of the above and the test SMS is still not sending, InTheClear may not be supported on your handset.  Please email us at:\n</string>
+	<string name="WIZARD_CONFIRMATION_SMSTEST">It seems like your message went through.  Please check to make sure.</string>
+	<string name="WIZARD_CONFIRMATION_SMSTEST_FAIL">It looks like your test SMS was NOT sent successfully.\nView details for more info.</string>
+	<string name="WIZARD_CONFIRMATION_LOCATIONTEST">This is the location data we could access:</string>
+	<string name="WIZARD_FAIL_SMSTEST_INVALIDNUMBER">This phone number doesn\'t appear valid.  Please try another number.</string>
+	<string name="WIZARD_RECIPIENT_MOBILE_NUMBERS">Recipient\nMobile #(s)</string>
+	<string name="WIZARD_EMERGENCY_MESSAGE">Your\nEmergency\nMessage</string>
+	<string name="WIZARD_WIPE_WARNING">Be careful!  You won\'t be able to recover the data once it\'s wiped.</string>
+	<string name="WIZARD_SELECT_DATA_BUTTON">Select Data to be Wiped</string>
+	<string name="WIZARD_ONE_TOUCH_PANIC_DESCRIPTION">When One-Touch Panic is activated, DO NOT prompt me to confirm before running.</string>
+	<string name="WIZARD_ONE_TOUCH_HOMESCREEN_DESCRIPTION">Yes, create a homescreen shortcut for One-Touch Panic.</string>
+	<string name="WIZARD_FAIL_LOCATIONTEST">We were unable to access any phone location data.</string>
+	<string name="WIZARD_CONFIRMATION_LOCALDATA">Great!  Seems like we can access your local data.</string>
+	<string name="KEY_WIZARD_YOURNAME">Your Name</string>
+	<string name="KEY_WIZARD_YOURLOCATION">Location or other info</string>
+	<string name="KEY_WIZARD_ONETOUCH">1-Touch Panic?</string>
+	<string name="KEY_WIZARD_ONETOUCH_DIALOG">Check this if you DO NOT want confirmation before executing Panic!  Otherwise, you will have to confirm before Panic! executes.</string>
+	<string name="KEY_WIZARD_PHONENUMBER">Phone Number</string>
+	<string name="KEY_WIZARD_SMSTESTMSG">This is a test message from InTheClear.</string>
+	<string name="KEY_WIZARD_PHONENUMBERS">Phone Numbers</string>
+	<string name="KEY_WIZARD_ALERTMSG">Alert Message</string>
+	<string name="KEY_WIZARD_CONFIGURE_SHOUT">Configure Alerts</string>
+</resources>

@@ -1,0 +1,191 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<resources>
+    <string name="KEY_0">لا</string>
+    <string name="KEY_1">نعم</string>
+    <string name="KEY_2">منزل</string>
+    <string name="KEY_3">تشغيل</string>
+    <string name="KEY_4">ظهر</string>
+    <string name="KEY_5">DevoidME [القائمة الرئيسية]</string>
+    <string name="KEY_6">قائمة الأسماء</string>
+    <string name="KEY_7">حذف كافة جهات الاتصال</string>
+    <string name="KEY_8">املأ اتصالات عشوائية (100)</string>
+    <string name="KEY_9">املأ صفر اتصالات (100)</string>
+    <string name="KEY_10">انطوائي</string>
+    <string name="KEY_11">اهتمام</string>
+    <string name="KEY_12">هل أنت متأكد؟</string>
+    <string name="KEY_13">إزالة</string>
+    <string name="KEY_14">تمت إزالة كافة جهات الاتصال من الهاتف.</string>
+    <string name="KEY_15">عشوائي</string>
+    <string name="KEY_16">وقد تم إضافة 100 الاتصالات عشوائيا على هاتفك.</string>
+    <string name="KEY_17">صفر</string>
+    <string name="KEY_PANIC_TITLE">ذعر!</string>
+    <string name="KEY_PANIC_MSG_TITLE">الذعر Msg:</string>
+    <string name="KEY_PANIC_PROGRESS_1">ارسال الذعر الخاص! الرسالة...</string>
+    <string name="KEY_PANIC_PROGRESS_2">مسح البيانات المحددة من الهاتف...</string>
+    <string name="KEY_PANIC_ERROR_CONFIGUREDFRIENDS">أرجو أن ترسلوا الإعداد الأولى لإدخال المعلومات الخاصة بك في حالة تأهب.</string>
+    <string name="KEY_PANIC_PROGRESS_3">وسوف تستمر في هاتفك الذعر! كل 45 ثانية حتى يتم إلغاء هذه العملية...</string>
+    <string name="KEY_PANIC_NEXT_PANIC">القادم الذعر! في</string>
+    <string name="KEY_PANIC_BTN_PANIC">ذعر!</string>
+    <string name="KEY_PANIC_MENU_CANCEL">إلغاء الذعر!</string>
+    <string name="KEY_PANIC_COUNTDOWNMSG">ذعر! في</string>
+    <string name="KEY_PANIC_TITLE_ERROR">خطأ</string>
+    <string name="KEY_PANIC_ERROR_PREFS">غير قادر على فتح تفضيلات</string>
+    <string name="KEY_PANIC_TITLE_MAIN">ذعر! المنشط</string>
+    <string name="KEY_PANIC_RETURN">حدد لإلغاء الذعر!</string>
+    <string name="KEY_PANIC_ERROR_SMS">غير قادر على بدء وصول الرسائل القصيرة</string>
+    <string name="KEY_PANIC_MSG_FROM">ذعر! من</string>
+    <string name="KEY_PANIC_MSG_LOCATION">Location:</string>
+    <string name="KEY_PANIC_MSG_CID">cid:</string>
+    <string name="KEY_PANIC_MSG_LAC">lac:</string>
+    <string name="KEY_PANIC_MSG_MCC">mcc:</string>
+    <string name="KEY_PANIC_MSG_MNC">mnc:</string>
+    <string name="KEY_PANIC_MSG_LAT">latitude:</string>
+    <string name="KEY_PANIC_MSG_LNG">longitude:</string>
+    <string name="KEY_PANIC_MSG_TIMESTAMP">ts:</string>
+    <string name="KEY_PANIC_MSG_SENT">مرسلة الذعر</string>
+    <string name="KEY_PANIC_MSG_SENTTO">أرسلت to:</string>
+    <string name="KEY_NC_TITLE">NetCheck</string>
+    <string name="KEY_NC_INTRO">وهذه الأداة المساعدة عرض معلومات الشهادة SSL لتمكين أي موقع HTTPS.</string>
+    <string name="KEY_NC_ENTER">إدخال Url: HTTPS</string>
+    <string name="KEY_START">بداية</string>
+    <string name="KEY_EXIT">خروج</string>
+    <string name="KEY_WARNING">تحذير</string>
+    <string name="KEY_NC_ERROR">يجب عليك إدخال عنوان موقع https://</string>
+    <string name="KEY_NC_COMPLETE">الاختيار تم انجازها!</string>
+    <string name="KEY_PREF_LANGUAGE_TITLE">لغات</string>
+    <string name="KEY_PREF_LANGUAGE_SUMMARY">ما الذي يجب أن اللغة في عرض واضح؟</string>
+    <string name="KEY_PREF_CONFIG_PANIC_TITLE">هلع! تفضيلات</string>
+    <string name="KEY_PREF_CONFIG_WIPE_TITLE">امسحي تفضيلات</string>
+    <string name="KEY_PREF_ENTERPHONES_TITLE">تكوين أصدقاء</string>
+    <string name="KEY_PREF_ENTERPHONES">أدخل رقم الهاتف النقال (ق) ، ويفصل بينهما فاصلة ، من الذين تريد التنبيه عبر الرسائل القصيرة</string>
+    <string name="KEY_PREF_ENTERNAME_TITLE">اسمك</string>
+    <string name="KEY_PREF_ENTERNAME">أدخل اسمك ليتم عرضها للأصدقاء تكوينه.</string>
+    <string name="KEY_PREF_ENTERLOCATION_TITLE">موقعك</string>
+    <string name="KEY_PREF_ENTERLOCATION">أين أنت الآن؟</string>
+    <string name="KEY_PREF_ENTERPANICMSG_TITLE">هلع الخاص! رسالة</string>
+    <string name="KEY_PREF_ENTERPANICMSG">أدخل الهلع الخاص! الرسالة هنا.</string>
+    <string name="KEY_PREF_WIPEDIALOG_TITLE">ما للقضاء</string>
+    <string name="KEY_PREF_WIPECONTACTS">مسح كل الأسماء</string>
+    <string name="KEY_PREF_WIPEPHOTOS">مسح جميع Photos/Videos</string>
+    <string name="KEY_PREF_WIPEMEDIADIALOG">مسح جميع الصور والفيديو من معرض وسائل الإعلام الخاص.</string>
+    <string name="KEY_PREF_WIPEFILES">مسح المجلدات المحددة</string>
+    <string name="KEY_PREF_WIPEDIALOG">حدد المجلدات على بطاقة SD الخاص التي من شأنها أن تمحى عند الضغط على هلع! زر</string>
+    <string name="KEY_PREF_WIPEFILESLIST">المجلدات لمسح</string>
+    <string name="KEY_PREF_WIPECALLLOG">مسح سجل المكالمات</string>
+    <string name="KEY_PREF_WIPECALENDAR">يمسح التقويم الخاص بك</string>
+    <string name="KEY_PREF_WIPESMS">مسح لديك المفتاح SMS</string>
+    <string name="KEY_PREF_ONETOUCH">1 بلمسة الذعر؟</string>
+    <string name="KEY_PREF_ONETOUCH_DIALOG">الاختيار هذا إذا كنت لا تريد التأكيد قبل تنفيذ الذعر! خلاف ذلك ، سيكون لديك للتأكد من قبل الذعر! ينفذ.</string>
+    <string name="KEY_PREF_ACCESSFAIL">couldn\'t علينا الوصول الإعدادات. يرجى التحقق من خياراتك.</string>
+    <string name="KEY_PREF_SAVEFAIL">كانت هناك مشكلة في حفظ تفضيلاتك.</string>
+    <string name="KEY_MAIN_TOPREFS">إطلاق تفضيلات</string>
+    <string name="KEY_SHOUT_BTN_TITLE">الصراخ!</string>
+    <string name="KEY_SHOUT_PANICMSG_TITLE">Message: الخاص</string>
+    <string name="KEY_SHOUT_CHANGEPANICMSG_BTN">تغيير هذه الرسالة؟</string>
+    <string name="KEY_SHOUT_SAVECHANGEDPANICMSG_BTN">حفظ رسالة جديدة</string>
+    <string name="KEY_SHOUT_MENU_CANCEL">إلغاء صيحة!</string>
+    <string name="KEY_SHOUT_MENU_RESTOREDEFAULT">استعادة الرسالة الافتراضي</string>
+    <string name="KEY_SHOUT_PREFSFAIL">ليس لديك أي أصدقاء تكوينه. يرجى التحقق من خياراتك.</string>
+    <string name="KEY_SHOUT_ENTERSHOUTMSG">أدخل الرسالة التي أريد أن أصرخ لأصدقائك تكوينه.</string>
+    <string name="KEY_SHOUT_COUNTDOWNMSG">الصراخ! في</string>
+    <string name="KEY_SECONDS">ثانية...</string>
+    <string name="KEY_SHOUT_COUNTDOWNCANCEL">(إلغاء هذه صيحة في القائمة)</string>
+    <string name="KEY_WIPE_ACTIVITYTEXT">هل هذا WARNING: إزالة البيانات الفعلية من PHONE.\n\nSelect YOUR أنواع البيانات واحد أو أكثر دون أن يمسح.</string>
+    <string name="KEY_WIPE_WIPECONTACTS">محو الأسماء</string>
+    <string name="KEY_WIPE_WIPEPHOTOS">مسح الصور</string>
+    <string name="KEY_WIPE_CALLLOG">مسح سجل المكالمات</string>
+    <string name="KEY_WIPE_SMS">يمسح سجل SMS</string>
+    <string name="KEY_WIPE_CALENDAR">يمسح التقويم</string>
+    <string name="KEY_WIPE_BTN_TITLE">يمسح!</string>
+    <string name="KEY_WIPE_SELECTFOLDERS">حدد المجلدات لمسح</string>
+    <string name="KEY_WIPE_CONFIRMSELECT">فعل</string>
+    <string name="KEY_WIPE_FOLDERSELECTIONTEXT">اخترت المجلدات على بطاقة SD إلى أن تمحى.</string>
+    <string name="KEY_WIPE_NOSELECTEDFOLDERS">لديك لم يتم تحديد أي من المجلدات ، أو تعطيل القضاء المجلد ، لذلك سيتم مسح أي شيء على بطاقة SD</string>
+    <string name="KEY_WIPE_VIEWSELECTEDFOLDERS">حدد مجلد</string>
+    <string name="KEY_WIPE_CONFIRM_PHOTOS">تم القضاء على الصور!</string>
+    <string name="KEY_WIPE_CONFIRM_CONTACTS">تم القضاء على جميع الاتصالات!</string>
+    <string name="KEY_WIPE_CONFIRM_CALLLOG">وقد تم محو سجل المكالمات!</string>
+    <string name="KEY_WIPE_CONFIRM_SMS">تم القضاء على جميع الرسائل القصيرة!</string>
+    <string name="KEY_WIPE_CONFIRM_CALENDAR">وقد تم القضاء تقويمك!</string>
+    <string name="KEY_WIPE_CONFIRM_FOLDERS">تم القضاء على المجلدات المختارة!</string>
+    <string name="KEY_HOME">في واضحة</string>
+    <string name="KEY_HOME_INTRO">InTheClear هو التطبيق المتنقلة المصممة للمساعدة في تحسين السلامة الخاصة بك في المواقف الصعبة. لا يفعل ذلك مع ثلاثة ملامح رئيسية التي يجب أن configure.\n\nPanic! ، صيحة والمعالج Wipe\n\nThis سوف يسير لكم من خلال عملية الإعداد لهذه الميزات ، والتأكد من هاتفك النقال مستعدة لمواجهة أي طارئالوضع.</string>
+    <string name="KEY_HOME_TOWIZARD">بدء تشغيل معالج</string>
+    <string name="KEY_HOME_TOPREFS">تفضيلات</string>
+    <string name="KEY_WIZARD_NEXT">التالي</string>
+    <string name="KEY_WIZARD_BACK">ظهر</string>
+    <string name="KEY_WIZARD_ENABLE">تمكين</string>
+    <string name="KEY_WIZARD_SEND">إرسال</string>
+    <string-array name="WIZARD_TEXT">
+        <item>إذا كان مثل you\'d وفي مسح لتشمل معلومات عن نفسك عند تفعيلها ، يمكنك تكوين ذلك الآن.</item>
+        <item>الآن سوف نقوم تأكد من تكوين الهاتف بشكل صحيح.</item>
+        <item>إدخال رقم الهاتف المتحرك الذي تختاره دون أن أصرخ اختبار! ارسال الرسائل القصيرة. جعل you\'re متأكد قادرة على التحقق من التسليم مع المتلقي!</item>
+        <item>عند تفعيلها ، صيحة! سوف ترسل معلوماتك اختياريا الموقع جنبا إلى جنب مع رسالة التنبيه. قد تكون هذه المعلومات ضرورية لسلامتك ، حتى لو كان الهاتف لا تملك نظام تحديد المواقع. تمكين أذونات الموقع أدناه.</item>
+        <item>يدخل في رقم هاتف واحد أو أكثر ، مفصولة فاصلة ، لإرسال التنبيه إليه ، ورسالة قصيرة ترسل إلى التنبيه.</item>
+        <item>يمكن تعيين ما يصل إلى محو محو أو الكتابة فوق البيانات الموجودة لديك phone\ عند تفعيلها. فهي تتطلب أذونات للوصول إلى قائمة الاتصال الخاصة بك أو قاعدة بيانات SMS للقيام so.\n\nChoose you\'d مثل كيفية مسح! العمل أدناه. الحذر -- محو البيانات أو الكتابة هو عمل غير قابل للاسترداد ، لذلك اختر الإعداد ثisely.</item>
+        <item>يمكنك أيضا تحديد مجلدات معينة على بطاقة SD إلى أن تمحى تلقائيا. يرجى تحديدها هنا.</item>
+        <item>التكوين الخاص للذعر! الإعدادات هي الآن كاملة. يجوز لك تشغيل هذا المعالج مرة أخرى ، أو إطلاق الأفضليات من شاشة الإعداد لتغيير الإعدادات.</item>
+    </string-array>
+    <string-array name="WIZARD_CHECKS">
+        <item>التحقق من أذونات SMS</item>
+        <item>التحقق من الوصول إلى موقع</item>
+        <item>رسالة تنبيه الإعداد</item>
+        <item>امسح تكوين! خيارات</item>
+        <item>تمكين مسح! الوصول إلى مجلدات</item>
+    </string-array>
+    <string name="WIZARD_CONFIRMATION_SMSTEST">يبدو أن الرسالة مرت. يرجى التحقق مع المتلقي للتأكد.</string>
+    <string name="WIZARD_CONFIRMATION_LOCATIONTEST">هذه هي بيانات الموقع يمكننا access:</string>
+    <string name="WIZARD_FAIL_SMSTEST_INVALIDNUMBER">doesn\'t رقم الهاتف هذا يبدو صحيحا. الرجاء حاول عدد آخر.</string>
+    <string name="WIZARD_FAIL_LOCATIONTEST">لم نتمكن من الوصول إلى أي بيانات الموقع الهاتف.</string>
+    <string name="WIZARD_CONFIRMATION_LOCALDATA">عظيم! يبدو أن نتمكن من الوصول إلى البيانات المحلية.</string>
+    <string name="KEY_WIZARD_YOURNAME">اسمك</string>
+    <string name="KEY_WIZARD_YOURLOCATION">موقع أو معلومات أخرى</string>
+    <string name="KEY_WIZARD_ONETOUCH">1 بلمسة الذعر؟</string>
+    <string name="KEY_WIZARD_ONETOUCH_DIALOG">الاختيار هذا إذا كنت لا تريد التأكيد قبل تنفيذ الذعر! خلاف ذلك ، سيكون لديك للتأكد من قبل الذعر! ينفذ.</string>
+    <string name="KEY_WIZARD_PHONENUMBER">رقم الهاتف</string>
+    <string name="KEY_WIZARD_SMSTESTMSG">هذه هي رسالة اختبار. الرد اذا كان لديك!</string>
+    <string name="KEY_WIZARD_PHONENUMBERS">أرقام الهاتف</string>
+    <string name="KEY_WIZARD_ALERTMSG">رسالة تنبيه</string>
+    <string name="KEY_WIZARD_CONFIGURE_SHOUT">تكوين تنبيهات</string>
+<string name="app_name">InTheClear</string>
+    <string name="KEY_OK">موافق</string>
+    <string name="KEY_DETAILS">تفاصيل</string>
+    <string name="KEY_NONE">لا شيء</string>
+    <string name="KEY_EDIT">تحرير</string>
+    <string name="KEY_FINISH">نهاية</string>
+    <string name="KEY_WIPE_SETTINGS_TITLE">بيانات مسح إعدادات InTheClear</string>
+    <string name="KEY_PANIC_MSG_LATLNG">lat/lng:</string>
+    <string name="KEY_PANIC_WIPE_TITLE">البيانات التي سيتم wiped:</string>
+    <string name="KEY_MAIN_TOWIZARD">بدء تشغيل معالج</string>
+    <string name="KEY_EMERGENCY_SMS_TITLE">الطوارئ SMS</string>
+    <string name="KEY_EMERGENCY_SMS_INTRO">اختر إرسال لبدء البث SMS الطوارئ بشكل متكرر حتى يتم وقف يدويا أو يفقد الاتصال بالهاتف أو السلطة. يمكنك اختياريا تغيير رسالتك والمتلقي (ق) أدناه.</string>
+    <string name="KEY_EMERGENCY_SMS_SEND_BUTTON">ارسال الرسائل القصيرة في حالات الطوارئ</string>
+    <string name="KEY_EMERGENCY_SMS_RECIPIENT_MOBILE">Recipient\nmobile # (ق)</string>
+    <string name="KEY_EMERGENCY_SMS_EMERGENCY_MSG">رسالة طارئة</string>
+    <string name="KEY_WIPE_ACTIVITY_TITLE">مسح البيانات</string>
+    <string name="KEY_WIPE_SDCARD">مسح بطاقة SD</string>
+    <string name="KEY_WIPE_EDIT_WIPE">تحرير امسح</string>
+    <string name="KEY_WIZARD_TITLE">InTheClear الإعداد</string>
+    <string name="KEY_WIZARD_TESTING_SMS_TITLE">اختبار SMS الطوارئ</string>
+    <string name="KEY_WIZARD_PLEASE_WAIT">الرجاء الانتظار...</string>
+    <string-array name="WIZARD_TITLES">
+        <item>InTheClear الإعداد</item>
+        <item>اختبار SMS الطوارئ</item>
+        <item>SMS الإعداد الطوارئ</item>
+        <item>بيانات مسح الإعداد</item>
+        <item>لمسة واحدة الذعر الإعداد</item>
+        <item>InTheClear اكتمال الإعداد</item>
+    </string-array>
+    <string name="WIZARD_YOUR_MOBILE_NUMBER"># المحمول الخاص</string>
+    <string name="WIZARD_SEND_TEST">ارسال اختبار</string>
+    <string name="WIZARD_CONFIRMATION_SMSTEST_TITLE">النجاح!</string>
+    <string name="WIZARD_CONFIRMATION_SMSTEST_FAIL_TITLE">SMS تجارب الفشل</string>
+    <string name="WIZARD_SMS_TEST_FAILURES">يتم إرسال رسائل قصيرة الطوارئ InTheClear كأي SMS الأخرى. الأسباب المحتملة لفشل include:\n\nBad reception\nNo البث اللاسلكي أو credit\nMissing أو التالفة SIM card\n\nIf you\'ve فحص كل ما سبق وSMS الاختبار لا تزال ترسل ، قد لا يكون معتمدا على InTheClear يديكوآخرون. يرجى مراسلتنا at:\n</string>
+    <string name="WIZARD_CONFIRMATION_SMSTEST_FAIL">يبدو لم يرسل SMS اختبارك successfully.\nView تفاصيل لمزيد من المعلومات.</string>
+    <string name="WIZARD_RECIPIENT_MOBILE_NUMBERS">Recipient\nMobile # (ق)</string>
+    <string name="WIZARD_EMERGENCY_MESSAGE">Your\nEmergency\nMessage</string>
+    <string name="WIZARD_WIPE_WARNING">كن حذرا! won\'t تتمكن من استعادة البيانات مرة واحدة في محو it\.</string>
+    <string name="WIZARD_SELECT_DATA_BUTTON">حدد لمحو البيانات</string>
+    <string name="WIZARD_ONE_TOUCH_PANIC_DESCRIPTION">عندما يتم تنشيط بلمسة واحدة الذعر وعدم المطالبة لي لتأكيد قبل تشغيل.</string>
+    <string name="WIZARD_ONE_TOUCH_HOMESCREEN_DESCRIPTION">نعم ، إنشاء اختصار الشاشة الرئيسية لبلمسة واحدة الذعر.</string>
+</resources>

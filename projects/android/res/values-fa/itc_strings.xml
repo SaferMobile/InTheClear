@@ -1,0 +1,191 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<resources>
+    <string name="KEY_0">بدون</string>
+    <string name="KEY_1">بله</string>
+    <string name="KEY_2">خانه</string>
+    <string name="KEY_3">اجرای</string>
+    <string name="KEY_4">پشت</string>
+    <string name="KEY_5">DevoidME [منوی اصلی]</string>
+    <string name="KEY_6">تماس با ما لیست</string>
+    <string name="KEY_7">حذف همه اطلاعات تماس</string>
+    <string name="KEY_8">تماس با ما را پر کنید تصادفی (100)</string>
+    <string name="KEY_9">صفر تماس با ما را پر کنید (100)</string>
+    <string name="KEY_10">دشمن جامعه</string>
+    <string name="KEY_11">توجه</string>
+    <string name="KEY_12">آیا شما مطمئن هستید؟</string>
+    <string name="KEY_13">حذف</string>
+    <string name="KEY_14">تمام مخاطبین خود را از گوشی خود حذف شده اند.</string>
+    <string name="KEY_15">تصادفی</string>
+    <string name="KEY_16">100 تماس به صورت تصادفی تولید شده اند را به گوشی شما اضافه شده است.</string>
+    <string name="KEY_17">صفر</string>
+    <string name="KEY_PANIC_TITLE">هراس!</string>
+    <string name="KEY_PANIC_MSG_TITLE">هراس Msg:</string>
+    <string name="KEY_PANIC_PROGRESS_1">ارسال وحشت خود را! پیام...</string>
+    <string name="KEY_PANIC_PROGRESS_2">پاک کردن داده های انتخاب شده از گوشی شما...</string>
+    <string name="KEY_PANIC_ERROR_CONFIGUREDFRIENDS">لطفا تنظیمات و راه اندازی اولین اطلاعات هشدار خود را وارد کنید.</string>
+    <string name="KEY_PANIC_PROGRESS_3">تلفن شما ادامه خواهد داد به وحشت! هر 45 ثانیه تا زمانی که این فرآیند را لغو...</string>
+    <string name="KEY_PANIC_NEXT_PANIC">هراس بعدی! به</string>
+    <string name="KEY_PANIC_BTN_PANIC">هراس!</string>
+    <string name="KEY_PANIC_MENU_CANCEL">لغو وحشت!</string>
+    <string name="KEY_PANIC_COUNTDOWNMSG">هراس! به</string>
+    <string name="KEY_PANIC_TITLE_ERROR">خطا</string>
+    <string name="KEY_PANIC_ERROR_PREFS">قادر به باز کردن ترجیحات</string>
+    <string name="KEY_PANIC_TITLE_MAIN">هراس! *</string>
+    <string name="KEY_PANIC_RETURN">انتخاب برای صرفنظر کردن از هراس!</string>
+    <string name="KEY_PANIC_ERROR_SMS">قادر به آغاز دسترسی به SMS</string>
+    <string name="KEY_PANIC_MSG_FROM">هراس! از</string>
+    <string name="KEY_PANIC_MSG_LOCATION">Location:</string>
+    <string name="KEY_PANIC_MSG_CID">cid:</string>
+    <string name="KEY_PANIC_MSG_LAC">lac:</string>
+    <string name="KEY_PANIC_MSG_MCC">mcc:</string>
+    <string name="KEY_PANIC_MSG_MNC">mnc:</string>
+    <string name="KEY_PANIC_MSG_LAT">latitude:</string>
+    <string name="KEY_PANIC_MSG_LNG">longitude:</string>
+    <string name="KEY_PANIC_MSG_TIMESTAMP">ts:</string>
+    <string name="KEY_PANIC_MSG_SENT">وحشت ارسال</string>
+    <string name="KEY_PANIC_MSG_SENTTO">ارسال to:</string>
+    <string name="KEY_NC_TITLE">NetCheck</string>
+    <string name="KEY_NC_INTRO">این برنامه اطلاعات مربوط به گواهینامه SSL برای هر وب سایت را فعال کنید HTTPS را نمایش می دهد.</string>
+    <string name="KEY_NC_ENTER">یک Url: HTTPS را وارد کنید</string>
+    <string name="KEY_START">شروع</string>
+    <string name="KEY_EXIT">خروج</string>
+    <string name="KEY_WARNING">هشدار</string>
+    <string name="KEY_NC_ERROR">شما باید https:// آدرس سایت را وارد کنید</string>
+    <string name="KEY_NC_COMPLETE">چک پایان یافته!</string>
+    <string name="KEY_PREF_LANGUAGE_TITLE">زبان</string>
+    <string name="KEY_PREF_LANGUAGE_SUMMARY">به چه زبانی باید در صفحه نمایش روشن؟</string>
+    <string name="KEY_PREF_CONFIG_PANIC_TITLE">وحشت! ترجیحات</string>
+    <string name="KEY_PREF_CONFIG_WIPE_TITLE">پاک کردن ترجیحات</string>
+    <string name="KEY_PREF_ENTERPHONES_TITLE">پیکربندی دوستان</string>
+    <string name="KEY_PREF_ENTERPHONES">شماره تلفن همراه (ها) ، از هم جدا شده توسط کاما از هم ، که شما می خواهید به هشدار از طریق SMS را وارد کنید</string>
+    <string name="KEY_PREF_ENTERNAME_TITLE">نام شما</string>
+    <string name="KEY_PREF_ENTERNAME">نام خود را به دوستان پیکربندی نمایش داده شده را وارد کنید.</string>
+    <string name="KEY_PREF_ENTERLOCATION_TITLE">محل زندگی تان</string>
+    <string name="KEY_PREF_ENTERLOCATION">کجا هستند؟</string>
+    <string name="KEY_PREF_ENTERPANICMSG_TITLE">وحشت شما! پیام</string>
+    <string name="KEY_PREF_ENTERPANICMSG">وحشت خود را وارد کنید! مطلب را اینجا بنویسید.</string>
+    <string name="KEY_PREF_WIPEDIALOG_TITLE">برای از بین بردن</string>
+    <string name="KEY_PREF_WIPECONTACTS">پاک همه اطلاعات تماس</string>
+    <string name="KEY_PREF_WIPEPHOTOS">پاک همه Photos/Videos</string>
+    <string name="KEY_PREF_WIPEMEDIADIALOG">تمام تصاویر و ویدئو از گالری رسانه ها خود را پاک.</string>
+    <string name="KEY_PREF_WIPEFILES">پاک پوشه منتخب</string>
+    <string name="KEY_PREF_WIPEDIALOG">انتخاب پوشه ها بر روی کارت SD خود را که پاک خواهد شد هنگامی که شما فشار وحشت! دکمه</string>
+    <string name="KEY_PREF_WIPEFILESLIST">پوشه ها برای از بین بردن</string>
+    <string name="KEY_PREF_WIPECALLLOG">ورود به سیستم تماس شما پاک</string>
+    <string name="KEY_PREF_WIPECALENDAR">پاک تقویم</string>
+    <string name="KEY_PREF_WIPESMS">پاک ورود شما اس ام اس</string>
+    <string name="KEY_PREF_ONETOUCH">1 لمسی هراس؟</string>
+    <string name="KEY_PREF_ONETOUCH_DIALOG">چک این اگر شما DO تایید قبل از اجرای هراس نمی خواهیم! در غیر این صورت ، شما باید به تایید قبل از هراس! اجرا.</string>
+    <string name="KEY_PREF_ACCESSFAIL">ما couldn\'t تنظیمات شما دسترسی داشته باشید. لطفا ترجیحات من بدهید.</string>
+    <string name="KEY_PREF_SAVEFAIL">صرفه جویی در ترجیحات یک مشکل وجود دارد.</string>
+    <string name="KEY_MAIN_TOPREFS">تنظیمات راه اندازی</string>
+    <string name="KEY_SHOUT_BTN_TITLE">پیامهای!</string>
+    <string name="KEY_SHOUT_PANICMSG_TITLE">Message: شما</string>
+    <string name="KEY_SHOUT_CHANGEPANICMSG_BTN">تغییر این پیام؟</string>
+    <string name="KEY_SHOUT_SAVECHANGEDPANICMSG_BTN">ذخیره پیغام جدید</string>
+    <string name="KEY_SHOUT_MENU_CANCEL">لغو پیامهای!</string>
+    <string name="KEY_SHOUT_MENU_RESTOREDEFAULT">بازگرداندن پیام پیش فرض</string>
+    <string name="KEY_SHOUT_PREFSFAIL">شما لازم نیست هیچ دوستی پیکربندی شده است. لطفا ترجیحات من بدهید.</string>
+    <string name="KEY_SHOUT_ENTERSHOUTMSG">پیغامی را که میخواهید برای فریاد زدن به شما دوستان پیکربندی را وارد کنید.</string>
+    <string name="KEY_SHOUT_COUNTDOWNMSG">پیامهای! به</string>
+    <string name="KEY_SECONDS">ثانیه...</string>
+    <string name="KEY_SHOUT_COUNTDOWNCANCEL">(منو لغو این فریاد)</string>
+    <string name="KEY_WIPE_ACTIVITYTEXT">WARNING: این نیز از داده های واقعی از PHONE.\n\nSelect شما یک یا بیشتر از انواع داده های زیر را برای از بین بردن را حذف کنید.</string>
+    <string name="KEY_WIPE_WIPECONTACTS">پاک تماس با ما</string>
+    <string name="KEY_WIPE_WIPEPHOTOS">پاک عکسها</string>
+    <string name="KEY_WIPE_CALLLOG">پاک دفترچه ثبت تماس</string>
+    <string name="KEY_WIPE_SMS">پاک SMS ورود به سیستم</string>
+    <string name="KEY_WIPE_CALENDAR">پاک تقویم</string>
+    <string name="KEY_WIPE_BTN_TITLE">پاک!</string>
+    <string name="KEY_WIPE_SELECTFOLDERS">انتخاب پوشه ها برای از بین بردن</string>
+    <string name="KEY_WIPE_CONFIRMSELECT">انجام شده</string>
+    <string name="KEY_WIPE_FOLDERSELECTIONTEXT">شما باید انتخاب پوشه ها بر روی کارت SD شما از بین برود.</string>
+    <string name="KEY_WIPE_NOSELECTEDFOLDERS">شما باید هر پوشه انتخاب شده نیست ، یا از کار افتاده پاک کردن پوشه ، بنابراین هیچ چیزی بر روی کارت SD شما پاک خواهد شد</string>
+    <string name="KEY_WIPE_VIEWSELECTEDFOLDERS">برگزیدنپوشه</string>
+    <string name="KEY_WIPE_CONFIRM_PHOTOS">عکسهای اند پاک شده است!</string>
+    <string name="KEY_WIPE_CONFIRM_CONTACTS">همه مخاطب پاک شده است!</string>
+    <string name="KEY_WIPE_CONFIRM_CALLLOG">ورود به سیستم تماس شما پاک شده است!</string>
+    <string name="KEY_WIPE_CONFIRM_SMS">تمام پیامهای اس ام اس پاک شده اند!</string>
+    <string name="KEY_WIPE_CONFIRM_CALENDAR">تقویم شما پاک شده است!</string>
+    <string name="KEY_WIPE_CONFIRM_FOLDERS">انتخاب پوشه های پاک شده!</string>
+    <string name="KEY_HOME">در روشن</string>
+    <string name="KEY_HOME_INTRO">InTheClear APP تلفن همراه طراحی شده برای کمک به بهبود ایمنی خود را در شرایط دشوار است. این کار با سه ویژگی اصلی است که شما باید configure.\n\nPanic! ، فریاد و Wipe\n\nThis جادوگر به شما از طریق فرایند نصب راه رفتن برای این ویژگی ها ، و حصول اطمینان از تلفن همراه خود را برای شرایط اضطراری آماده استوضعیت.</string>
+    <string name="KEY_HOME_TOWIZARD">شروع جادوگر</string>
+    <string name="KEY_HOME_TOPREFS">ترجیحات</string>
+    <string name="KEY_WIZARD_NEXT">بعد</string>
+    <string name="KEY_WIZARD_BACK">پشت</string>
+    <string name="KEY_WIZARD_ENABLE">فعال</string>
+    <string name="KEY_WIZARD_SEND">ارسال</string>
+    <string-array name="WIZARD_TEXT">
+        <item>اگر در روشن you\'d شامل اطلاعاتی از خودتان در زمانی که فعال است ، شما می توانید به پیکربندی که در حال حاضر.</item>
+        <item>در حال حاضر ما مطمئن خواهند شد که تلفن خود را درست تنظیم شده است.</item>
+        <item>را وارد کنید شماره تلفن همراه از انتخاب خود را در زیر به فریاد آزمون! ارسال SMS. اطمینان you\'re مطمئن شوید که قادر به تایید تحویل گیرنده!</item>
+        <item>هنگامی که فعال می شود ، فریاد! خواهد شد به صورت اختیاری اطلاعات محل خود را همراه با پیام هشدار خود را ارسال کنید. این اطلاعات می تواند ضروری برای ایمنی خود را ، حتی اگر گوشی شما GPS ندارد. فعال کردن مجوز محل زیر وارد نمایید.</item>
+        <item>وارد کنید و یک یا چند شماره تلفن ، از هم جدا شده توسط کاما ، ارسال هشدار به ، و برای ارسال پیام کوتاه هوشیار.</item>
+        <item>پاک را می توان مجموعه ای برای پاک کردن یا بازنویسی موجود phone\ شما داده هنگامی که فعال است. از آن نیاز به مجوز برای دسترسی به لیست تماس خود و یا پایگاه داده SMS به انجام so.\n\nChoose چگونه مانند پاک you\'d! برای کار در زیر. احتیاط -- پاک کردن یا جای نوشتن داده ها اقدام unrecoverable ، بنابراین راه اندازی W را انتخاب کنیدisely.</item>
+        <item>شما همچنین می توانید پوشه های خاصی را بر روی کارت SD خود را به طور خودکار پاک را انتخاب کنید. لطفا آنها را در اینجا را انتخاب کنید.</item>
+        <item>پیکربندی خود را از هراس! تنظیمات در حال حاضر کامل شده است. شما ممکن است این جادوگر را دوباره اجرا کنید ، و یا راه اندازی تنظیمات از صفحه ی تنظیمات برای تغییر تنظیمات خود را.</item>
+    </string-array>
+    <string-array name="WIZARD_CHECKS">
+        <item>مجوزهارابررسیکنید SMS</item>
+        <item>چک کردن دسترسی به محل سکونت</item>
+        <item>پیام راه اندازی هشدار</item>
+        <item>پیکربندی پاک! گزینه ها</item>
+        <item>فعال کردن پاک! دسترسی به پوشه ها</item>
+    </string-array>
+    <string name="WIZARD_CONFIRMATION_SMSTEST">به نظر می رسد مانند پیام خود را از طریق رفت. لطفا با گیرنده تا مطمئن شویم که.</string>
+    <string name="WIZARD_CONFIRMATION_LOCATIONTEST">این داده های مکان ما می تواند access:</string>
+    <string name="WIZARD_FAIL_SMSTEST_INVALIDNUMBER">این شماره تلفن معتبر doesn\'t ظاهر می شود. لطفا شماره دیگر را امتحان کنید.</string>
+    <string name="WIZARD_FAIL_LOCATIONTEST">ما قادر به دسترسی به داده های مکان هر تلفن است.</string>
+    <string name="WIZARD_CONFIRMATION_LOCALDATA">بزرگ! به نظر می رسد مانند ما می توانیم داده های محلی خود دسترسی پیدا کنید.</string>
+    <string name="KEY_WIZARD_YOURNAME">نام و نام خانوادگی</string>
+    <string name="KEY_WIZARD_YOURLOCATION">محل سکونت و یا اطلاعات دیگر</string>
+    <string name="KEY_WIZARD_ONETOUCH">1 لمسی هراس؟</string>
+    <string name="KEY_WIZARD_ONETOUCH_DIALOG">چک این اگر شما DO تایید قبل از اجرای هراس نمی خواهیم! در غیر این صورت ، شما باید به تایید قبل از هراس! اجرا.</string>
+    <string name="KEY_WIZARD_PHONENUMBER">شماره تلفن</string>
+    <string name="KEY_WIZARD_SMSTESTMSG">این یک پیام تست است. پاسخ اگر شما آن را دریافت کند!</string>
+    <string name="KEY_WIZARD_PHONENUMBERS">شماره تلفن</string>
+    <string name="KEY_WIZARD_ALERTMSG">پیام هشدار</string>
+    <string name="KEY_WIZARD_CONFIGURE_SHOUT">پیکربندی ابزارهای جستوجو ابزارهای وب و</string>
+<string name="app_name">InTheClear</string>
+    <string name="KEY_OK">خوب</string>
+    <string name="KEY_DETAILS">جزئیات</string>
+    <string name="KEY_NONE">هیچ کدام</string>
+    <string name="KEY_EDIT">ویرایش</string>
+    <string name="KEY_FINISH">پایان</string>
+    <string name="KEY_WIPE_SETTINGS_TITLE">داده InTheClear پاک تنظیمات</string>
+    <string name="KEY_PANIC_MSG_LATLNG">lat/lng:</string>
+    <string name="KEY_PANIC_WIPE_TITLE">داده ها می شود wiped:</string>
+    <string name="KEY_MAIN_TOWIZARD">شروع جادوگر</string>
+    <string name="KEY_EMERGENCY_SMS_TITLE">اورژانس SMS</string>
+    <string name="KEY_EMERGENCY_SMS_INTRO">را انتخاب کنید ارسال به شروع به پخش اس ام اس اضطراری خود را بارها و بارها تا زمانی که شما دستی آن را متوقف کند و یا گوشی خود را از دست می دهد اتصال و یا قدرت. شما به صورت اختیاری می توانید پیام و گیرنده (ها) زیر را تغییر دهید.</string>
+    <string name="KEY_EMERGENCY_SMS_SEND_BUTTON">ارسال اس ام اس اضطراری</string>
+    <string name="KEY_EMERGENCY_SMS_RECIPIENT_MOBILE">Recipient\nmobile # (ها)</string>
+    <string name="KEY_EMERGENCY_SMS_EMERGENCY_MSG">پیام اضطراری</string>
+    <string name="KEY_WIPE_ACTIVITY_TITLE">داده ها پاک</string>
+    <string name="KEY_WIPE_SDCARD">پاک SD کارت</string>
+    <string name="KEY_WIPE_EDIT_WIPE">ویرایش پاک</string>
+    <string name="KEY_WIZARD_TITLE">راه اندازی InTheClear</string>
+    <string name="KEY_WIZARD_TESTING_SMS_TITLE">تست اس ام اس اضطراری</string>
+    <string name="KEY_WIZARD_PLEASE_WAIT">لطفا صبر کنید...</string>
+    <string-array name="WIZARD_TITLES">
+        <item>راه اندازی InTheClear</item>
+        <item>تست اس ام اس اضطراری</item>
+        <item>اورژانس SMS راه اندازی</item>
+        <item>داده ها پاک راه اندازی</item>
+        <item>راه اندازی هراس تک لمسی</item>
+        <item>راه اندازی InTheClear کامل</item>
+    </string-array>
+    <string name="WIZARD_YOUR_MOBILE_NUMBER">تلفن همراه #</string>
+    <string name="WIZARD_SEND_TEST">ارسال تست</string>
+    <string name="WIZARD_CONFIRMATION_SMSTEST_TITLE">انجام شد!</string>
+    <string name="WIZARD_CONFIRMATION_SMSTEST_FAIL_TITLE">اس ام اس شکست تست</string>
+    <string name="WIZARD_SMS_TEST_FAILURES">SMSes InTheClear اضطراری هستند درست مانند هر اس ام اس های دیگر فرستاده شده است. از دلایل ممکن برای شکست include:\n\nBad بی سیم و یا اعتبار مکالمه reception\nNo credit\nMissing یا آسیب دیده سیم card\n\nIf you\'ve بررسی تمام موارد فوق و تست اس ام اس هنوز ارسال InTheClear ممکن است بر روی دست های خود را پشتیبانی نمی شودو همکاران. لطفا به ما ایمیل at:\n</string>
+    <string name="WIZARD_CONFIRMATION_SMSTEST_FAIL">به نظر می رسد مانند SMS آزمون خود را جزئیات successfully.\nView برای اطلاعات بیشتر فرستاده است.</string>
+    <string name="WIZARD_RECIPIENT_MOBILE_NUMBERS">Recipient\nMobile # (ها)</string>
+    <string name="WIZARD_EMERGENCY_MESSAGE">Your\nEmergency\nMessage</string>
+    <string name="WIZARD_WIPE_WARNING">مراقب باشید! شما won\'t قادر به بازیابی داده ها یک بار it\ را پاک می شود.</string>
+    <string name="WIZARD_SELECT_DATA_BUTTON">انتخاب داده ها از بین برود</string>
+    <string name="WIZARD_ONE_TOUCH_PANIC_DESCRIPTION">وقتی هراس های تک لمسی فعال است ، من بی درنگ به تایید قبل از اجرای.</string>
+    <string name="WIZARD_ONE_TOUCH_HOMESCREEN_DESCRIPTION">بله ، ایجاد یک میانبر صفحه اصلی هراس برای تک لمسی.</string>
+</resources>

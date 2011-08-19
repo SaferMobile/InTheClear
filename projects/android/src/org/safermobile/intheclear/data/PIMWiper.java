@@ -65,6 +65,7 @@ public class PIMWiper extends Thread {
 	@Override
 	public void run() {
 		try {
+			// FIRST, you must turn off sync or else you get the "Deleted Contacts" error...
 			preventSync();
 
 			if(contacts) {
@@ -209,6 +210,8 @@ public class PIMWiper extends Thread {
 					}
 					cursor.moveToNext();
 				}
+			} else {
+				Log.d(ITCConstants.Log.ITC,"there are no records to manipulate here: " + uriBase.toString());
 			}
 			cursor.close();
 		} catch(NullPointerException npe) {}
@@ -299,7 +302,6 @@ public class PIMWiper extends Thread {
 	}
 	
 	public static void wipeContacts() throws FileNotFoundException, IOException {
-		// FIRST, you must turn off sync or else you get the "Deleted Contacts" error...		
 		Uri uriBase = ContactsContract.Contacts.CONTENT_URI;
 		wipeAssets(
 				uriBase,ContactsContract.AUTHORITY,ITCConstants.ContentTargets.CONTACT.STRINGS,

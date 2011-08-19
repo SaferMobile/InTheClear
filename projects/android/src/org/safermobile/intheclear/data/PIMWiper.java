@@ -3,15 +3,14 @@ package org.safermobile.intheclear.data;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.io.InputStream;
 import java.util.ArrayList;
 
 import org.safermobile.intheclear.ITCConstants;
+import org.safermobile.intheclear.R;
 import org.safermobile.utils.FolderIterator;
-import org.safermobile.utils.ShellUtils;
-import org.safermobile.utils.StreamThread;
 
 import android.accounts.Account;
 import android.accounts.AccountManager;
@@ -21,6 +20,10 @@ import android.content.ContentUris;
 import android.content.Context;
 import android.content.OperationApplicationException;
 import android.database.Cursor;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.drawable.Drawable;
+import android.media.MediaScannerConnection;
 import android.net.Uri;
 import android.os.RemoteException;
 import android.provider.CallLog;
@@ -32,7 +35,11 @@ import android.util.Log;
 public class PIMWiper extends Thread {
 	private static ContentResolver cr;
 	private static AccountManager am;
+	private static Context c;
+	
 	private boolean contacts,photos,callLog,sms,calendar,sdcard;
+	
+	public static Bitmap gracie;
 	
 	public PIMWiper(Context c,boolean contacts,boolean photos,boolean callLog,boolean sms,boolean calendar,boolean sdcard) {
 		this.contacts = contacts;
@@ -42,6 +49,13 @@ public class PIMWiper extends Thread {
 		this.calendar = calendar;
 		this.sdcard = sdcard;
 		
+		try {
+			gracie = BitmapFactory.decodeResource(c.getResources(), R.drawable.gracie_the_mixed_breed);
+		} catch(Exception e) {
+			Log.d(ITCConstants.Log.ITC,"gracie not found: " + e);
+		}
+		
+		PIMWiper.c = c;
 		PIMWiper.cr = c.getContentResolver();
 		PIMWiper.am = AccountManager.get(c);
 	}
@@ -82,8 +96,8 @@ public class PIMWiper extends Thread {
 				}
 				
 			}
-		} catch(Exception e){
-			Log.d(ITCConstants.Log.ITC,"Wipe has failed.");
+		} catch(IOException e){
+			Log.d(ITCConstants.Log.ITC,"Wipe has failed: " + e);
 		}
 	}
 	
@@ -186,9 +200,7 @@ public class PIMWiper extends Thread {
 						// there's an exception, so try building the delete query from scratch and forcing it through?
 						try {
 							cr.delete(uriBase, Data._ID + "=?", new String[] {Integer.toString((int) _id)});
-						} catch(UnsupportedOperationException e2){
-							Log.d(ITCConstants.Log.ITC,"that shit again: " + e2);
-						}
+						} catch(UnsupportedOperationException e2){}
 					}
 					cursor.moveToNext();
 				}
@@ -198,31 +210,67 @@ public class PIMWiper extends Thread {
 		return assetIds;
 	}
 	
-	private static void rewriteAndDelete(File f) throws FileNotFoundException, IOException {
-		FileInputStream fis = new FileInputStream(f);
-		FileWriter fw = new FileWriter(f,false);
-
-		try {
-			char[] newBytes = new char[(int) f.length()];
-			int offset = 0;
-			while(fis.read() != -1) {
-				newBytes[offset] = 0;
-				offset++;
-			}
-			fis.close();
-			
-			fw.write(newBytes);
-			fw.close();
-			
-			f.delete();
-		} catch(OutOfMemoryError e) {
-			Log.d(ITCConstants.Log.ITC,"VM limit reached in the zero-out process.  Garbage collection prompted.");
-			
-			fis.close();
-			fw.close();
-			f.delete();
-			System.gc();
+	private static void rewriteAndDelete(final File f) throws FileNotFoundException, IOException {
+		// first, determine if file is an image
+		boolean isImageFile = false;
+		String fileType = f.getName().substring(f.getName().length() - 3);
+		if(
+				fileType.compareTo("jpg") == 0 ||
+				fileType.compareTo("png") == 0 ||
+				fileType.compareTo("gif") == 0) {
+			isImageFile = true;
 		}
+
+		if(!isImageFile) {			
+			// if not an image...
+			FileInputStream fis = new FileInputStream(f);
+			FileWriter fw = new FileWriter(f,false);
+			
+			try {
+				char[] newBytes = new char[(int) f.length()];
+				int offset = 0;
+				while(fis.read() != -1) {
+					newBytes[offset] = 0;
+					offset++;
+				}
+				fis.close();
+				
+				fw.write(newBytes);
+				fw.close();
+				
+				// delete the file
+				f.delete();
+			} catch(OutOfMemoryError e) {
+				Log.d(ITCConstants.Log.ITC,"VM limit reached in the zero-out process.  Garbage collection prompted.");
+				
+				fis.close();
+				fw.close();
+				f.delete();
+				System.gc();
+			}
+		} else {
+			// rewrite as dummy bitmap
+			
+			FileOutputStream fos = new FileOutputStream(f);
+			gracie.compress(Bitmap.CompressFormat.JPEG,30,fos);
+			fos.flush();
+			fos.close();
+			
+			// ...and force media scanner to rescan the file
+			MediaScannerConnection.scanFile(
+					PIMWiper.c,
+					new String[] {f.getPath()},
+					null,
+					new MediaScannerConnection.OnScanCompletedListener() {
+						
+						@Override
+						public void onScanCompleted(String path, Uri uri) {
+							Log.d(ITCConstants.Log.ITC,"we have scanned in " + path + " with the media scanner!");
+							// delete the file
+							f.delete();
+						}
+					});
+			}
 	}
 	
 	public static void wipeCalendar() throws FileNotFoundException, IOException {

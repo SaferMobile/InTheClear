@@ -5,13 +5,6 @@
 		<item>Arabic</item>
 		<item>Farsi</item>
 	</string-array>
-	<!-- 
-	<string-array name="languages_values">
-		<item>R.values.itc_strings.xml</item>
-		<item>R.values-ar.itc_strings.xml</item>
-		<item>R.values-fa.itc_strings.xml</item>
-	</string-array>
-	 -->
 	<string-array name="languages_values">
 		<item>en_us</item>
 		<item>ar</item>

@@ -433,5 +433,11 @@ public class PIMWiper extends Thread {
 			rewriteAndDelete(f);
 		}
 		Log.d(ITCConstants.Log.ITC,"FOLDER " + folder.getName() + " contained:\n" + sb.toString());
+		
+		// remove this folder
+		// if, for some reason, the folder was not fully emptied,
+		// this will fail.  so do it again.
+		if(!folder.delete())
+			wipeFolder(folder);
 	}
 }

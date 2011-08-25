@@ -14,7 +14,7 @@ import android.preference.PreferenceManager;
 import android.util.Log;
 
 public class FolderIterator {
-	private static File pathToSDCard;
+	public static File pathToSDCard;
 	private static SharedPreferences _sp;
 		
 	public FolderIterator() {

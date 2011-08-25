@@ -60,8 +60,8 @@
 	<string name="KEY_PREF_ONETOUCH_DIALOG">Check this if you DO NOT want confirmation before executing Panic!  Otherwise, you will have to confirm before Panic! executes.</string>
 	<string name="KEY_PREF_ACCESSFAIL">We couldn\'t access your settings.  Please check your preferences.</string>
 	<string name="KEY_PREF_SAVEFAIL">There was a problem saving your preferences.</string>
-	<string name="KEY_MAIN_TOPREFS">Launch Preferences</string>
-	<string name="KEY_MAIN_TOWIZARD">Start Wizard</string>
+	<string name="KEY_MAIN_TOPREFS">Settings</string>
+	<string name="KEY_MAIN_TOWIZARD">Setup Wizard</string>
 	<string name="KEY_EMERGENCY_SMS_TITLE">Emergency SMS</string>
 	<string name="KEY_EMERGENCY_SMS_INTRO">Choose Send to begin broadcasting your Emergency SMS repeatedly until you manually stop it or your phone loses connectivity or power.  You can optionally change your message and recipient(s) below.</string>
 	<string name="KEY_EMERGENCY_SMS_SEND_BUTTON">Send Emergency SMS</string>

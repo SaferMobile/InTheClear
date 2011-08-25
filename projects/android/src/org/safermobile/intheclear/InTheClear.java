@@ -35,7 +35,7 @@ public class InTheClear extends Activity implements OnClickListener {
         setContentView(R.layout.main);
         
         _sp = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
-        if(_sp.getBoolean("IsVirginUser", true)) {
+        if(_sp.getBoolean("IsVirginUser", true)) {        	
         	launchWizard();
       	}
         
@@ -122,19 +122,19 @@ public class InTheClear extends Activity implements OnClickListener {
 
 				switch(position){
 				case 0:
-					tv.setText("Emergency SMS");
+					tv.setText(getResources().getString(R.string.KEY_EMERGENCY_SMS_TITLE));
 					iv.setImageResource(R.drawable.btn_shout);
 					break;
 				case 1:
-					tv.setText("Data Wipe");
+					tv.setText(getResources().getString(R.string.KEY_WIPE_ACTIVITY_TITLE));
 					iv.setImageResource(R.drawable.btn_wipe);
 					break;
 				case 2:
-					tv.setText("Setup Wizard");
+					tv.setText(getResources().getString(R.string.KEY_MAIN_TOWIZARD));
 					iv.setImageResource(R.drawable.btn_wizard);
 					break;
 				case 3:
-					tv.setText("Settings");
+					tv.setText(getResources().getString(R.string.KEY_MAIN_TOPREFS));
 					iv.setImageResource(R.drawable.btn_settings);
 					break;
 				}

@@ -36,6 +36,8 @@ public class ITCPreferences extends PreferenceActivity implements OnPreferenceCh
 		config.locale = new Locale(localeCode);
 		getBaseContext().getResources().updateConfiguration(config, getBaseContext().getResources().getDisplayMetrics());
 		Log.d(ITCConstants.Log.ITC,"current configuration = " + getBaseContext().getResources().getConfiguration().locale);
+		// go to home to "reload" activity properly?
+		startActivity(new Intent(this,InTheClear.class));
 	}
 
 	@Override

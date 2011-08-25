@@ -4,7 +4,6 @@
 			<ListPreference android:title="@string/KEY_PREF_LANGUAGE_TITLE"
 			android:summary="@string/KEY_PREF_LANGUAGE_SUMMARY"
 			android:key="DefaultLanguage"
-			android:defaultValue="EN_US"
 			android:entries="@array/languages"
 			android:entryValues="@array/languages_values" />
 	</PreferenceCategory>

@@ -176,6 +176,7 @@ public class ITCConstants {
 	
 	public static class Preference {
 		public static final String WIPERCAT = "DefaultWipers";
+		public static final String DEFAULT_LANGUAGE = "DefaultLanguage";
 		public static final String WIPE_SELECTOR = "wipe_selector";
 		public static final String FOLDER_SELECTOR = "folder_selector";
 		public static final String USER_DISPLAY_NAME = "UserDisplayName";

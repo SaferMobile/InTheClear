@@ -57,7 +57,11 @@ public class ShoutManualForm
         			Logger.error(ITCConstants.TAG, "a problem saving the prefs: " + e, e);
         		}
                 
-                // Set the title and menu.
+                setupUI();
+        }
+        
+        public void setupUI ()
+        {
                 setTitle( "Send Emergency Message" );
                // setMenuText( "Cancel" ,  l10n.getString(L10nConstants.keys.MENU_SEND) );
 

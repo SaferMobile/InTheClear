@@ -37,7 +37,11 @@ public class SetupCompleteForm
         public SetupCompleteForm (ITCMainMIDlet midlet)
         {
                 _midlet = midlet;
-                
+                setupUI();
+        }
+        
+        public void setupUI ()
+        {
                 // Set the title and menu.
                 setTitle( l10n.getString(L10nConstants.keys.SETUP_COMPLETE_TITLE) );
                
@@ -68,8 +72,6 @@ public class SetupCompleteForm
 			
 		}
    
-        
-      
         
       
 }

@@ -47,8 +47,9 @@ public class StartPanicForm
         PanicController _pc;
         Thread _thread;
 		
-    	L10nResources l10n = LocaleManager.getResources();
-        
+
+    	private L10nResources l10n;
+    	
     	/*
     	 * stores the user data between the config app and this one
     	 */
@@ -76,7 +77,9 @@ public class StartPanicForm
         public void show ()
         {
         	super.show();
-        	
+	    	l10n = LocaleManager.getResources();
+	    	deleteAll();
+	    	
     		DisplayManager manager = new DisplayManager(_midlet.getCurrentDisplay());
 
     		_cmdCancel = new Command(l10n.getString(L10nConstants.keys.MENU_CANCEL), Command.SCREEN,1);
@@ -144,4 +147,6 @@ public class StartPanicForm
 		}
         
         
+		
+
 }

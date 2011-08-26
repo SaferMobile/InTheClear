@@ -45,14 +45,24 @@ public class ITCMainMIDlet extends MIDlet implements Runnable {
 	/**
 	 * Creates several screens and navigates between them.
 	 */
-	public ITCMainMIDlet() {
+	public ITCMainMIDlet() 
+	{
 	
+		
 		try
 		{
 		 _prefs = new Preferences (ITCConstants.PANIC_PREFS_DB);
 		} catch (RecordStoreException e) {
 			
 			Logger.error(ITCConstants.TAG, "a problem saving the prefs: " + e, e);
+			
+		}
+		
+		String userLocale = _prefs.get("locale");
+		
+		if (userLocale != null)
+		{
+			LocaleManager.setCurrentLocale(userLocale);
 		}
 		
 		setupWipeDataTypes();
@@ -180,7 +190,13 @@ public class ITCMainMIDlet extends MIDlet implements Runnable {
 		
 	}
 
-	
+	public void setLocale (String locale)
+	{
+
+		LocaleManager.setCurrentLocale(locale);		
+		savePref("locale", locale);
+		setupUI ();
+	}
 	
 	public void savePref (String key, String value)
 	{

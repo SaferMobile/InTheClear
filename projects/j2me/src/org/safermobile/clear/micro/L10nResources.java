@@ -1,6 +1,7 @@
 package org.safermobile.clear.micro;
 
 import java.io.ByteArrayOutputStream;
+import java.io.DataInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -156,10 +157,14 @@ public class L10nResources {
     byte[] result = null;
     String value  = getString(key);
     if (value != null) {
-      InputStream  stream = this.getClass().getResourceAsStream(value);
-      if (stream == null) {
+      
+    InputStream  istream = this.getClass().getResourceAsStream(value);
+      if (istream == null) {
         throw new IOException(UNABLE_TO_FIND_BINARY_RESOURCE);
       }
+      
+      DataInputStream stream = new DataInputStream(istream);
+      
 
       ByteArrayOutputStream buffer = new ByteArrayOutputStream();
       try {
@@ -207,7 +212,7 @@ public class L10nResources {
     if (stream == null) {
       throw new IOException(LOCALE_NOT_FOUND + " " + this.locale + ".");
     } else {
-      reader = new InputStreamReader(stream);
+      reader = new InputStreamReader(new DataInputStream(stream),"UTF-8");
     }
 
     return reader;

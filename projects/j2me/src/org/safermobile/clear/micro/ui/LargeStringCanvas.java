@@ -44,11 +44,37 @@ public class LargeStringCanvas extends Canvas
 	    StringTokenizer st = new StringTokenizer(_largeString,NEWLINE);
 	    
 	    int startY = getHeight()/2;
+	    String line;
+	    Font font = graphics.getFont();
+	    int screenWidth = this.getWidth();
+	    int lineWidth;
+	    int lineHeight = graphics.getFont().getHeight() + 3; //padding
 	    
 	    while (st.hasMoreTokens())
 	    {
-	    	graphics.drawString(st.nextToken(), getWidth()/2, startY, Graphics.HCENTER|Graphics.BASELINE);
-	    	startY+=graphics.getFont().getHeight()+3;
+	    	line = st.next();
+	    
+	    	lineWidth = font.charsWidth(line.toCharArray(), 0, line.length());
+	    	
+	    	if (lineWidth > screenWidth)
+	    	{
+	    		
+	    		startY+=lineHeight;
+	    		
+	    		graphics.drawString(line.substring(0, line.length()/2), getWidth()/2, startY, Graphics.HCENTER|Graphics.BASELINE);
+	    		startY+=lineHeight;
+	    		
+	    		graphics.drawString(line.substring(line.length()/2), getWidth()/2, startY, Graphics.HCENTER|Graphics.BASELINE);
+	    		startY+=lineHeight;
+	    		
+	    	}
+	    	else
+	    	{
+	    		graphics.drawString(line, getWidth()/2, startY, Graphics.HCENTER|Graphics.BASELINE);
+	    		startY+=lineHeight;
+	    	}
+	    	
+	    	
 	    }
 	   }
 	  

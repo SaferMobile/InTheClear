@@ -1678,19 +1678,21 @@ devices the name consists of â€œNokiaâ€�, the device
 			int clipHeight = g.getClipHeight();
 			
 			// Paint the title bar and/or menu bar?
-			if ( master.isFullScreenMode() == false )
-			{
+		//	if ( master.isFullScreenMode() == false )
+		//	{
 				// Paint the title bar at the top of the screen.
 				title = master.getTitle();
 				
-				if ( master.hasTitleBar() )
-				{
+				//if ( master.hasTitleBar() )
+				//{
 					// We'll paint the title after the canvas area.
 					titleHeight = theme.getTitleHeight();
-				}
+				//}
 				
+					
 				// Paint the menu bar at the bottom of the screen.
-				if ( master.hasMenuBar() )
+				/*
+					if ( master.hasMenuBar() )
 				{
 					// Set the menu text.
 					leftMenuText = master.getLeftMenuText();
@@ -1708,14 +1710,14 @@ devices the name consists of â€œNokiaâ€�, the device
 					
 					// Set the height of the menu.
 					menuHeight = theme.getMenuHeight();
-				}
+				}*/
 	
 				// Set the graphics object for painting the canvas area.
 				height = height - titleHeight - menuHeight;
 				
 				g.translate( 0, titleHeight );
 				g.clipRect( 0, 0, width, height );
-			}
+			//}
 			
 			// Paint the canvas area.
 			if ( DeviceScreen.intersects(g, 0, 0, width, height) )

@@ -36,7 +36,11 @@ public class LocationPermissionForm
         public LocationPermissionForm (ITCMainMIDlet midlet)
         {
                 this.midlet = midlet;
-                
+                setupUI();
+        }
+        
+        public void setupUI()
+        {
                 // Set the title and menu.
                 setTitle(l10n.getString(L10nConstants.keys.TITLE_LOCATION_PERMISSION));
                 setMenuText(  l10n.getString(L10nConstants.keys.MENU_BACK) ,  l10n.getString(L10nConstants.keys.MENU_ENABLE) );
@@ -123,5 +127,4 @@ public class LocationPermissionForm
 
     		}
         }
-        
 }

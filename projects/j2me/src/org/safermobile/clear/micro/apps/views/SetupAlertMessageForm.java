@@ -44,7 +44,11 @@ public class SetupAlertMessageForm
         public SetupAlertMessageForm (ITCMainMIDlet midlet)
         {
                _midlet = midlet;
-                
+                setupUI();
+        }
+        
+        public void setupUI()
+        {
                 // Set the title and menu.
                 setTitle(l10n.getString(L10nConstants.keys.PANIC_MESSAGE_TITLE) );
                 //setMenuText(  l10n.getString(L10nConstants.keys.MENU_BACK) ,  l10n.getString(L10nConstants.keys.MENU_NEXT) );

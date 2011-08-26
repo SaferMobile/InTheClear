@@ -52,10 +52,11 @@ public class WipeManualForm
         int successCount = 0;
         int errCount = 0;
 		
-    	L10nResources l10n = LocaleManager.getResources();
         
     	private Thread thread;
     	
+    	private L10nResources l10n = LocaleManager.getResources();
+
     	/*
     	 * stores the user data between the config app and this one
     	 */
@@ -77,6 +78,12 @@ public class WipeManualForm
         			Logger.error(ITCConstants.TAG, "a problem saving the prefs: " + e, e);
         		}
                 
+                setupUI();
+        }
+        
+        public void setupUI ()
+        {
+        	deleteAll();
                 // Set the title and menu.
                 setTitle( l10n.getString(L10nConstants.keys.TITLE_WIPE_MANUAL) );
               //  setMenuText( l10n.getString(L10nConstants.keys.MENU_EXIT), l10n.getString(L10nConstants.keys.MENU_WIPE_NOW));
@@ -291,6 +298,7 @@ public class WipeManualForm
 				
 			}
 		}
+
         
         
 }

@@ -8,6 +8,7 @@ import org.j4me.ui.components.OnClickListener;
 import org.safermobile.clear.micro.L10nResources;
 import org.safermobile.clear.micro.apps.ITCMainMIDlet;
 import org.safermobile.clear.micro.apps.LocaleManager;
+import org.safermobile.clear.micro.L10nConstants;
 
 /**
  * Example of a <code>TextBox</code> component.
@@ -36,28 +37,33 @@ public class ITCMainForm
         {
         	super();
             _midlet = midlet;
-            
+            setupUI();
+        }
+        
+        public void setupUI()
+        {
+        	
             // Set the title and menu.
-            setTitle( "In The Clear" );                
+            setTitle( l10n.getString(L10nConstants.keys.KEY_MAIN_TITLE) );                
     
     		btnPanic = new Button();
     		btnPanic.setOnClickListener(this);
-    		btnPanic.setLabel("One-touch Panic");
+    		btnPanic.setLabel(l10n.getString(L10nConstants.keys.KEY_MAIN_ONETOUCH));
     		append (btnPanic);
     		
     		btnMsg = new Button();
     		btnMsg.setOnClickListener(this);
-    		btnMsg.setLabel("Emergency Message");
+    		btnMsg.setLabel(l10n.getString(L10nConstants.keys.KEY_MAIN_EMERGENCY));
     		append (btnMsg);
     		
     		btnWipe = new Button();
     		btnWipe.setOnClickListener(this);
-    		btnWipe.setLabel("Data Wipe");
+    		btnWipe.setLabel(l10n.getString(L10nConstants.keys.KEY_MAIN_WIPE));
     		append (btnWipe);
     		
     		btnWizard = new Button();
     		btnWizard.setOnClickListener(this);
-    		btnWizard.setLabel("Setup Wizard");
+    		btnWizard.setLabel(l10n.getString(L10nConstants.keys.KEY_MAIN_SETUP));
     		append (btnWizard);
         }
         
@@ -87,6 +93,5 @@ public class ITCMainForm
 			
 			
 		}
-        
-      
+	
 }

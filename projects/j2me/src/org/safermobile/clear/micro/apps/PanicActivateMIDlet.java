@@ -56,6 +56,21 @@ public class PanicActivateMIDlet extends MIDlet implements CommandListener, Wipe
 	 * Creates Panic Activate app
 	 */
 	public PanicActivateMIDlet() {
+
+		try
+		{
+			_prefs = new Preferences (ITCConstants.PANIC_PREFS_DB);
+	
+			String userLocale = _prefs.get("locale");
+			
+			if (userLocale != null)
+			{
+				LocaleManager.setCurrentLocale(userLocale);
+				 l10n = LocaleManager.getResources();
+			}
+		}
+		catch (Exception e)
+		{}
 		
 		_display = Display.getDisplay(this);
 		_manager = new DisplayManager(_display);
@@ -90,7 +105,6 @@ public class PanicActivateMIDlet extends MIDlet implements CommandListener, Wipe
 	{
 		_pc.stopPanic();
 		
-		//_thread.interrupt();
 	}
 
 	
@@ -101,33 +115,25 @@ public class PanicActivateMIDlet extends MIDlet implements CommandListener, Wipe
 		
 		_manager.next(_tbMain);
 		
-		try
+		
+		
+		String oneTouch = _prefs.get(ITCConstants.PREFS_KEY_ONE_TOUCH_PANIC);
+		String recipients = _prefs.get(ITCConstants.PREFS_KEY_RECIPIENT);
+
+		if (recipients == null)
 		{
-		
-			_prefs = new Preferences (ITCConstants.PANIC_PREFS_DB);
-			String oneTouch = _prefs.get(ITCConstants.PREFS_KEY_ONE_TOUCH_PANIC);
-			String recipients = _prefs.get(ITCConstants.PREFS_KEY_RECIPIENT);
 
-			if (recipients == null)
-			{
+			_tbMain.setString(l10n.getString(L10nConstants.keys.ERROR_RUN_SETUP));
 
-				_tbMain.setString(l10n.getString(L10nConstants.keys.ERROR_RUN_SETUP));
-
-			}
-			else if (oneTouch == null || oneTouch.equals("false"))
-			{
-				_tbMain.setString(l10n.getString(L10nConstants.keys.PANIC_PRESS_TO_ACTIVATE));
-				_tbMain.addCommand(_cmdPanic);
-			}
-			else
-			{
-				startPanic();
-			}
-		
-		} catch (RecordStoreException e) {
-			
-			Logger.error(ITCConstants.TAG, "error access preferences", e);
-			showAlert(l10n.getString(L10nConstants.keys.TITLE_ERROR),l10n.getString(L10nConstants.keys.ERROR_PREFS),null);
+		}
+		else if (oneTouch == null || oneTouch.equals("false"))
+		{
+			_tbMain.setString(l10n.getString(L10nConstants.keys.PANIC_PRESS_TO_ACTIVATE));
+			_tbMain.addCommand(_cmdPanic);
+		}
+		else
+		{
+			startPanic();
 		}
 		
 	}

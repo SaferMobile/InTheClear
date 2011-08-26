@@ -47,7 +47,12 @@ public class EnableOneTouchPanicForm
         public EnableOneTouchPanicForm (ITCMainMIDlet midlet)
         {
                 _midlet = midlet;
-                
+                setupUI();
+        }
+        
+        public void setupUI()
+        {
+        	
                 // Set the title and menu.
                 setTitle( l10n.getString(L10nConstants.keys.ONE_TOUCH_TITLE) );
         //        setMenuText( l10n.getString(L10nConstants.keys.MENU_BACK), l10n.getString(L10nConstants.keys.MENU_NEXT));
@@ -91,6 +96,5 @@ public class EnableOneTouchPanicForm
     	 
     	 	
         }
-        
         
 }

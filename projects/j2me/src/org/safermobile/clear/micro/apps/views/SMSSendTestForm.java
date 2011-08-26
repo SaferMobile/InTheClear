@@ -42,7 +42,12 @@ public class SMSSendTestForm
         public SMSSendTestForm (ITCMainMIDlet midlet)
         {
                 _midlet = midlet;
-                
+                setupUI();
+        }	
+        
+        public void setupUI ()
+        {
+        	deleteAll();
                 // Set the title and menu.
                 setTitle( l10n.getString(L10nConstants.keys.SMS_TEST_TITLE) );
               //  setMenuText(  l10n.getString(L10nConstants.keys.MENU_BACK) , "");
@@ -122,5 +127,6 @@ public class SMSSendTestForm
 		protected void declineNotify() {
 			_midlet.showPrev();
 		}
+		
         
 }

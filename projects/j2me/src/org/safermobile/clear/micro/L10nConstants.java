@@ -9,6 +9,8 @@ public class L10nConstants {
  	 */
     public class locales {
 		public static final String EN_US = "en-US";
+		public static final String FA_IR = "fa-IR";
+		public static final String AR_EG = "ar-EG";
 
     }
 
@@ -131,6 +133,11 @@ public class L10nConstants {
 		public static final String WIPE_MSG_COMPLETE = "WIPE_MSG_COMPLETE";
 		public static final String KEY_WIPE_ROOTS = "KEY_WIPE_ROOTS";
 		public static final String KEY_ZERO_FILES = "KEY_ZERO_FILES";
+		public static final String KEY_MAIN_TITLE = "KEY_MAIN_TITLE";
+		public static final String KEY_MAIN_ONETOUCH = "KEY_MAIN_ONETOUCH";
+		public static final String KEY_MAIN_EMERGENCY = "KEY_MAIN_EMERGENCY";
+		public static final String KEY_MAIN_WIPE = "KEY_MAIN_WIPE";
+		public static final String KEY_MAIN_SETUP = "KEY_MAIN_SETUP";
 
     }
 }

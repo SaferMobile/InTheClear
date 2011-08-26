@@ -34,7 +34,8 @@ public class WipeSelectionForm
         private Vector _wipeDataTypes;
         private Vector _checkBoxes;        
         
-    	L10nResources l10n = LocaleManager.getResources();
+    	private L10nResources l10n = LocaleManager.getResources();
+
         
         /**
          * Constructs a screen that shows a <code>TextBox</code> component in action.
@@ -45,7 +46,12 @@ public class WipeSelectionForm
         {
                 _midlet = midlet;
                 _wipeDataTypes = wipeDataTypes;
-                
+         
+                setupUI();
+        }
+        
+        public void setupUI ()
+        {
                 // Set the title and menu.
                 setTitle( l10n.getString(L10nConstants.keys.WIPE_SELECT_TITLE) );
                // setMenuText( l10n.getString(L10nConstants.keys.MENU_BACK), l10n.getString(L10nConstants.keys.MENU_NEXT) );
@@ -60,7 +66,7 @@ public class WipeSelectionForm
         		_checkBoxes = new Vector();
         		CheckBox cb;
         		
-        		Enumeration enumWDTs = wipeDataTypes.elements();
+        		Enumeration enumWDTs = _wipeDataTypes.elements();
         		
         		while (enumWDTs.hasMoreElements())
         		{
@@ -151,5 +157,7 @@ public class WipeSelectionForm
 			}
 			
 		}
+		
+		
         
 }

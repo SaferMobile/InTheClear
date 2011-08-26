@@ -11,7 +11,7 @@
       <entry key="menu_cancel" value="Cancel"/>
       <entry key="menu_next" value="Next"/>
       <entry key="menu_send" value="Send"/>
-      <entry key="panic_error_sms" value="Unable to initiate SMS access"/>
+      <entry key="panic_error_sms" value="Could not enable SMS"/>
       <entry key="panic_msg_pre" value="Emergency Message:"/>
       <entry key="panic_msg_from" value="From"/>
       <entry key="panic_msg_location" value="Location:"/>
@@ -21,7 +21,7 @@
       <entry key="panic_msg_sent" value="Panic Sent"/>
       <entry key="panic_msg_sentto" value="Sent to:"/>
       <entry key="setup_title" value="Setup Wizard"/>
-      <entry key="setup_intro" value="InTheClear keeps you safer in difficult situations by sending emergency SMS messages and by wiping data off your phone."/>
+      <entry key="setup_intro" value="InTheClear keeps you safe in difficult situations by sending emergency SMS messages and by wiping data off your phone."/>
       <entry key="sms_test_title" value="Emergency SMS"/>
       <entry key="sms_test_msg" value="The first step is to send a test SMS to yourself."/>
       <entry key="sms_test_lbl_phone" value="Enter your mobile phone number"/>
@@ -109,12 +109,261 @@
       <entry key="key_wipe_files" value="Wiping card..."/>
       <entry key="key_wipe_files_complete" value="Wiping card...\nCOMPLETE."/>
       <entry key="key_wipe_files_error" value="Wiping card...\nERROR!"/>
-      <entry key="key_panic_again" value="Panic! again in\n"/>
+      <entry key="key_panic_again" value="Panic! again i\nn"/>
       <entry key="key_seconds" value="secs..."/>
       <entry key="wipe_status_recordings" value="Wiping recordings..."/>
       <entry key="WIPE_STATUS_PERSONAL_COMPLETE" value="Wiping personal data...\nCOMPLETE"/>
       <entry key="wipe_msg_complete" value="Wipe complete."/>
       <entry key="key_wipe_roots" value="Wiping storage roots"/>
       <entry key="key_zero_files" value="Zeroing out storage...\n(please be patient)"/>
+      <entry key="key_main_title" value="In The Clear"/>
+      <entry key="key_main_onetouch" value="One-touch Panic"/>
+      <entry key="key_main_emergency" value="Emergency Message"/>
+      <entry key="key_main_wipe" value="Data Wipe"/>
+      <entry key="key_main_setup" value="Setup Wizard"/>
+   </locale>
+   <locale country="IR" language="fa">
+      <entry key="menu_exit" value="خروج"/>
+      <entry key="menu_no" value="خیر"/>
+      <entry key="menu_yes" value="بله"/>
+      <entry key="menu_enable" value="فعال سازی"/>
+      <entry key="menu_home" value="صفحه اصلی"/>
+      <entry key="menu_run" value="راه اندازی"/>
+      <entry key="menu_back" value="برگشت"/>
+      <entry key="menu_cancel" value="لغو"/>
+      <entry key="menu_next" value="بعدی"/>
+      <entry key="menu_send" value="ارسال"/>
+      <entry key="panic_error_sms" value="ارسال پیامک مقدور نیست"/>
+      <entry key="panic_msg_pre" value="پیام اضطراری"/>
+      <entry key="panic_msg_from" value="ازطرف"/>
+      <entry key="panic_msg_location" value="مکان:"/>
+      <entry key="panic_msg_cid" value="شناسه گوشی تلفن"/>
+      <entry key="panic_msg_lac" value="کدمحلی"/>
+      <entry key="panic_msg_timestamp" value="برچسب زمانی"/>
+      <entry key="panic_msg_sent" value="ارسال «هراس!»"/>
+      <entry key="panic_msg_sentto" value="ارسال به‫:‬"/>
+      <entry key="setup_title" value="راه اندازی ویزارد"/>
+      <entry key="setup_intro" value="این د کلیر درشرایط دشوار با ارسال پیامک اضطراری و حذف داده ها از روی دستگاه تلفن شما به امنیت تان می افزاید‫.‬"/>
+      <entry key="sms_test_title" value="پیامک اضطراری"/>
+      <entry key="sms_test_msg" value="قدم اول، ارسال یک پیامک آزمایشی به خودتان است‫.‬"/>
+      <entry key="sms_test_lbl_phone" value="«شماره تلفن گووشی خود را واردکنید‫.‬»"/>
+      <entry key="sms_test_lbl_msg" value="پیغام"/>
+      <entry key="wipe_select_title" value="حذف اطلاعات"/>
+      <entry key="wipe_message" value="این د کلیر می تواند هنگامی که دستگاه تلفن همراه خود را فعال می کنید، داده های شما را از روی حافظه گوشی تلفن تان حذف کند‫. شما می توانید اطلاعاتی را که می خواهید حذف کنید، توسط گزینه زیر انتخاب کنید. مراقب باشید! این اطلاعات پس از پاک شدن قابل بازیابی نیستند.‬"/>
+      <entry key="wipe_menu_contacts" value="تماس ها و آدرس"/>
+      <entry key="wipe_menu_photos" value="عکس، ویدئو و داده های ضبط شده"/>
+      <entry key="wipe_menu_files" value="کارت حافظه"/>
+      <entry key="wipe_menu_calendar" value="رویدادها، تقویم و لیست کارهای برنامه ریزی شده"/>
+      <entry key="wipe_message_saved" value="تنظیمات مربوط به حذف داده های شما ذخیره شده است‫.‬ هشدار‫:‬ چنانچه تصمیم به پاک کردن اطلاعات مهم گرفته اید، پیش از انجام آن اطمینان حاصل کنید که یک نسخه از آن را به دستگاه دیگری منتقل کرده و یا بر روی تکه کاغذی یادداشت کرده اید‫.‬"/>
+      <entry key="title_location_permission" value="مجوز مکان‬"/>
+      <entry key="permission_info" value="هنگامی که دستگاه فعال می شود، گزینهء کمک خواهی بصورت اختیاری اطلاعات مربوط به موقعیت مکانی شما را به همراه یک پیغام هشدارآمیز ارسال می کند‫.‬ این اطلاعات می تواند برای حفظ ایمنی شما ضروری باشد، حتی اگر گوشی شما دارای جی پی اس نباشد‫.‬ اجازه دسترسی به موقعیت مکانی خود را در قسمت زیر فعال کنید‫.‬"/>
+      <entry key="lbl_imei" value="IMEI‫:‬"/>
+      <entry key="lbl_imsi" value=":IMSI‬"/>
+      <entry key="title_location_info" value="اطلاعات مربوط به موقعیت مکانی"/>
+      <entry key="permission_loc_success" value="اطلاعات مربوط به موقعیت مکانی، که قابل دسترس ماست"/>
+      <entry key="permission_loc_failure" value="متاسفانه گوشی شما اطلاعات مربوط به موقعیت مکانی را به ما ارائه نمی کند‫.‬"/>
+      <entry key="title_wipe_manual" value="حذف سریع"/>
+      <entry key="menu_wipe_now" value="حذف سریع"/>
+      <entry key="wipe_warning_msg" value="یک یا چند نوع از اطلاعات زیر را برای پاک کردن انتخاب کنید‫.‬ اخطار‫:‬ این اقدام داده های اصلی را از گوشی شما حذف می کند‫.‬"/>
+      <entry key="title_wipe_complete" value="بطور کامل حذف شد"/>
+      <entry key="wipe_msg_success" value="با موفقیت حذف شد‫.‬"/>
+      <entry key="title_wipe_err" value="اشکال در حذف"/>
+      <entry key="wipe_msg_err" value="اشکال  درحذف ‫‬"/>
+      <entry key="title_wipe_inprogress" value="هشدار‫…‬"/>
+      <entry key="wipe_msg_inprogress" value="لطفا صبر کنید"/>
+      <entry key="wipe_msg_file" value="حذف پرونده"/>
+      <entry key="default_alert_msg" value="کمک! من دچار مشکل شده ام‫!‬"/>
+      <entry key="title_success" value="موفقیت آمیز!‬"/>
+      <entry key="wipe_status_inprogress" value="حذف داده ها‫...‬"/>
+      <entry key="wipe_status_personal" value="حذف داده های شخصی"/>
+      <entry key="wipe_type_personal" value="داده های شخصی"/>
+      <entry key="wipe_type_photos" value="ویدئوها"/>
+      <entry key="wipe_status_photos" value="حذف عکس ها‫…‬"/>
+      <entry key="wipe_status_videos" value="حذف ویدئوها‫…‬"/>
+      <entry key="wipe_type_files" value="پرونده ها"/>
+      <entry key="wipe_status_files" value="حذف پرونده ها"/>
+      <entry key="wipe_status_files_deleted" value="مطالب حذف شد‫.‬"/>
+      <entry key="wipe_status_errors" value="خطا"/>
+      <entry key="wipe_status_wiping_word" value="حذف کردن"/>
+      <entry key="panic_title" value="«هراس‫!»‬"/>
+      <entry key="title_error" value="مشکلی ایجاد شد‫.‬"/>
+      <entry key="error_prefs" value="اطلاعات ‫مربوط به تنظیمات ‬شما در دسترس نمی باشد‫.‬"/>
+      <entry key="sms_test_msg_default" value="تنها یک پیغام آزمایشی"/>
+      <entry key="error_sms_failure" value="به نظر می رسد پیامک آزمایشی شما با موفقیت ارسال نشده باشد‫.‬ برای اطلاعات بیشتر به جزئیات توجه کنید‫.‬"/>
+      <entry key="error_sms_success" value="به نظر می رسد پیامک آزمایشی شما با موفقیت ارسال شد‫.‬ برای کسب اطمینان با گیرنده تماس بگیرید‫.‬"/>
+      <entry key="panic_message_title" value="راه اندازی پیامک اضطراری"/>
+      <entry key="panic_message_info" value="اکنون شما باید شماره تلفن اضطراری واقعی  را بکاراندازید د تا درهنگام وقوع  شرایط اضطراری از آن استفاده کنید‫.‬"/>
+      <entry key="panic_message_lbl_msg" value="پیغام اضطراری"/>
+      <entry key="setup_complete_title" value="راه اندازی این دکلیر تکمیل شد‫.‬"/>
+      <entry key="setup_complete_msg" value="با تشکر از اینکه این دکلیر را راه اندازی کردید‫.‬ به خاطر داشته باشید که شما می توانید گزینه های آن را به صورت دستی از داخل برنامه این دکلیر فعال کنید و یا با کمک میانبر مستقیما به ‫گزینه «هراس!» دسترسی داشته باشید‫.‬"/>
+      <entry key="error_pim_data" value="ما قادر به دسترسی به اطلاعات شخصی و پرونده های صوتی تصویری شما نیستیم‫.‬ لطفا سعی کنید برخی از انواع داده ها را ‫غیر فعال‬ کنید، زیرا ممکن است گوشی شما قادر به پشتیبانی همه گزینه ها نباشد‫.‬"/>
+      <entry key="one_touch_title" value="راه اندازی گزینه تک اشاره ای «هراس»"/>
+      <entry key="one_touch_info" value="گزینه تک اشاره ای «هراس» یکی از ویژگی های این درکلیر است که گزینه پیامک اضطراری و حذف اطلاعات را فعال میکند‫.‬ جهت جلوگیری از استفاده تصادفی، راه اندازی دستی ازشما می خواهد تا زمانی که گزینه تک اشاره ای «هراس»را فعال میکنید، آن را تایید کنید‫.‬ شما می توانید با تنظیمات زیر آن را غیر فعال کنید‫.‬"/>
+      <entry key="one_touch_lbl_cb" value="پیش از فعال کردن گزینه تک اشاره ای «هراس» آنرا تایید کنید‫.‬"/>
+      <entry key="error_not_complete" value="شما باید همه بخشهای فرم را تکمیل کنید‫.‬"/>
+      <entry key="error_run_setup" value="شما باید پیش از فعال کردن گزینه «هراس»، این در کلیر را بکار اندازید‫."/>
+      <entry key="menu_panic" value="شروع"/>
+      <entry key="panic_press_to_activate" value="ما باید دگمه «شروع» را فشار دهید، تا راه اندازی گزینه هشدار اضطراری را تایید کرده و داده ها را حذف کنید‫.‬"/>
+      <entry key="sms_test_default_msg" value="این یک پیغام آزمایشی است"/>
+      <entry key="panic_msg_lbl_phone" value="شماره تلفن دریافت کننده پیام"/>
+      <entry key="button_continue" value="ادامه"/>
+      <entry key="button_send_test" value="ارسال پیامک"/>
+      <entry key="MENU_OK" value="تصویب"/>
+      <entry key="key_panic_start" value="پیغام اضطراری آماده برای ارسال می باشد."/>
+      <entry key="key_sending" value="ارسال به"/>
+      <entry key="key_ellipse" value="..."/>
+      <entry key="key_sending_messages" value="ارسال پیغام"/>
+      <entry key="key_message_sent" value="پیغام ارسال شد"/>
+      <entry key="key_error_sending" value="ایجاد اشکال در ارسال"/>
+      <entry key="key_preparing_wipe" value="آماده برای حذف اطلاعات."/>
+      <entry key="key_wiping_starting" value="حذف اطلاعات شخصی انتخاب شده"/>
+      <entry key="key_wipe_success" value="حذف اطلاعات موفقیت آمیز بود."/>
+      <entry key="key_wipe_error" value="هشدار‫:‬ در حذف داده های شما اشکالی  صورت گرفت‫.‬"/>
+      <entry key="key_wipe_photos" value="حذف عکسها‫…‬"/>
+      <entry key="key_wipe_photos_complete" value="حذف عکسها انجام  شد"/>
+      <entry key="key_wipe_photos_error" value="حذف عکسها‫…‬ درحذف عکسها اشکالی صورت گرفت‫.‬"/>
+      <entry key="key_wipe_videos" value="حذف ویدئوها"/>
+      <entry key="key_wipe_videos_complete" value="حذف ویدئوها انجام شد‫.‬"/>
+      <entry key="key_wipe_videos_error" value="درحذف ویدئوها آشکالی صورت گرفت‫.‬"/>
+      <entry key="key_wipe_recordings" value="حذف داده های ضبط شده"/>
+      <entry key="key_wipe_recordings_complete" value="حذف داده های ضبط شده انجام شد‫.‬"/>
+      <entry key="key_wipe_recordings_error" value="در حذف داده های ضبط شده اشکالی صورت گرفت‫.‬"/>
+      <entry key="key_wipe_files" value="حذف کارت‫ حافظه…‬"/>
+      <entry key="key_wipe_files_complete" value="حذف کارت حافظه انجام شد‫.‬"/>
+      <entry key="key_wipe_files_error" value="در حذف کارت اشکالی صورت گرفت‫.‬"/>
+      <entry key="key_panic_again" value="/n«هراس!» دوباره در"/>
+      <entry key="key_seconds" value="ثانیه ها‫...‬"/>
+      <entry key="wipe_status_recordings" value="حذف داده های ضبط شده"/>
+      <entry key="WIPE_STATUS_PERSONAL_COMPLETE" value="حذف داده های شخصی انجام شد‫.‬"/>
+      <entry key="wipe_msg_complete" value="حذف انجام شد"/>
+      <entry key="key_wipe_roots" value="حذف حافظه مبدع"/>
+      <entry key="key_zero_files" value="خالی کردن حافظه.‬/n لطفا صبر کنید‫.‬"/>
+      <entry key="key_main_title" value="در روشن"/>
+      <entry key="key_main_onetouch" value="یک لمسی هراس"/>
+      <entry key="key_main_emergency" value="پیام اضطراری"/>
+      <entry key="key_main_wipe" value="داده ها پاک"/>
+      <entry key="key_main_setup" value="راه اندازی جادوگر"/>
+   </locale>
+   <locale country="EG" language="ar">
+      <entry key="menu_exit" value="خروج"/>
+      <entry key="menu_no" value="لا"/>
+      <entry key="menu_yes" value="نعم"/>
+      <entry key="menu_enable" value="تمكين"/>
+      <entry key="menu_home" value="الصفحة الرئيسية"/>
+      <entry key="menu_run" value="تشغيل"/>
+      <entry key="menu_back" value="الخلف"/>
+      <entry key="menu_cancel" value="إلغاء"/>
+      <entry key="menu_next" value="التالي"/>
+      <entry key="menu_send" value="إرسال"/>
+      <entry key="panic_error_sms" value="عاجز عن بدء الدخول إلى خدمةالرسائل القصيرة"/>
+      <entry key="panic_msg_pre" value="رسالة طوارئ"/>
+      <entry key="panic_msg_from" value="من"/>
+      <entry key="panic_msg_location" value="المكان:"/>
+      <entry key="panic_msg_cid" value="cid:"/>
+      <entry key="panic_msg_lac" value="lac:"/>
+      <entry key="panic_msg_timestamp" value="ts:"/>
+      <entry key="panic_msg_sent" value="إرسال فزع"/>
+      <entry key="panic_msg_sentto" value="إرسال إلى:"/>
+      <entry key="setup_title" value="إعداد ويزارد"/>
+      <entry key="setup_intro" value="في واضحة يبقيك آمنة في حالات الطوارئ الصعبة عن طريق ارسال رسائل نصية قصيرة، ومحو البيانات من الهاتف."/>
+      <entry key="sms_test_title" value="رسالة طوارئ"/>
+      <entry key="sms_test_msg" value="أول خطوة هو إرسال رسال قصيرة للاختبار إلى نفسك"/>
+      <entry key="sms_test_lbl_phone" value="ادخل رقم هاتفك المحمول"/>
+      <entry key="sms_test_lbl_msg" value="رسالة"/>
+      <entry key="wipe_select_title" value="إعداد مسح البيانات"/>
+      <entry key="wipe_message" value="في واضحة يمكن محو البيانات من ذاكرة الهاتف الخاص بك عند تنشيطه. حدد ما هي البيانات التي تريد محو أدناه. كن حذرا! فلن تكون قادرة على استرداد هذه البيانات تمحى بمجرد أن يتم ذلك."/>
+      <entry key="wipe_menu_contacts" value="Contacts &amp; Addresses"/>
+      <entry key="wipe_menu_photos" value="Photos, Video &amp; Recordings"/>
+      <entry key="wipe_menu_files" value="كارت الذاكرة"/>
+      <entry key="wipe_menu_calendar" value="Events, Calendar &amp; To-Do&apos;s"/>
+      <entry key="wipe_message_saved" value="تم حفظ إعدادات المسح خاصتك. تحذير: لو اخترت مسح بيانات مهمة، تأكد من نسخها أولًا على جهاز آخر أو كتابتها على ورقة."/>
+      <entry key="title_location_permission" value="إذن المكان"/>
+      <entry key="permission_info" value="عند التفعيل، سترسل خصية صرخة! اختياريًا بيانات مكانك مرفقة في رسالتك التحذيرية. قد تكون هذه المعلومة ضرورية من أجل أمنك، حتى لو كان هاتفك غير مزود بإمكانية تحديد المكان الجغرافي. تفعيل أذونات المكان أسفل."/>
+      <entry key="lbl_imei" value="رقم هوية الهاتف التعريفي الدولية:"/>
+      <entry key="lbl_imsi" value="رقم الهوية التعريفية الدولية لبطاقة تعريف المشترك:"/>
+      <entry key="title_location_info" value="بيانات المكان"/>
+      <entry key="permission_loc_success" value="هذه هي بيانات المكان التي نستطيع الوصول إليها"/>
+      <entry key="permission_loc_failure" value="مع الأسف، لا يقدم هاتفك أي بيانات مكان يمكننا استخدامها."/>
+      <entry key="title_wipe_manual" value="امسح الآن"/>
+      <entry key="menu_wipe_now" value="امسح الآن"/>
+      <entry key="wipe_warning_msg" value="اختر نوع أو أكثر من أنواع البيانات المذكورة أسفل لمسحها. تحذير: سيمسح هذا بيانات حقيقية من على هاتفك."/>
+      <entry key="title_wipe_complete" value="تم المسح"/>
+      <entry key="wipe_msg_success" value="نجحت عملية المسح."/>
+      <entry key="title_wipe_err" value="خطأ في عملية المسح"/>
+      <entry key="wipe_msg_err" value="خطأ في عملية المسح:"/>
+      <entry key="title_wipe_inprogress" value="...جاري المسح"/>
+      <entry key="wipe_msg_inprogress" value="رجاء الانتظار..."/>
+      <entry key="wipe_msg_file" value=":جاري مسح الملف"/>
+      <entry key="default_alert_msg" value="!أريد المساعدة، أنا في ورطة"/>
+      <entry key="title_success" value="!نجحت العملية"/>
+      <entry key="wipe_status_inprogress" value="...جاري مسح البيانات"/>
+      <entry key="wipe_status_personal" value="...جاري مسح البيانات الشخصية"/>
+      <entry key="wipe_type_personal" value="البيانات الشخصية"/>
+      <entry key="wipe_type_photos" value="تسجيلات الفيديو"/>
+      <entry key="wipe_status_photos" value="...جاري مسح الصور"/>
+      <entry key="wipe_status_videos" value="جاري مسح الفيديو..."/>
+      <entry key="wipe_type_files" value="الملفات"/>
+      <entry key="wipe_status_files" value="...جاري مسح الملفات"/>
+      <entry key="wipe_status_files_deleted" value="تم مسح الأشياء"/>
+      <entry key="wipe_status_errors" value="أخطاء."/>
+      <entry key="wipe_status_wiping_word" value="جاري المسح"/>
+      <entry key="panic_title" value="فزع"/>
+      <entry key="title_error" value="حدث خطأ ما"/>
+      <entry key="error_prefs" value="غير قادر على الوصول إلى بيانات المستخدم التفضيلية"/>
+      <entry key="sms_test_msg_default" value="رسالة اختبار فقط"/>
+      <entry key="error_sms_failure" value="يبدو أن رسالة الاختبار القصيرة خاصتك لم ترسل بنجاح. اطلع على التفاصيل للحصول على المزيد من المعلومات."/>
+      <entry key="error_sms_success" value="يبدو أن رسالة الاختبار القصيرة خاصتك أُرسِلَت بنجاح. راجع مع المتلقي للتأكد."/>
+      <entry key="panic_message_title" value="إعداد رسالة الطوارئ القصيرة"/>
+      <entry key="panic_message_info" value="عليك الآن إعداد رقم الهاتف المحمول الفعلي الذي ستستخدمه والرسالة التي سترسلها في حالة الطوارئ."/>
+      <entry key="panic_message_lbl_msg" value="رسالة الطوارئ"/>
+      <entry key="setup_complete_title" value="InTheClear Setup Complete"/>
+      <entry key="setup_complete_msg" value="Thanks for setting up InTheClear. Remember that you can activate its features manually from within the InTheClear app, or access the Panic! shortcut directly."/>
+      <entry key="error_pim_data" value="لم نتمكن من الوصول إلى بياناتك الشخصية الموضعية وملفات الوسائط خاصتك. حاول إلغاء اختيار بعض أنواع البيانات، إذ إن هاتفك قد لا يكون يدعم كل الأنواع."/>
+      <entry key="one_touch_title" value="إعداد خصية الفزع بلمسة واحدة"/>
+      <entry key="one_touch_info" value="One-Touch Panic is a feature of InTheClear that activates Emergency SMS and Data Wipe. To avoid accidental usage, the default setting requires you to confirm activation once you start One-Touch Panic. You can remove this prompt with the setting below."/>
+      <entry key="one_touch_lbl_cb" value="عند تفعيل خصية الفزع بلمسة واحد، أكد قبل التشغيل"/>
+      <entry key="error_not_complete" value="عليك ملئ كل الخانات في النموذج"/>
+      <entry key="error_run_setup" value="You must run the InTheClear setup before you can activate the Panic feature"/>
+      <entry key="menu_panic" value="ابدأ"/>
+      <entry key="panic_press_to_activate" value="You must press the &apos;Start&apos; option to confirm you want to start the emergency alert and data wipe"/>
+      <entry key="sms_test_default_msg" value="هذه رسالة للاختبار"/>
+      <entry key="panic_msg_lbl_phone" value="رقم هاتف المتلقي"/>
+      <entry key="button_continue" value="Continue &gt;&gt;"/>
+      <entry key="button_send_test" value="ارسل رسالة الاختبار"/>
+      <entry key="MENU_OK" value="تمام"/>
+      <entry key="key_panic_start" value="EMERGENCY MESSAGE: preparing to send..."/>
+      <entry key="key_sending" value="جاري الإرسال"/>
+      <entry key="key_ellipse" value="..."/>
+      <entry key="key_sending_messages" value="جاري إرسال رسائل"/>
+      <entry key="key_message_sent" value="تم إرسال الرسالة!"/>
+      <entry key="key_error_sending" value="Error Sending:"/>
+      <entry key="key_preparing_wipe" value="Preparing to wipe data..."/>
+      <entry key="key_wiping_starting" value="Wiping selected personal data..."/>
+      <entry key="key_wipe_success" value="Success - Data wiped!"/>
+      <entry key="key_wipe_error" value="تحذير: حدث خطأ أثناء مسح بياناتك."/>
+      <entry key="key_wipe_photos" value="جاري مسح الصور..."/>
+      <entry key="key_wipe_photos_complete" value="Wiping photos... COMPLETE."/>
+      <entry key="key_wipe_photos_error" value="Wiping photos... ERROR. UNABLE TO WIPE PHOTOS."/>
+      <entry key="key_wipe_videos" value="جاري مسح تسجيلات الفيديو..."/>
+      <entry key="key_wipe_videos_complete" value="Wiping videos... COMPLETE."/>
+      <entry key="key_wipe_videos_error" value="Wiping videos... ERROR!"/>
+      <entry key="key_wipe_recordings" value="جاري مسح التسجيلات الصوتية..."/>
+      <entry key="key_wipe_recordings_complete" value="Wiping recordings... COMPLETE."/>
+      <entry key="key_wipe_recordings_error" value="Wiping recordings... ERROR!"/>
+      <entry key="key_wipe_files" value="جاري مسح الكارت..."/>
+      <entry key="key_wipe_files_complete" value="Wiping card... COMPLETE."/>
+      <entry key="key_wipe_files_error" value="Wiping card... ERROR!"/>
+      <entry key="key_panic_again" value="Panic! again in"/>
+      <entry key="key_seconds" value="ثواني..."/>
+      <entry key="wipe_status_recordings" value="جاري مسح التسجيلات الصوتية..."/>
+      <entry key="WIPE_STATUS_PERSONAL_COMPLETE" value="Wiping personal data... COMPLETE"/>
+      <entry key="wipe_msg_complete" value="تم المسح."/>
+      <entry key="key_wipe_roots" value="جاري مسح جذور التخزين"/>
+      <entry key="key_zero_files" value="Zeroing out storage... (please be patient)"/>
+      <entry key="key_main_title" value="في واضحة"/>
+      <entry key="key_main_onetouch" value="لمسة واحدة الذعر"/>
+      <entry key="key_main_emergency" value="رسالة طارئة"/>
+      <entry key="key_main_wipe" value="مسح البيانات"/>
+      <entry key="key_main_setup" value="معالج الإعداد"/>
    </locale>
 </locales>

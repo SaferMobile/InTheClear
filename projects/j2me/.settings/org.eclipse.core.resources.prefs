@@ -1,4 +1,4 @@
-#Fri Aug 12 10:32:19 EDT 2011
+#Fri Aug 26 12:45:08 EDT 2011
 eclipse.preferences.version=1
 encoding//.processed/src/org/j4me/collections/Cache.java=UTF-8
 encoding//.processed/src/org/j4me/collections/CubbyHole.java=UTF-8
@@ -64,6 +64,7 @@ encoding//.processed/src/org/safermobile/clear/micro/ui/LargeStringCanvas.java=U
 encoding//.processed/src/org/safermobile/clear/micro/ui/ProgressAlert.java=UTF-8
 encoding//.processed/src/org/safermobile/micro/ui/DisplayManager.java=UTF-8
 encoding//.processed/src/org/safermobile/micro/ui/Splash.java=UTF-8
+encoding//.processed/src/org/safermobile/micro/utils/CharTokenizer.java=UTF-8
 encoding//.processed/src/org/safermobile/micro/utils/FileWriter.java=UTF-8
 encoding//.processed/src/org/safermobile/micro/utils/Logger.java=UTF-8
 encoding//.processed/src/org/safermobile/micro/utils/Preferences.java=UTF-8

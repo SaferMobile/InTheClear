@@ -1,6 +1,7 @@
 package org.safermobile.intheclear;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Map;
 
 import org.safermobile.intheclear.screens.WipePreferences;
@@ -569,8 +570,11 @@ public class Wizard extends Activity implements OnClickListener, SMSTesterConsta
 					getResources().getString(R.string.KEY_WIZARD_TESTING_SMS_TITLE),
 					true);
 			
+			
 			// initiate SMSSender instance with customized handler
 			// so UI will update according to SMSSender results
+			
+			/*
 			SMSSender sms = new SMSSender(c,new Handler() {
 				
 				@SuppressWarnings("unchecked")
@@ -582,6 +586,24 @@ public class Wizard extends Activity implements OnClickListener, SMSTesterConsta
 			
 			// send test
 			sms.sendSMS(testSmsNumber,getResources().getString(R.string.KEY_WIZARD_SMSTESTMSG));
+			*/
+			
+			/* Instead of that,
+			 * here is a spoof for the emulator
+			 * which will not have SMS sending capability
+			 */
+			
+			Message spoofMsg = new Message();
+			Map<String,Integer> msg = new HashMap<String,Integer>();
+			
+			msg.put("smsResult",Activity.RESULT_OK);
+			msg.put("process", SMS_DELIVERY);
+			msg.put("status", SMS_DELIVERED);
+			
+			spoofMsg.obj = msg;
+			
+			pd.dismiss();
+			displayTestSMSResults(spoofMsg);
 		}
 		
 		public boolean hasPreferenceData() {

@@ -408,6 +408,8 @@ public class Wizard extends Activity implements OnClickListener, SMSTesterConsta
 				//emergencyMessage.setPadding(10, 5, 5, 7);
 				emergencyMessage.setId(R.string.defaultPanicMessageStatic);
 				emergencyMessage.setOnFocusChangeListener(editTextFocusChangeListener);
+				
+				/*
 				emergencyMessage.setOnKeyListener(new OnKeyListener() {
 
 					@Override
@@ -421,6 +423,9 @@ public class Wizard extends Activity implements OnClickListener, SMSTesterConsta
 					}
 					
 				});
+				*/
+				
+				wizardForward.setEnabled(true);
 				emHolder.addView(emergencyMessage);
 				
 				views.add(emHolder);

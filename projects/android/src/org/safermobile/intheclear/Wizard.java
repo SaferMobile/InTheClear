@@ -66,16 +66,6 @@ public class Wizard extends Activity implements OnClickListener, SMSTesterConsta
 		_sp = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
 		_ed = _sp.edit();
 		
-		/* if this is the first time the user has launched the app,
-		 * the user will immediately be brought here (with a bundle from the main activity)
-		 * set the "IsVirginUser" preference to false now
-		 * that the user's cherry is sufficiently popped.
-		 */
-		if(_sp.getBoolean("IsVirginUser", true)) {
-			_ed.putBoolean(ITCConstants.Preference.IS_VIRGIN_USER, false);
-			_ed.commit();
-		}
-		
 		wizardForward = (Button) findViewById(R.id.wizardForward);
 		wizardForward.setText(getResources().getString(R.string.KEY_WIZARD_NEXT));
 		wizardForward.setOnClickListener(this);
@@ -91,7 +81,6 @@ public class Wizard extends Activity implements OnClickListener, SMSTesterConsta
 			wNum = getIntent().getIntExtra("wNum", 0);
 		} else {
 			wNum = 1;
-			wizardBackward.setClickable(false);
 		}
 		
 		wizardTitle = (TextView) findViewById(R.id.wizardTitle);
@@ -480,6 +469,16 @@ public class Wizard extends Activity implements OnClickListener, SMSTesterConsta
 				break;
 			case 6:
 				// change buttons from back/next to back/finish
+				
+				/* if this is the first time the user has launched the app,
+				 * the user will immediately be brought here (with a bundle from the main activity)
+				 * set the "IsVirginUser" preference to false now
+				 * that the user's cherry is sufficiently popped.
+				 */
+				if(_sp.getBoolean("IsVirginUser", true)) {
+					_ed.putBoolean(ITCConstants.Preference.IS_VIRGIN_USER, false);
+					_ed.commit();
+				}
 				wizardForward.setText(getResources().getString(R.string.KEY_FINISH));
 				break;
 			case 7:

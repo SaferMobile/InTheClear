@@ -1,15 +1,21 @@
 package org.safermobile.intheclear;
 
+import java.util.Locale;
+
 import org.safermobile.intheclear.apps.Panic;
 import org.safermobile.intheclear.apps.Shout;
 import org.safermobile.intheclear.apps.Wipe;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -18,9 +24,7 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.BaseAdapter;
 import android.widget.GridView;
-import android.widget.ImageButton;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 public class InTheClear extends Activity implements OnClickListener {
@@ -35,8 +39,22 @@ public class InTheClear extends Activity implements OnClickListener {
         setContentView(R.layout.main);
         
         _sp = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
-        if(_sp.getBoolean("IsVirginUser", true)) {        	
-        	launchWizard();
+        if(_sp.getBoolean("IsVirginUser", true)) {
+        	AlertDialog.Builder ad = new AlertDialog.Builder(this);
+        	ad.setTitle(getResources().getString(R.string.KEY_PREF_LANGUAGE_TITLE));
+        	
+        	CharSequence[] langs = getResources().getStringArray(R.array.languages);
+        	ad.setItems(langs, new DialogInterface.OnClickListener() {
+				
+				@Override
+				public void onClick(DialogInterface dialog, int which) {
+					if(setNewLocale(getResources().getStringArray(R.array.languages_values)[which]))
+						launchWizard();
+				}
+			});
+        	
+        	AlertDialog alert = ad.create();
+        	alert.show();
       	}
         
         logoPanic = (ImageView) findViewById(R.id.logoPanic);
@@ -81,6 +99,15 @@ public class InTheClear extends Activity implements OnClickListener {
 	private void launchPreferences() {
 		Intent i = new Intent(this,ITCPreferences.class);
 		startActivity(i);
+	}
+	
+	public boolean setNewLocale(String localeCode) {
+		Configuration config = new Configuration();
+		config.locale = new Locale(localeCode);
+		getBaseContext().getResources().updateConfiguration(config, getBaseContext().getResources().getDisplayMetrics());
+		Log.d(ITCConstants.Log.ITC,"current configuration = " + getBaseContext().getResources().getConfiguration().locale);
+
+		return true;
 	}
 	
 	@Override

@@ -138,6 +138,9 @@ public class L10nConstants {
 		public static final String KEY_MAIN_EMERGENCY = "KEY_MAIN_EMERGENCY";
 		public static final String KEY_MAIN_WIPE = "KEY_MAIN_WIPE";
 		public static final String KEY_MAIN_SETUP = "KEY_MAIN_SETUP";
+		public static final String KEY_EXTRA_ZERO_WIPE = "KEY_EXTRA_ZERO_WIPE";
+		public static final String KEY_NOTHING_TO_WIPE = "KEY_NOTHING_TO_WIPE";
+		public static final String KEY_WIPE_SELECT_ONE = "KEY_WIPE_SELECT_ONE";
 
     }
 }

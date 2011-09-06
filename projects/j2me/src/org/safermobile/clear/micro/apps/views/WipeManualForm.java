@@ -116,7 +116,7 @@ public class WipeManualForm
         		append( _cbAllStorage );
         		
         		_cbZeroStorage = new CheckBox();
-        		_cbZeroStorage.setLabel("Extra Zero Wipe (Very Slow)");
+        		_cbZeroStorage.setLabel(l10n.getString(L10nConstants.keys.KEY_EXTRA_ZERO_WIPE));
         		_cbZeroStorage.setChecked(false);
         		append (_cbZeroStorage);
         		
@@ -210,12 +210,12 @@ public class WipeManualForm
 	                	{
 	                		msg += l10n.getString(L10nConstants.keys.WIPE_MSG_COMPLETE);
 	
-	                		msg += "\n" + "Nothing to wipe";
+	                		msg += "\n" + l10n.getString(L10nConstants.keys.KEY_NOTHING_TO_WIPE);
 	                	}
         			}
         			else
         			{
-        				msg = "You must select\nat least one\nwipe data type.";
+        				msg = l10n.getString(L10nConstants.keys.KEY_WIPE_SELECT_ONE);
         			}
                 	//if (errCount > 0)
                 		//msg += "\n" + errCount + ' ' + l10n.getString(L10nConstants.keys.WIPE_STATUS_ERRORS);

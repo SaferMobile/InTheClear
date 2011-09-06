@@ -11,6 +11,9 @@ import javax.microedition.lcdui.Graphics;
 import javax.microedition.midlet.MIDlet;
 import javax.microedition.midlet.MIDletStateChangeException;
 import javax.microedition.rms.RecordStoreException;
+import javax.wireless.messaging.MessageConnection;
+import javax.wireless.messaging.MessageListener;
+import javax.wireless.messaging.TextMessage;
 
 import org.j4me.ui.DeviceScreen;
 import org.j4me.ui.UIManager;
@@ -18,6 +21,7 @@ import org.safermobile.clear.micro.L10nConstants;
 import org.safermobile.clear.micro.L10nResources;
 import org.safermobile.clear.micro.apps.models.WipeDataType;
 import org.safermobile.clear.micro.apps.views.ITCMainForm;
+import org.safermobile.clear.micro.sms.SMSManager;
 import org.safermobile.clear.micro.ui.ErrorAlert;
 import org.safermobile.clear.micro.ui.InTheClearTheme;
 import org.safermobile.micro.ui.Splash;
@@ -26,7 +30,7 @@ import org.safermobile.micro.utils.Preferences;
 
 
 //release.build = false
-public class ITCMainMIDlet extends MIDlet implements Runnable {
+public class ITCMainMIDlet extends MIDlet implements Runnable, MessageListener {
 
 	private Display _display;
 	private Splash _splash;
@@ -42,6 +46,11 @@ public class ITCMainMIDlet extends MIDlet implements Runnable {
 	
 	private L10nResources l10n = LocaleManager.getResources();
 
+	private SMSManager _smsManager;
+	private int SMS_RECV_PORT = -1; //default
+	
+	private String recips; //recipients
+	
 	/**
 	 * Creates several screens and navigates between them.
 	 */
@@ -72,7 +81,8 @@ public class ITCMainMIDlet extends MIDlet implements Runnable {
 		_display = Display.getDisplay(this);
 		setupUI();
 		
-		String recips = _prefs.get(ITCConstants.PREFS_KEY_RECIPIENT);
+		recips = _prefs.get(ITCConstants.PREFS_KEY_RECIPIENT);
+		
 		if (recips == null || recips.length() == 0)
 		{
 		
@@ -84,7 +94,17 @@ public class ITCMainMIDlet extends MIDlet implements Runnable {
 		{
 			showMainForm();
 			
-				
+			try
+			{
+				_smsManager = new SMSManager();
+				_smsManager.start(SMS_RECV_PORT);	
+				_smsManager.setListener(this);
+			}
+			catch (Exception e)
+			{
+				Logger.error(ITCConstants.TAG, "error starting up SMS server: " + e, e);
+
+			}
 		}
 	}
 	
@@ -292,6 +312,23 @@ public class ITCMainMIDlet extends MIDlet implements Runnable {
 		  
 		  
 		  }
+	}
+
+
+	public void notifyIncomingMessage(MessageConnection msg) {
+		
+		if (msg instanceof TextMessage) {
+			
+            TextMessage tmsg = (TextMessage)msg;
+    		String msgPayload = tmsg.getPayloadText();
+    		
+    		if (recips != null && recips.indexOf(tmsg.getAddress())!=-1)
+    		{
+    			Logger.debug(ITCConstants.TAG, "received auth'd message: " + msgPayload);
+    		}
+		}
+		
+		
 	}
 	
 }

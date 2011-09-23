@@ -1,11 +1,13 @@
 package org.safermobile.intheclear.apps;
 
 import org.safermobile.intheclear.ITCConstants;
+import org.safermobile.intheclear.ITCPreferences;
 import org.safermobile.intheclear.R;
 import org.safermobile.intheclear.controllers.ShoutController;
 import org.safermobile.utils.EndActivity;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -97,6 +99,20 @@ public class Shout extends Activity implements OnClickListener, OnDismissListene
 
 		recipients = _sp.getString(ITCConstants.Preference.CONFIGURED_FRIENDS,"");
 		configuredFriendsText.setText(recipients);
+		
+		
+		if(recipients.compareTo("") == 0) {
+			AlertDialog.Builder d = new AlertDialog.Builder(this);
+			d.setMessage(getResources().getString(R.string.KEY_SHOUT_PREFSFAIL))
+				.setCancelable(false)
+				.setPositiveButton(getResources().getString(R.string.KEY_OK), new DialogInterface.OnClickListener() {
+					public void onClick(DialogInterface dialog, int id) {
+						Shout.this.launchPreferences();
+					}
+				});
+			AlertDialog a = d.create();
+			a.show();
+		}
 	}
 	
 	private void updatePreferences() {
@@ -161,5 +177,11 @@ public class Shout extends Activity implements OnClickListener, OnDismissListene
 		Intent toKill = new Intent(this,EndActivity.class).setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 		finish();
 		startActivity(toKill);
+	}
+	
+	public void launchPreferences() {
+		Intent toPrefs = new Intent(this,ITCPreferences.class);
+		finish();
+		startActivity(toPrefs);
 	}
 }

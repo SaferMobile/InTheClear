@@ -130,7 +130,7 @@
 	<string name="WIZARD_SEND_TEST">发送测试</string>
 	<string name="WIZARD_CONFIRMATION_SMSTEST_TITLE">成功!</string>
 	<string name="WIZARD_CONFIRMATION_SMSTEST_FAIL_TITLE">短信测试失败</string>
-	<string name="WIZARD_SMS_TEST_FAILURES">InTheClear 的紧急短信以一般短信进行发送。可能的错误包括:\n\n糟糕的无线网络\n欠费\n无sim卡或sim卡损坏\n\n如果你已经检查了以上所有情况，但是测试短信还是未能发送，InTheClear 可能不支持您的手持设备。请发邮件告知我们:\n</string>
+	<string name="WIZARD_SMS_TEST_FAILURES">InTheClear 的紧急短信以一般短信进行发送。可能的错误包括:\n\n\u279E糟糕的无线网络\n\u279E欠费\n\u279E无sim卡或sim卡损坏\n\n如果你已经检查了以上所有情况，但是测试短信还是未能发送，InTheClear 可能不支持您的手持设备。请发邮件告知我们:\n</string>
 	<string name="WIZARD_CONFIRMATION_SMSTEST">看起来您的消息通过了。请进一步确认。</string>
 	<string name="WIZARD_CONFIRMATION_SMSTEST_FAIL">看起来好像您的测试短信未能发送成功。请查阅详情获得更多信息。</string>
 	<string name="WIZARD_CONFIRMATION_LOCATIONTEST">我们能访问的本地数据:</string>

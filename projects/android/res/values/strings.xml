@@ -5,5 +5,5 @@
     <string name="yourNumberStatic">yourNumberStatic</string>
     <string name="configuredFriendsStatic">Your Configured Friends</string>
     <string name="defaultPanicMessageStatic">The one where the gang sets its default panic message.</string>
-    <string name="SAFERMOBILE_EMAIL">support&amp;safermobile.org</string>
+    <string name="SAFERMOBILE_EMAIL">support@safermobile.org</string>
 </resources>

@@ -8,6 +8,7 @@ import org.safermobile.intheclear.sms.SMSSender;
 import org.safermobile.intheclear.sms.SMSTesterConstants;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.BroadcastReceiver;
@@ -99,6 +100,26 @@ public class Wizard extends Activity implements OnClickListener, SMSTesterConsta
 		if(form.hasPreferenceData())
 			populateDefaults(sv);
 			
+	}
+	
+	public void showFailureDetails() {
+		wizardTitle.setText(getResources().getString(R.string.WIZARD_CONFIRMATION_SMSTEST_FAIL_TITLE));
+		LinearLayout l = (LinearLayout) sv.getChildAt(0);
+		l.removeAllViews();
+		
+		TextView failures = new TextView(this);
+		failures.setTextColor(android.graphics.Color.BLACK);
+		failures.setText(getResources().getString(R.string.WIZARD_SMS_TEST_FAILURES));
+		l.addView(failures);
+		
+		TextView email = new TextView(this);
+		email.setText(getResources().getString(R.string.SAFERMOBILE_EMAIL));
+		Linkify.addLinks(email, Linkify.EMAIL_ADDRESSES);
+		l.addView(email);
+		
+		
+		wizardForward.setClickable(false);
+		wNum = 3;
 	}
 	
 	@Override
@@ -531,7 +552,7 @@ public class Wizard extends Activity implements OnClickListener, SMSTesterConsta
 					@Override
 					public void onClick(View v) {
 						rd.dismiss();
-						
+						showFailureDetails();
 					}
 					
 				});

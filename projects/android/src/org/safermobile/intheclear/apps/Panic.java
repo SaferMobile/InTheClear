@@ -249,7 +249,6 @@ public class Panic extends Activity implements OnClickListener, OnDismissListene
 	
 	public void killActivity() {
 		Intent toKill = new Intent(Panic.this,EndActivity.class).setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-		finish();
 		startActivity(toKill);
 	}
 	
@@ -273,7 +272,7 @@ public class Panic extends Activity implements OnClickListener, OnDismissListene
 				pc.startPanic();
 				
 				// kill the activity
-				//killActivity();
+				killActivity();
 			}
 
 			@Override

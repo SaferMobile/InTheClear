@@ -181,7 +181,6 @@ public class Shout extends Activity implements OnClickListener, OnDismissListene
 	
 	public void launchPreferences() {
 		Intent toPrefs = new Intent(this,ITCPreferences.class);
-		finish();
 		startActivity(toPrefs);
 	}
 }

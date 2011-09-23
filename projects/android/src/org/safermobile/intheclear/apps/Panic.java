@@ -255,7 +255,8 @@ public class Panic extends Activity implements OnClickListener, OnDismissListene
 	
 	public void launchPreferences() {
 		Intent toPrefs = new Intent(this,ITCPreferences.class);
-		finish();
+		if(isBound)
+			unbindPanicService();
 		startActivity(toPrefs);
 	}
 	
@@ -272,7 +273,7 @@ public class Panic extends Activity implements OnClickListener, OnDismissListene
 				pc.startPanic();
 				
 				// kill the activity
-				killActivity();
+				//killActivity();
 			}
 
 			@Override

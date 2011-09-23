@@ -185,6 +185,7 @@ public class Panic extends Activity implements OnClickListener, OnDismissListene
 	}
 	
 	private void alignPreferences() {
+		oneTouchPanic = false;
 		String recipients = _sp.getString(ITCConstants.Preference.CONFIGURED_FRIENDS,"");
 		if(recipients.compareTo("") == 0) {
 			AlertDialog.Builder d = new AlertDialog.Builder(this);

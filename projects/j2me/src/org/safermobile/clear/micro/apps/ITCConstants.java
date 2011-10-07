@@ -22,5 +22,5 @@ public interface ITCConstants {
 	
 	public final static int SCREEN_WIDTH_LARGE = 320;
 	
-	public final static String [][] LOCALES = {{"en","English"}, {"ar","لعربية Arabic"}, {"fa","ارسی Farsi"}};
+	public final static String [][] LOCALES = {{"en","English"}, {"ar","العربية Arabic"}, {"fa","پارسی Farsi"}};
 }

@@ -3,6 +3,7 @@ package org.safermobile.intheclear.apps;
 import java.util.ArrayList;
 
 import org.safermobile.intheclear.ITCConstants;
+import org.safermobile.intheclear.ITCPreferences;
 import org.safermobile.intheclear.R;
 import org.safermobile.intheclear.controllers.PanicController;
 import org.safermobile.intheclear.controllers.PanicController.LocalBinder;
@@ -11,6 +12,7 @@ import org.safermobile.intheclear.ui.WipeDisplayAdaptor;
 import org.safermobile.utils.EndActivity;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.BroadcastReceiver;
@@ -182,8 +184,23 @@ public class Panic extends Activity implements OnClickListener, OnDismissListene
 		super.onDestroy();
 	}
 	
-	private void alignPreferences() {		
-		oneTouchPanic = _sp.getBoolean(ITCConstants.Preference.DEFAULT_ONE_TOUCH_PANIC, false);
+	private void alignPreferences() {
+		oneTouchPanic = false;
+		String recipients = _sp.getString(ITCConstants.Preference.CONFIGURED_FRIENDS,"");
+		if(recipients.compareTo("") == 0) {
+			AlertDialog.Builder d = new AlertDialog.Builder(this);
+			d.setMessage(getResources().getString(R.string.KEY_SHOUT_PREFSFAIL))
+				.setCancelable(false)
+				.setPositiveButton(getResources().getString(R.string.KEY_OK), new DialogInterface.OnClickListener() {
+					public void onClick(DialogInterface dialog, int id) {
+						Panic.this.launchPreferences();
+					}
+				});
+			AlertDialog a = d.create();
+			a.show();
+		} else {
+			oneTouchPanic = _sp.getBoolean(ITCConstants.Preference.DEFAULT_ONE_TOUCH_PANIC, false);
+		}
 	}
 	
 	public void cancelPanic() {
@@ -232,8 +249,14 @@ public class Panic extends Activity implements OnClickListener, OnDismissListene
 	
 	public void killActivity() {
 		Intent toKill = new Intent(Panic.this,EndActivity.class).setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-		finish();
 		startActivity(toKill);
+	}
+	
+	public void launchPreferences() {
+		Intent toPrefs = new Intent(this,ITCPreferences.class);
+		if(isBound)
+			unbindPanicService();
+		startActivity(toPrefs);
 	}
 	
 	private void doPanic() {		

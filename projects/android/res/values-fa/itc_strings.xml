@@ -180,7 +180,7 @@
     <string name="WIZARD_SEND_TEST">ارسال تست</string>
     <string name="WIZARD_CONFIRMATION_SMSTEST_TITLE">انجام شد!</string>
     <string name="WIZARD_CONFIRMATION_SMSTEST_FAIL_TITLE">اس ام اس شکست تست</string>
-    <string name="WIZARD_SMS_TEST_FAILURES">SMSes InTheClear اضطراری هستند درست مانند هر اس ام اس های دیگر فرستاده شده است. از دلایل ممکن برای شکست include:\n\nBad بی سیم و یا اعتبار مکالمه reception\nNo credit\nMissing یا آسیب دیده سیم card\n\nIf you\'ve بررسی تمام موارد فوق و تست اس ام اس هنوز ارسال InTheClear ممکن است بر روی دست های خود را پشتیبانی نمی شودو همکاران. لطفا به ما ایمیل at:\n</string>
+    <string name="WIZARD_SMS_TEST_FAILURES">SMSes InTheClear اضطراری هستند درست مانند هر اس ام اس های دیگر فرستاده شده است. از دلایل ممکن برای شکست include:\n\n\u279EBad بی سیم و یا اعتبار مکالمه reception\n\u279ENo credit\n\u279EMissing یا آسیب دیده سیم card\n\nIf you\'ve بررسی تمام موارد فوق و تست اس ام اس هنوز ارسال InTheClear ممکن است بر روی دست های خود را پشتیبانی نمی شودو همکاران. لطفا به ما ایمیل at:\n</string>
     <string name="WIZARD_CONFIRMATION_SMSTEST_FAIL">به نظر می رسد مانند SMS آزمون خود را جزئیات successfully.\nView برای اطلاعات بیشتر فرستاده است.</string>
     <string name="WIZARD_RECIPIENT_MOBILE_NUMBERS">Recipient\nMobile # (ها)</string>
     <string name="WIZARD_EMERGENCY_MESSAGE">Your\nEmergency\nMessage</string>

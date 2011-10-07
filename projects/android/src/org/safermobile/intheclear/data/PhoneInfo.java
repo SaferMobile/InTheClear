@@ -32,58 +32,91 @@ public class PhoneInfo {
 	
 	public static String getMyPhoneNumber() {
 		String out = null;
-		out = tm.getLine1Number();
-		return out;
+		try {
+			out = tm.getLine1Number();
+			return out;
+		} catch(NullPointerException e) {
+			return "";
+		}
 	}
 	
 	public static String getOperator() {
 		String out = null;
-		if(tm.getPhoneType() != TelephonyManager.PHONE_TYPE_NONE)
-			out = tm.getNetworkOperator();
-		return out;
+		try {
+			if(tm.getPhoneType() != TelephonyManager.PHONE_TYPE_NONE)
+				out = tm.getNetworkOperator();
+			return out;
+		} catch(NullPointerException e) {
+			return "";
+		}
 	}
 	
 	public static String getCellId() {	
 		String out = null;
-		if (tm.getPhoneType() == TelephonyManager.PHONE_TYPE_GSM) {
-			final GsmCellLocation gLoc = (GsmCellLocation) tm.getCellLocation();
-			if(gLoc != null)
-				out = Integer.toString(gLoc.getCid());
+		try {
+			if (tm.getPhoneType() == TelephonyManager.PHONE_TYPE_GSM) {
+				final GsmCellLocation gLoc = (GsmCellLocation) tm.getCellLocation();
+				if(gLoc != null)
+					out = Integer.toString(gLoc.getCid());
+			}
+			return out;
+		} catch(NullPointerException e) {
+			return "";
 		}
-		return out;
 	}
 	
 	public static String getLAC() {
 		String out = null;
-		if (tm.getPhoneType() == TelephonyManager.PHONE_TYPE_GSM){
-			final GsmCellLocation gLoc = (GsmCellLocation) tm.getCellLocation();
-			if(gLoc != null)
-				out = Integer.toString(gLoc.getLac());
+		try {
+			if (tm.getPhoneType() == TelephonyManager.PHONE_TYPE_GSM){
+				final GsmCellLocation gLoc = (GsmCellLocation) tm.getCellLocation();
+				if(gLoc != null)
+					out = Integer.toString(gLoc.getLac());
+			}
+			return out;		
+		} catch(NullPointerException e) {
+			return "";
 		}
-		return out;
+		
 	}
 	
 	public static String getIMSI() {
 		String out = null;
-		out = tm.getSubscriberId();
-		return out;
+		try {
+			out = tm.getSubscriberId();
+			return out;
+		} catch(NullPointerException e) {
+			return "";
+		}
 	}
 	
 	public static String getMCC() {
 		String out = null;
-		out = tm.getNetworkOperator().substring(0,3);
-		return out;
+		try {
+			out = tm.getNetworkOperator().substring(0,3);
+			return out;
+		} catch(NullPointerException e) {
+			return "";
+		}
 	}
 	
 	public static String getMNC() {
 		String out = null;
-		out = tm.getNetworkOperator().substring(3);
-		return out;
+		try {
+			out = tm.getNetworkOperator().substring(3);
+			return out;
+		} catch(NullPointerException e) {
+			return "";
+		}
 	}
 	
 	public static String getIMEI() {
 		String out = null;
-		out = tm.getDeviceId();
-		return out;
+		try {
+			out = tm.getDeviceId();
+			return out;
+		} catch(NullPointerException e) {
+			return "";
+		}
 	}
 }

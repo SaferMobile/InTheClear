@@ -180,7 +180,7 @@
     <string name="WIZARD_SEND_TEST">ارسال اختبار</string>
     <string name="WIZARD_CONFIRMATION_SMSTEST_TITLE">النجاح!</string>
     <string name="WIZARD_CONFIRMATION_SMSTEST_FAIL_TITLE">SMS تجارب الفشل</string>
-    <string name="WIZARD_SMS_TEST_FAILURES">يتم إرسال رسائل قصيرة الطوارئ InTheClear كأي SMS الأخرى. الأسباب المحتملة لفشل include:\n\nBad reception\nNo البث اللاسلكي أو credit\nMissing أو التالفة SIM card\n\nIf you\'ve فحص كل ما سبق وSMS الاختبار لا تزال ترسل ، قد لا يكون معتمدا على InTheClear يديكوآخرون. يرجى مراسلتنا at:\n</string>
+    <string name="WIZARD_SMS_TEST_FAILURES">يتم إرسال رسائل قصيرة الطوارئ InTheClear كأي SMS الأخرى. الأسباب المحتملة لفشل include:\n\n\u279EBad reception\n\u279ENo البث اللاسلكي أو credit\n\u279EMissing أو التالفة SIM card\n\nIf you\'ve فحص كل ما سبق وSMS الاختبار لا تزال ترسل ، قد لا يكون معتمدا على InTheClear يديكوآخرون. يرجى مراسلتنا at:\n</string>
     <string name="WIZARD_CONFIRMATION_SMSTEST_FAIL">يبدو لم يرسل SMS اختبارك successfully.\nView تفاصيل لمزيد من المعلومات.</string>
     <string name="WIZARD_RECIPIENT_MOBILE_NUMBERS">Recipient\nMobile # (ق)</string>
     <string name="WIZARD_EMERGENCY_MESSAGE">Your\nEmergency\nMessage</string>

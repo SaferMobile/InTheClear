@@ -31,7 +31,7 @@ public class PhoneInfo {
 	}
 	
 	public static String getMyPhoneNumber() {
-		String out = null;
+		String out = "";
 		try {
 			out = tm.getLine1Number();
 			return out;
@@ -41,7 +41,7 @@ public class PhoneInfo {
 	}
 	
 	public static String getOperator() {
-		String out = null;
+		String out = "";
 		try {
 			if(tm.getPhoneType() != TelephonyManager.PHONE_TYPE_NONE)
 				out = tm.getNetworkOperator();
@@ -52,7 +52,7 @@ public class PhoneInfo {
 	}
 	
 	public static String getCellId() {	
-		String out = null;
+		String out = "";
 		try {
 			if (tm.getPhoneType() == TelephonyManager.PHONE_TYPE_GSM) {
 				final GsmCellLocation gLoc = (GsmCellLocation) tm.getCellLocation();
@@ -66,7 +66,7 @@ public class PhoneInfo {
 	}
 	
 	public static String getLAC() {
-		String out = null;
+		String out = "";
 		try {
 			if (tm.getPhoneType() == TelephonyManager.PHONE_TYPE_GSM){
 				final GsmCellLocation gLoc = (GsmCellLocation) tm.getCellLocation();
@@ -81,7 +81,7 @@ public class PhoneInfo {
 	}
 	
 	public static String getIMSI() {
-		String out = null;
+		String out = "";
 		try {
 			out = tm.getSubscriberId();
 			return out;
@@ -91,7 +91,7 @@ public class PhoneInfo {
 	}
 	
 	public static String getMCC() {
-		String out = null;
+		String out = "";
 		try {
 			out = tm.getNetworkOperator().substring(0,3);
 			return out;
@@ -101,7 +101,7 @@ public class PhoneInfo {
 	}
 	
 	public static String getMNC() {
-		String out = null;
+		String out = "";
 		try {
 			out = tm.getNetworkOperator().substring(3);
 			return out;
@@ -111,7 +111,7 @@ public class PhoneInfo {
 	}
 	
 	public static String getIMEI() {
-		String out = null;
+		String out = "";
 		try {
 			out = tm.getDeviceId();
 			return out;
